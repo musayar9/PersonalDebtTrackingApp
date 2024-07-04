@@ -18,14 +18,15 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please Provide Username"],
       minlength: [3, "Username must contain at least 4 Characters"],
+      unique:true,
     },
     email: {
       type: String,
       required: [true, "Please Provide Email"],
-      match: [
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-        "Please provide a valid email",
-      ],
+      // match: [
+      //   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      //   "Please provide a valid email",
+      // ],
       unique: true,
     },
 
