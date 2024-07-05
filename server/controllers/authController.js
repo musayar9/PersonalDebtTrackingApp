@@ -14,7 +14,7 @@ const getUsers = async (req, res, next) => {
 };
 
 const register = async (req, res, next) => {
-  const { name, surname, username, email, password } = req.body;
+  const { name, surname, username, email, password, birthdate } = req.body;
 
   const user = new User({
     name,
@@ -22,6 +22,7 @@ const register = async (req, res, next) => {
     username,
     email,
     password,
+    birthdate,
   });
 
   try {
@@ -78,4 +79,20 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = { register, getUsers, login };
+const deleteUser = async (req, res, next) => {
+  const { id } = req.params;
+
+  const user = await User.findById({ _id: id });
+
+  if (!user) {
+    throw new BadRequestError("User not found");
+  }
+
+  try {
+    await User.findByIdAndDelete({ _id: id });
+
+    res.status(StatusCodes.OK).json({ msg: "User is deleted" });
+  } catch (error) {}
+};
+
+module.exports = { register, getUsers, login, deleteUser };

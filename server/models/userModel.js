@@ -18,8 +18,13 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please Provide Username"],
       minlength: [3, "Username must contain at least 4 Characters"],
-      unique:true,
+      unique: true,
     },
+    birthdate: {
+      type: Date,
+      required: [true, "Please Provide Username"],
+    },
+
     email: {
       type: String,
       required: [true, "Please Provide Email"],
