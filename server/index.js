@@ -14,9 +14,8 @@ const xss = require("xss-clean");
 const connectMongoDB = require("./db/connect");
 // const rateLimiter = ("express-rate-limit")
 
-const errorHandlerMiddleware = require("./middleware/errorHandler")
-
-
+const errorHandlerMiddleware = require("./middleware/errorHandler");
+const notFoundMiddleware = require("./middleware/notFound");
 
 app.use(express.json());
 app.use(cookieParser());
@@ -24,13 +23,12 @@ app.use(cors());
 app.use(helmet());
 app.use(xss());
 
-
-
 app.get("/", (req, res) => {
   res.send("<h1>Personal Debt Tracking</h1>");
 });
 app.use("/api/v1/auth", authRoutes);
 app.use(errorHandlerMiddleware);
+app.use(notFoundMiddleware);
 const port = process.env.PORT || 5000;
 
 connectMongoDB();

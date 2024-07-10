@@ -14,7 +14,7 @@ const getUsers = async (req, res, next) => {
 };
 
 const register = async (req, res, next) => {
-  const { name, surname, username, email, password, birthdate } = req.body;
+  const { name, surname, username, email, password, birthdate } = req.body.formData;
 
   const user = new User({
     name,
