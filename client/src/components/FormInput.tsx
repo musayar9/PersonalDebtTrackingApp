@@ -21,7 +21,7 @@ const FormInput = ({
   styles
 }: FormInputProps) => {
   return (
-    <>
+    <div className="relative">
       <input
         type={type}
         id={id}
@@ -38,7 +38,7 @@ const FormInput = ({
       >
         {id}
       </label>
-    </>
+    </div>
   );
 };
 

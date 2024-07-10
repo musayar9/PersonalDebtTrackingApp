@@ -103,126 +103,69 @@ const Register = () => {
 
           <form className="flex flex-col gap-2 p-4  " onSubmit={handleSubmit}>
             <div className="flex flex-col justify-between md:flex-row gap-2 ">
-              <div className="relative">
+              <FormInput
+                type={"text"}
+                id="Name"
+                name="name"
+                placeholder={"name"}
+                value={formData.name}
+                handleChange={handleChange}
+                styles="custom-input peer w-full md:w-40"
+              />
 
+              <FormInput
+                type={"text"}
+                id="Surname"
+                name="surname"
+                placeholder={"surname"}
+                value={formData.surname}
+                handleChange={handleChange}
+                styles="custom-input peer w-full md:w-40"
+              />
 
-                <FormInput
-                  type={"text"}
-                  id="Name"
-                  name="name"
-                  placeholder={"name"}
-                  value={formData.name}
-                  handleChange={handleChange}
-                  styles="custom-input peer"
-                />
-              </div>
-
-              <div className="relative">
-                <input
-                  type="text"
-                  id="surname"
-                  name="surname"
-                  placeholder="surname "
-                  className="block px-2.5 pb-2.5 pt-4 w-full md:w-40  text-sm placeholder:hidden
-  text-gray-900 bg-transparent rounded-md border-1 border-gray-300 appearance-none dark:text-white
-  dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
-                  value={formData.surname}
-                  onChange={handleChange}
-                />
-
-                <label
-                  htmlFor="Surname"
-                  className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-emerald-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
-                >
-                  Surname
-                </label>
-              </div>
-              <div className="relative">
-                <input
-                  type="date"
-                  id="birthdate"
-                  name="birthdate"
-                  placeholder="Date of Birth"
-                  className="flex px-2.5 pb-2.5 pt-4 w-full md:w-40 text-sm placeholder:hidden
-  text-gray-900 bg-transparent rounded-md border-1 border-gray-300 appearance-none dark:text-white
-  dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
-                  value={formData.birthdate}
-                  onChange={handleChange}
-                />
-
-                <label
-                  htmlFor="Date of Birth"
-                  className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-emerald-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
-                >
-                  Birth Date
-                </label>
-              </div>
+              <FormInput
+                type={"date"}
+                id="Birthdate"
+                name="birthdate"
+                placeholder={"birthdate"}
+                value={formData.birthdate}
+                handleChange={handleChange}
+                styles="custom-input peer w-full md:w-40 "
+              />
             </div>
 
             <div className="flex flex-col justify-between md:flex-row gap-2 ">
-              <div className="relative">
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  placeholder="username"
-                  className="block px-2.5 pb-2.5 pt-4 w-full md:w-60 text-sm placeholder:hidden
-  text-gray-900 bg-transparent rounded-md border-1 border-gray-300 appearance-none dark:text-white
-  dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
-                  value={formData.username}
-                  onChange={handleChange}
-                />
+              <FormInput
+                type={"text"}
+                id="Username"
+                name="username"
+                placeholder={"username"}
+                value={formData.username}
+                handleChange={handleChange}
+                styles="custom-input peer w-full md:w-60"
+              />
 
-                <label
-                  htmlFor="username"
-                  className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-emerald-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
-                >
-                  Username
-                </label>
-              </div>
-
-              <div className="relative">
-                <input
-                  type="text"
-                  id="email"
-                  name="email"
-                  placeholder="email"
-                  className="block px-2.5 pb-2.5 pt-4 w-full md:w-60 text-sm placeholder:hidden
-  text-gray-900 bg-transparent rounded-md border-1 border-gray-300 appearance-none dark:text-white
-  dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-
-                <label
-                  htmlFor="username"
-                  className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-emerald-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
-                >
-                  Email
-                </label>
-              </div>
+              <FormInput
+                type={"email"}
+                id="Email"
+                name="email"
+                placeholder={"email"}
+                value={formData.email}
+                handleChange={handleChange}
+                styles="custom-input peer w-full md:w-60"
+              />
             </div>
 
             <div className="flex flex-col gap-2">
-              <div className="relative">
-                <input
-                  type="password"
-                  id="password"
-                  className="block px-2.5 pb-2.5 pt-4 w-full  text-sm placeholder:hidden
-  text-gray-900 bg-transparent rounded-md border-1 border-gray-300 appearance-none dark:text-white
-  dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
-                  placeholder="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
-                <label
-                  htmlFor="password"
-                  className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-emerald-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
-                >
-                  Password
-                </label>
-              </div>
+              <FormInput
+                type={"password"}
+                id="Password"
+                name="password"
+                placeholder={"password"}
+                value={formData.password}
+                handleChange={handleChange}
+                styles="custom-input peer w-full"
+              />
             </div>
 
             <button className="border border-emerald-400 text-gray-500 font-semibold hover:border-white hover:text-white hover:bg-emerald-500 duration-150 ease-in rounded-md p-2">
