@@ -7,7 +7,7 @@ import {
   Navbar,
   NavbarBrand,
   NavbarCollapse,
-  NavbarLink,
+
   NavbarToggle,
 } from "flowbite-react";
 import { CiUser } from "react-icons/ci";

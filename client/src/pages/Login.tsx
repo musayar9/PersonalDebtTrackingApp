@@ -91,8 +91,8 @@ const Login = () => {
             </Link>
             <p className="text-xs text-slate-500">
               Do You Have An Account?{" "}
-              <Link to="/login" className="text-blue-600 underline pr-2">
-                Sign Up
+              <Link to="/register" className="text-blue-600 underline pr-2">
+               Register
               </Link>
             </p>
           </div>
