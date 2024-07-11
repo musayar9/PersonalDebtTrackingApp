@@ -14,7 +14,8 @@ const getUsers = async (req, res, next) => {
 };
 
 const register = async (req, res, next) => {
-  const { name, surname, username, email, password, birthdate } = req.body.formData;
+  const { name, surname, username, email, password, birthdate } =
+    req.body.formData;
 
   const user = new User({
     name,
@@ -40,6 +41,7 @@ const register = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
+  console.log(req.body);
   const { email, password } = req.body;
   console.log(email, password);
   try {
@@ -73,7 +75,7 @@ const login = async (req, res, next) => {
         // maxAge: 1 * 24 * 60 * 60 * 1000,
         sameSite: "strict", // CSRF: saldirilara karsi onlemek icin
       })
-      .json({ user: rest });
+      .json({ user: rest, message: " Otp code Your send email address" });
   } catch (error) {
     next(error);
   }

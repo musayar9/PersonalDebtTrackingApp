@@ -1,7 +1,36 @@
 import { Link } from "react-router-dom";
 import RegisterSvg from "../assets/register.svg";
+import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+
+import FormInput from "../components/FormInput";
+import { loginUser } from "../redux/dataFetch";
+
+type UserLogin = {
+  email: string;
+  password: string;
+};
 
 const Login = () => {
+  const [formData, setFormData] = useState<UserLogin>({
+    email: "",
+    password: "",
+  });
+
+  const { user } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(loginUser({ formData }));
+  };
+
+  console.log("user", user);
   return (
     <div className="">
       <div className="flex p-3 max-w-5xl mx-auto flex-col md:flex-row md:items-center gap-5">
@@ -25,43 +54,27 @@ const Login = () => {
             <h1 className="text-2xl font-semibold my-4">Login</h1>
           </div>
 
-          <form className="flex flex-col gap-2 p-4  ">
+          <form className="flex flex-col gap-2 p-4  " onSubmit={handleSubmit}>
             <div className="flex flex-col gap-2">
-              <div className="relative">
-                <input
-                  type="text"
-                  id="email"
-                  name="email"
-                  placeholder="email"
-                  className="block px-2.5 pb-2.5 pt-4 w-full text-sm placeholder:hidden
-  text-gray-900 bg-transparent rounded-md border-1 border-gray-300 appearance-none dark:text-white
-  dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
-                />
+              <FormInput
+                type={"email"}
+                id="Email"
+                name="email"
+                placeholder={"email"}
+                value={formData.email}
+                handleChange={handleChange}
+                styles="custom-input peer w-full "
+              />
 
-                <label
-                  htmlFor="username"
-                  className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-emerald-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
-                >
-                  Email
-                </label>
-              </div>
-              <div className="relative">
-                <input
-                  type="password"
-                  id="password"
-                  className="block px-2.5 pb-2.5 pt-4 w-full  text-sm placeholder:hidden
-  text-gray-900 bg-transparent rounded-md border-1 border-gray-300 appearance-none dark:text-white
-  dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
-                  placeholder="Password"
-                  name="password"
-                />
-                <label
-                  htmlFor="password"
-                  className=" absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-emerald-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
-                >
-                  Password
-                </label>
-              </div>
+              <FormInput
+                type={"password"}
+                id="Password"
+                name="password"
+                placeholder={"password"}
+                value={formData.password}
+                handleChange={handleChange}
+                styles="custom-input peer w-full"
+              />
             </div>
 
             <button className="border border-emerald-400 text-gray-500 font-semibold hover:border-white hover:text-white hover:bg-emerald-500 duration-150 ease-in rounded-md p-2">
