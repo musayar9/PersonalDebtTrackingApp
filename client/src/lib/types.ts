@@ -3,16 +3,22 @@ export interface User {
   name: string;
   surname: string;
   username: string;
-  birthdate: string; // ISO tarih formatında olduğundan string olarak tanımlanmıştır
+  birthdate: string;
   email: string;
   profilePicture: string;
   verifyAccount: boolean;
   verified: boolean;
   isAdmin: boolean;
-  createdAt: string; // ISO tarih formatında olduğundan string olarak tanımlanmıştır
-  updatedAt: string; // ISO tarih formatında olduğundan string olarak tanımlanmıştır
+  createdAt: string; 
+  updatedAt: string;
   __v: number;
 }
+
+export type RegisterUser = {
+  message: string;
+  data: User;
+};
+
 
 export interface ApiResponse {
   user: User;
