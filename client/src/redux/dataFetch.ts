@@ -16,11 +16,11 @@ export const loginUser: AsyncThunk<
   async ({ formData }: { formData: LoginInterface }) => {
     try {
       const res = await axios.post("/api/v1/auth/login", formData);
-      const data: ApiResponse = await res.data;
+      const data = await res.data;
       return data;
     } catch (error) {
-      console.log(error);
-      throw error; // Hata durumunda exception fırlatılır
+
+      return error // Hata durumunda exception fırlatılır
     }
   }
 );

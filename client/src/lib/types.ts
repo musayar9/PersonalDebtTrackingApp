@@ -23,11 +23,16 @@ export type RegisterUser = {
 export interface ApiResponse {
   user: User;
   message: string;
+  response?: {
+    status: number;
+    data?: unknown; // Gelen verinin türüne göre uygun şekilde tanımlayın
+  };
 }
 
 
 export interface UsersState {
   user: ApiResponse | null;
   userStatus: "idle" | "loading" | "succeeded" | "failed";
-  error: string | null;
+  error: boolean | null
+
 }

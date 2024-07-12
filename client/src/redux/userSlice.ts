@@ -1,19 +1,21 @@
-import {
-  createSlice,
-  PayloadAction,
-} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ApiResponse, UsersState } from "../lib/types";
 import { loginUser } from "./dataFetch";
+
 const initialState: UsersState = {
   user: null, // Başlangıçta user null olarak tanımlanır
   userStatus: "idle",
-  error: null,
+  error: false,
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    setError: (state, action) => {
+      state.error = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
@@ -28,9 +30,11 @@ const userSlice = createSlice({
       )
       .addCase(loginUser.rejected, (state, action) => {
         state.userStatus = "failed";
-        state.error = action.error.message || "Failed to login";
+        console.log(action);
+
+        state.error = true;
       });
   },
 });
-
+export const { setError } = userSlice.actions;
 export default userSlice.reducer;

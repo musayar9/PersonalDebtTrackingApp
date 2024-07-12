@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RegisterSvg from "../assets/register.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 import FormInput from "../components/FormInput";
 import { loginUser } from "../redux/dataFetch";
+import { setError } from "../redux/userSlice";
+import AlertMessage from "../components/AlertMessage";
+import { MdErrorOutline } from "react-icons/md";
 
 type UserLogin = {
   email: string;
@@ -17,9 +20,9 @@ const Login = () => {
     password: "",
   });
 
-  const { user } = useAppSelector((state) => state.user);
+  const { user, error } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-
+  const navigate = useNavigate();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -28,9 +31,23 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(loginUser({ formData }));
+  
   };
 
   console.log("user", user);
+  console.log("eerr", error);
+
+  useEffect(() => {
+    if (user?.response?.status === 404) {
+      dispatch(setError(true));
+      navigate("/login");
+    }else{
+    navigate("/")
+    }
+    setTimeout(() => {
+      dispatch(setError(false));
+    }, 3000);
+  }, [user, dispatch, navigate]);
   return (
     <div className="">
       <div className="flex p-3 max-w-5xl mx-auto flex-col md:flex-row md:items-center gap-5">
@@ -92,10 +109,24 @@ const Login = () => {
             <p className="text-xs text-slate-500">
               Do You Have An Account?{" "}
               <Link to="/register" className="text-blue-600 underline pr-2">
-               Register
+                Register
               </Link>
             </p>
           </div>
+
+          {error && (
+            <AlertMessage
+              icon={<MdErrorOutline size={28} />}
+              message={
+                typeof user?.response?.data === "object" &&
+                user.response?.data &&
+                "msg" in user.response.data
+                  ? (user.response.data as { msg: string }).msg
+                  : "An error occurred"
+              }
+              color={"bg-red-500"}
+            />
+          )}
         </div>
       </div>
     </div>
