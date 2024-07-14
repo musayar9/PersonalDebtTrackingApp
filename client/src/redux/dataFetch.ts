@@ -8,7 +8,7 @@ interface LoginInterface {
 }
 
 export const loginUser: AsyncThunk<
-  ApiResponse,
+ApiResponse,
   { formData: LoginInterface },
   Record<string, never>
 > = createAsyncThunk(
@@ -19,8 +19,21 @@ export const loginUser: AsyncThunk<
       const data = await res.data;
       return data;
     } catch (error) {
-
-      return error // Hata durumunda exception fırlatılır
+      return error; // Hata durumunda exception fırlatılır
     }
   }
 );
+
+export const signOut: AsyncThunk<
+  {message:string},
+  { id: string },
+  Record<string, never>
+> = createAsyncThunk("user/signOut", async ({ id }: { id: string }) => {
+  try {
+    const res = await axios.get(`/api/v1/auth/signOut/${id}`);
+    const data = await res.data;
+    return data;
+  } catch (error) {
+    return error;
+  }
+});

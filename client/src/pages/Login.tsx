@@ -21,6 +21,8 @@ const Login = () => {
   });
 
   const { user, error } = useAppSelector((state) => state.user);
+
+  const [errMsg, setErrMsg] = useState("");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,23 +33,34 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(loginUser({ formData }));
-  
   };
 
   console.log("user", user);
   console.log("eerr", error);
 
   useEffect(() => {
-    if (user?.response?.status === 404) {
+    if (user && user?.response?.status !== 404) {
+      if (user !== null) {
+        navigate("/");
+      }
+    } else {
       dispatch(setError(true));
-      navigate("/login");
-    }else{
-    navigate("/")
+      let errorMsg = "";
+
+      if (
+        typeof user?.response?.data === "object" &&
+        user.response?.data &&
+        "msg" in user.response.data
+      ) {
+        errorMsg = (user.response.data as { msg: string }).msg;
+      }
+      setErrMsg(errorMsg);
+      setTimeout(() => {
+        dispatch(setError(false));
+      }, 3000);
     }
-    setTimeout(() => {
-      dispatch(setError(false));
-    }, 3000);
-  }, [user, dispatch, navigate]);
+  }, [user]);
+console.log("errMsg", errMsg)
   return (
     <div className="">
       <div className="flex p-3 max-w-5xl mx-auto flex-col md:flex-row md:items-center gap-5">
@@ -114,16 +127,10 @@ const Login = () => {
             </p>
           </div>
 
-          {error && (
+          {error && errMsg!=="" && (
             <AlertMessage
               icon={<MdErrorOutline size={28} />}
-              message={
-                typeof user?.response?.data === "object" &&
-                user.response?.data &&
-                "msg" in user.response.data
-                  ? (user.response.data as { msg: string }).msg
-                  : "An error occurred"
-              }
+              message={errMsg}
               color={"bg-red-500"}
             />
           )}

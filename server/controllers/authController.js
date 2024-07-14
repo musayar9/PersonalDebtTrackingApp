@@ -97,4 +97,16 @@ const deleteUser = async (req, res, next) => {
   } catch (error) {}
 };
 
-module.exports = { register, getUsers, login, deleteUser };
+const signOut = async (req, res, next) => {
+  const { id } = req.params;
+
+  const user = await User.findById(id);
+
+  if (!user) {
+    throw new BadRequestError("User is not found");
+  }
+
+  res.clearCookie("token").status(200).json({ message: "Sign Out" });
+};
+
+module.exports = { register, getUsers, signOut,  login, deleteUser };
