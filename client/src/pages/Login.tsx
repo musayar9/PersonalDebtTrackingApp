@@ -20,7 +20,7 @@ const Login = () => {
     password: "",
   });
 
-  const { user, error } = useAppSelector((state) => state.user);
+  const { user, error, userStatus } = useAppSelector((state) => state.user);
 
   const [errMsg, setErrMsg] = useState("");
   const dispatch = useAppDispatch();
@@ -60,7 +60,7 @@ const Login = () => {
       }, 3000);
     }
   }, [user]);
-console.log("errMsg", errMsg)
+  console.log("errMsg", errMsg);
   return (
     <div className="">
       <div className="flex p-3 max-w-5xl mx-auto flex-col md:flex-row md:items-center gap-5">
@@ -108,7 +108,14 @@ console.log("errMsg", errMsg)
             </div>
 
             <button className="border border-emerald-400 text-gray-500 font-semibold hover:border-white hover:text-white hover:bg-emerald-500 duration-150 ease-in rounded-md p-2">
-              Login
+              {userStatus === "loading" ? (
+                <div className="flex items-center justify-center gap-2">
+                  <span className="loading loading-infinity loading-xs"></span>
+                  <span>Redirecting</span>
+                </div>
+              ) : (
+                <span>Logging in</span>
+              )}
             </button>
           </form>
 
@@ -127,7 +134,7 @@ console.log("errMsg", errMsg)
             </p>
           </div>
 
-          {error && errMsg!=="" && (
+          {error && errMsg !== "" && (
             <AlertMessage
               icon={<MdErrorOutline size={28} />}
               message={errMsg}

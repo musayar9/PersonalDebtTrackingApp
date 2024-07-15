@@ -34,7 +34,7 @@ console.log(user)
         </span>
       </NavbarBrand>
       <div className="flex md:order-2">
-        {!user?.user   ? (
+        {!user?.user ? (
           <div className="dropdown dropdown-hover  group">
             <div
               tabIndex={0}
@@ -78,12 +78,14 @@ console.log(user)
             }
           >
             <DropdownHeader>
-              <span className="block text-sm">Bonnie Green</span>
+              <span className="block text-sm">{user.user.username}</span>
               <span className="block truncate text-sm font-medium">
-                name@flowbite.com
+                {user.user.email}
               </span>
             </DropdownHeader>
-            <DropdownItem>Dashboard</DropdownItem>
+            <DropdownItem>
+              <Link to="/dashboard?tab=dash">Dashboard</Link>
+            </DropdownItem>
             <DropdownItem>Settings</DropdownItem>
             <DropdownItem>Earnings</DropdownItem>
             <DropdownDivider />
