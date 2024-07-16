@@ -4,6 +4,8 @@ import DashSidebar from "../components/DashSidebar";
 import Profile from "../components/Profile";
 import Debt from "../components/Debt";
 import DashboardArea from "../components/DashboardArea";
+import ProfileChangePassword from "../components/ProfileChangePassword";
+import ProfileContactPreference from "../components/ProfileContactPreference";
 
 const Dashboard = () => {
   const location = useLocation();
@@ -24,10 +26,13 @@ const Dashboard = () => {
       </div>
 
       {tab === "profile" && <Profile />}
+
+      {tab === "profile/change-password" && <ProfileChangePassword />}
+      {tab === "profile/contact-preference" && <ProfileContactPreference />}
+
       {tab === "debt" && <Debt />}
 
-      
-      {tab === "dash" && <DashboardArea/>}
+      {tab === "dash" && <DashboardArea />}
     </div>
   );
 };

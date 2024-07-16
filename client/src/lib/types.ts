@@ -36,3 +36,14 @@ export interface UsersState {
   error: boolean | null
 
 }
+
+export interface Country {
+  name: {
+    common: string;
+  };
+  cca2: string;
+  idd: {
+    root: string;
+    suffixes: string[];
+  };
+}
