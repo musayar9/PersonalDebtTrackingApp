@@ -6,7 +6,7 @@ const cors = require("cors");
 
 // routes
 const authRoutes = require("./routes/authRoutes");
-
+const countryRoutes = require("./routes/countryRoutes");
 //extra security packages
 
 const helmet = require("helmet");
@@ -27,6 +27,7 @@ app.get("/", (req, res) => {
   res.send("<h1>Personal Debt Tracking</h1>");
 });
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/countries", countryRoutes);
 app.use(errorHandlerMiddleware);
 app.use(notFoundMiddleware);
 const port = process.env.PORT || 5000;

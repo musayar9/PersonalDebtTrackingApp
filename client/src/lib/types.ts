@@ -47,3 +47,13 @@ export interface Country {
     suffixes: string[];
   };
 }
+
+
+
+export interface CountryData {
+  country: string;
+  phoneCode: string;
+  iso: string;
+  flag: string;
+}
+

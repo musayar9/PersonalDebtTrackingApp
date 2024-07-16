@@ -1,5 +1,5 @@
 import { AsyncThunk, createAsyncThunk } from "@reduxjs/toolkit";
-import { ApiResponse } from "../lib/types";
+import { ApiResponse, CountryData } from "../lib/types";
 import axios from "axios";
 
 interface LoginInterface {
@@ -39,3 +39,13 @@ export const signOut: AsyncThunk<
 });
 
 
+export const fetchCountries = async():Promise<CountryData[]>=>{
+  try {
+    const res = await axios.get("/api/v1/countries")
+    const data:CountryData[]=  await res.data
+    return data
+  } catch (error) {
+    console.log(error)
+    return []
+  }
+}

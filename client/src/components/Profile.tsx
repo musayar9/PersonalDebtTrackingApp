@@ -63,6 +63,7 @@ const Profile = () => {
                 src={user?.user.profilePicture}
                 alt="profile"
               />
+          
             </div>
           </div>
         </div>
