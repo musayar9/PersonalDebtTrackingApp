@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import ProfileBreadcrumps from "./ProfileBreadcrumps";
 import FormInput from "./FormInput";
 import { formattedDate } from "../utils/functions";
@@ -8,19 +8,30 @@ import FormTextArea from "./FormTextArea";
 
 import CountryDropDown from "./CountryDropDown";
 
-const Profile = () => {
-  const { user } = useAppSelector((state) => state.user);
+import { updateUser } from "../redux/dataFetch";
+import AlertMessage from "./AlertMessage";
+import { MdErrorOutline } from "react-icons/md";
+
+
+
+const Profile:React.FC = () => {
+  const { user, error } = useAppSelector((state) => state.user);
   // const [countries, setCountries] = useState<Country[]>([]);
-  const birthDateFormat = formattedDate(user?.user.birthdate);
+  const dispatch = useAppDispatch()
+  const birthDateFormat = formattedDate(user?.user?.birthdate);
   const [formData, setFormData] = useState({
-    name: user?.user.name || "",
-    surname: user?.user.surname || "",
-    username: user?.user.username || "",
-    email: user?.user.email || "",
+    name: user?.user?.name || "",
+    surname: user?.user?.surname || "",
+    username: user?.user?.username || "",
+    email: user?.user?.email || "",
     birthdate: birthDateFormat || "",
-    address: "",
-    phone:""
+    address: user?.user?.address || "",
+    phone: user?.user?.phone || "",
+    city: user?.user?.city || "",
+    district: user?.user?.district || "",
   });
+  
+  
   // const [countries, setCountries] = useState<CountryData[]>([]);
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -50,8 +61,17 @@ const Profile = () => {
 
   }, []);
 
-
-
+  const handleSubmit =async(e:React.FormEvent<HTMLFormElement>)=>{
+    e.preventDefault();
+  if (user?.user?._id) {
+   await dispatch(updateUser({ id: user?.user?._id, formData }));
+  } else {
+    console.error("User ID is not available");
+  }
+    
+  }
+console.log(user, "user")
+console.log(error,"error")
   return (
     <div className="w-full border p-8">
       <ProfileBreadcrumps />
@@ -63,7 +83,7 @@ const Profile = () => {
               <input type="file" hidden accept="image/*" />
               <img
                 className="border border-zinc-200 shadow-md p-1 rounded-full h-28 w-28 self-center object-cover"
-                src={user?.user.profilePicture}
+                src={user?.user?.profilePicture}
                 alt="profile"
               />
             </div>
@@ -71,7 +91,7 @@ const Profile = () => {
         </div>
 
         <div>
-          <form className="flex flex-col gap-2 p-4  ">
+          <form className="flex flex-col gap-2 p-4  " onSubmit={handleSubmit}>
             <div className="flex flex-col justify-between md:flex-row gap-2 ">
               <FormInput
                 type={"text"}
@@ -126,6 +146,28 @@ const Profile = () => {
               />
             </div>
 
+            <div className="flex flex-col justify-between md:flex-row gap-2 ">
+              <FormInput
+                type={"text"}
+                id="City"
+                name="city"
+                placeholder={"city"}
+                value={formData.city}
+                handleChange={handleChange}
+                styles="custom-input peer w-full md:w-60"
+              />
+
+              <FormInput
+                type={"text"}
+                id="District"
+                name="district"
+                placeholder={"district"}
+                value={formData.district}
+                handleChange={handleChange}
+                styles="custom-input peer w-full md:w-60"
+              />
+            </div>
+
             <div className="flex     flex-col   ">
               <FormTextArea
                 id="address"
@@ -144,7 +186,6 @@ const Profile = () => {
               <CountryDropDown />
 
               <div className="w-full ">
-           
                 <FormInput
                   type={"text"}
                   id="Phone Number"
@@ -163,6 +204,14 @@ const Profile = () => {
               Update
             </button>
           </form>
+
+          {error && (
+            <AlertMessage
+              icon={<MdErrorOutline size={28} />}
+              message={error}
+              color={"bg-red-500"}
+            />
+          )}
         </div>
       </div>
     </div>

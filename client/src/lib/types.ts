@@ -1,24 +1,27 @@
 export interface User {
-  _id: string;
+  _id?: string;
   name: string;
   surname: string;
   username: string;
   birthdate: string;
   email: string;
-  profilePicture: string;
-  verifyAccount: boolean;
-  verified: boolean;
-  isAdmin: boolean;
-  createdAt: string; 
-  updatedAt: string;
-  __v: number;
+  profilePicture?: string;
+  verifyAccount?: boolean;
+  verified?: boolean;
+  isAdmin?: boolean;
+  address: string;
+  phone: string;
+  city: string;
+  district: string;
+  createdAt?: string;
+  updatedAt?: string;
+  __v?: number;
 }
 
 export type RegisterUser = {
   message: string;
   data: User;
 };
-
 
 export interface ApiResponse {
   user: User;
@@ -29,12 +32,10 @@ export interface ApiResponse {
   };
 }
 
-
 export interface UsersState {
   user: ApiResponse | null;
   userStatus: "idle" | "loading" | "succeeded" | "failed";
-  error: boolean | null
-
+  error: string | null | boolean;
 }
 
 export interface Country {
@@ -48,13 +49,10 @@ export interface Country {
   };
 }
 
-
-
 export interface CountryData {
   country: string;
   phoneCode: string;
   iso: string;
   flag: string;
-  _id:string;
+  _id: string;
 }
-

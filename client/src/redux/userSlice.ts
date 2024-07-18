@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ApiResponse, UsersState } from "../lib/types";
-import { loginUser, signOut } from "./dataFetch";
+import { loginUser, signOut, updateUser } from "./dataFetch";
 
 const initialState: UsersState = {
   user: null, // Başlangıçta user null olarak tanımlanır
   userStatus: "idle",
-  error: false,
+  error: null,
 };
 
 const userSlice = createSlice({
@@ -33,6 +33,19 @@ const userSlice = createSlice({
         console.log(action);
 
         state.error = true;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.userStatus = "loading";
+        state.error = null;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.userStatus = "succeeded";
+        state.user= action.payload;
+        state.error= null
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+               state.userStatus = "failed";
+               state.error = action.payload as string;
       })
 
       .addCase(signOut.pending, (state) => {

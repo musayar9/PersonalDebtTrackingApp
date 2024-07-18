@@ -1,6 +1,7 @@
 import { AsyncThunk, createAsyncThunk } from "@reduxjs/toolkit";
-import { ApiResponse, CountryData } from "../lib/types";
+import { ApiResponse, CountryData, User } from "../lib/types";
 import axios from "axios";
+
 
 interface LoginInterface {
   email: string;
@@ -37,6 +38,56 @@ export const signOut: AsyncThunk<
     return error;
   }
 });
+
+
+interface UpdateUserArgs {
+  id: string;
+  formData:User
+}
+
+// export const updateUser: AsyncThunk<
+// ApiResponse,
+
+//   UpdateUserArgs,
+//   Record<string, never>
+// > = createAsyncThunk(
+//   "user/updateUser",
+//   async ({ id, formData }: UpdateUserArgs) => {
+//     try {
+//       const res = await axios.put(`/api/v1/auth/updateUser/${id}`, {
+//         formData,
+//       });
+//       const data = await res.data;
+//       console.log(data, "data");
+//       return data;
+//     } catch (error) {
+//        console.error("Error updating user:", error);
+//       return error
+//     }
+//   }
+// );
+
+export const updateUser = createAsyncThunk<
+  ApiResponse,
+  UpdateUserArgs,
+  { rejectValue: string }
+>(
+  "user/updateUser",
+  async ({ id, formData }: UpdateUserArgs, { rejectWithValue }) => {
+    try {
+      const res = await axios.put(`/api/v1/auth/updateUser/${id}`, formData);
+      return res.data;
+    } catch (error: unknown) {
+      console.error("Error updating user:", error);
+      if (axios.isAxiosError(error) && error.response) {
+        return rejectWithValue(error.response.data.error);
+      } else {
+        return rejectWithValue("An unknown error occurred");
+      }
+    }
+  }
+);
+
 
 
 export const fetchCountries = async():Promise<CountryData[]>=>{

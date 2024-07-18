@@ -28,7 +28,7 @@ const Dashboard = () => {
       {tab === "profile" && <Profile />}
 
       {tab === "profile/change-password" && <ProfileChangePassword />}
-      {tab === "profile/contact-preference" && <ProfileContactPreference />}
+      {tab === "profile/contactPreference" && <ProfileContactPreference />}
 
       {tab === "debt" && <Debt />}
 

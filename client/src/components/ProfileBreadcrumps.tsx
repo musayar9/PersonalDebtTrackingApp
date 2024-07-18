@@ -20,7 +20,7 @@ const ProfileBreadcrumps = () => {
             </Link>
           </li>
           <li>
-            <Link to="/dashboard?tab=profile/contact-preference">
+            <Link to="/dashboard?tab=profile/contactPreference">
               Contact Preferences
             </Link>
           </li>

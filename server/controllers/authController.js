@@ -81,6 +81,74 @@ const login = async (req, res, next) => {
   }
 };
 
+const updateUser = async (req, res, next) => {
+  const {
+    name,
+    surname,
+    username,
+    birthdate,
+    email,
+    city,
+    district,
+    address,
+    phone,
+    profilePicture,
+  } = req.body;
+  console.log(req.body)
+  const { id } = req.params;
+  const userId = req.user.id;
+
+  console.log(req.params.id);
+  console.log(req.user);
+
+  if (id !== userId) {
+    return res.status(400).json({ error: "You mustn't update this user" });
+  }
+
+  if (name.length < 2 || name.length > 14 || name === "") {
+    return res.status(400).json({ error: "Name must be 2 and 14 characters" });
+  }
+  if (surname.length < 2 || surname.length > 14 || surname === "") {
+    return res
+      .status(400)
+      .json({ error: "Surname must be 2 and 14 characters" });
+  }
+  if (username.length < 3 || username.length > 14 || username === "") {
+    return res
+      .status(400)
+      .json({ error: "Username must be 3 and 14 characters" });
+  }
+  if (email === "") {
+    return res.status(400).json({ error: "Email is required" });
+  }
+
+
+  try {
+    const updateUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        $set: {
+          name,
+          surname,
+          username,
+          email,
+          address,
+          phone,
+          city,
+          district,
+          profilePicture,
+          birthdate,
+        },
+      },
+      { new: true }
+    );
+
+    res.status(200).json({ user: updateUser, message: "user is updated" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const deleteUser = async (req, res, next) => {
   const { id } = req.params;
 
@@ -109,4 +177,4 @@ const signOut = async (req, res, next) => {
   res.clearCookie("token").status(200).json({ message: "Sign Out" });
 };
 
-module.exports = { register, getUsers, signOut,  login, deleteUser };
+module.exports = { register, getUsers, signOut, login, deleteUser, updateUser };

@@ -40,6 +40,19 @@ const userSchema = new mongoose.Schema(
       required: [true, "Please Provide Password"],
       minlength: [6, "Password must contain at least 6 characters"],
     },
+
+    city: {
+      type: String,
+    },
+    district: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
+
+    phone: { type: String },
+
     profilePicture: {
       type: String,
       default:
@@ -61,7 +74,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-userSchema.pre("save", async function() {
+userSchema.pre("save", async function () {
   const salt = await bcrypt.genSalt(12);
   this.password = await bcrypt.hash(this.password, salt);
 });

@@ -114,7 +114,7 @@ const Login = () => {
                   <span>Redirecting</span>
                 </div>
               ) : (
-                <span>Logging in</span>
+                <span>Login</span>
               )}
             </button>
           </form>

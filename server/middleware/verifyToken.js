@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const { UnauthenticatedError } = require("../errors");
 
 const verifyToken = async (req, res, next) => {
-  const token = res.cookies.token;
+  const token = req.cookies.token;
   if (!token) {
     throw new UnauthenticatedError("Authentication Invalid");
   }
@@ -15,15 +15,15 @@ const verifyToken = async (req, res, next) => {
     req.user = user;
     next();
   });
-  
-  
-    // try {
-    //   const payload = jwt.verify(token, process.env.JWT_SECRET);
-    //   const user = User.findById(payload.id).select("-password");
-    //   req.user = user;
-    //   req.user = { userId: payload.userId, name: payload.name };
-    //   next();
-    // } catch (err) {
-    //   throw new UnauthenticatedError("Authentication failed");
-    // }
+
+  // try {
+  //   const payload = jwt.verify(token, process.env.JWT_SECRET);
+  //   const user = User.findById(payload.id).select("-password");
+  //   req.user = user;
+  //   req.user = { userId: payload.userId, name: payload.name };
+  //   next();
+  // } catch (err) {
+  //   throw new UnauthenticatedError("Authentication failed");
+  // }
 };
+module.exports = verifyToken;
