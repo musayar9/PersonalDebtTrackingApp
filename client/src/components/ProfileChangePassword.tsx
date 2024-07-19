@@ -5,6 +5,7 @@ import axios from "axios";
 import { useAppSelector } from "../redux/hooks";
 import AlertMessage from "./AlertMessage";
 import { MdErrorOutline } from "react-icons/md";
+import { AiFillLike } from "react-icons/ai";
 
 interface PasswordData {
   currentPassword: string;
@@ -18,6 +19,8 @@ const ProfileChangePassword: React.FC = () => {
     currentPassword: "",
     newPassword: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState("");
   const [passMsg, setPassMsg] = useState("");
   const [passMsgErr, setPassMsgErr] = useState(false);
   const [currPassShow, setCurrPassShow] = useState(false);
@@ -31,38 +34,36 @@ const ProfileChangePassword: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // if (formData.currentPassword === formData.newPassword) {
-    //   setPassMsg("Yeni şifreniz bir önceki şifreniz ile aynı olmamalıdır.");
-    //   setPassMsgErr(true);
-    //   setTimeout(() => {
-    //     setPassMsg("");
-    //     setPassMsgErr(false);
-    //   }, 3000);
-    // }
 
     try {
+      setLoading(true);
+
       const res = await axios.patch(
         `/api/v1/auth/changePassword/${user?.user._id}`,
         formData
       );
       const data = await res.data;
       console.log(data);
+      setLoading(false);
+      setSuccess(data.message);
 
+      setTimeout(() => {
+        setSuccess("");
+      }, 3000);
       return data;
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response) {
         setPassMsg(error.response.data.message);
-        setPassMsgErr(true)
+        setPassMsgErr(true);
       } else {
         setPassMsg("An unknown error occurred");
-        setPassMsgErr(true)
-        
+        setPassMsgErr(true);
       }
-      
-      setTimeout(()=>{
-      setPassMsg("")
-      setPassMsgErr(false)
-      },3000)
+
+      setTimeout(() => {
+        setPassMsg("");
+        setPassMsgErr(false);
+      }, 3000);
     }
   };
   console.log(passMsg);
@@ -156,15 +157,29 @@ const ProfileChangePassword: React.FC = () => {
             type="submit"
             className=" w-full max-w-md my-4  text-xs border border-emerald-400 text-gray-500 font-semibold hover:border-white hover:text-white hover:bg-emerald-500 duration-150 ease-linear rounded-md p-2.5"
           >
-            Update Password
+            {loading ? (
+              <p className="flex gap-2 items-center justify-center">
+                <span className="loading loading-spinner"></span>
+                <span>Password is updating</span>
+              </p>
+            ) : (
+              "Update Password"
+            )}
           </button>
         </form>
         <div>
-          {passMsg && (
+          {passMsgErr && (
             <AlertMessage
               message={passMsg}
               color={"bg-red-500"}
               icon={<MdErrorOutline size={28} />}
+            />
+          )}
+          {success && (
+            <AlertMessage
+              message={success}
+              color={"bg-green-500"}
+              icon={<AiFillLike size={28} />}
             />
           )}
         </div>

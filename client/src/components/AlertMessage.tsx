@@ -10,7 +10,7 @@ color:string;
 const AlertMessage = ({icon, message, color}:AlertMessageProps) => {
   return (
     <div
-      className={`${color} mt-2 flex items-center p-2 text-sm rounded-md gap-2`}
+      className={`${color} mt-2 flex items-center p-3 text-sm rounded-md gap-2`}
     >
       <span className='text-white text-2xl font-bold'>{icon}</span>
 
