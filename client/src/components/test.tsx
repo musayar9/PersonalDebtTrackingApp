@@ -43,11 +43,7 @@ const Profile: React.FC = () => {
   const [imageError, setImageError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const imageRef = useRef<HTMLInputElement | null>(null);
-  useEffect(() => {
-    if (image) {
-      handleFileUpload(image);
-    }
-  }, [image]);
+
   // const [countries, setCountries] = useState<CountryData[]>([]);
   const handleChange = (
     e: React.ChangeEvent<
@@ -58,7 +54,11 @@ const Profile: React.FC = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-
+  useEffect(() => {
+    if (image) {
+      handleFileUpload(image);
+    }
+  }, [image]);
 
   const handleFileUpload = async (image: File) => {
     const storage = getStorage(app);
@@ -99,7 +99,7 @@ const Profile: React.FC = () => {
       <div className="flex items-center flex-col justify-center mx-auto max-w-6xl ">
         <div className="relative my-8 ">
           <div className="w-full">
-            <div className="flex  flex-col items-center justify-center">
+            <div className="flex items-center justify-center">
               <input
                 type="file"
                 hidden
@@ -111,12 +111,12 @@ const Profile: React.FC = () => {
               />
               <img
                 className="border border-zinc-200 shadow-md p-1 rounded-full h-28 w-28 self-center object-cover"
-                src={formData.profilePicture}
+                src={user?.user?.profilePicture}
                 onClick={() => imageRef.current?.click()}
                 alt="profile"
               />
 
-              <p className="text-sm self-center mt-3">
+              <p className="text-sm self-center -mt-3">
                 {imageError ? (
                   <span className="text-red-700">
                     Error uploading image (file size must be less than 2 MB)

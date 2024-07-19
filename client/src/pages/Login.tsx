@@ -52,7 +52,7 @@ const Login = () => {
         user.response?.data &&
         "msg" in user.response.data
       ) {
-        errorMsg = (user.response.data as { msg: string }).msg;
+        errorMsg = (user?.response.data as { msg: string }).msg;
       }
       setErrMsg(errorMsg);
       setTimeout(() => {

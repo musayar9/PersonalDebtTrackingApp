@@ -94,7 +94,7 @@ const updateUser = async (req, res, next) => {
     phone,
     profilePicture,
   } = req.body;
-  console.log(req.body)
+  console.log(req.body);
   const { id } = req.params;
   const userId = req.user.id;
 
@@ -121,7 +121,6 @@ const updateUser = async (req, res, next) => {
   if (email === "") {
     return res.status(400).json({ error: "Email is required" });
   }
-
 
   try {
     const updateUser = await User.findByIdAndUpdate(
@@ -177,4 +176,32 @@ const signOut = async (req, res, next) => {
   res.clearCookie("token").status(200).json({ message: "Sign Out" });
 };
 
-module.exports = { register, getUsers, signOut, login, deleteUser, updateUser };
+const changePassword = async (req, res, next) => {
+  const { currentPassword, newPassword } = req.body;
+  const { id } = req.params;
+  const userId = req.user.id;
+
+  if (id !== userId) {
+    throw new BadRequestError("You can't change password");
+  }
+
+  if (currentPassword === newPassword) {
+    throw new BadRequestError(
+      "Your new password should not be the same as your last password."
+    );
+  }
+  const hashedPassword = await bcrypt.hashSync(newPassword, 10);
+
+  try {
+    await User.findByIdAndUpdate(
+      id,
+      { $set: { password: hashedPassword } },
+      { new: true }
+    );
+    res.status(200).json({ message: "The Password was changed" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { register, changePassword, getUsers, signOut, login, deleteUser, updateUser };

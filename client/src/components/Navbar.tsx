@@ -20,10 +20,12 @@ export function NavbarComponent() {
   console.log(user);
   const navigate = useNavigate();
   const handleSignOut = async () => {
-    if (user && user.user) {
-      await dispatch(signOut({ id: user.user?._id }));
-      navigate("/login");
-    }
+  const userId = user?.user?._id;
+
+  if (user && userId) {
+    await dispatch(signOut({ id: userId }));
+    navigate("/login");
+  }
   };
 console.log(user)
   return (
@@ -72,8 +74,8 @@ console.log(user)
             label={
               <Avatar
                 alt="User settings"
-                img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                rounded
+                img={user?.user.profilePicture}
+                rounded className="object-cover"
               />
             }
           >

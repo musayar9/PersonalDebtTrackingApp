@@ -27,9 +27,9 @@ ApiResponse,
 
 export const signOut: AsyncThunk<
   {message:string},
-  { id: string },
+  { id:   string },
   Record<string, never>
-> = createAsyncThunk("user/signOut", async ({ id }: { id: string }) => {
+> = createAsyncThunk("user/signOut", async ({ id }: { id: string  }) => {
   try {
     const res = await axios.get(`/api/v1/auth/signOut/${id}`);
     const data = await res.data;

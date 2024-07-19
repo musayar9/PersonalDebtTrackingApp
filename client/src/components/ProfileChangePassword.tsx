@@ -11,6 +11,7 @@ const ProfileChangePassword: React.FC = () => {
   const [formData, setFormData] = useState<PasswordData>({
     currentPassword: "",
     newPassword: "",
+    
   });
   const [passMsg, setPassMsg] = useState("");
   const [passMsgErr, setPassMsgErr] = useState(false);
