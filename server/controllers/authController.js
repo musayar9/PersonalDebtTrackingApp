@@ -45,14 +45,14 @@ const login = async (req, res, next) => {
   const { email, password } = req.body;
   console.log(email, password);
   try {
-    if (!email || !password) {
+    if (email === "" || password === "") {
       throw new BadRequestError("Please Provide Email and Password");
     }
 
     const isUser = await User.findOne({ email });
 
     if (!isUser) {
-      throw new NotFoundError("Registered email address not found");
+      throw new BadRequestError("Registered email address not found");
     }
 
     const validPassword = await bcrypt.compare(password, isUser.password);
@@ -184,11 +184,14 @@ const changePassword = async (req, res, next) => {
   if (id !== userId) {
     throw new BadRequestError("You can't change password");
   }
+  const user = await User.findById({ _id: id });
 
-  if (currentPassword === newPassword) {
-    throw new BadRequestError(
-      "Your new password should not be the same as your last password."
-    );
+  if (currentPassword == newPassword) {
+    return res.status(400).json({
+      message:
+        "Your new password should not be the same as your last password.",
+    });
+   
   }
   const hashedPassword = await bcrypt.hashSync(newPassword, 10);
 
@@ -204,4 +207,12 @@ const changePassword = async (req, res, next) => {
   }
 };
 
-module.exports = { register, changePassword, getUsers, signOut, login, deleteUser, updateUser };
+module.exports = {
+  register,
+  changePassword,
+  getUsers,
+  signOut,
+  login,
+  deleteUser,
+  updateUser,
+};

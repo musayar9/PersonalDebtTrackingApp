@@ -17,5 +17,5 @@ router.put("/updateUser/:id", verifyToken, updateUser);
 
 router.delete("/:id", deleteUser);
 router.get("/signOut/:id", signOut);
-router.patch("/changePassword/:id", changePassword);
+router.patch("/changePassword/:id", verifyToken, changePassword);
 module.exports = router;

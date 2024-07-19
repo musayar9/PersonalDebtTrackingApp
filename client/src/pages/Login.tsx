@@ -39,7 +39,7 @@ const Login = () => {
   console.log("eerr", error);
 
   useEffect(() => {
-    if (user && user?.response?.status !== 404) {
+    if (user && user?.response?.status !== 400) {
       if (user !== null) {
         navigate("/");
       }

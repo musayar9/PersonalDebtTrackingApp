@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import ProfileBreadcrumps from "./ProfileBreadcrumps";
 import { HiEye } from "react-icons/hi";
+import axios from "axios";
+import { useAppSelector } from "../redux/hooks";
 
 interface PasswordData {
   currentPassword: string;
@@ -8,6 +10,9 @@ interface PasswordData {
 }
 
 const ProfileChangePassword: React.FC = () => {
+  
+  const {user} = useAppSelector((state)=>state.user)
+
   const [formData, setFormData] = useState<PasswordData>({
     currentPassword: "",
     newPassword: "",
@@ -26,13 +31,23 @@ const ProfileChangePassword: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formData.currentPassword === formData.newPassword) {
-      setPassMsg("Yeni şifreniz bir önceki şifreniz ile aynı olmamalıdır.");
-      setPassMsgErr(true);
-      setTimeout(() => {
-        setPassMsg("");
-        setPassMsgErr(false);
-      }, 3000);
+    // if (formData.currentPassword === formData.newPassword) {
+    //   setPassMsg("Yeni şifreniz bir önceki şifreniz ile aynı olmamalıdır.");
+    //   setPassMsgErr(true);
+    //   setTimeout(() => {
+    //     setPassMsg("");
+    //     setPassMsgErr(false);
+    //   }, 3000);
+    // }
+    
+    
+    try {
+      const res = await axios.patch(`/api/v1/auth/changePassword/${user?.user._id}`,formData)
+      const data = await res.data;
+      console.log(data)
+      return data
+    } catch (error) {
+      console.log(error)
     }
   };
 
