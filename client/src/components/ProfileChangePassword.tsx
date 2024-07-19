@@ -3,6 +3,8 @@ import ProfileBreadcrumps from "./ProfileBreadcrumps";
 import { HiEye } from "react-icons/hi";
 import axios from "axios";
 import { useAppSelector } from "../redux/hooks";
+import AlertMessage from "./AlertMessage";
+import { MdErrorOutline } from "react-icons/md";
 
 interface PasswordData {
   currentPassword: string;
@@ -10,13 +12,11 @@ interface PasswordData {
 }
 
 const ProfileChangePassword: React.FC = () => {
-  
-  const {user} = useAppSelector((state)=>state.user)
+  const { user } = useAppSelector((state) => state.user);
 
   const [formData, setFormData] = useState<PasswordData>({
     currentPassword: "",
     newPassword: "",
-    
   });
   const [passMsg, setPassMsg] = useState("");
   const [passMsgErr, setPassMsgErr] = useState(false);
@@ -39,18 +39,33 @@ const ProfileChangePassword: React.FC = () => {
     //     setPassMsgErr(false);
     //   }, 3000);
     // }
-    
-    
+
     try {
-      const res = await axios.patch(`/api/v1/auth/changePassword/${user?.user._id}`,formData)
+      const res = await axios.patch(
+        `/api/v1/auth/changePassword/${user?.user._id}`,
+        formData
+      );
       const data = await res.data;
-      console.log(data)
-      return data
-    } catch (error) {
-      console.log(error)
+      console.log(data);
+
+      return data;
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        setPassMsg(error.response.data.message);
+        setPassMsgErr(true)
+      } else {
+        setPassMsg("An unknown error occurred");
+        setPassMsgErr(true)
+        
+      }
+      
+      setTimeout(()=>{
+      setPassMsg("")
+      setPassMsgErr(false)
+      },3000)
     }
   };
-
+  console.log(passMsg);
   return (
     <div className="w-full p-8">
       <ProfileBreadcrumps />
@@ -144,7 +159,15 @@ const ProfileChangePassword: React.FC = () => {
             Update Password
           </button>
         </form>
-        <div>{passMsg && <p>{passMsg}</p>}</div>
+        <div>
+          {passMsg && (
+            <AlertMessage
+              message={passMsg}
+              color={"bg-red-500"}
+              icon={<MdErrorOutline size={28} />}
+            />
+          )}
+        </div>
 
         <p className=" text-xs flex items-center justify-center text-center text-slate-600 w-full p-4">
           For your security, choose a password that does not include your name,

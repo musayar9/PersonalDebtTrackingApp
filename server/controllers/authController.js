@@ -201,7 +201,7 @@ const changePassword = async (req, res, next) => {
       { $set: { password: hashedPassword } },
       { new: true }
     );
-    res.status(200).json({ message: "The Password was changed" });
+    res.status(200).json({ message: "The Password is updating" });
   } catch (error) {
     next(error);
   }
