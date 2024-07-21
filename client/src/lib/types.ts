@@ -78,13 +78,18 @@ export interface DebtData {
   description?: string;
   paymentStatus: string;
   paymentPlan: PaymentPlan;
-  createdAt?:Date | string;
+  createdAt?: Date | string;
   updatedAt?: Date | string;
   __v?: number;
 }
 
+export interface DebtResponse {
+  status: DebtData;
+  message: string;
+}
 
-export interface DebtResponse{
-  status:DebtData,
-  message:string
+export interface DebtState {
+  debt: DebtData | null;
+  debtStatus: "idle" | "succeeded" | "loading" | "failed";
+  error:null | string
 }
