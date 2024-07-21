@@ -56,3 +56,35 @@ export interface CountryData {
   flag: string;
   _id: string;
 }
+
+// debt types
+
+export interface PaymentPlan {
+  paymentData: Date | string;
+  paymentAmount: number;
+  paymentStatus: boolean;
+}
+
+export interface DebtData {
+  _id?: string;
+  userId?: string;
+  lender: string;
+  borrower: string;
+  debtAmount: number;
+  interestRate: number;
+  amount: number;
+  paymentStart: Date | string;
+  installment: number;
+  description?: string;
+  paymentStatus: string;
+  paymentPlan: PaymentPlan;
+  createdAt?:Date | string;
+  updatedAt?: Date | string;
+  __v?: number;
+}
+
+
+export interface DebtResponse{
+  status:DebtData,
+  message:string
+}

@@ -45,27 +45,7 @@ interface UpdateUserArgs {
   formData:User
 }
 
-// export const updateUser: AsyncThunk<
-// ApiResponse,
 
-//   UpdateUserArgs,
-//   Record<string, never>
-// > = createAsyncThunk(
-//   "user/updateUser",
-//   async ({ id, formData }: UpdateUserArgs) => {
-//     try {
-//       const res = await axios.put(`/api/v1/auth/updateUser/${id}`, {
-//         formData,
-//       });
-//       const data = await res.data;
-//       console.log(data, "data");
-//       return data;
-//     } catch (error) {
-//        console.error("Error updating user:", error);
-//       return error
-//     }
-//   }
-// );
 
 export const updateUser = createAsyncThunk<
   ApiResponse,
