@@ -19,9 +19,10 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
+import { CiCircleInfo } from "react-icons/ci";
 
 const Profile: React.FC = () => {
-  const { user, error } = useAppSelector((state) => state.user);
+  const { user, error, userStatus } = useAppSelector((state) => state.user);
   // const [countries, setCountries] = useState<Country[]>([]);
   const dispatch = useAppDispatch();
   const birthDateFormat = formattedDate(user?.user?.birthdate);
@@ -43,9 +44,18 @@ const Profile: React.FC = () => {
   const [imageError, setImageError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const imageRef = useRef<HTMLInputElement | null>(null);
+  const [showSuccessMsg, setShowSuccessMsg] = useState(false)
   useEffect(() => {
     if (image) {
       handleFileUpload(image);
+    }
+    
+    if(userStatus ==="succeeded"){
+      setShowSuccessMsg(true)
+      
+      setTimeout(()=>{
+      setShowSuccessMsg(false)
+      },3000)
     }
   }, [image]);
   // const [countries, setCountries] = useState<CountryData[]>([]);
@@ -90,7 +100,7 @@ const Profile: React.FC = () => {
       console.error("User ID is not available");
     }
   };
-  console.log(user, "user");
+  console.log(user?.message, "user");
   console.log(error, "error");
   return (
     <div className="w-full border p-8">
@@ -246,9 +256,24 @@ const Profile: React.FC = () => {
             </div>
 
             <button className="border border-emerald-400 text-gray-500 font-semibold hover:border-white hover:text-white hover:bg-emerald-500 duration-150 ease-in rounded-md p-2">
-              Update
+              {userStatus === "loading" ? (
+                <div className="flex items-center justify-center gap-2">
+                  <span className="loading loading-infinity loading-xs"></span>
+                  <span>Updateting</span>
+                </div>
+              ) : (
+                <span>Update Profile</span>
+              )}
             </button>
           </form>
+
+          {showSuccessMsg && (
+            <AlertMessage
+              icon={<CiCircleInfo size={28} />}
+              message={user?.message}
+              color={"bg-emerald-500"}
+            />
+          )}
 
           {error && (
             <AlertMessage

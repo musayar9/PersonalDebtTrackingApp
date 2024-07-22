@@ -77,17 +77,17 @@ const DebtForm = () => {
 
     try {
       setLoading(true);
-      setErrMsg("false");
+
       const res = await axios.post("/api/v1/debt", formData);
       const data = await res.data;
+      console.log(data);
       setMsg(data?.message);
       setLoading(false);
-      
-      setTimeout(()=>{
-        setMsg("")
-      }, 3000)
+
+      setTimeout(() => {
+        setMsg("");
+      }, 3000);
     } catch (error) {
-    
       if (axios.isAxiosError(error)) {
         console.log(error);
 
@@ -96,13 +96,12 @@ const DebtForm = () => {
         setErrMsg("request failed");
       }
 
-      setTimeout(()=>{
-      setErrMsg("")
-      })
+      setTimeout(() => {
+        setErrMsg("");
+      }, 3000);
     }
   };
 
-  console.log(formData);
   return (
     <div className=" w-full">
       <div className="">

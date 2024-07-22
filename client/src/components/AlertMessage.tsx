@@ -2,7 +2,7 @@ import React from 'react'
 
 type AlertMessageProps = {
 icon: React.ReactNode
-message:string | boolean;
+message:string | boolean | undefined;
 color:string;
 
 }
