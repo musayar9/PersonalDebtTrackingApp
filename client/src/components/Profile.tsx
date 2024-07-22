@@ -22,7 +22,9 @@ import {
 import { CiCircleInfo } from "react-icons/ci";
 
 const Profile: React.FC = () => {
-  const { user, error, userStatus } = useAppSelector((state) => state.user);
+  const { user, error, userUpdateStatus } = useAppSelector(
+    (state) => state.user
+  );
   // const [countries, setCountries] = useState<Country[]>([]);
   const dispatch = useAppDispatch();
   const birthDateFormat = formattedDate(user?.user?.birthdate);
@@ -50,12 +52,12 @@ const Profile: React.FC = () => {
       handleFileUpload(image);
     }
     
-    if(userStatus ==="succeeded"){
-      setShowSuccessMsg(true)
-      
-      setTimeout(()=>{
-      setShowSuccessMsg(false)
-      },3000)
+    if (userUpdateStatus === "succeeded") {
+      setShowSuccessMsg(true);
+
+      setTimeout(() => {
+        setShowSuccessMsg(false);
+      }, 3000);
     }
   }, [image]);
   // const [countries, setCountries] = useState<CountryData[]>([]);
@@ -256,7 +258,7 @@ const Profile: React.FC = () => {
             </div>
 
             <button className="border border-emerald-400 text-gray-500 font-semibold hover:border-white hover:text-white hover:bg-emerald-500 duration-150 ease-in rounded-md p-2">
-              {userStatus === "loading" ? (
+              {userUpdateStatus === "loading" ? (
                 <div className="flex items-center justify-center gap-2">
                   <span className="loading loading-infinity loading-xs"></span>
                   <span>Updateting</span>
