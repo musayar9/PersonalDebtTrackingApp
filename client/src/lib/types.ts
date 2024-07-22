@@ -65,6 +65,19 @@ export interface PaymentPlan {
   paymentStatus: boolean;
 }
 
+export interface CreateDebt {
+  lender: string;
+  borrower: string;
+  debtAmount: number;
+  interestRate: number;
+  amount: number;
+  paymentStart: Date | string;
+  installment: number;
+  description?: string;
+  paymentStatus: string;
+  paymentPlan: PaymentPlan;
+}
+
 export interface DebtData {
   _id?: string;
   userId?: string;
@@ -89,7 +102,7 @@ export interface DebtResponse {
 }
 
 export interface DebtState {
-  debt: DebtData | null;
+  debt: DebtData[] | null;
   debtStatus: "idle" | "succeeded" | "loading" | "failed";
   error:null | string
 }

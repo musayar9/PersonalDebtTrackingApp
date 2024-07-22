@@ -3,7 +3,7 @@ const Debt = require("../models/debtModel");
 const { StatusCodes } = require("http-status-codes");
 
 const getAllDebt = async (req, res, next) => {
-  const debt = await Debt.find({});
+  const debt = await Debt.find({}).sort({ createdAt: -1 });
 
   try {
     res.status(StatusCodes.OK).json(debt);
@@ -13,6 +13,7 @@ const getAllDebt = async (req, res, next) => {
 };
 
 const createDebt = async (req, res, next) => {
+console.log(req.user)
   const id = req.user.id;
 
   const debt = new Debt({

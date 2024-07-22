@@ -5,9 +5,10 @@ interface FormInputProps {
   id: string;
   name: string;
   placeholder: string;
-  value: string;
+  value: string | number;
   styles:string;
-handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  min?:string
+handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 
 }
 
@@ -18,7 +19,9 @@ const FormInput = ({
   placeholder,
   value,
   handleChange,
-  styles
+  styles,
+  min
+  
 }: FormInputProps) => {
   return (
     <div className="relative">
@@ -30,6 +33,7 @@ const FormInput = ({
         className={styles}
         value={value}
         onChange={handleChange}
+        min={min}
       />
 
       <label

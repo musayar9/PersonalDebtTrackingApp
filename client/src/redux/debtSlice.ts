@@ -3,7 +3,7 @@ import { DebtData, DebtState } from "../lib/types";
 import { getAllDebt } from "./debtFetch";
 
 const initialState: DebtState = {
-  debt: null,
+  debt: [],
   debtStatus: "idle",
   error: null,
 };
@@ -20,7 +20,7 @@ const debtSlice = createSlice({
       })
       .addCase(
         getAllDebt.fulfilled,
-        (state, action: PayloadAction<DebtData>) => {
+        (state, action: PayloadAction<DebtData[]>) => {
           state.debtStatus = "succeeded";
           state.debt = action.payload;
         }
