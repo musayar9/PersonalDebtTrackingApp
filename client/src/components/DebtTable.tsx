@@ -1,20 +1,7 @@
+import { DebtData } from "../lib/types";
+import { formatPercentage, formatPrice } from "../utils/functions";
 
-
-import {DebtData } from "../lib/types";
-import {
-  formatPercentage,
-  formatPrice,
-
-} from "../utils/functions";
-
-
-
-
-
-
-const DebtTable = ({debt}:{debt:DebtData[]}) => {
-
-
+const DebtTable = ({ debt }: { debt: DebtData[] }) => {
   return (
     <div className="overflow-x-auto my-8 rounded-md">
       <table className="table table-zebra bg-slate-100">
@@ -53,7 +40,17 @@ const DebtTable = ({debt}:{debt:DebtData[]}) => {
               <td
                
               >
+              
+              <p  className={`${
+                  item.paymentStatus === "Unpaid"
+                    ? "bg-red-600"
+                    : item?.paymentStatus === "Partially Paid"
+                    ? "bg-yellow-400"
+                    : item.paymentStatus === "Paid" && "bg-green-500"
+                }  } px-2 py-2 rounded-sm text-center text-white text-xs` }>
+              
                 {item.paymentStatus}
+              </p>
               </td>
               <td className="text-red-600 font-semibold hover:underline cursor-pointer">
                 Delete
