@@ -1,18 +1,59 @@
-import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { getAllDebt } from "../redux/debtFetch";
+import React, { useEffect, useState } from "react";
+import { useAppSelector } from "../redux/hooks";
+
 import { Link } from "react-router-dom";
 import DebtTable from "./DebtTable";
+import axios from "axios";
+import ErrorMessage from "../pages/ErrorMessage";
+import Loading from "../pages/Loading";
 
-const Debt = () => {
-  const { debt } = useAppSelector((state) => state.debt);
-  const dispatch = useAppDispatch();
+
+const Debt:React.FC = () => {
+  // const { debt } = useAppSelector((state) => state.debt);
+  const { user } = useAppSelector((state) => state.user);
+  const [loading, setLoading] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
+  const [debt, setDebt] = useState([]);
+
   useEffect(() => {
-    dispatch(getAllDebt());
-  }, []);
+    // dispatch(getAllDebt());
+
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(`/api/v1/debt/${user?.user._id}`);
+        const data = await res.data;
+        setDebt(data);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+        if (axios.isAxiosError(error)) {
+          setErrMsg(error.response?.data.msg);
+        } else {
+          setErrMsg("Request Failed");
+        }
+      }
+    };
+    fetchData();
+  }, [user]);
 
   console.log(debt);
 
+  if (loading) {
+    return (
+    <div className="flex items-center justify-between mx-auto max-w-4xl" >
+    
+      <Loading/>
+    </div>
+    );
+  }
+
+  if (errMsg) {
+    return <ErrorMessage message={errMsg} />;
+  }
+
+  console.log(errMsg);
   return (
     <div className="w-full p-8">
       <div className="bg-[#f3f4f6] p-4 rounded-md shadow-sm flex items-center  justify-between">
@@ -30,7 +71,7 @@ const Debt = () => {
       <div className="mx-auto max-w-8xl">
         {debt ? (
           <>
-            <DebtTable />
+            <DebtTable debt={debt} />
           </>
         ) : (
           <div>

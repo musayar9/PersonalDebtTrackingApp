@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { CreateDebt, DebtData, DebtResponse } from "../lib/types";
+import {  DebtData, } from "../lib/types";
 
 export const getAllDebt = createAsyncThunk<DebtData[], void,  {rejectValue:string}>(
   "debt/getAllDebt",
@@ -19,6 +19,8 @@ export const getAllDebt = createAsyncThunk<DebtData[], void,  {rejectValue:strin
     }
   }
 );
+
+
 
 
 

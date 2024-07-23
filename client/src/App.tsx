@@ -8,7 +8,7 @@ import ResetPassword from './pages/ResetPassword'
 import Dashboard from './pages/Dashboard'
 
 
-const App = () => {
+const App:React.FC = () => {
   return (
     <div>
       <NavbarComponent />

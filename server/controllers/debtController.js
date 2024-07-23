@@ -18,14 +18,14 @@ const getUserDebt = async (req, res, next) => {
   const userIdCookie = req.user.id;
 
   try {
-    const debt = await Debt.find({ userId }).exec();
+    const debt = await Debt.find({ userId }).sort({ createdAt: -1 }).exec();
 
     if (!debt) {
       res.status(400).json("Debt was not found");
     }
 
     if (userId !== userIdCookie) {
-      throw new BadRequestError("You can't use data");
+      throw new BadRequestError("You can't use data. Unauthorized");
     }
 
     res.status(StatusCodes.OK).json(debt);
