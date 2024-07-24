@@ -1,7 +1,47 @@
+import axios from "axios";
 import { DebtData } from "../lib/types";
 import { formatPercentage, formatPrice } from "../utils/functions";
+import { useState } from "react";
+import { Button, Modal } from "flowbite-react";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 
-const DebtTable = ({ debt }: { debt: DebtData[] }) => {
+interface DebtTableProps {
+  debt: DebtData[];
+  setDebt: React.Dispatch<React.SetStateAction<DebtData[]>>;
+}
+
+const DebtTable = ({ debt, setDebt }: DebtTableProps) => {
+  const [showModal, setShowModal] = useState(false);
+  const [debtId, setDebtId] = useState<string | undefined>("");
+  const [errMsg, setErrMsg] = useState("");
+  const handleDeleteDebt = async () => {
+    try {
+      const res = await axios.delete(
+        `/api/v1/debt/${"66a107979f1e5354e24a70d0"}`
+      );
+      const data = await res.data;
+
+      const deleteDebt = debt.filter((d) => d._id !== debtId);
+      console.log(deleteDebt);
+      setDebt(deleteDebt);
+      setShowModal(false);
+      console.log(data);
+      setErrMsg("");
+    } catch (error) {
+      console.log(error);
+      if (axios.isAxiosError(error)) {
+        setErrMsg(error.response?.data.msg);
+      } else {
+        setErrMsg("request failed");
+      }
+
+      setTimeout(() => {
+        setErrMsg("");
+        setShowModal(false);
+      }, 3000);
+    }
+  };
+  console.log("errMsg", errMsg);
   return (
     <div className="overflow-x-auto my-8 rounded-md">
       <table className="table table-zebra bg-slate-100">
@@ -37,22 +77,26 @@ const DebtTable = ({ debt }: { debt: DebtData[] }) => {
               <td>{formatPrice(item.amount)}</td>
               <td>{new Date(item.paymentStart).toLocaleDateString()}</td>
               <td>{item.installment}</td>
-              <td
-               
-              >
-              
-              <p  className={`${
-                  item.paymentStatus === "Unpaid"
-                    ? "bg-red-600"
-                    : item?.paymentStatus === "Partially Paid"
-                    ? "bg-yellow-400"
-                    : item.paymentStatus === "Paid" && "bg-green-500"
-                }  } px-2 py-2 rounded-sm text-center text-white text-xs` }>
-              
-                {item.paymentStatus}
-              </p>
+              <td>
+                <p
+                  className={`${
+                    item.paymentStatus === "Unpaid"
+                      ? "bg-rose-700"
+                      : item?.paymentStatus === "Partially Paid"
+                      ? "bg-yellow-400"
+                      : item.paymentStatus === "Paid" && "bg-green-500"
+                  }  } px-1 py-1.5 rounded-sm text-center text-white text-xs`}
+                >
+                  {item.paymentStatus}
+                </p>
               </td>
-              <td className="text-red-600 font-semibold hover:underline cursor-pointer">
+              <td
+                onClick={() => {
+                  setShowModal(true);
+                  setDebtId(item?._id);
+                }}
+                className="text-red-500 font-semibold hover:underline cursor-pointer"
+              >
                 Delete
               </td>
               <td className="text-blue-600 font-semibold hover:underline cursor-pointer">
@@ -67,6 +111,39 @@ const DebtTable = ({ debt }: { debt: DebtData[] }) => {
           {/* row 2 */}
         </tbody>
       </table>
+
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        popup
+        size="md"
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationCircle className="h-14 w-14 text-gray-200 mx-auto" />
+
+            {errMsg !== "" ? (
+              <p className="text-red-600 text-md font-semibold">{errMsg}</p>
+            ) : (
+              <>
+                <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400 ">
+                  Are you sure you want to delete this post?
+                </h3>
+
+                <div className="flex justify-center gap-4">
+                  <Button color="failure" onClick={handleDeleteDebt}>
+                    Yes I'm sure
+                  </Button>
+                  <Button color="gray" onClick={() => setShowModal(false)}>
+                    No Cancel
+                  </Button>
+                </div>
+              </>
+            )}
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

@@ -6,6 +6,7 @@ import DebtTable from "./DebtTable";
 import axios from "axios";
 import ErrorMessage from "../pages/ErrorMessage";
 import Loading from "../pages/Loading";
+import { DebtData } from "../lib/types";
 
 
 const Debt:React.FC = () => {
@@ -13,7 +14,7 @@ const Debt:React.FC = () => {
   const { user } = useAppSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  const [debt, setDebt] = useState([]);
+  const [debt, setDebt] = useState<DebtData[]>([]);
 
   useEffect(() => {
     // dispatch(getAllDebt());
@@ -75,7 +76,7 @@ const Debt:React.FC = () => {
       <div className="mx-auto max-w-8xl">
         {debt ? (
           <>
-            <DebtTable debt={debt} />
+            <DebtTable debt={debt} setDebt= {setDebt}/>
           </>
         ) : (
           <div>

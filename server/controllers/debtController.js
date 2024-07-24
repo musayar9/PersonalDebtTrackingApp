@@ -15,8 +15,8 @@ const getAllDebt = async (req, res, next) => {
 
 const getUserDebt = async (req, res, next) => {
   const { userId } = req.params;
- const {id} = req.user
-  console.log(req.user)
+  const { id } = req.user;
+  console.log(req.user);
 
   try {
     const debt = await Debt.find({ userId }).sort({ createdAt: -1 }).exec();
@@ -54,4 +54,24 @@ const createDebt = async (req, res, next) => {
   }
 };
 
-module.exports = { getAllDebt, createDebt, getUserDebt };
+const deleteDebt = async (req, res, next) => {
+  const { id } = req.params;
+  const userId = req.user.id;
+  console.log("id", id);
+
+  try {
+    const isDebt = await Debt.findById({ _id: id });
+
+    if (!isDebt) {
+      throw new BadRequestError("Silinecek veri bulunamadı");
+    }
+    await Debt.findByIdAndDelete(id);
+    const debt = await Debt.find({ userId }).sort({ createdAt: -1 });
+
+    res.status(200).json({ message: "Debt is deleted", debt });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { getAllDebt, createDebt, getUserDebt, deleteDebt };
