@@ -54,6 +54,67 @@ const createDebt = async (req, res, next) => {
   }
 };
 
+const updateDebt = async (req, res, next) => {
+  const {
+    lender,
+    borrower,
+    debtAmount,
+    interestRate,
+    amount,
+    paymentStart,
+    description,
+    paymentStatus,
+    paymentPlan,
+  } = req.body;
+
+  const { id } = req.params;
+
+
+
+  try {
+    if (
+      lender === "" ||
+      borrower === "" ||
+      debtAmount === "" ||
+      interestRate === "" ||
+      amount === "" ||
+      paymentStart === "" ||
+      description === "" ||
+      paymentStatus === ""
+    ) {
+      throw new BadRequestError("please fill in all fields");
+    }
+  
+    const debt = await Debt.findById({ _id: id });
+    console.log(debt);
+    if (!debt) {
+     throw new BadRequestError("Kayıtlı borç bullamadır");
+    }
+
+    const updateDebt = await Debt.findByIdAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          lender,
+          borrower,
+          debtAmount,
+          interestRate,
+          amount,
+          paymentStart,
+          description,
+          paymentStatus,
+          paymentPlan,
+        },
+      },
+      { new: true }
+    );
+
+    res.status(200).json({ debt: updateDebt, message: "user is updated" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const deleteDebt = async (req, res, next) => {
   const { id } = req.params;
   const userId = req.user.id;
@@ -74,4 +135,10 @@ const deleteDebt = async (req, res, next) => {
   }
 };
 
-module.exports = { getAllDebt, createDebt, getUserDebt, deleteDebt };
+module.exports = {
+  getAllDebt,
+  createDebt,
+  getUserDebt,
+  deleteDebt,
+  updateDebt,
+};

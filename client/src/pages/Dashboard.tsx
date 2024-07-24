@@ -8,6 +8,7 @@ import ProfileChangePassword from "../components/ProfileChangePassword";
 import ProfileContactPreference from "../components/ProfileContactPreference";
 import DebtForm from "../components/DebtForm";
 
+
 const Dashboard = () => {
   const location = useLocation();
   const [tab, setTab] = useState("");
@@ -33,6 +34,7 @@ const Dashboard = () => {
 
       {tab === "debt" && <Debt />}
       {tab === "debt/create_debt" && <DebtForm />}
+
       {tab === "dash" && <DashboardArea />}
     </div>
   );

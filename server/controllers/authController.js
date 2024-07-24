@@ -191,7 +191,6 @@ const changePassword = async (req, res, next) => {
       message:
         "Your new password should not be the same as your last password.",
     });
-   
   }
   const hashedPassword = await bcrypt.hashSync(newPassword, 10);
 
