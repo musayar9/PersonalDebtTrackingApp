@@ -269,6 +269,12 @@ const Profile: React.FC = () => {
             </button>
           </form>
 
+          <div className="flex justify-end pr-4">
+            <button className=" text-red-600 hover:underline ">
+              Delete Account
+            </button>
+          </div>
+
           {showSuccessMsg && (
             <AlertMessage
               icon={<CiCircleInfo size={28} />}

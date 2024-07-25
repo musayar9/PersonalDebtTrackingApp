@@ -6,35 +6,35 @@ import axios from "axios";
 import EditDebtPage from "./EditDebtPage";
 import { CreateDebt } from "../lib/types";
 import Loading from "../pages/Loading";
+import ErrorMessage from "../pages/ErrorMessage";
 
 const EditDebt = () => {
   const { id } = useParams();
 
-
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-const [formData, setFormData] = useState<CreateDebt>({
-  lender: "",
-  borrower: "",
-  debtAmount: 0,
-  interestRate: 0,
-  amount: 0,
-  paymentStart: "",
-  installment: 1,
-  description: "",
+  const [formData, setFormData] = useState<CreateDebt>({
+    lender: "",
+    borrower: "",
+    debtAmount: 0,
+    interestRate: 0,
+    amount: 0,
+    paymentStart: "",
+    installment: 1,
+    description: "",
 
-  paymentPlan: [{ paymentDate: "", paymentAmount: 0, paymentStatus: false }],
-});
+    paymentPlan: [{ paymentDate: "", paymentAmount: 0, paymentStatus: false }],
+  });
   console.log(id);
   useEffect(() => {
     const fetchDebtId = async () => {
-      setLoading(true)
-    
+      setLoading(true);
+
       try {
         const res = await axios.get(`/api/v1/debt/getDebt/${id}`);
         const data = await res.data;
-        setFormData(data)
-        setLoading(false)
+        setFormData(data);
+        setLoading(false);
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setErrMsg(error.response?.data.msg);
@@ -51,16 +51,15 @@ const [formData, setFormData] = useState<CreateDebt>({
     return (
       <div className=" mx-auto max-w-4xl my-24">
         <div className="flex items-center justify-center">
-        
-        <Loading />
+          <Loading />
         </div>
       </div>
     );
   }
-  
 
-  console.log("ERR", errMsg);
-  console.log(formData);
+  if (errMsg) {
+    return <ErrorMessage message={errMsg} />;
+  }
 
   return (
     <div className="w-full p-4">
