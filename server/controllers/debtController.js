@@ -35,6 +35,22 @@ const getUserDebt = async (req, res, next) => {
   }
 };
 
+const getDebtId = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const debt = await Debt.findById({ _id: id }).exec();
+    console.log(debt);
+    if (!debt) {
+      throw new BadRequestError("Kayıtlı bor. bulunamadı");
+    }
+
+    res.status(StatusCodes.OK).json(debt);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const createDebt = async (req, res, next) => {
   console.log(req.user);
   const id = req.user.id;
@@ -69,8 +85,6 @@ const updateDebt = async (req, res, next) => {
 
   const { id } = req.params;
 
-
-
   try {
     if (
       lender === "" ||
@@ -84,11 +98,11 @@ const updateDebt = async (req, res, next) => {
     ) {
       throw new BadRequestError("please fill in all fields");
     }
-  
+
     const debt = await Debt.findById({ _id: id });
     console.log(debt);
     if (!debt) {
-     throw new BadRequestError("Kayıtlı borç bullamadır");
+      throw new BadRequestError("Kayıtlı borç bullamadır");
     }
 
     const updateDebt = await Debt.findByIdAndUpdate(
@@ -109,7 +123,7 @@ const updateDebt = async (req, res, next) => {
       { new: true }
     );
 
-    res.status(200).json({ debt: updateDebt, message: "user is updated" });
+    res.status(200).json({ updateDebt, message: "user is updated" });
   } catch (error) {
     next(error);
   }
@@ -141,4 +155,5 @@ module.exports = {
   getUserDebt,
   deleteDebt,
   updateDebt,
+  getDebtId,
 };

@@ -64,14 +64,14 @@ const login = async (req, res, next) => {
     const token = jwt.sign(
       { id: isUser._id, name: isUser.name },
       process.env.JWT_SECRET,
-      { expiresIn: "2h" }
+      { expiresIn: "4h" }
     );
     // console.log(isUser._doc);
     return res
       .status(StatusCodes.OK)
       .cookie("token", token, {
         httpOnly: true,
-        maxAge: 2 * 60 * 60 * 1000,
+        maxAge: 4 * 60 * 60 * 1000,
         // maxAge: 1 * 24 * 60 * 60 * 1000,
         sameSite: "strict", // CSRF: saldirilara karsi onlemek icin
       })

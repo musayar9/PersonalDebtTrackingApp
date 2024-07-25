@@ -61,7 +61,7 @@ export interface CountryData {
 // debt types
 
 export interface PaymentPlan {
-  paymentData: Date | string;
+  paymentDate:  string;
   paymentAmount: number;
   paymentStatus: boolean;
 }
@@ -72,11 +72,11 @@ export interface CreateDebt {
   debtAmount: number;
   interestRate: number;
   amount: number;
-  paymentStart: Date | string;
+  paymentStart:   string;
   installment: number;
   description?: string;
-  paymentStatus: string;
-  paymentPlan: PaymentPlan;
+
+  paymentPlan: PaymentPlan[];
 }
 
 export interface DebtData {
@@ -90,7 +90,7 @@ export interface DebtData {
   paymentStart: Date | string;
   installment: number;
   description?: string;
-  paymentStatus: string;
+  paymentStatus?: string;
   paymentPlan: PaymentPlan;
   createdAt?: Date | string;
   updatedAt?: Date | string;
