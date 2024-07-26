@@ -18,7 +18,7 @@ const DebtTable = ({ debt, setDebt }: DebtTableProps) => {
   const handleDeleteDebt = async () => {
     try {
       const res = await axios.delete(
-        `/api/v1/debt/${"66a107979f1e5354e24a70d0"}`
+        `/api/v1/debt/${debtId}`
       );
       const data = await res.data;
 

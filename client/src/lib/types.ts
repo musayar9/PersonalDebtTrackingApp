@@ -85,7 +85,7 @@ export interface DebtData {
   userId?: string;
   lender: string;
   borrower: string;
-  debtAmount: number;
+  debtAmount: number ;
   interestRate: number;
   amount: number;
   paymentStart: Date | string;

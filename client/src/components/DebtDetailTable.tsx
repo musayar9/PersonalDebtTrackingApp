@@ -45,7 +45,7 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
   console.log(debt);
   return (
     <div className="overflow-x-auto my-10 rounded-md">
-      <table className="table table-zebra bg-slate-100">
+      <table className="table table-zebra bg-slate-100 ">
         <thead className="bg-slate-50">
           <tr>
             <th></th>

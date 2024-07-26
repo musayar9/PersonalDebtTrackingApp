@@ -11,7 +11,7 @@ if (!date) return "";
 
 };
 
-export const formatDateTwo = (date:string | undefined)=>{
+export const formatDateTwo = (date:string | undefined | number)=>{
 if (!date) return ""; 
 const dateFormat = new Date(date);
 const formattedDate = format(dateFormat, "d MMM yyyy");
@@ -19,12 +19,24 @@ return formattedDate
 }
 
 
+export const formatPrice = (price: number | undefined): string => {
+  if (price === undefined || price === null) {
+    return ""; // veya uygun bir varsayılan değer döndürebilirsiniz
+  }
 
-export const formatPrice = (price: number): string => {
+  // String türündeki price'ı sayıya çevir
+  const numericPrice = typeof price === "string" ? parseFloat(price) : price;
+
+  // NaN olup olmadığını kontrol et
+  if (isNaN(numericPrice)) {
+    return ""; // veya uygun bir varsayılan değer döndürebilirsiniz
+  }
+
   const tl = new Intl.NumberFormat("tr-TR", {
     style: "currency",
     currency: "TRY",
-  }).format(price);
+  }).format(numericPrice);
+
   return tl;
 };
 export const formatPercentage = (percentage: number): string => {

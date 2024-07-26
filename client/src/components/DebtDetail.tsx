@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { DebtData } from "../lib/types";
 import DebtDetailTable from "./DebtDetailTable";
+import DebtDetailItem from "./DebtDetailItem";
 
 const DebtDetail = () => {
   const { id } = useParams();
@@ -48,8 +49,10 @@ console.log(debt)
       <div className="lg:col-span-8">
       <DebtDetailTable id={id}/>
       </div>
-      <div className="lg:col-span-4 lg:pl-4"></div>
-      <div></div>
+      <div className="lg:col-span-4 lg:pl-4">
+      <DebtDetailItem id={id}/>
+      </div>
+      
       
       </div>
     </div>
