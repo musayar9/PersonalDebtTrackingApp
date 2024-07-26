@@ -1,5 +1,5 @@
 import {format, parseISO} from "date-fns"
-
+ 
 export const formattedDate = (date:string | undefined ) => {
 
 if (!date) return ""; 
@@ -10,6 +10,14 @@ if (!date) return "";
 
 
 };
+
+export const formatDateTwo = (date:string | undefined)=>{
+if (!date) return ""; 
+const dateFormat = new Date(date);
+const formattedDate = format(dateFormat, "d MMM yyyy");
+return formattedDate
+}
+
 
 
 export const formatPrice = (price: number): string => {

@@ -42,10 +42,29 @@ const getDebtId = async (req, res, next) => {
     const debt = await Debt.findById({ _id: id }).exec();
     console.log(debt);
     if (!debt) {
-      throw new BadRequestError("Kayıtlı bor. bulunamadı");
+      throw new BadRequestError("Not Found Debt");
     }
 
     res.status(StatusCodes.OK).json(debt);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getPaymentPlan = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const payment = await Debt.findById({ _id: id }).exec();
+
+    if (!payment) {
+      throw new BadRequestError("Not Found Debt");
+    }
+    const paymentPlan= payment.paymentPlan;
+    
+
+    
+    res.status(StatusCodes.OK).json(paymentPlan);
   } catch (error) {
     next(error);
   }
@@ -156,4 +175,5 @@ module.exports = {
   deleteDebt,
   updateDebt,
   getDebtId,
+  getPaymentPlan
 };
