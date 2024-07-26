@@ -9,3 +9,7 @@ Kullanıcı güvenliği için Nodemailer platformu kullanılarak, kullanıcılar
 Bu proje, kullanıcıların finansal düzenlemelerini kolaylaştırmak ve güvenli bir şekilde borç takibi yapmalarını sağlamak için özverili ve titizlikle geliştirilmektedir.
 
 
+
+
+https://github.com/user-attachments/assets/d665f471-6ac0-468b-8c77-872889e4bc03
+
