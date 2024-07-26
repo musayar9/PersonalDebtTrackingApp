@@ -2,14 +2,13 @@ import { AsyncThunk, createAsyncThunk } from "@reduxjs/toolkit";
 import { ApiResponse, CountryData, User } from "../lib/types";
 import axios from "axios";
 
-
 interface LoginInterface {
   email: string;
   password: string;
 }
 
 export const loginUser: AsyncThunk<
-ApiResponse,
+  ApiResponse,
   { formData: LoginInterface },
   Record<string, never>
 > = createAsyncThunk(
@@ -26,10 +25,10 @@ ApiResponse,
 );
 
 export const signOut: AsyncThunk<
-  {message:string},
-  { id:   string },
+  { message: string },
+  { id: string },
   Record<string, never>
-> = createAsyncThunk("user/signOut", async ({ id }: { id: string  }) => {
+> = createAsyncThunk("user/signOut", async ({ id }: { id: string }) => {
   try {
     const res = await axios.get(`/api/v1/auth/signOut/${id}`);
     const data = await res.data;
@@ -39,13 +38,10 @@ export const signOut: AsyncThunk<
   }
 });
 
-
 interface UpdateUserArgs {
   id: string;
-  formData:User
+  formData: User;
 }
-
-
 
 export const updateUser = createAsyncThunk<
   ApiResponse,
@@ -68,15 +64,31 @@ export const updateUser = createAsyncThunk<
   }
 );
 
-
-
-export const fetchCountries = async():Promise<CountryData[]>=>{
+export const deleteUser = createAsyncThunk<
+  { message: string },
+  { id: string },
+  { rejectValue: string }
+>("user/deleteUser", async ({ id }: { id: string }, { rejectWithValue }) => {
   try {
-    const res = await axios.get("/api/v1/countries")
-    const data:CountryData[]=  await res.data
-    return data
+    const res = await axios.delete(`/api/v1/auth/${id}`);
+    const data = await res.data;
+    return data;
   } catch (error) {
-    console.log(error)
-    return []
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(error.response?.data.msg);
+    } else {
+      return rejectWithValue("Reject Failed");
+    }
   }
-}
+});
+
+export const fetchCountries = async (): Promise<CountryData[]> => {
+  try {
+    const res = await axios.get("/api/v1/countries");
+    const data: CountryData[] = await res.data;
+    return data;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};

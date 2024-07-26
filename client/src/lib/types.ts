@@ -36,6 +36,7 @@ export interface UsersState {
   user: ApiResponse | null;
   userStatus: "idle" | "loading" | "succeeded" | "failed";
   userUpdateStatus: "idle" | "loading" | "succeeded" | "failed";
+  userDeleteStatus: "idle" | "loading" | "succeeded" | "failed";
   error: string | null | boolean;
 }
 

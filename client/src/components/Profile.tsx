@@ -8,7 +8,7 @@ import FormTextArea from "./FormTextArea";
 
 import CountryDropDown from "./CountryDropDown";
 
-import { updateUser } from "../redux/dataFetch";
+import { deleteUser, updateUser } from "../redux/dataFetch";
 import AlertMessage from "./AlertMessage";
 import { MdErrorOutline } from "react-icons/md";
 
@@ -21,8 +21,10 @@ import {
 } from "firebase/storage";
 import { CiCircleInfo } from "react-icons/ci";
 
+import Loading from "../pages/Loading";
+import { useNavigate } from "react-router-dom";
 const Profile: React.FC = () => {
-  const { user, error, userUpdateStatus } = useAppSelector(
+  const { user, error, userUpdateStatus, userStatus } = useAppSelector(
     (state) => state.user
   );
   // const [countries, setCountries] = useState<Country[]>([]);
@@ -47,6 +49,8 @@ const Profile: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const imageRef = useRef<HTMLInputElement | null>(null);
   const [showSuccessMsg, setShowSuccessMsg] = useState(false)
+  const navigate = useNavigate()
+
   useEffect(() => {
     if (image) {
       handleFileUpload(image);
@@ -99,11 +103,31 @@ const Profile: React.FC = () => {
     if (user?.user?._id) {
       await dispatch(updateUser({ id: user?.user?._id, formData }));
     } else {
-      console.error("User ID is not available");
+  
+      setErrorMessage("User ID is not available")
     }
   };
   console.log(user?.message, "user");
   console.log(error, "error");
+  
+  if(userStatus ==="loading"){
+    return (
+   <Loading/>
+    );
+  }
+  
+  
+const handleDeleteUser =async()=>{
+  if (user?.user?._id) {
+    await dispatch(deleteUser({ id: user?.user?._id }));
+    navigate("/login")
+    
+  } else {
+    setErrorMessage("User ID is not available");
+  }
+}
+
+console.log("user is deleted")
   return (
     <div className="w-full border p-8">
       <ProfileBreadcrumps />
@@ -270,7 +294,7 @@ const Profile: React.FC = () => {
           </form>
 
           <div className="flex justify-end pr-4">
-            <button className=" text-red-600 hover:underline ">
+            <button onClick={handleDeleteUser} className=" text-red-600 hover:underline ">
               Delete Account
             </button>
           </div>

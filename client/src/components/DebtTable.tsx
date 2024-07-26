@@ -106,7 +106,7 @@ const DebtTable = ({ debt, setDebt }: DebtTableProps) => {
                 </Link>
               </td>
               <td className="text-emerald-500 font-semibold hover:underline cursor-pointer">
-                Pay Debt
+                <Link to={`/dashboard/debtDetail/${item?._id}`}>Detail</Link>
               </td>
             </tr>
           ))}
