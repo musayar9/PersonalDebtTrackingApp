@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { DebtData } from "../lib/types";
 import DebtDetailTable from "./DebtDetailTable";
 import DebtDetailItem from "./DebtDetailItem";
@@ -37,23 +37,30 @@ const DebtDetail = () => {
 console.log(debt)
   return (
     <div className="max-w-6xl mx-auto p-4">
-      <div className="border-b border-slate-400 m-4 pb-2">
-        <h2 className="text-xl font-semibold text-gray-500">
-        {debt && debt.description}
+      <div className="border-b border-slate-400 m-4 pb-2 flex items-center justify-between">
+        <h2 className="text-xl font-semibold text-gray-500  capitalize">
+          {debt && debt.description}
         </h2>
+        {/* <p className="text-gray-500 gap-2">
+        <span>Installment: </span>
+        <span className="font-semibold">{debt?.installment}</span>
+        </p> */}
+
+        <Link
+          className="bg-slate-200 hover:bg-slate-300 hover:text-gray-900 duration-150 ease-linear px-4 py-3 rounded-lg font-semibold text-gray-700"
+          to="/dashboard?tab=debt"
+        >
+          Return Debt
+        </Link>
       </div>
-      
-      
-      
+
       <div className="mt-8 grid gap-6 lg:grid-cols-12">
-      <div className="lg:col-span-8">
-      <DebtDetailTable id={id}/>
-      </div>
-      <div className="lg:col-span-4 lg:pl-4">
-      <DebtDetailItem id={id}/>
-      </div>
-      
-      
+        <div className="lg:col-span-8">
+          <DebtDetailTable id={id} />
+        </div>
+        <div className="lg:col-span-4 lg:pl-4">
+          <DebtDetailItem id={id} />
+        </div>
       </div>
     </div>
   );

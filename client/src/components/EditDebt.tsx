@@ -62,7 +62,7 @@ const EditDebt = () => {
   }
 
   return (
-    <div className="w-full p-4">
+    <div className="max-w-6xl mx-auto p-4">
       <div className="border-b pb-2 border-slate-400 m-4 flex items-center justify-between">
         <h2 className="text-2xl font-semibold text-gray-500 ">Edit Debt</h2>
         <Link

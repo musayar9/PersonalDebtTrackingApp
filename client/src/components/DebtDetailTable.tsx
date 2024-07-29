@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 
 import axios from "axios";
 import { formatDateTwo, formatPrice } from "../utils/functions";
+import { Link } from "react-router-dom";
 
 interface PaymentPlan {
   _id: string;
@@ -63,12 +64,14 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
             <td>{formatPrice(item.paymentAmount)}</td>
             <td>
               {item.paymentStatus ? (
-                <span className="text-emerald-600">Ödendi</span>
+                <span className="text-emerald-600">Paid</span>
               ) : (
-                <span className="text-red-600">Ödenmedi</span>
+                <span className="text-red-600">Unpaid</span>
               )}
             </td>
-            <td className="text-info font-semibold">Pay Debt</td>
+            <td className="text-info font-semibold">
+              <Link to="/dashboard?tab=debt/payment_debt">Pay Debt</Link>
+            </td>
           </tr>
         ))}
       </table>

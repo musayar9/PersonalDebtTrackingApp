@@ -7,6 +7,7 @@ import DashboardArea from "../components/DashboardArea";
 import ProfileChangePassword from "../components/ProfileChangePassword";
 import ProfileContactPreference from "../components/ProfileContactPreference";
 import DebtForm from "../components/DebtForm";
+import PaymentPage from "../components/PaymentPage";
 
 
 const Dashboard = () => {
@@ -34,6 +35,7 @@ const Dashboard = () => {
 
       {tab === "debt" && <Debt />}
       {tab === "debt/create_debt" && <DebtForm />}
+      {tab === "debt/payment_debt" && <PaymentPage />}
 
       {tab === "dash" && <DashboardArea />}
     </div>

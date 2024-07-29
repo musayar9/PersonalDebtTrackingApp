@@ -11,7 +11,8 @@ if (!date) return "";
 
 };
 
-export const formatDateTwo = (date:string | undefined | number)=>{
+export const formatDateTwo = (date:string | undefined | Date)=>{
+
 if (!date) return ""; 
 const dateFormat = new Date(date);
 const formattedDate = format(dateFormat, "d MMM yyyy");
@@ -39,7 +40,11 @@ export const formatPrice = (price: number | undefined): string => {
 
   return tl;
 };
-export const formatPercentage = (percentage: number): string => {
+export const formatPercentage = (percentage: number | undefined): string => {
+  if (percentage === undefined || percentage === null) {
+    return ""; // veya uygun bir varsayılan değer döndürebilirsiniz
+  }
+
   const formattedPercentage = new Intl.NumberFormat("tr-TR", {
     style: "percent",
     minimumFractionDigits: 0,
