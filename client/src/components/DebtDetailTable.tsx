@@ -70,7 +70,7 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
               )}
             </td>
             <td className="text-info font-semibold">
-              <Link to="/dashboard?tab=debt/payment_debt">Pay Debt</Link>
+              <Link to={`/dashboard/payment_debt/${id}/debt/${item._id}`}>Pay Debt</Link>
             </td>
           </tr>
         ))}

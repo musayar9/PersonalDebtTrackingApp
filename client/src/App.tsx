@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import EditDebt from "./components/EditDebt";
 import DebtDetail from "./components/DebtDetail";
 import Success from "./components/Success";
+import PaymentPage from "./components/PaymentPage";
 
 
 const App: React.FC = () => {
@@ -24,7 +25,7 @@ const App: React.FC = () => {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="/dashboard/updateDebt/:id" element={<EditDebt />} />
         <Route path="/dashboard/debtDetail/:id" element={<DebtDetail />} />
-   
+   <Route path="/dashboard/payment_debt/:debtId/debt/:paymentId" element={<PaymentPage/>}/>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/reset-password" element={<ResetPassword />} />

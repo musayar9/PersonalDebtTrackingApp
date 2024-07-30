@@ -3,11 +3,13 @@ import React, { useEffect, useState } from "react";
 import { loadStripe, Stripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
+import { useParams } from "react-router-dom";
 const PaymentPage = () => {
   const [stripePromise, setStripePromise] = useState<Stripe | null>(null);
 
   const [clientSecret, setClientSecret] = useState("");
-
+const params  = useParams();
+console.log(params)
   useEffect(() => {
     const getStripeConfig = async () => {
       try {
@@ -25,20 +27,23 @@ const PaymentPage = () => {
   }, []);
 
   useEffect(() => {
-    const createPayment = async () => {
-      try {
-        const res = await axios.post("/api/v1/stripe/create-payment");
-        console.log(res, );
-        const data =  res.data;
+  if(params ){
+      const createPayment = async () => {
+        try {
+          const res = await axios.post("/api/v1/stripe/create-payment", params);
+          console.log(res);
+          const data = res.data;
 
-        console.log("createPayment data", data);
-        setClientSecret(data.clientSecret);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+          console.log("createPayment data", data);
+          setClientSecret(data.clientSecret);
+        } catch (error) {
+          console.log(error);
+        }
+      };
 
-    createPayment();
+      createPayment();
+  }
+
   }, []);
 
   console.log(stripePromise, "stripe");

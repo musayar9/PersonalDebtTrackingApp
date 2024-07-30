@@ -3,7 +3,7 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 
 const CheckoutForm = () => {
   const stripe = useStripe();
@@ -63,22 +63,22 @@ const CheckoutForm = () => {
         // Make sure to change this to your payment completion page
         return_url: `${window.location.origin}/success`,
       },
-    //   redirect: "if_required",
+      redirect: "if_required",
     });
 
-    // if (error) {
-    //   setMessage(error.message);
-    // } else if (paymentIntent && paymentIntent.status === "succeeded") {
-    //   setMessage("paymetn statsu " + paymentIntent.status + " 123");
-    // } else {
-    //   setMessage("an expected errror");
-    // }
+    if (error) {
+      setMessage(error.message);
+    } else if (paymentIntent && paymentIntent.status === "succeeded") {
+      setMessage("paymetn statsu " + paymentIntent.status + " 123");
+    } else {
+      setMessage("an expected errror");
+    }
     
-      if (error.type === "card_error" || error.type === "validation_error") {
-        setMessage(error.message);
-      } else {
-        setMessage("An unexpected error occured.");
-      }
+      // if (error.type === "card_error" || error.type === "validation_error") {
+      //   setMessage(error.message);
+      // } else {
+      //   setMessage("An unexpected error occured.");
+      // }
 
     setIsProcessing(false);
   };
