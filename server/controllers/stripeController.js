@@ -1,6 +1,7 @@
 const express = require("express");
 const { resolve } = require("path");
 const Debt = require("../models/debtModel");
+const { BadRequestError } = require("../errors");
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2022-08-01",
@@ -25,7 +26,7 @@ const createPayment = async (req, res, next) => {
     );
     console.log("selectDebt", selectDebt.paymentAmount);
     if (!selectDebt) {
-      return res.status(404).send({ error: "Payment plan not found" });
+      throw new BadRequestError( "Payment plan not found");
     }
 
     const amount = await  selectDebt?.paymentAmount; //
