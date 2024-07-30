@@ -45,9 +45,9 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
 
   console.log(debt);
   return (
-    <div className="overflow-x-auto my-10 rounded-md">
-      <table className="table table-zebra bg-slate-100 ">
-        <thead className="bg-slate-50">
+    <div className="overflow-x-auto my-10  border border-slate-200 rounded-md">
+      <table className="table table-zebra">
+        <thead className="bg-gray-50">
           <tr>
             <th></th>
             <th>Debt Date</th>
@@ -70,7 +70,9 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
               )}
             </td>
             <td className="text-info font-semibold">
-              <Link to={`/dashboard/payment_debt/${id}/debt/${item._id}`}>Pay Debt</Link>
+              <Link to={`/dashboard/payment_debt/${id}/debt/${item._id}`}>
+                Pay Debt
+              </Link>
             </td>
           </tr>
         ))}

@@ -29,39 +29,39 @@ const PaymentPageDetail: React.FC<PaymentPageDetailProps> = ({
         <span className="text-orange-500 font-semibold">Detail Page</span>
       </Link>
       <div className="pl-4 my-4 flex flex-col gap-2">
-        <h2 className="text-2xl font-semibold text-gray-500">
+        <h2 className="text-xl font-semibold text-gray-500 mb-2">Payment Summary</h2>
+        <h4 className="text-lg text-end font-semibold text-gray-500">
           Debt Payment For {formatDateTwo(selectPayment?.paymentDate)}
-        </h2>
-        <p className="text-xl text-orange-500 font-semibold">
+        </h4>
+        <p className="text-lg text-end text-orange-500 font-semibold">
           {" "}
           {debt?.description}
         </p>
-        <p className="flex items-center gap-2 text-xl">
-          <span className="text-gray-500">Lender: </span>
+        <p className="flex items-center gap-2 text-md justify-between">
+          <span className="text-gray-500">Lender </span>
           <span className="text-orange-500 font-semibold capitalize">
             {debt?.lender}
           </span>
         </p>
 
-        <p className="flex items-center gap-2 text-xl">
-          <span className="text-gray-500">Installment: </span>
+        <p className="flex items-center gap-2 text-md justify-between">
+          <span className="text-gray-500">Installment </span>
           <span className="text-orange-500 font-semibold capitalize">
             {debt?.installment}
           </span>
         </p>
-        <p className="flex items-center gap-2 text-xl">
+        <p className="flex items-center gap-2 text-md justify-between">
           <span className="text-gray-500  capitalize">
-            monthly payment amount: 
+            monthly payment amount
+            
           </span>
           <span className="text-orange-500 font-semibold capitalize">
             {formatPrice(selectPayment?.paymentAmount)}
           </span>
         </p>
-        <p className="flex items-center gap-2 text-xl">
-          <span className="text-gray-500 capitalize">
-            total debt amount:{" "}
-          </span>
-          <span className="text-orange-500 font-semibold capitalize">
+        <p className="flex items-center gap-2 text-md capitalize font-semibold  justify-between border-t-2 border-slate-300 my-2">
+          <span className="text-gray-500  mt-2">total debt amount </span>
+          <span className="text-orange-500  ">
             {formatPrice(debt?.amount)}
           </span>
         </p>

@@ -37,7 +37,7 @@ const DebtDetailItem = ({ id }: { id: string | undefined }) => {
   }, []);
   return (
     <div>
-      <div className="border my-10 border-gray-50 rounded-md shadow-md bg-slate-100">
+      <div className="border my-10 border-slate-200 rounded-md  ">
         <div className="grid grid-cols-1 gap-4 p-3">
           <p className="text-gray-500 flex items-center justify-between text-xs border-b p-2 border-neutral-300">
             <span>Payment Status:</span>

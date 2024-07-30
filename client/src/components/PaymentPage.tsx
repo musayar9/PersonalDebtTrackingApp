@@ -60,18 +60,25 @@ const PaymentPage = () => {
   return (
     <div className="max-w-6xl mx-auto ">
       <div className="border-b border-gray-200 my-4 p-2">
-        <h2 className="text-2xl text-gray-500 font-semibold">Payment Debt</h2>
+        <h2 className="text-2xl text-gray-500 font-semibold">
+          Payment Information
+        </h2>
       </div>
-      <div className="grid gap-6 lg:grid-cols-12">
-        <div className="lg:col-span-6  p-4 rounded-md">
+      <div className="grid gap-6 lg:grid-cols-8">
+        <div className="lg:col-span-3 p-4 rounded-md">
           <PaymentPageDetail id={params?.debtId} paymentId={params.paymentId} />
         </div>
 
-        <div className="lg:border-l-2 border-gray-200 lg:col-span-6">
+        <div className="lg:border-l-2 border-gray-200 lg:col-span-5 my-8 ">
           {clientSecret && stripePromise && (
-            <Elements stripe={stripePromise} options={{ clientSecret }}>
-              <CheckoutForm />
-            </Elements>
+            <>
+              <p className="mt-3 text-sm pl-6  text-slate-500">
+                You can make your payment safely using Debit or Credit Card.
+              </p>
+              <Elements stripe={stripePromise} options={{ clientSecret }}>
+                <CheckoutForm />
+              </Elements>
+            </>
           )}
         </div>
       </div>

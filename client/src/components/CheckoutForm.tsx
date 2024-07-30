@@ -69,7 +69,7 @@ const CheckoutForm = () => {
         id="submit"
       >
         <span id="button-text">
-          {isProcessing ? "Processing ... " : "Pay now"}
+          {isProcessing ? "Processing ... " : "Complete Payment"}
         </span>
       </button>
       {/* Show any error or success messages */}
