@@ -19,7 +19,7 @@ const getUserDebt = async (req, res, next) => {
   console.log(req.user);
 
   try {
-    const debt = await Debt.find({ userId }).sort({ createdAt: -1 }).exec();
+    const debt = await Debt.find({ userId }).sort({ updatedAt: -1 }).exec();
 
     if (!debt) {
       res.status(400).json("Debt was not found");
@@ -176,7 +176,7 @@ const updatePaymentDebt = async (req, res, next) => {
 
        await debt.save(); 
 
-       res.status(200).send({ message: "Payment status updated successfully" });
+       res.status(200).send({ message: "Payment was made successfully" })
   } catch (error) {
     next(error);
   }

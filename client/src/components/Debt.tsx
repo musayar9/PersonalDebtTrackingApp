@@ -1,56 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { useAppSelector } from "../redux/hooks";
-
 import { Link } from "react-router-dom";
 import DebtTable from "./DebtTable";
-import axios from "axios";
+
 import ErrorMessage from "../pages/ErrorMessage";
 import Loading from "../pages/Loading";
-import { DebtData } from "../lib/types";
 
+import { useFetchUserDebt } from "../utils/customHooks";
 
-const Debt:React.FC = () => {
+const Debt: React.FC = () => {
   // const { debt } = useAppSelector((state) => state.debt);
-  const { user } = useAppSelector((state) => state.user);
-  const [loading, setLoading] = useState(false);
-  const [errMsg, setErrMsg] = useState("");
-  const [debt, setDebt] = useState<DebtData[]>([]);
-
-  useEffect(() => {
-    // dispatch(getAllDebt());
-    
-    if(user){
-        const fetchData = async () => {
-          try {
-            setLoading(true);
-            const res = await axios.get(`/api/v1/debt/${user?.user._id}`);
-            const data = await res.data;
-            setDebt(data);
-            setLoading(false);
-          } catch (error) {
-            setLoading(false);
-            console.log(error);
-            if (axios.isAxiosError(error)) {
-              setErrMsg(error.response?.data.msg);
-            } else {
-              setErrMsg("Request Failed");
-            }
-          }
-        };
-        fetchData();
-    }
-
-
-  }, [user]);
-
-  console.log(debt);
+  const { debt, loading, errMsg, setDebt } = useFetchUserDebt();
 
   if (loading) {
     return (
-    <div className="flex items-center justify-between mx-auto max-w-4xl" >
-    
-      <Loading/>
-    </div>
+      <div className="flex items-center justify-between mx-auto max-w-4xl">
+        <Loading />
+      </div>
     );
   }
 
@@ -76,7 +40,7 @@ const Debt:React.FC = () => {
       <div className="mx-auto max-w-8xl">
         {debt ? (
           <>
-            <DebtTable debt={debt} setDebt= {setDebt}/>
+            <DebtTable debt={debt} setDebt={setDebt} />
           </>
         ) : (
           <div>

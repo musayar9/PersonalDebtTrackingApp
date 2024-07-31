@@ -69,10 +69,17 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
                 <span className="text-red-600">Unpaid</span>
               )}
             </td>
-            <td className="text-info font-semibold">
-              <Link to={`/dashboard/payment_debt/${id}/debt/${item._id}`}>
-                Pay Debt
-              </Link>
+            <td className=" font-semibold">
+              {item.paymentStatus ? (
+                <span className="text-blue-400 cursor-not-allowed">Pay Debt</span>
+              ) : (
+                <Link
+                  className="text-blue-600"
+                  to={`/dashboard/payment_debt/${id}/debt/${item._id}`}
+                >
+                  Pay Debt
+                </Link>
+              )}
             </td>
           </tr>
         ))}

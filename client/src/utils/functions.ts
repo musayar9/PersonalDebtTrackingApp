@@ -52,3 +52,13 @@ export const formatPercentage = (percentage: number | undefined): string => {
   }).format(percentage / 100);
   return formattedPercentage;
 };
+
+// yüzde hesablama 
+
+interface CalculatePercentage {
+count:number;
+total:number
+}
+export const calculatePercentage = ({ count, total }: CalculatePercentage): number => {
+  return (count / total) * 100;
+};
