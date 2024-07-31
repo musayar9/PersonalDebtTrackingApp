@@ -1,5 +1,15 @@
 const express = require("express");
-const { getAllDebt, createDebt, getUserDebt, deleteDebt, updateDebt, getDebtId, getPaymentPlan, updatePaymentDebt } = require("../controllers/debtController");
+const {
+  getAllDebt,
+  createDebt,
+  getUserDebt,
+  deleteDebt,
+  updateDebt,
+  getDebtId,
+  getPaymentPlan,
+  updatePaymentDebt,
+  getPaymentStatus,
+} = require("../controllers/debtController");
 const verifyToken = require("../middleware/verifyToken");
 const router = express.Router();
 
@@ -11,5 +21,6 @@ router.put("/updateDebt/:id", verifyToken, updateDebt);
 router.get("/getDebt/:id", verifyToken, getDebtId)
 router.get("/paymentPlan/:id", verifyToken, getPaymentPlan)
 router.patch("/paymentDebt/:debtId/:paymentId", verifyToken, updatePaymentDebt)
+router.get("/checkPaymentStatus/:status", verifyToken, getPaymentStatus);
 
 module.exports = router;

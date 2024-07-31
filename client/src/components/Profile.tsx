@@ -48,7 +48,7 @@ const Profile: React.FC = () => {
   const [imageError, setImageError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const imageRef = useRef<HTMLInputElement | null>(null);
-  const [showSuccessMsg, setShowSuccessMsg] = useState(false)
+  const [showSuccessMsg, setShowSuccessMsg] = useState<string | undefined>("")
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -56,13 +56,10 @@ const Profile: React.FC = () => {
       handleFileUpload(image);
     }
     
-    if (userUpdateStatus === "succeeded") {
-      setShowSuccessMsg(true);
-
-      setTimeout(() => {
-        setShowSuccessMsg(false);
-      }, 3000);
-    }
+   
+     setTimeout(() => {
+       setShowSuccessMsg("");
+     }, 3000);
   }, [image]);
   // const [countries, setCountries] = useState<CountryData[]>([]);
   const handleChange = (
@@ -102,6 +99,9 @@ const Profile: React.FC = () => {
     e.preventDefault();
     if (user?.user?._id) {
       await dispatch(updateUser({ id: user?.user?._id, formData }));
+       if (userUpdateStatus === "succeeded") {
+         setShowSuccessMsg(user?.message);
+       }
     } else {
   
       setErrorMessage("User ID is not available")
@@ -302,7 +302,7 @@ console.log("user is deleted")
           {showSuccessMsg && (
             <AlertMessage
               icon={<CiCircleInfo size={28} />}
-              message={user?.message}
+              message={showSuccessMsg}
               color={"bg-emerald-500"}
             />
           )}

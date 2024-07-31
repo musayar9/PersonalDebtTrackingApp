@@ -147,39 +147,51 @@ const updateDebt = async (req, res, next) => {
 };
 
 const updatePaymentDebt = async (req, res, next) => {
-  const { debtId, paymentId } = req.params
+  const { debtId, paymentId } = req.params;
   try {
-       const debt = await Debt.findById({ _id: debtId });
-       if (!debt) {
-         throw new BadRequestError("Debt not found" );
-       }
-       const paymentDebt = debt.paymentPlan.find(
-         (payment) => payment._id.toString() === paymentId
-       );
+    const debt = await Debt.findById({ _id: debtId });
+    if (!debt) {
+      throw new BadRequestError("Debt not found");
+    }
+    const paymentDebt = debt.paymentPlan.find(
+      (payment) => payment._id.toString() === paymentId
+    );
 
-       if (!paymentDebt) {
-             throw new BadRequestError("Payment plan not found" );
-       }
-       paymentDebt.paymentStatus = true; 
-       const totalPayments = debt.paymentPlan.length;
-       const paidPayments = debt.paymentPlan.filter(
-         (payment) => payment.paymentStatus
-       ).length;
+    if (!paymentDebt) {
+      throw new BadRequestError("Payment plan not found");
+    }
+    paymentDebt.paymentStatus = true;
+    const totalPayments = debt.paymentPlan.length;
+    const paidPayments = debt.paymentPlan.filter(
+      (payment) => payment.paymentStatus
+    ).length;
 
-       if (paidPayments === 0) {
-         debt.paymentStatus = "Unpaid"; 
-       } else if (paidPayments < totalPayments) {
-         debt.paymentStatus = "Partially Paid"; 
-       } else if (paidPayments === totalPayments) {
-         debt.paymentStatus = "Paid"; 
-       }
+    if (paidPayments === 0) {
+      debt.paymentStatus = "Unpaid";
+    } else if (paidPayments < totalPayments) {
+      debt.paymentStatus = "Partially Paid";
+    } else if (paidPayments === totalPayments) {
+      debt.paymentStatus = "Paid";
+    }
 
-       await debt.save(); 
+    await debt.save();
 
-       res.status(200).send({ message: "Payment was made successfully" })
+    res.status(200).send({ message: "Payment was made successfully" });
   } catch (error) {
     next(error);
   }
+};
+
+const getPaymentStatus = async (req, res, next) => {
+  const { paymentStatus } = req.body;
+  const { status } = req.params;
+  const userId = req.user.id;
+  console.log(req.params);
+  console.log(paymentStatus);
+
+  const checkDebt = await Debt.find({ userId, paymentStatus });
+
+  res.status(StatusCodes.OK).json(checkDebt);
 };
 
 const deleteDebt = async (req, res, next) => {
@@ -210,5 +222,6 @@ module.exports = {
   updateDebt,
   getDebtId,
   getPaymentPlan,
-  updatePaymentDebt
+  updatePaymentDebt,
+  getPaymentStatus,
 };
