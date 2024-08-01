@@ -183,7 +183,10 @@ const EditDebtPage: React.FC<EditDebtProps> = ({
             value={formData.description ?? ""}
             handleChange={handleChange}
             rows={2}
+            maxLength={20}
           />
+
+       
         </div>
 
         <div className="mt-4">

@@ -11,9 +11,10 @@ interface FormTextAreaProps {
   ) => void;
   name: string;
   rows: number;
+  maxLength:number ;
 }
 
-const FormTextArea = ({id, name, placeholder, value,styles, handleChange, rows}:FormTextAreaProps) => {
+const FormTextArea = ({id, name, placeholder, value,styles, handleChange, rows, maxLength}:FormTextAreaProps) => {
   return (
     <div className="relative">
       <textarea
@@ -24,6 +25,7 @@ const FormTextArea = ({id, name, placeholder, value,styles, handleChange, rows}:
         value={value}
         onChange={handleChange}
         rows={rows}
+        maxLength={maxLength}
       ></textarea>
       <label
         htmlFor="description"

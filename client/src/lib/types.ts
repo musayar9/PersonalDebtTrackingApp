@@ -76,7 +76,7 @@ export interface CreateDebt {
   amount: number;
   paymentStart: string;
   installment: number;
-  description?: string;
+  description?: string  | undefined;
 
   paymentPlan: PaymentPlan[];
 }

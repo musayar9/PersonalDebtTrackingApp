@@ -1,31 +1,21 @@
 import Loading from "../pages/Loading";
 import { useAppSelector } from "../redux/hooks";
-import { useFetchUserDebt } from "../utils/customHooks";
-import { calculatePercentage } from "../utils/functions";
-import { BsDroplet, BsDropletHalf, BsFillDropletFill } from "react-icons/bs";
 
+import { useFetchUserDebt, useGetPaymentStatus } from "../utils/customHooks";
+import DashboardStat from "./DashboardStat";
+import DebtPaymentChart from "./DebtPaymentChart";
+import PaidTable from "./PaidTable";
+import PartiallyPaid from "./PartiallyPaid";
+import UnpaidTable from "./UnpaidTable";
 const DashboardArea = () => {
-  const { user } = useAppSelector((state) => state.user);
+  const {user} = useAppSelector((state)=>state.user)
   const { debt, loading } = useFetchUserDebt();
-  console.log(debt);
-  const totalDebt = debt.length;
-  const unpaidCount = debt.filter((d) => d.paymentStatus === "Unpaid").length;
-  const partialPaidCount = debt.filter(
-    (d) => d.paymentStatus === "Partially Paid"
-  ).length;
-  const paidCount = debt.filter((d) => d.paymentStatus === "Paid").length;
-  const unpaidPercentage = calculatePercentage({
-    count: unpaidCount,
-    total: totalDebt,
-  });
-  const partiallyPaidPercentage = calculatePercentage({
-    count: partialPaidCount,
-    total: totalDebt,
-  });
-  const fullyPaidPercentage = calculatePercentage({
-    count: paidCount,
-    total: totalDebt,
-  });
+  const {groupDebt} = useGetPaymentStatus({paymentStatus:"Paid"})
+  console.log("grouğDebt", groupDebt)
+
+
+
+
 
 
 if(loading){
@@ -33,59 +23,25 @@ if(loading){
   <Loading/>
   </div>
 }
-  console.log(unpaidCount, partialPaidCount, paidCount);
+
   return (
-    <div className="max-w-6xl mx-auto my-4">
-      <div className="stats shadow">
-        <div className="stat">
-          <div className="stat-figure">
-            <BsDroplet className="text-red-600" size={24} />
-          </div>
-          <div className="stat-title text-red-500 font-semibold">Unpaid</div>
-          <div className="stat-value text-red-600">
-            {unpaidPercentage.toFixed(2)}%
-          </div>
-          <div className="stat-desc">{unpaidCount} debt</div>
-        </div>
-
-        <div className="stat">
-          <div className="stat-figure ">
-            <BsDropletHalf className="text-yellow-400" size={24} />
-          </div>
-          <div className="stat-title text-yellow-300 font-semibold">Partially Paid</div>
-          <div className="stat-value text-yellow-300">
-            {partiallyPaidPercentage.toFixed(2)}%
-          </div>
-          <div className="stat-desc">{partialPaidCount} partially paid</div>
-        </div>
-
-        <div className="stat">
-          <div className="stat-figure ">
-            <BsFillDropletFill className="text-emerald-600" size={24} />
-          </div>
-          <div className="stat-title text-emerald-500 font-semibold"> Paid</div>
-          <div className="stat-value text-emerald-600">
-            {fullyPaidPercentage.toFixed(2)}%
-          </div>
-          <div className="stat-desc">{paidCount} partially paid</div>
-        </div>
-
-        <div className="stat">
-          <div className="stat-figure text-secondary">
-            <div className="avatar online">
-              <div className="w-16 rounded-full">
-                <img src={user?.user?.profilePicture} />
-              </div>
-            </div>
-          </div>
-          <div className="stat-value">{user?.user.username}</div>
-          <div className="stat-title">Debt</div>
-          <div className="stat-desc text-secondary">
-            {debt.length} Total recorded debt
+    <>
+      {user !== null && debt !== null ? (
+        <div className="max-w-6xl mx-auto my-4">
+          <DashboardStat />
+          <div className="grid grid-cols-1 md:grid-cols-2  gap-4 p-4">
+            <UnpaidTable />
+            <PartiallyPaid />
+            <PaidTable />
+            <DebtPaymentChart />
           </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <div className="flex items-center justify-center my-8 ">
+          <p className="text-sem text-gray-500">You have no registered debt</p>
+        </div>
+      )}
+    </>
   );
 };
 

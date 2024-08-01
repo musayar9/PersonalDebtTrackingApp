@@ -56,33 +56,36 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
             <th>Pay</th>
           </tr>
         </thead>
-
-        {debt?.map((item: PaymentPlan, index: number) => (
-          <tr key={item._id} className="text-gray-500">
-            <th>{index + 1}</th>
-            <td>{formatDateTwo(item.paymentDate)}</td>
-            <td>{formatPrice(item.paymentAmount)}</td>
-            <td>
-              {item.paymentStatus ? (
-                <span className="text-emerald-600">Paid</span>
-              ) : (
-                <span className="text-red-600">Unpaid</span>
-              )}
-            </td>
-            <td className=" font-semibold">
-              {item.paymentStatus ? (
-                <span className="text-blue-400 cursor-not-allowed">Pay Debt</span>
-              ) : (
-                <Link
-                  className="text-blue-600"
-                  to={`/dashboard/payment_debt/${id}/debt/${item._id}`}
-                >
-                  Pay Debt
-                </Link>
-              )}
-            </td>
-          </tr>
-        ))}
+        <tbody>
+          {debt?.map((item: PaymentPlan, index: number) => (
+            <tr key={item._id} className="text-gray-500">
+              <th>{index + 1}</th>
+              <td>{formatDateTwo(item.paymentDate)}</td>
+              <td>{formatPrice(item.paymentAmount)}</td>
+              <td>
+                {item.paymentStatus ? (
+                  <span className="text-emerald-600">Paid</span>
+                ) : (
+                  <span className="text-red-600">Unpaid</span>
+                )}
+              </td>
+              <td className=" font-semibold">
+                {item.paymentStatus ? (
+                  <span className="text-blue-400 cursor-not-allowed">
+                    Pay Debt
+                  </span>
+                ) : (
+                  <Link
+                    className="text-blue-600"
+                    to={`/dashboard/payment_debt/${id}/debt/${item._id}`}
+                  >
+                    Pay Debt
+                  </Link>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );

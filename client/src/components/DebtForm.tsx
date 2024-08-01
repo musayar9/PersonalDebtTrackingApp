@@ -210,7 +210,12 @@ const DebtForm = () => {
               value={formData.description}
               handleChange={handleChange}
               rows={2}
+              maxLength={20}
             />
+
+            <p className="text-slate-500 text-xs pl-2 mt-2">
+              {20 - formData.description.length} characters remaining
+            </p>
           </div>
 
           <div className="mt-4">

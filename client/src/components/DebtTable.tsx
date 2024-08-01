@@ -45,7 +45,7 @@ const DebtTable = ({ debt, setDebt }: DebtTableProps) => {
   console.log("errMsg", errMsg);
   return (
     <div className="overflow-x-auto my-8 rounded-md">
-      <table className="table table-zebra bg-slate-100">
+      <table className="table table-zebra table-sm bg-slate-100">
         {/* head */}
         <thead className="bg-slate-50 p-2">
           <tr>
