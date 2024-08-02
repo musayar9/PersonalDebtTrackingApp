@@ -11,7 +11,7 @@ interface FormTextAreaProps {
   ) => void;
   name: string;
   rows: number;
-  maxLength:number ;
+  maxLength?:number ;
 }
 
 const FormTextArea = ({id, name, placeholder, value,styles, handleChange, rows, maxLength}:FormTextAreaProps) => {

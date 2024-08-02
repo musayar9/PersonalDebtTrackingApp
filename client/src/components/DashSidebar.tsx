@@ -19,7 +19,8 @@ const DashSidebar = () => {
   const [tab, setTab] = useState("");
   const dispatch = useAppDispatch();
   const handleSignOut = async () => {
-    if (user && user.user) {
+    if (user && user?.user) {
+    
       dispatch(signOut({ id: user.user._id }));
     }
   };

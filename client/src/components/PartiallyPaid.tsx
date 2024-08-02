@@ -5,7 +5,13 @@ const PartiallyPaid = () => {
   const { groupDebt } = useGetPaymentStatus({
     paymentStatus: "Partially Paid",
   });
-  return <DashboardTable status="Partially Paid" groupDebt={groupDebt} />;
+  return (
+    <>
+      {groupDebt.length > 0 && (
+        <DashboardTable status="Partially Paid" groupDebt={groupDebt} />
+      )}
+    </>
+  );
 };
 
 export default PartiallyPaid;

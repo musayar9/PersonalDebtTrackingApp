@@ -7,6 +7,7 @@ import axios from "axios";
 import AlertMessage from "./AlertMessage";
 import { CiCircleInfo } from "react-icons/ci";
 import { MdErrorOutline } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 const DebtForm = () => {
   const [formData, setFormData] = useState({
     lender: "",
@@ -22,7 +23,7 @@ const DebtForm = () => {
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [msg, setMsg] = useState("");
-
+  const navigate = useNavigate();
   useEffect(() => {
     const debtAmount = parseFloat(formData.debtAmount.toString()) || 0;
     const interestRate = parseFloat(formData.interestRate.toString()) || 0;
@@ -83,7 +84,7 @@ const DebtForm = () => {
       console.log(data);
       setMsg(data?.message);
       setLoading(false);
-
+      navigate("/dashboard?tab=debt");
       setTimeout(() => {
         setMsg("");
       }, 3000);

@@ -1,0 +1,89 @@
+import React from 'react'
+import { PieChart, Pie, Cell, Tooltip, PieLabelRenderProps } from "recharts";
+import { useFetchUserDebt } from '../utils/customHooks';
+
+
+
+
+
+
+
+const PieChartUnpaidDebt = () => {
+
+  const { debt } = useFetchUserDebt();
+
+
+
+  const unpaidCount = debt?.filter((d) => d.paymentStatus === "Unpaid").length;
+  const partialPaidCount = debt.filter(
+    (d) => d.paymentStatus === "Partially Paid"
+  ).length;
+  const paidCount = debt.filter((d) => d.paymentStatus === "Paid").length;
+
+  const data = [
+    { name: "Other Debt", value: partialPaidCount + paidCount },
+    { name: "Unpaid", value: unpaidCount },
+  ];
+
+  const COLORS = ["#fd810eea", "#dd1414"];
+
+  const renderCustomizedLabel = (props: PieLabelRenderProps) => {
+    const { cx, cy, midAngle, innerRadius, outerRadius, percent } = props;
+    const RADIAN = Math.PI / 180;
+    const radius = ((innerRadius as number) + (outerRadius as number)) / 2;
+    const x = (cx as number) + radius * Math.cos(-midAngle! * RADIAN);
+    const y = (cy as number) + radius * Math.sin(-midAngle! * RADIAN);
+
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="white"
+        textAnchor={x > (cx as number) ? "start" : "end"}
+        dominantBaseline="central"
+         fontSize="12px" 
+      >
+        {`${(percent! * 100).toFixed(2)}%`}
+      </text>
+    );
+  };
+
+  return (
+    <div className="col-span-3 flex flex-col items-center">
+      <PieChart width={200} height={200}>
+        <Pie
+          data={data}
+          cx={100}
+          cy={100}
+          labelLine={false}
+          label={renderCustomizedLabel}
+         
+          fill="#8884d8"
+          dataKey="value"
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Tooltip />
+      </PieChart>
+
+      <h6 className="-mt-2 mb-2 text-xs font-semibold text-gray-500">
+        UnPaid Debt Pie Chart
+      </h6>
+      {/* <div className="flex flex-col justify-center items-center mt-2">
+        {data.map((entry, index) => (
+          <div key={`legend-${index}`} className="flex items-center text-xs mb-2">
+            <div
+              className="w-4 h-4 mr-2"
+              style={{ backgroundColor: COLORS[index % COLORS.length] }}
+            ></div>
+            <span>{entry.name}</span>
+          </div>
+        ))}
+      </div> */}
+    </div>
+  );
+}
+
+export default PieChartUnpaidDebt

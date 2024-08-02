@@ -184,10 +184,12 @@ const updatePaymentDebt = async (req, res, next) => {
 
 const getPaymentStatus = async (req, res, next) => {
   const { paymentStatus } = req.body;
-  console.log("server", paymentStatus)
+  console.log("server", paymentStatus);
   const userId = req.user.id;
   try {
-    const checkDebt = await Debt.find({ userId, paymentStatus });
+    const checkDebt = await Debt.find({ userId, paymentStatus }).sort({
+      updatedAt: -1,
+    });
 
     if (!checkDebt) {
       throw new BadRequestError("Data is not found");

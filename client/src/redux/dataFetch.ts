@@ -26,9 +26,9 @@ export const loginUser: AsyncThunk<
 
 export const signOut: AsyncThunk<
   { message: string },
-  { id: string },
+  { id: string  | undefined},
   Record<string, never>
-> = createAsyncThunk("user/signOut", async ({ id }: { id: string }) => {
+> = createAsyncThunk("user/signOut", async ({ id }: { id: string | undefined }) => {
   try {
     const res = await axios.get(`/api/v1/auth/signOut/${id}`);
     const data = await res.data;

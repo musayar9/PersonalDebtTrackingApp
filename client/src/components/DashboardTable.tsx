@@ -10,9 +10,7 @@ groupDebt: DebtData[]
 const DashboardTable:React.FC<DashboardTableProps> = ({groupDebt, status}) => {
   
 return (
-  <div
-    className={`border  overflow-x-auto p-2 h-max rounded-md`}
-  >
+  <div className={`border  overflow-x-auto p-2 h-max rounded-md`}>
     <div className="flex justify-end p-2.5">
       <span
         className={`${
@@ -27,7 +25,7 @@ return (
       </span>
     </div>
 
-    <table className="table table-zebra   table-sm p-4 ">
+    <table className="table table-zebra   table-xs p-4 ">
       {/* head */}
       <thead>
         <tr>
@@ -43,13 +41,13 @@ return (
         {/* row 1 */}
 
         {groupDebt?.map((item, index) => (
-          <tr  key={item._id}>
-            <th>{index + 1}</th>
-            <td >{item?.lender}</td>
-            <td>{item.borrower}</td>
-            <td>{item.description}</td>
-            <td>{formatPrice(item.amount)}</td>
-            <td>{item.installment}</td>
+          <tr className="text-xs" key={item._id}>
+            <th className="text-xs">{index + 1}</th>
+            <td className="text-xs">{item?.lender}</td>
+            <td className="text-xs">{item.borrower}</td>
+            <td className="text-xs">{item.description}</td>
+            <td className="text-xs">{formatPrice(item.amount)}</td>
+            <td className="text-xs">{item.installment}</td>
           </tr>
         ))}
       </tbody>
