@@ -72,8 +72,8 @@ const {user} = useAppSelector((state)=>state.user);
 
           <div className="stat">
             <div className="stat-figure text-secondary">
-              <div className="avatar online">
-                <div className="w-16 rounded-full">
+              <div className="avatar online z-0">
+                <div className="w-16  rounded-full">
                   <img src={user?.user?.profilePicture} />
                 </div>
               </div>

@@ -1,13 +1,25 @@
 const express = require("express");
 const Debt = require("../models/debtModel");
+const User = require("../models/userModel");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError } = require("../errors/index");
-
+const moment = require("moment");
 const getAllDebt = async (req, res, next) => {
   const debt = await Debt.find({}).sort({ createdAt: -1 });
 
+  for (const d of debt) {
+    const user = await User.findById(d.userId);
+
+    if (!user) {
+      await Debt.findByIdAndDelete(d._id);
+    }
+  }
+
+  // Tüm borçları tekrar sorgula, çünkü bazıları silinmiş olabilir.
+  const debts = await Debt.find({}).sort({ createdAt: -1 });
+
   try {
-    res.status(StatusCodes.OK).json(debt);
+    res.status(StatusCodes.OK).json(debts);
   } catch {
     next(error);
   }
@@ -16,20 +28,56 @@ const getAllDebt = async (req, res, next) => {
 const getUserDebt = async (req, res, next) => {
   const { userId } = req.params;
   const { id } = req.user;
-  // console.log(req.user);
 
   try {
     const debt = await Debt.find({ userId }).sort({ updatedAt: -1 }).exec();
-
-    if (!debt) {
-      res.status(400).json("Debt was not found");
-    }
 
     if (userId !== id) {
       throw new BadRequestError("You can't use data. Unauthorized");
     }
 
     res.status(StatusCodes.OK).json(debt);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const upcomingDebts = async (req, res, next) => {
+  const { userId } = req.params;
+
+  const { id } = req.user;
+  if (userId !== id) {
+    throw new BadRequestError("You can't use data. Unauthorized");
+  }
+  try {
+    const now = moment();
+    const tenDaysLater = moment().add(20, "days");
+    const debts = await Debt.find({
+      userId: id,
+      "paymentPlan.paymentDate": {
+        $gte: now.toDate(),
+        $lt: tenDaysLater.toDate(),
+      },
+      "paymentPlan.paymentStatus": false,
+    });
+
+    const upcomingDebt = debts.flatMap((debt) =>
+      debt.paymentPlan
+        .filter((plan) => {
+          const paymentDate = moment(plan.paymentDate);
+          return paymentDate.isBetween(now, tenDaysLater, undefined, "[)");
+        })
+        .map((plan) => ({
+
+          lender: debt.lender,
+          borrower: debt.borrower,
+          description: debt.description,
+          paymentDate: plan.paymentDate,
+          paymentAmount: plan.paymentAmount,
+        }))
+    );
+
+    res.status(StatusCodes.OK).json(upcomingDebt);
   } catch (error) {
     next(error);
   }
@@ -231,4 +279,5 @@ module.exports = {
   getPaymentPlan,
   updatePaymentDebt,
   getPaymentStatus,
+  upcomingDebts,
 };

@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { signOut } from "../redux/dataFetch";
 import { UsersState } from "../lib/types";
+import Notifications from "./Notifications";
 export function NavbarComponent() {
   const { user } = useAppSelector((state: { user: UsersState }) => state.user);
   const dispatch = useAppDispatch();
@@ -68,31 +69,35 @@ console.log(user)
             </ul>
           </div>
         ) : (
-          <Dropdown
-            arrowIcon={false}
-            inline
-            label={
-              <Avatar
-                alt="User settings"
-                img={user?.user.profilePicture}
-                rounded className="object-cover"
-              />
-            }
-          >
-            <DropdownHeader>
-              <span className="block text-sm">{user.user.username}</span>
-              <span className="block truncate text-sm font-medium">
-                {user.user.email}
-              </span>
-            </DropdownHeader>
-            <DropdownItem>
-              <Link to="/dashboard?tab=dash">Dashboard</Link>
-            </DropdownItem>
-            <DropdownItem>Settings</DropdownItem>
-            <DropdownItem>Earnings</DropdownItem>
-            <DropdownDivider />
-            <DropdownItem onClick={handleSignOut}>Sign out</DropdownItem>
-          </Dropdown>
+          <div className="flex items-center gap-2">
+          <Notifications/>
+            <Dropdown
+              arrowIcon={false}
+              inline
+              label={
+                <Avatar
+                  alt="User settings"
+                  img={user?.user.profilePicture}
+                  rounded
+                  className="object-cover"
+                />
+              }
+            >
+              <DropdownHeader>
+                <span className="block text-sm">{user.user.username}</span>
+                <span className="block truncate text-sm font-medium">
+                  {user.user.email}
+                </span>
+              </DropdownHeader>
+              <DropdownItem>
+                <Link to="/dashboard?tab=dash">Dashboard</Link>
+              </DropdownItem>
+              <DropdownItem>Settings</DropdownItem>
+              <DropdownItem>Earnings</DropdownItem>
+              <DropdownDivider />
+              <DropdownItem onClick={handleSignOut}>Sign out</DropdownItem>
+            </Dropdown>
+          </div>
         )}
 
         <NavbarToggle />

@@ -9,6 +9,7 @@ const {
   getPaymentPlan,
   updatePaymentDebt,
   getPaymentStatus,
+  upcomingDebts,
 } = require("../controllers/debtController");
 const verifyToken = require("../middleware/verifyToken");
 const router = express.Router();
@@ -22,5 +23,6 @@ router.get("/getDebt/:id", verifyToken, getDebtId);
 router.get("/paymentPlan/:id", verifyToken, getPaymentPlan);
 router.patch("/paymentDebt/:debtId/:paymentId", verifyToken, updatePaymentDebt);
 router.post("/checkPaymentStatus", verifyToken, getPaymentStatus);
+router.get("/upcomingDebt/:userId", verifyToken, upcomingDebts)
 
 module.exports = router;
