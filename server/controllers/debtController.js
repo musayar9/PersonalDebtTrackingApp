@@ -51,7 +51,7 @@ const upcomingDebts = async (req, res, next) => {
   }
   try {
     const now = moment();
-    const tenDaysLater = moment().add(20, "days");
+    const tenDaysLater = moment().add(30, "days");
     const debts = await Debt.find({
       userId: id,
       "paymentPlan.paymentDate": {

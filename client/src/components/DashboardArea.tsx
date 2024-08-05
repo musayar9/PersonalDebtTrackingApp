@@ -11,7 +11,7 @@ import PieChartPartialDebt from "./PieChartPartialDebt";
 import PieChartUnpaidDebt from "./PieChartUnpaidDebt";
 import UnpaidTable from "./UnpaidTable";
 import { IoFileTraySharp } from "react-icons/io5";
-import UpcomingDebts from "./UpcomingDebts";
+
 const DashboardArea = () => {
 
   const { debt, loading } = useFetchUserDebt();
@@ -34,7 +34,7 @@ if(loading){
       {debt.length || groupDebt.length > 0 ? (
         <div className="max-w-6xl mx-auto my-4">
           <DashboardStat />
-          <UpcomingDebts/>
+
 
           <div className="grid lg:grid-cols-12">
             <div className="lg:col-span-3 p-2">

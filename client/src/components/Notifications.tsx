@@ -1,16 +1,13 @@
 import {
   Dropdown,
-  DropdownDivider,
-  DropdownHeader,
-  DropdownItem,
+  DropdownHeader, DropdownItem,
 } from "flowbite-react";
-
 import { FaBell } from "react-icons/fa6";
-
 import { useAppSelector } from "../redux/hooks";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {formatDateTwo, formatPrice} from "../utils/functions";
+import {IoFileTraySharp} from "react-icons/io5";
 const Notifications = () => {
   const { user } = useAppSelector((state) => state.user);
    const [upcomingDebt, setUpcomingDebt] =useState()
@@ -37,9 +34,10 @@ const Notifications = () => {
   }, []);
   return (
     <div className="relative flex items-center">
-      <div className="absolute flex items-center justify-center -top-2 right-0 w-5 h-5 text-xs bg-blue-500 text-white rounded-full p-1">
-        <span>{upcomingDebt?.length}</span>
-      </div>
+      {upcomingDebt?.length > 0 &&  <div className="absolute flex items-center justify-center -top-2 right-0 w-5 h-5 text-xs bg-blue-500 text-white rounded-full p-1">
+        <span>{upcomingDebt?.length } </span>
+      </div>}
+
       <Dropdown
         className="w-72"
         arrowIcon={false}
@@ -52,28 +50,39 @@ const Notifications = () => {
             {formatDateTwo(new Date().toLocaleDateString())}
           </span>
         </DropdownHeader>
-        <DropdownItem className="">
-          {upcomingDebt.map((item, index)=>(
-              <div key={index} className="w-full ">
-                <div className="flex items-center justify-between ">
-                  <p className="text-xs italic text-slate-400">{item?.lender}</p>
-                  <p className="text-xs italic  text-slate-400">{formatDateTwo(item?.paymentDate)}</p>
+        <div className=" p-2 space-y-2 border-b border-gray-200">
+          {
+            upcomingDebt?.length > 0 ? <>
+              {upcomingDebt?.map((item, index)=>(
+                  <div key={index} className="w-full flex flex-col  border-b border-slate-200">
+                    <div className="flex items-center justify-between ">
+                      <p className="text-xs italic text-slate-400">Lender - {item?.lender}</p>
+                      <p className="text-xs italic  text-slate-400">{formatDateTwo(item?.paymentDate)}</p>
 
-                </div>
-                <div className="flex items-center justify-between my-1 px-2">
+                    </div>
+                    <div className="flex items-center justify-between my-1 px-2">
 
-                  <p className="text-sm text-gray-500">{item.description}</p>
-                  <p className="text-xs text-gray-600">{formatPrice(item.paymentAmount)}</p>
-                </div>
-
-                < DropdownDivider className="border border-gray-200"/>
-              </div>
-
-          ))}
-        </DropdownItem>
+                      <p className="text-xs text-gray-500"> {item.description}</p>
+                      <p className="text-xs text-gray-600 font-semibold">{formatPrice(item.paymentAmount)}</p>
+                    </div>
 
 
-        <div  className="flex items-center justify-center -mt-1 mb-2">
+                  </div>
+
+              ))}
+            </> : <div className="flex items-center justify-center flex-col p-2">
+              <IoFileTraySharp size={28} className="text-gray-400"/>
+              <p className="text-xs font-semibold text-gray-400">
+                You do not have any upcoming debts yet.</p>
+
+            </div>
+
+          }
+
+        </div>
+
+
+        <div  className="flex items-center justify-center mt-1 mb-2">
           <p className="text-xs text-gray-400 ">Upcoming debts are listed here.</p>
 
         </div>
