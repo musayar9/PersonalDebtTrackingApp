@@ -46,7 +46,7 @@ const Notifications = () => {
       )}
 
       <Dropdown
-        className="w-72 rounded-xl"
+        className="w-72 rounded-xl border shadow-sm"
         arrowIcon={false}
         inline
         label={<FaBell className="text-gray-500 z-100" size={28} />}

@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-
 import { IoFileTraySharp } from "react-icons/io5";
 import { useFetchUserDebt } from "../../utils/customHooks";
 import Loading from "../../pages/Loading";
@@ -22,12 +21,12 @@ const Debt: React.FC = () => {
     return <ErrorMessage message={errMsg} />;
   }
 
-  console.log(errMsg);
+
   return (
     <>
       {debt.length > 0 ? (
         <div className="w-full p-8">
-          <div className="bg-[#f3f4f6] p-4 rounded-md shadow-sm flex items-center  justify-between">
+          <div className="border-b border-[#dfe1e6eb] p-4 rounded-md  flex items-center  justify-between">
             <h2 className="font-semibold text-2xl tracking-wider pl-4 text-slate-600">
               Debt Tracking Tables
             </h2>

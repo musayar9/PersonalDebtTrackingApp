@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import DashSidebar from "../components/DashSidebar";
-import Profile from "../components/Profile";
-import Debt from "../components/Debt";
-import DashboardArea from "../components/DashboardArea";
-import ProfileChangePassword from "../components/ProfileChangePassword";
-import ProfileContactPreference from "../components/ProfileContactPreference";
-import DebtForm from "../components/DebtForm";
-// import PaymentPage from "../components/PaymentPage";
+import Profile from "../components/profile/Profile";
+import ProfileChangePassword from "../components/profile/ProfileChangePassword";
+import ProfileContactPreference from "../components/profile/ProfileContactPreference";
+import Debt from "../components/debt/Debt";
+import DebtForm from "../components/debt/DebtForm";
+import DashboardArea from "../components/dashboard/DashboardArea";
 
 
 const Dashboard = () => {

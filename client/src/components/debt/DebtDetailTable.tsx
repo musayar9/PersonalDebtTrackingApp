@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import ErrorMessage from "../../pages/ErrorMessage";
 import { formatDateTwo, formatPrice } from "../../utils/functions";
+import { Audio } from "react-loader-spinner";
 
 interface PaymentPlan {
   _id: string;
@@ -20,6 +21,9 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
 
   console.log("loading", loading);
   console.log("errmsg", errMsg);
+  
+  
+  
 
   useEffect(() => {
     const fetchDebtId = async () => {
@@ -43,6 +47,22 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
   }, []);
 
   console.log(debt);
+   if (loading) {
+     return (
+       <div className="ml-4 hidden">
+         <Audio
+           height="75"
+           width="75"
+           color="#4fa94d"
+           ariaLabel="audio-loading"
+           wrapperStyle={{}}
+           wrapperClass="wrapper-class"
+           visible={true}
+         />
+       </div>
+     );
+   }
+  
   
     if (errMsg) {
       return <ErrorMessage message={errMsg} />;

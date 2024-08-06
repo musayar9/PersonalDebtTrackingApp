@@ -30,7 +30,7 @@ const {user} = useAppSelector((state)=>state.user);
 
   return (
     <>
-      {debt.length > 0}
+      {debt?.length > 0}
       <div className="flex items-center justify-center">
         <div className="stats shadow ">
           <div className="stat">

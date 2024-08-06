@@ -23,9 +23,9 @@ const DashboardArea = () => {
   }
 
   return (
-    <>
+    <div className="">
       {debt.length || groupDebt.length > 0 ? (
-        <div className="max-w-6xl mx-auto my-4">
+        <div className="max-w-6xl mx-auto my-4 ">
           <DashboardStat />
 
           <div className="grid lg:grid-cols-12">
@@ -54,7 +54,7 @@ const DashboardArea = () => {
           </p>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

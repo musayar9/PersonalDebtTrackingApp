@@ -6,12 +6,13 @@ import ErrorMessage from "../../pages/ErrorMessage";
 import { DebtData } from "../../lib/types";
 import { formatDateTwo, formatPercentage, formatPrice } from "../../utils/functions";
 
+import { Audio } from "react-loader-spinner";
+
 const DebtDetailItem = ({ id }: { id: string | undefined }) => {
   const [debt, setDebt] = useState<DebtData>();
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
 
-  console.log("loading", loading);
 
 
   useEffect(() => {
@@ -34,6 +35,21 @@ const DebtDetailItem = ({ id }: { id: string | undefined }) => {
     fetchDebtId();
   }, []);
   
+  if(loading){
+    return (
+      <div className="ml-4 hidden">
+        <Audio
+          height="75"
+          width="75"
+          color="#4fa94d"
+          ariaLabel="audio-loading"
+          wrapperStyle={{}}
+          wrapperClass="wrapper-class"
+          visible={true}
+        />
+      </div>
+    ); 
+  }
   
   if (errMsg) {
     return <ErrorMessage message={errMsg} />;
