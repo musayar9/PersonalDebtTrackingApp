@@ -1,8 +1,9 @@
 
-import { useAppSelector } from '../redux/hooks'
-import { useFetchUserDebt } from '../utils/customHooks';
-import { calculatePercentage } from '../utils/functions';
+
 import { BsDroplet, BsDropletHalf, BsFillDropletFill } from 'react-icons/bs';
+import { useFetchUserDebt } from '../../utils/customHooks';
+import { useAppSelector } from '../../redux/hooks';
+import { calculatePercentage } from '../../utils/functions';
 
 const DashboardStat = () => {
   const {debt} = useFetchUserDebt()

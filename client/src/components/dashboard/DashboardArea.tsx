@@ -1,33 +1,26 @@
-import Loading from "../pages/Loading";
-
-
-import { useFetchUserDebt, useGetPaymentStatus } from "../utils/customHooks";
-import DashboardStat from "./DashboardStat";
-import DebtPaymentChart from "./DebtPaymentChart";
-import PaidTable from "./PaidTable";
-import PartiallyPaid from "./PartiallyPaid";
-import PieChartDebt from "./PieChartPaidDebt";
-import PieChartPartialDebt from "./PieChartPartialDebt";
-import PieChartUnpaidDebt from "./PieChartUnpaidDebt";
-import UnpaidTable from "./UnpaidTable";
+import { useFetchUserDebt, useGetPaymentStatus } from "../../utils/customHooks";
 import { IoFileTraySharp } from "react-icons/io5";
+import DashboardStat from "./DashboardStat";
+import PieChartPaidDebt from "./pieChart/PieChartPaidDebt";
+import PieChartPartialDebt from "./pieChart/PieChartPartialDebt";
+import PieChartUnpaidDebt from "./pieChart/PieChartUnpaidDebt";
+import Loading from "../../pages/Loading";
+import UnpaidTable from "./dashboardTable/UnpaidTable";
+import PartiallyPaid from "./dashboardTable/PartiallyPaid";
+import PaidTable from "./dashboardTable/PaidTable";
+import DebtPaymentChart from "./DebtPaymentChart";
 
 const DashboardArea = () => {
-
   const { debt, loading } = useFetchUserDebt();
-  const {groupDebt} = useGetPaymentStatus({paymentStatus:"Paid"})
-  console.log("grouğDebt", groupDebt)
-console.log(debt)
+  const { groupDebt } = useGetPaymentStatus({ paymentStatus: "Paid" });
 
-
-
-
-
-if(loading){
-  return <div className="flex items-center justify-center mx-auto">
-  <Loading/>
-  </div>
-}
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center mx-auto">
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -35,13 +28,11 @@ if(loading){
         <div className="max-w-6xl mx-auto my-4">
           <DashboardStat />
 
-
           <div className="grid lg:grid-cols-12">
             <div className="lg:col-span-3 p-2">
-            <PieChartDebt/>
-            <PieChartPartialDebt/>
-            <PieChartUnpaidDebt/>
-            
+              <PieChartPaidDebt />
+              <PieChartPartialDebt />
+              <PieChartUnpaidDebt />
             </div>
             <div className="lg:col-span-5">
               <div className=" gap-6 p-4 space-y-4">

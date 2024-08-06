@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-
-
 import axios from "axios";
-import { formatDateTwo, formatPrice } from "../utils/functions";
 import { Link } from "react-router-dom";
+import ErrorMessage from "../../pages/ErrorMessage";
+import { formatDateTwo, formatPrice } from "../../utils/functions";
 
 interface PaymentPlan {
   _id: string;
@@ -44,6 +43,11 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
   }, []);
 
   console.log(debt);
+  
+    if (errMsg) {
+      return <ErrorMessage message={errMsg} />;
+    }
+  
   return (
     <div className="overflow-x-auto my-10  border border-slate-200 rounded-md">
       <table className="table table-zebra">

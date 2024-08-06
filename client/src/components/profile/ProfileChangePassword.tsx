@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import ProfileBreadcrumps from "./ProfileBreadcrumps";
+
 import { HiEye } from "react-icons/hi";
 import axios from "axios";
-import { useAppSelector } from "../redux/hooks";
-import AlertMessage from "./AlertMessage";
 import { MdErrorOutline } from "react-icons/md";
 import { AiFillLike } from "react-icons/ai";
+import { useAppSelector } from "../../redux/hooks";
+import ProfileBreadcrumps from "./ProfileBreadcrumps";
+import AlertMessage from "../AlertMessage";
 
 interface PasswordData {
   currentPassword: string;

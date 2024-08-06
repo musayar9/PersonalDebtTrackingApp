@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-
+import Loading from "../../pages/Loading";
+import ErrorMessage from "../../pages/ErrorMessage";
 import EditDebtPage from "./EditDebtPage";
-import { CreateDebt } from "../lib/types";
-import Loading from "../pages/Loading";
-import ErrorMessage from "../pages/ErrorMessage";
+import { CreateDebt } from "../../lib/types";
+
+
 
 const EditDebt = () => {
   const { id } = useParams();

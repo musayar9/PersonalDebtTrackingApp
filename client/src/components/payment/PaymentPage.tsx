@@ -2,12 +2,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { loadStripe, Stripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import CheckoutForm from "./CheckoutForm";
-import { useParams } from "react-router-dom";
 
+import { useParams } from "react-router-dom";
+import useDebtData from "../../utils/customHooks";
+import Loading from "../../pages/Loading";
+import CheckoutForm from "../CheckoutForm";
 import PaymentPageDetail from "./PaymentPageDetail";
-import useDebtData from "../utils/customHooks";
-import Loading from "../pages/Loading";
+
+
 const PaymentPage = () => {
   const [stripePromise, setStripePromise] = useState<Stripe | null>(null);
 

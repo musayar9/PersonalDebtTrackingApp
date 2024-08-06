@@ -1,5 +1,6 @@
-import { useGetPaymentStatus } from "../utils/customHooks";
-import DashboardTable from "./DashboardTable";
+import { useGetPaymentStatus } from "../../../utils/customHooks";
+import DashboardTable from "../DashboardTable";
+
 
 const PartiallyPaid = () => {
   const { groupDebt } = useGetPaymentStatus({

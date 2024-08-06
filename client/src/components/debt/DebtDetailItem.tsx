@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { DebtData } from "../lib/types";
+
 import axios from "axios";
-import {
-  formatDateTwo,
-  formatPercentage,
-  formatPrice,
-} from "../utils/functions";
+
+import ErrorMessage from "../../pages/ErrorMessage";
+import { DebtData } from "../../lib/types";
+import { formatDateTwo, formatPercentage, formatPrice } from "../../utils/functions";
 
 const DebtDetailItem = ({ id }: { id: string | undefined }) => {
   const [debt, setDebt] = useState<DebtData>();
@@ -13,8 +12,7 @@ const DebtDetailItem = ({ id }: { id: string | undefined }) => {
   const [errMsg, setErrMsg] = useState("");
 
   console.log("loading", loading);
-  console.log("errmsg", errMsg);
-  console.log(debt);
+
 
   useEffect(() => {
     const fetchDebtId = async () => {
@@ -35,6 +33,12 @@ const DebtDetailItem = ({ id }: { id: string | undefined }) => {
 
     fetchDebtId();
   }, []);
+  
+  
+  if (errMsg) {
+    return <ErrorMessage message={errMsg} />;
+  }
+  
   return (
     <div>
       <div className="border my-10 border-slate-200 rounded-md  ">

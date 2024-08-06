@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
-import DebtTable from "./DebtTable";
 
-import ErrorMessage from "../pages/ErrorMessage";
-import Loading from "../pages/Loading";
-
-import { useFetchUserDebt } from "../utils/customHooks";
 import { IoFileTraySharp } from "react-icons/io5";
+import { useFetchUserDebt } from "../../utils/customHooks";
+import Loading from "../../pages/Loading";
+import ErrorMessage from "../../pages/ErrorMessage";
+import DebtTable from "./DebtTable";
 
 const Debt: React.FC = () => {
   // const { debt } = useAppSelector((state) => state.debt);

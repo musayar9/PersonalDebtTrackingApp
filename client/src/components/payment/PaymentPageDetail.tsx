@@ -1,8 +1,8 @@
 import { IoIosReturnLeft } from "react-icons/io";
 import { Link } from "react-router-dom";
-import useDebtData from "../utils/customHooks";
+import useDebtData from "../../utils/customHooks";
+import { formatDateTwo, formatPrice } from "../../utils/functions";
 
-import { formatDateTwo, formatPrice } from "../utils/functions";
 
 interface PaymentPageDetailProps {
   id: string | undefined;

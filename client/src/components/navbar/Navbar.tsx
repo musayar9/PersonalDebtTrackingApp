@@ -11,10 +11,11 @@ import {
 } from "flowbite-react";
 import { CiUser } from "react-icons/ci";
 import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { signOut } from "../redux/dataFetch";
-import { UsersState } from "../lib/types";
+
 import Notifications from "./Notifications";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { signOut } from "../../redux/dataFetch";
+import { UsersState } from "../../lib/types";
 export function NavbarComponent() {
   const { user } = useAppSelector((state: { user: UsersState }) => state.user);
   const dispatch = useAppDispatch();

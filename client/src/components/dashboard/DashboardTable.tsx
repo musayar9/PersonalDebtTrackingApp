@@ -1,5 +1,6 @@
-import { DebtData } from "../lib/types"
-import { formatPrice } from "../utils/functions";
+import { DebtData } from "../../lib/types";
+import { formatPrice } from "../../utils/functions";
+
 
 interface DashboardTableProps{
 status:string;

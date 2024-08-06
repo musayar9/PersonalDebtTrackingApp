@@ -1,27 +1,28 @@
 import { useEffect, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import ProfileBreadcrumps from "./ProfileBreadcrumps";
-import FormInput from "./FormInput";
-import { formattedDate } from "../utils/functions";
-import FormTextArea from "./FormTextArea";
-// import { Country, CountryData } from "../lib/types";
 
-import CountryDropDown from "./CountryDropDown";
-
-import { updateUser } from "../redux/dataFetch";
-import AlertMessage from "./AlertMessage";
-import { MdErrorOutline } from "react-icons/md";
-
-import { app } from "../utils/firebase";
 import {
   getDownloadURL,
   getStorage,
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-
+import { CiCircleInfo } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { formattedDate } from "../../utils/functions";
+import { app } from "../../utils/firebase";
+import { deleteUser, updateUser } from "../../redux/dataFetch";
+import Loading from "../../pages/Loading";
+import ProfileBreadcrumps from "./ProfileBreadcrumps";
+import FormInput from "../FormInput";
+import FormTextArea from "../FormTextArea";
+import CountryDropDown from "../CountryDropDown";
+import AlertMessage from "../AlertMessage";
+import { MdErrorOutline } from "react-icons/md";
 const Profile: React.FC = () => {
-  const { user, error } = useAppSelector((state) => state.user);
+  const { user, error, userUpdateStatus, userStatus } = useAppSelector(
+    (state) => state.user
+  );
   // const [countries, setCountries] = useState<Country[]>([]);
   const dispatch = useAppDispatch();
   const birthDateFormat = formattedDate(user?.user?.birthdate);
@@ -43,7 +44,19 @@ const Profile: React.FC = () => {
   const [imageError, setImageError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const imageRef = useRef<HTMLInputElement | null>(null);
+  const [showSuccessMsg, setShowSuccessMsg] = useState<string | undefined>("")
+  const navigate = useNavigate()
 
+  useEffect(() => {
+    if (image) {
+      handleFileUpload(image);
+    }
+    
+   
+     setTimeout(() => {
+       setShowSuccessMsg("");
+     }, 3000);
+  }, [image]);
   // const [countries, setCountries] = useState<CountryData[]>([]);
   const handleChange = (
     e: React.ChangeEvent<
@@ -54,11 +67,7 @@ const Profile: React.FC = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  useEffect(() => {
-    if (image) {
-      handleFileUpload(image);
-    }
-  }, [image]);
+
 
   const handleFileUpload = async (image: File) => {
     const storage = getStorage(app);
@@ -86,12 +95,35 @@ const Profile: React.FC = () => {
     e.preventDefault();
     if (user?.user?._id) {
       await dispatch(updateUser({ id: user?.user?._id, formData }));
+       if (userUpdateStatus === "succeeded") {
+         setShowSuccessMsg(user?.message);
+       }
     } else {
-      console.error("User ID is not available");
+  
+      setErrorMessage("User ID is not available")
     }
   };
-  console.log(user, "user");
+  console.log(user?.message, "user");
   console.log(error, "error");
+  
+  if(userStatus ==="loading"){
+    return (
+   <Loading/>
+    );
+  }
+  
+  
+const handleDeleteUser =async()=>{
+  if (user?.user?._id) {
+    await dispatch(deleteUser({ id: user?.user?._id }));
+    navigate("/login")
+    
+  } else {
+    setErrorMessage("User ID is not available");
+  }
+}
+
+console.log("user is deleted")
   return (
     <div className="w-full border p-8">
       <ProfileBreadcrumps />
@@ -99,7 +131,7 @@ const Profile: React.FC = () => {
       <div className="flex items-center flex-col justify-center mx-auto max-w-6xl ">
         <div className="relative my-8 ">
           <div className="w-full">
-            <div className="flex items-center justify-center">
+            <div className="flex  flex-col items-center justify-center">
               <input
                 type="file"
                 hidden
@@ -111,12 +143,12 @@ const Profile: React.FC = () => {
               />
               <img
                 className="border border-zinc-200 shadow-md p-1 rounded-full h-28 w-28 self-center object-cover"
-                src={user?.user?.profilePicture}
+                src={formData.profilePicture}
                 onClick={() => imageRef.current?.click()}
                 alt="profile"
               />
 
-              <p className="text-sm self-center -mt-3">
+              <p className="text-sm self-center mt-3">
                 {imageError ? (
                   <span className="text-red-700">
                     Error uploading image (file size must be less than 2 MB)
@@ -246,9 +278,30 @@ const Profile: React.FC = () => {
             </div>
 
             <button className="border border-emerald-400 text-gray-500 font-semibold hover:border-white hover:text-white hover:bg-emerald-500 duration-150 ease-in rounded-md p-2">
-              Update
+              {userUpdateStatus === "loading" ? (
+                <div className="flex items-center justify-center gap-2">
+                  <span className="loading loading-infinity loading-xs"></span>
+                  <span>Updateting</span>
+                </div>
+              ) : (
+                <span>Update Profile</span>
+              )}
             </button>
           </form>
+
+          <div className="flex justify-end pr-4">
+            <button onClick={handleDeleteUser} className=" text-red-600 hover:underline ">
+              Delete Account
+            </button>
+          </div>
+
+          {showSuccessMsg && (
+            <AlertMessage
+              icon={<CiCircleInfo size={28} />}
+              message={showSuccessMsg}
+              color={"bg-emerald-500"}
+            />
+          )}
 
           {error && (
             <AlertMessage

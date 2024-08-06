@@ -76,7 +76,7 @@ export interface CreateDebt {
   amount: number;
   paymentStart: string;
   installment: number;
-  description?: string  | undefined;
+  description?: string | undefined;
 
   paymentPlan: PaymentPlan[];
 }
@@ -108,4 +108,12 @@ export interface DebtState {
   debt: DebtData[] | null;
   debtStatus: "idle" | "succeeded" | "loading" | "failed";
   error: null | string;
+}
+
+export interface UpcomingDebt {
+  lender: string;
+  borrower: string;
+  paymentAmount: number;
+  paymentDate: string | Date;
+  description: string;
 }

@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
-import ProfileBreadcrumps from './ProfileBreadcrumps'
-import { ToggleSwitch } from 'flowbite-react';
+import React, { useState } from "react";
+
+import { ToggleSwitch } from "flowbite-react";
+import ProfileBreadcrumps from "./ProfileBreadcrumps";
 
 const ProfileContactPreference = () => {
-const [sms, setSms] = useState(false);
-const [email, setEmail] = useState(false);
-const [phoneCall, setPhoneCall] = useState(false);
+  const [sms, setSms] = useState(false);
+  const [email, setEmail] = useState(false);
+  const [phoneCall, setPhoneCall] = useState(false);
 
   return (
     <div className="w-full p-8">
@@ -63,6 +64,6 @@ const [phoneCall, setPhoneCall] = useState(false);
       </div>
     </div>
   );
-}
+};
 
-export default ProfileContactPreference
+export default ProfileContactPreference;

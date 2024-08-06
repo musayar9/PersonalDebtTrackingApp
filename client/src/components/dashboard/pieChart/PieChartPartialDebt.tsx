@@ -1,6 +1,7 @@
 import React from "react";
 import { PieChart, Pie, Cell, Tooltip, PieLabelRenderProps } from "recharts";
-import { useFetchUserDebt } from "../utils/customHooks";
+import { useFetchUserDebt } from "../../../utils/customHooks";
+
 
 const PieChartPartialDebt = () => {
   const { debt } = useFetchUserDebt();

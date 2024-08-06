@@ -1,5 +1,4 @@
-import React from 'react'
-import { useGetPaymentStatus } from '../utils/customHooks'
+
 import {
   BarChart,
   Bar,
@@ -11,6 +10,7 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts";
+import { useGetPaymentStatus } from "../../utils/customHooks";
 const DebtPaymentChart = () => {
 const unpaid = useGetPaymentStatus({paymentStatus:"Unpaid"}).groupDebt.length
 const partiallyPaid = useGetPaymentStatus({ paymentStatus: "Partially Paid" })

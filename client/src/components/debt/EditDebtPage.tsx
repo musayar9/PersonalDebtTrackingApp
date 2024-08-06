@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { CreateDebt } from "../lib/types";
-import FormInput from "./FormInput";
-import { formattedDate } from "../utils/functions";
 import { addMonths, format, isToday, isValid, parseISO } from "date-fns";
-import FormTextArea from "./FormTextArea";
 import axios from "axios";
-import AlertMessage from "./AlertMessage";
 import { MdErrorOutline } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { CreateDebt } from "../../lib/types";
+import FormInput from "../FormInput";
+import { formattedDate } from "../../utils/functions";
+import FormTextArea from "../FormTextArea";
+import AlertMessage from "../AlertMessage";
 
 interface EditDebtProps {
   id: string | undefined;

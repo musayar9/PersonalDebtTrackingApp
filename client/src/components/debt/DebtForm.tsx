@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import FormInput from "./FormInput";
-import FormTextArea from "./FormTextArea";
+
 import { addMonths, format, isToday, isValid, parseISO } from "date-fns";
 import DebtImage from "../assets/Debt.png";
 import axios from "axios";
-import AlertMessage from "./AlertMessage";
+
 import { CiCircleInfo } from "react-icons/ci";
 import { MdErrorOutline } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import FormInput from "../FormInput";
+import FormTextArea from "../FormTextArea";
+import AlertMessage from "../AlertMessage";
 const DebtForm = () => {
   const [formData, setFormData] = useState({
     lender: "",
