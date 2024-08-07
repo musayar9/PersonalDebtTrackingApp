@@ -2,7 +2,7 @@ import { Sidebar } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { Link, useLocation } from "react-router-dom";
-
+import { FaUsers } from "react-icons/fa";
 import { FcDebt } from "react-icons/fc";
 import {
   HiArrowSmRight,
@@ -12,6 +12,7 @@ import {
 } from "react-icons/hi";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { signOut } from "../redux/dataFetch";
+
 const DashSidebar = () => {
   const { user } = useAppSelector((state) => state.user);
 
@@ -59,6 +60,19 @@ const DashSidebar = () => {
               Profile
             </Sidebar.Item>{" "}
           </Link>
+
+          <Link to="/dashboard?tab=users">
+            <Sidebar.Item
+                active={tab === "users"}
+                icon={FaUsers}
+                label={"Admin"}
+                as="div"
+                labelColor="dark"
+            >
+              Users
+            </Sidebar.Item>{" "}
+          </Link>
+
 
           <Link to="/dashboard?tab=debt">
             <Sidebar.Item

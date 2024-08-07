@@ -70,7 +70,7 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
   
   return (
     <div className="overflow-x-auto my-10  border border-slate-200 rounded-md">
-      <table className="table table-zebra">
+      <table className="table ">
         <thead className="bg-gray-50">
           <tr>
             <th></th>
@@ -95,12 +95,12 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
               </td>
               <td className=" font-semibold">
                 {item.paymentStatus ? (
-                  <span className="text-blue-400 cursor-not-allowed">
+                  <button disabled={item.paymentStatus} className="btn btn-xs text-blue-400 cursor-not-allowed">
                     Pay Debt
-                  </span>
+                  </button>
                 ) : (
                   <Link
-                    className="text-blue-600"
+                    className="text-blue-600 btn btn-xs "
                     to={`/dashboard/payment_debt/${id}/debt/${item._id}`}
                   >
                     Pay Debt

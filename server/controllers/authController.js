@@ -62,7 +62,7 @@ const login = async (req, res, next) => {
     const { password: pass, ...rest } = isUser._doc;
 
     const token = jwt.sign(
-      { id: isUser._id, name: isUser.name },
+      { id: isUser._id, name: isUser.name, isAdmin: isUser.isAdmin },
       process.env.JWT_SECRET,
       { expiresIn: "4h" }
     );
@@ -150,6 +150,7 @@ const updateUser = async (req, res, next) => {
 
 const deleteUser = async (req, res, next) => {
   const { id } = req.params;
+  const { isAdmin } = req.user;
 
   const user = await User.findById({ _id: id });
 
@@ -160,8 +161,20 @@ const deleteUser = async (req, res, next) => {
   try {
     await User.findByIdAndDelete({ _id: id });
 
-    res.status(StatusCodes.OK).clearCookie("token").json({ message: "User is deleted" });
-  } catch (error) {}
+    if (isAdmin) {
+      res
+        .status(StatusCodes.OK)
+
+        .json({ message: "User is deleted" });
+    } else {
+      res
+        .status(StatusCodes.OK)
+        .clearCookie("token")
+        .json({ message: "User is deleted" });
+    }
+  } catch (error) {
+    next(error);
+  }
 };
 
 const signOut = async (req, res, next) => {

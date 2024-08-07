@@ -62,3 +62,20 @@ total:number
 export const calculatePercentage = ({ count, total }: CalculatePercentage): number => {
   return (count / total) * 100;
 };
+
+
+export  const calculateAge = (birthDate)=>{
+  const today = new Date();
+  const birthDateObj = new Date(birthDate);
+
+  let age = today.getFullYear() - birthDateObj.getFullYear();
+  const monthDifference = today.getMonth() - birthDateObj.getMonth();
+
+  // Adjust age if birth date has not occurred yet this year
+  if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDateObj.getDate())) {
+    age--;
+  }
+
+
+  return  age;
+}

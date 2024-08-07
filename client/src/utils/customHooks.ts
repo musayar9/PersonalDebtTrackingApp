@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { DebtData } from "../lib/types";
+import { DebtData, User } from "../lib/types";
 import axios from "axios";
 import { useAppSelector } from "../redux/hooks";
 
@@ -79,17 +79,48 @@ export const useGetPaymentStatus = ({
   useEffect(() => {
     const fetchPaymentStatus = async () => {
       try {
-        const res = await axios.post(`/api/v1/debt/checkPaymentStatus`, {paymentStatus});
+        const res = await axios.post(`/api/v1/debt/checkPaymentStatus`, {
+          paymentStatus,
+        });
         const data = await res.data;
-        console.log("group data", data)
-        setGroupDebt(data)
+        console.log("group data", data);
+        setGroupDebt(data);
       } catch (error) {
         console.log(error);
       }
     };
-    
-    fetchPaymentStatus()
+
+    fetchPaymentStatus();
+  }, []);
+
+  return { groupDebt };
+};
+
+export const useGetAllUsers = () => {
+  const [allUsers, setAllUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const getAllUsers = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get("/api/v1/auth");
+        const data = await res.data;
+
+        setAllUsers(data);
+        setLoading(false);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          setError(error?.response?.data.msg);
+        } else {
+          setError("Request failed");
+        }
+      }
+    };
+
+    getAllUsers();
   }, []);
   
-  return {groupDebt}
+  return {allUsers, setAllUsers, loading, error}
 };

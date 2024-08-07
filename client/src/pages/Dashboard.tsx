@@ -7,6 +7,7 @@ import ProfileContactPreference from "../components/profile/ProfileContactPrefer
 import Debt from "../components/debt/Debt";
 import DebtForm from "../components/debt/DebtForm";
 import DashboardArea from "../components/dashboard/DashboardArea";
+import Users from "../components/Admin/Users.tsx";
 
 
 const Dashboard = () => {
@@ -31,6 +32,8 @@ const Dashboard = () => {
 
       {tab === "profile/change-password" && <ProfileChangePassword />}
       {tab === "profile/contactPreference" && <ProfileContactPreference />}
+
+      {tab === "users" && <Users/>}
 
       {tab === "debt" && <Debt />}
       {tab === "debt/create_debt" && <DebtForm />}

@@ -45,10 +45,10 @@ const DebtTable = ({ debt, setDebt }: DebtTableProps) => {
   };
   console.log("errMsg", errMsg);
   return (
-    <div className="overflow-x-auto my-8 rounded-md">
-      <table className="table table-zebra table-sm bg-slate-100">
+    <div className="overflow-x-auto my-8 ">
+      <table className="table table-sm ">
         {/* head */}
-        <thead className="bg-slate-50 p-2">
+        <thead className=" p-2">
           <tr>
             <th></th>
             <th>Lender</th>
