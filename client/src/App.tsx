@@ -10,6 +10,7 @@ import DebtDetail from "./components/debt/DebtDetail";
 import PaymentPage from "./components/payment/PaymentPage";
 import Success from "./components/Success";
 import { NavbarComponent } from "./components/navbar/Navbar";
+import UserDetail from "./components/Admin/UserDetail";
 
 const App: React.FC = () => {
   return (
@@ -25,6 +26,8 @@ const App: React.FC = () => {
           path="/dashboard/payment_debt/:debtId/debt/:paymentId"
           element={<PaymentPage />}
         />
+        
+        <Route path="/dashboard/user_detail/:userId" element={<UserDetail/>}/>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/reset-password" element={<ResetPassword />} />
