@@ -1,25 +1,17 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-
-import {
-  FaBirthdayCake,
-  FaMapMarkerAlt,
-  FaPhoneAlt,
-  FaUser,
-} from "react-icons/fa";
-import { FaX } from "react-icons/fa6";
-
-import { MdEmail } from "react-icons/md";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../../pages/Loading";
 import ErrorMessage from "../../pages/ErrorMessage";
 import UserDetailInfo from "./UserDetailInfo";
+import { User } from "../../lib/types";
+import UserDetailDebtInfo from "./UserDetailDebtInfo";
 
 const UserDetail = () => {
   const { userId } = useParams();
   console.log(userId, "params");
 
-  const [userDetail, setUserDetail] = useState();
+  const [userDetail, setUserDetail] = useState<User | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -28,7 +20,7 @@ const UserDetail = () => {
       try {
         setLoading(true);
         const res = await axios.get(`/api/v1/auth/${userId}`);
-        const data = await res.data;
+        const data: User = await res.data;
         setLoading(false);
         setUserDetail(data);
       } catch (error) {
@@ -51,13 +43,12 @@ const UserDetail = () => {
       </div>
     );
   }
-  
-  if(error){
-  return <ErrorMessage message={error}/>
+
+  if (error) {
+    return <ErrorMessage message={error} />;
   }
 
-
-console.log(userDetail, "userDetail")
+  console.log(userDetail, "userDetail");
   return (
     <div className="max-w-6xl mx-auto my-8">
       <div className="grid gap-4 p-4  md:grid-cols-10">
@@ -107,51 +98,9 @@ console.log(userDetail, "userDetail")
             </div>
           </div>
         </div> */}
-        <UserDetailInfo/>
-        <div className="md:col-span-7 ">
-          <div className="shadow-sm">
-            <div className="flex items-start flex-col border rounded-lg gap-4 p-8">
-              <h2 className="text-xl font-semibold text-gray-500">
-                Account Status
-              </h2>
+        <UserDetailInfo userDetail={userDetail} />
 
-              <div className="overflow-x-auto border border-slate-200 rounded-lg">
-                <table className="table  w-[40vw] md:w-[50vw] ">
-                  <thead className="bg-slate-50">
-                    <tr>
-                      <th>Email</th>
-                      <th>Password</th>
-                      <th>Status</th>
-                      <th>Admin</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="text-slate-500">aliceclara@ggmail.com</td>
-                      <td>
-                        <input
-                          type="password"
-                          maxLength={6}
-                          value={"123456"}
-                          disabled
-                          className="border border-none w-24 text-slate-400"
-                        />
-                      </td>
-                      <td>
-                        <span className="px-6 py-1 text-sm bg-emerald-300 font-semibold text-emerald-600 rounded-full">
-                          verified
-                        </span>
-                      </td>
-                      <td>
-                        <FaX className="text-rose-600" />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
+        <UserDetailDebtInfo userDetail={userDetail} />
       </div>
     </div>
   );

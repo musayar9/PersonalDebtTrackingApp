@@ -1,60 +1,17 @@
-import React, { useEffect, useState } from "react";
 
-import axios from "axios";
 
-import ErrorMessage from "../../pages/ErrorMessage";
+// import axios from "axios";
+
+// import ErrorMessage from "../../pages/ErrorMessage";
 import { DebtData } from "../../lib/types";
 import { formatDateTwo, formatPercentage, formatPrice } from "../../utils/functions";
 
-import { Audio } from "react-loader-spinner";
-
-const DebtDetailItem = ({ id }: { id: string | undefined }) => {
-  const [debt, setDebt] = useState<DebtData>();
-  const [loading, setLoading] = useState(false);
-  const [errMsg, setErrMsg] = useState("");
+// import { Audio } from "react-loader-spinner";
 
 
 
-  useEffect(() => {
-    const fetchDebtId = async () => {
-      setLoading(true);
-      try {
-        const res = await axios.get(`/api/v1/debt/getDebt/${id}`);
-        const data: DebtData = await res.data;
-        setDebt(data);
-        setLoading(false);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          setErrMsg(error.response?.data.msg);
-        } else {
-          setErrMsg("Request failed");
-        }
-      }
-    };
+const DebtDetailItem = ({debt}:{debt:DebtData | undefined}) => {
 
-    fetchDebtId();
-  }, []);
-  
-  if(loading){
-    return (
-      <div className="ml-4 hidden">
-        <Audio
-          height="75"
-          width="75"
-          color="#4fa94d"
-          ariaLabel="audio-loading"
-          wrapperStyle={{}}
-          wrapperClass="wrapper-class"
-          visible={true}
-        />
-      </div>
-    ); 
-  }
-  
-  if (errMsg) {
-    return <ErrorMessage message={errMsg} />;
-  }
-  
   return (
     <div>
       <div className="border my-10 border-slate-200 rounded-md  ">

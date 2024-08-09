@@ -31,7 +31,7 @@ const DebtDetail = () => {
     };
 
     fetchDebtId();
-  }, []);
+  }, [id]);
 
   if (loading) {
     return (
@@ -62,10 +62,10 @@ const DebtDetail = () => {
 
       <div className="mt-8 grid gap-6 lg:grid-cols-12">
         <div className="lg:col-span-8">
-          <DebtDetailTable id={id} />
+          <DebtDetailTable  id={id} />
         </div>
         <div className="lg:col-span-4 lg:pl-4">
-          <DebtDetailItem id={id} />
+          <DebtDetailItem debt={debt} />
         </div>
       </div>
     </div>

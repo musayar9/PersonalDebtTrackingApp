@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import ErrorMessage from "../../pages/ErrorMessage";
@@ -44,7 +44,7 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
     };
 
     fetchDebtId();
-  }, []);
+  }, [id]);
 
   console.log(debt);
    if (loading) {
