@@ -52,7 +52,7 @@ const Notifications = () => {
         label={<FaBell className="text-gray-500 z-100" size={28} />}
       >
         <DropdownHeader className="flex items-center justify-between rounded-lg">
-          <span className="block text-sm font-bold">Upcoming Debts</span>
+          <span className="block text-sm font-bold text-slate-600">Upcoming Debts</span>
           <span className="block truncate text-sm font-medium">
             {formatDateTwo(new Date().toLocaleDateString())}
           </span>
@@ -66,10 +66,10 @@ const Notifications = () => {
                   className="w-full flex flex-col  border-b border-slate-200"
                 >
                   <div className="flex items-center justify-between ">
-                    <p className="text-xs italic text-slate-400">
+                    <p className="text-xs italic text-yellow-400">
                       Lender - {item?.lender}
                     </p>
-                    <p className="text-xs italic  text-slate-400">
+                    <p className="text-xs italic  text-yellow-400">
                       {formatDateTwo(item?.paymentDate)}
                     </p>
                   </div>
