@@ -86,7 +86,7 @@ const CheckoutForm = ({ debtId, paymentId }: CheckoutFormProps) => {
       <PaymentElement id="payment-element" options={{ layout: "tabs" }} />
 
       <button
-        className="px-4 py-2 rounded-md bg-orange-500 text-gray-50 hover:bg-orange-400 ease-linear duration-150"
+        className="px-6 py-2 text-sm  rounded-full bg-orange-500 text-gray-50 hover:bg-orange-600 ease-linear duration-150"
         disabled={isProcessing || !stripe || !elements}
         id="submit"
       >
