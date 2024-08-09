@@ -56,10 +56,14 @@ export const formatPercentage = (percentage: number | undefined): string => {
 // yüzde hesablama 
 
 interface CalculatePercentage {
-count:number;
-total:number
+count:number | undefined;
+total:number | undefined
 }
 export const calculatePercentage = ({ count, total }: CalculatePercentage): number => {
+if(count === undefined || total=== undefined){
+return 0
+
+}
   return (count / total) * 100;
 };
 

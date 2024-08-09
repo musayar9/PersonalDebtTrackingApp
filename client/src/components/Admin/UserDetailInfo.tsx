@@ -12,7 +12,8 @@ const UserDetailInfo= ({userDetail}:{userDetail:User | null}) => {
         {" "}
         <img
           className=" w-24 h-24 object-center    rounded-full   top-14 border-2  border-slate-50"
-          src={userDetail?.profilePicture} alt={userDetail?.username}
+          src={userDetail?.profilePicture}
+          alt={userDetail?.username}
         />
         <h2 className="text-xl font-semibold  text-gray-600 mt-1">
           {userDetail?.username}
@@ -37,20 +38,37 @@ const UserDetailInfo= ({userDetail}:{userDetail:User | null}) => {
           <span className="text-gray-500 text-sm  ">{userDetail?.email}</span>
         </p>
         <p className="flex items-center gap-2">
-          <FaPhoneAlt className="text-gray-500" size={18} />
-          <span className="text-gray-500  text-sm ">{userDetail?.phone}</span>
+          {userDetail?.phone && (
+            <>
+              <FaPhoneAlt className="text-gray-500" size={18} />
+              <span className="text-gray-500  text-sm ">
+                {userDetail?.phone}
+              </span>
+            </>
+          )}
         </p>
 
         <p className="flex items-center gap-2">
-          <FaMapMarkerAlt className="text-gray-500" size={18} />
-          <span className="text-gray-500  text-sm ">
-            {userDetail?.district}, {userDetail?.city}
-          </span>
+          {userDetail?.city &&
+            (userDetail?.district && (
+              <>
+                <FaMapMarkerAlt className="text-gray-500" size={18} />
+                <span className="text-gray-500  text-sm ">
+                  {userDetail?.district}, {userDetail?.city}
+                </span>
+              </>
+            ))}
         </p>
 
         <p className="flex items-center gap-2">
-          <FaMapMarkedAlt className="text-gray-500" size={18} />
-          <span className="text-gray-500  text-sm ">{userDetail?.address}</span>
+          {userDetail?.address && (
+            <>
+              <FaMapMarkedAlt className="text-gray-500" size={18} />
+              <span className="text-gray-500  text-sm ">
+                {userDetail?.address}
+              </span>
+            </>
+          )}
         </p>
         <div className="mt-8">
           <button className="btn btn-sm btn-circle mt-8 w-full text-rose-500 flex items-center">

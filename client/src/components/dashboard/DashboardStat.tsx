@@ -1,20 +1,21 @@
 
 
 import { BsDroplet, BsDropletHalf, BsFillDropletFill } from 'react-icons/bs';
-import { useFetchUserDebt } from '../../utils/customHooks';
+
 import { useAppSelector } from '../../redux/hooks';
 import { calculatePercentage } from '../../utils/functions';
+import { DebtData } from '../../lib/types';
 
-const DashboardStat = () => {
-  const {debt} = useFetchUserDebt()
+const DashboardStat = ({debt}:{debt:DebtData[] | null}) => {
+  // const {debt} = useFetchUserDebt()
 const {user} = useAppSelector((state)=>state.user);
 
   const totalDebt = debt?.length;
-  const unpaidCount = debt?.filter((d) => d.paymentStatus === "Unpaid").length;
-  const partialPaidCount = debt.filter(
+  const unpaidCount = debt?.filter((d) => d?.paymentStatus === "Unpaid").length;
+  const partialPaidCount = debt?.filter(
     (d) => d.paymentStatus === "Partially Paid"
   ).length;
-  const paidCount = debt.filter((d) => d.paymentStatus === "Paid").length;
+  const paidCount = debt?.filter((d) => d?.paymentStatus === "Paid")?.length;
   const unpaidPercentage = calculatePercentage({
     count: unpaidCount,
     total: totalDebt,
@@ -30,7 +31,7 @@ const {user} = useAppSelector((state)=>state.user);
 
   return (
     <>
-      {debt?.length > 0}
+
       <div className="flex items-center justify-center">
         <div className="stats shadow ">
           <div className="stat">
@@ -82,7 +83,7 @@ const {user} = useAppSelector((state)=>state.user);
             <div className="stat-value">{user?.user.username}</div>
             <div className="stat-title">Debt</div>
             <div className="stat-desc text-secondary">
-              {debt.length} Total recorded debt
+              {debt?.length} Total recorded debt
             </div>
           </div>
         </div>
