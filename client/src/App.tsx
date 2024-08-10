@@ -21,7 +21,7 @@ const App: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="/dashboard/updateDebt/:id" element={<EditDebt />} />
-        <Route path="/dashboard/debtDetail/:id" element={<DebtDetail />} />
+        <Route path="/dashboard/debtDetail/:userId/:id" element={<DebtDetail />} />
         <Route
           path="/dashboard/payment_debt/:debtId/debt/:paymentId"
           element={<PaymentPage />}

@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ErrorMessage from "../../pages/ErrorMessage";
 import { formatDateTwo, formatPrice } from "../../utils/functions";
 import { Audio } from "react-loader-spinner";
+import { useAppSelector } from "../../redux/hooks";
 // import { useAppSelector } from "../../redux/hooks";
 
 interface PaymentPlan {
@@ -14,8 +15,8 @@ interface PaymentPlan {
 }
 
 const DebtDetailTable = ({ id }: { id: string | undefined }) => {
-  //   const { id } = useParams();
-  // const {user} = useAppSelector((state)=>state.user)
+    const { userId } = useParams();
+  const {user} = useAppSelector((state)=>state.user)
   const [debt, setDebt] = useState<PaymentPlan[]>([]);
 
   const [loading, setLoading] = useState(false);
@@ -78,9 +79,8 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
             <th>Debt Date</th>
             <th>Amount</th>
             <th>Status</th>
- <th>Pay</th>
 
-            <th>Pay</th>
+            {userId === user?.user._id && <th>Pay</th>}
           </tr>
         </thead>
         <tbody>
@@ -96,25 +96,26 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
                   <span className="text-red-600">Unpaid</span>
                 )}
               </td>
-     
-              
-              <td className=" font-semibold">
-                {item.paymentStatus ? (
-                  <button
-                    disabled={item.paymentStatus}
-                    className="btn btn-xs text-blue-400 cursor-not-allowed"
-                  >
-                    Pay Debt
-                  </button>
-                ) : (
-                  <Link
-                    className="text-blue-600 btn btn-xs "
-                    to={`/dashboard/payment_debt/${id}/debt/${item._id}`}
-                  >
-                    Pay Debt
-                  </Link>
-                )}
-              </td>
+
+              {userId === user?.user._id && (
+                <td className=" font-semibold">
+                  {item.paymentStatus ? (
+                    <button
+                      disabled={item.paymentStatus}
+                      className="btn btn-xs text-blue-400 cursor-not-allowed"
+                    >
+                      Pay Debt
+                    </button>
+                  ) : (
+                    <Link
+                      className="text-blue-600 btn btn-xs "
+                      to={`/dashboard/payment_debt/${id}/debt/${item._id}`}
+                    >
+                      Pay Debt
+                    </Link>
+                  )}
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

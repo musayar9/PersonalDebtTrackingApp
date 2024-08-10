@@ -127,7 +127,7 @@ const UserDetailDebtInfo = ({ userDetail }: { userDetail: User | null }) => {
                     </td>
 
                     <td className="text-emerald-500 font-semibold hover:underline cursor-pointer">
-                      <Link to={`/dashboard/debtDetail/${item?._id}`}>
+                      <Link to={`/dashboard/debtDetail/${item?.userId}/${item?._id}`}>
                         Detail
                       </Link>
                     </td>

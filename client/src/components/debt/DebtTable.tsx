@@ -13,6 +13,7 @@ interface DebtTableProps {
 }
 
 const DebtTable = ({ debt, setDebt }: DebtTableProps) => {
+
   const [showModal, setShowModal] = useState(false);
   const [debtId, setDebtId] = useState<string | undefined>("");
   const [errMsg, setErrMsg] = useState("");
@@ -107,7 +108,7 @@ const DebtTable = ({ debt, setDebt }: DebtTableProps) => {
                 </Link>
               </td>
               <td className="text-emerald-500 font-semibold hover:underline cursor-pointer">
-                <Link to={`/dashboard/debtDetail/${item?._id}`}>Detail</Link>
+                <Link to={`/dashboard/debtDetail/${item.userId}/${item?._id}`}>Detail</Link>
               </td>
             </tr>
           ))}

@@ -2,6 +2,7 @@ import { IoIosReturnLeft } from "react-icons/io";
 import { Link } from "react-router-dom";
 import useDebtData from "../../utils/customHooks";
 import { formatDateTwo, formatPrice } from "../../utils/functions";
+import { useAppSelector } from "../../redux/hooks";
 
 
 interface PaymentPageDetailProps {
@@ -13,6 +14,7 @@ const PaymentPageDetail: React.FC<PaymentPageDetailProps> = ({
   id,
   paymentId,
 }) => {
+const {user} = useAppSelector((state)=>state.user)
   const { debt, errMsg } = useDebtData({ id });
   const selectPayment = debt?.paymentPlan?.find((d) => d?._id === paymentId);
   console.log(selectPayment);
@@ -22,7 +24,7 @@ const PaymentPageDetail: React.FC<PaymentPageDetailProps> = ({
   return (
     <div className="my-4 ">
       <Link
-        to={`/dashboard/debtDetail/${id}`}
+        to={`/dashboard/debtDetail/${user?.user._id}/${id}`}
         className="flex items-center gap-1 pl-4"
       >
         <IoIosReturnLeft className="bg-orange-500 hover:bg-orange-400 duration-150 ease-linear w-8 h-8 rounded-full p-2 text-slate-50" />

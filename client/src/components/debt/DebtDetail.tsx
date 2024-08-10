@@ -7,8 +7,11 @@ import DebtDetailItem from "./DebtDetailItem";
 import Loading from "../../pages/Loading";
 import ErrorMessage from "../../pages/ErrorMessage";
 
+import { useAppSelector } from "../../redux/hooks";
+
 const DebtDetail = () => {
-  const { id } = useParams();
+  const { id, userId } = useParams();
+  const {user} = useAppSelector((state)=>state.user)
   const [debt, setDebt] = useState<DebtData>();
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
@@ -51,13 +54,23 @@ const DebtDetail = () => {
         <h2 className="text-xl font-semibold text-gray-500  capitalize">
           {debt && debt.description}
         </h2>
-
-        <Link
+        {
+        userId === user?.user._id ?    <Link
           className="bg-slate-100 hover:bg-slate-300 hover:text-gray-900 duration-150 ease-linear px-4 py-3 rounded-lg font-semibold text-gray-700"
           to="/dashboard?tab=debt"
         >
           Return Debt
+        </Link>:
+          <Link
+          className="bg-slate-100 hover:bg-slate-300 hover:text-gray-900 duration-150 ease-linear px-4 py-3 rounded-lg font-semibold text-gray-700"
+          to={`/dashboard/user_detail/${userId}`}
+        >
+          Return User Detail 
         </Link>
+        
+        }
+
+     
       </div>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-12">
