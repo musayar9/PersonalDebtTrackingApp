@@ -68,7 +68,7 @@ return 0
 };
 
 
-export  const calculateAge = ({birthDate}:{birthDate:string})=>{
+export  const calculateAge = (birthDate:string ):number=>{
   const today = new Date();
   const birthDateObj = new Date(birthDate);
 

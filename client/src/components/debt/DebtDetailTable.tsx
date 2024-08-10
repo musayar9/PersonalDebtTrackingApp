@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import ErrorMessage from "../../pages/ErrorMessage";
 import { formatDateTwo, formatPrice } from "../../utils/functions";
 import { Audio } from "react-loader-spinner";
+// import { useAppSelector } from "../../redux/hooks";
 
 interface PaymentPlan {
   _id: string;
@@ -14,6 +15,7 @@ interface PaymentPlan {
 
 const DebtDetailTable = ({ id }: { id: string | undefined }) => {
   //   const { id } = useParams();
+  // const {user} = useAppSelector((state)=>state.user)
   const [debt, setDebt] = useState<PaymentPlan[]>([]);
 
   const [loading, setLoading] = useState(false);
@@ -22,8 +24,7 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
   console.log("loading", loading);
   console.log("errmsg", errMsg);
   
-  
-  
+
 
   useEffect(() => {
     const fetchDebtId = async () => {
@@ -77,6 +78,8 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
             <th>Debt Date</th>
             <th>Amount</th>
             <th>Status</th>
+ <th>Pay</th>
+
             <th>Pay</th>
           </tr>
         </thead>
@@ -93,9 +96,14 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
                   <span className="text-red-600">Unpaid</span>
                 )}
               </td>
+     
+              
               <td className=" font-semibold">
                 {item.paymentStatus ? (
-                  <button disabled={item.paymentStatus} className="btn btn-xs text-blue-400 cursor-not-allowed">
+                  <button
+                    disabled={item.paymentStatus}
+                    className="btn btn-xs text-blue-400 cursor-not-allowed"
+                  >
                     Pay Debt
                   </button>
                 ) : (

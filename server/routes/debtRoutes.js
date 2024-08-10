@@ -16,13 +16,13 @@ const router = express.Router();
 
 router.get("/", getAllDebt);
 router.post("/", verifyToken, createDebt);
-router.get("/:userId", verifyToken, getUserDebt);
+router.get("/:userId", getUserDebt);
 router.delete("/:id", verifyToken, deleteDebt);
 router.put("/updateDebt/:id", verifyToken, updateDebt);
 router.get("/getDebt/:id", verifyToken, getDebtId);
 router.get("/paymentPlan/:id", verifyToken, getPaymentPlan);
 router.patch("/paymentDebt/:debtId/:paymentId", verifyToken, updatePaymentDebt);
 router.post("/checkPaymentStatus", verifyToken, getPaymentStatus);
-router.get("/upcomingDebt/:userId", verifyToken, upcomingDebts)
+router.get("/upcomingDebt/:userId", verifyToken, upcomingDebts);
 
 module.exports = router;

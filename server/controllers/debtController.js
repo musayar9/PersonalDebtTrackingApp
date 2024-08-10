@@ -27,13 +27,15 @@ const getAllDebt = async (req, res, next) => {
 
 const getUserDebt = async (req, res, next) => {
   const { userId } = req.params;
-  const { id } = req.user;
+
 
   try {
     const debt = await Debt.find({ userId }).sort({ updatedAt: -1 }).exec();
+    
+    
 
-    if (userId !== id) {
-      throw new BadRequestError("You can't use data. Unauthorized");
+    if (!debt) {
+      throw new BadRequestError("Data is not found");
     }
 
     res.status(StatusCodes.OK).json(debt);
