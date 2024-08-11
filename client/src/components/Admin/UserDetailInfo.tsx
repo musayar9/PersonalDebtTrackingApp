@@ -1,10 +1,43 @@
+import {
+  FaBirthdayCake,
+  FaMapMarkedAlt,
+  FaMapMarkerAlt,
+  FaPhoneAlt,
+  FaUser,
+} from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+import { User } from "../../lib/types";
+import { formatDateTwo } from "../../utils/functions";
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ErrorMessage from "../../pages/ErrorMessage";
 
-import { FaBirthdayCake, FaMapMarkedAlt, FaMapMarkerAlt, FaPhoneAlt, FaUser } from 'react-icons/fa';
-import { MdEmail } from 'react-icons/md';
-import { User } from '../../lib/types';
-import { formatDateTwo } from '../../utils/functions';
+const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
+  const [errMsg, setErrMsg] = useState("");
+  const navigate = useNavigate();
 
-const UserDetailInfo= ({userDetail}:{userDetail:User | null}) => {
+  const handleDeleteUser = async ({ id }: { id: string | undefined }) => {
+    try {
+      const res = await axios.delete(`/api/v1/auth/${id}`);
+      const data = await res.data;
+      navigate("/dashboard?tab=users");
+      console.log(data);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setErrMsg(error.response?.data.msg);
+      } else {
+        setErrMsg("Request failed");
+      }
+    }
+  };
+  
+  console.log(errMsg)
+  
+  if(errMsg){
+    return <ErrorMessage message={errMsg}/>
+  }
+
   return (
     <div className="md:col-span-3   ">
       <div className="shadow-md rounded-lg">
@@ -70,15 +103,22 @@ const UserDetailInfo= ({userDetail}:{userDetail:User | null}) => {
               </>
             )}
           </p>
-          <div className="mt-8">
-            <button className="btn btn-sm btn-circle mt-8 w-full text-rose-500 flex items-center">
-              Delete
-            </button>
-          </div>
+
+          {!userDetail?.isAdmin && (
+            <div className="mt-8">
+              <button
+                disabled={userDetail?.isAdmin}
+                onClick={() => handleDeleteUser({ id: userDetail?._id })}
+                className={` btn btn-sm btn-circle mt-8 w-full text-rose-500 flex items-center`}
+              >
+                Delete
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default UserDetailInfo
+export default UserDetailInfo;
