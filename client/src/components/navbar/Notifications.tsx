@@ -54,7 +54,7 @@ const Notifications = () => {
         <DropdownHeader className="flex items-center justify-between rounded-lg">
           <span className="block text-sm font-bold text-slate-600">Upcoming Debts</span>
           <span className="block truncate text-sm font-medium">
-            {formatDateTwo(new Date().toLocaleDateString())}
+            {formatDateTwo(new Date().toDateString())}
           </span>
         </DropdownHeader>
         <div className=" p-2 space-y-2 border-b border-gray-200">

@@ -61,10 +61,10 @@ const UserDebtStatus = ({ debt }: { debt: DebtData[] | undefined  }) => {
             </table>
           </div>
         ) : (
-          <div className="flex items-center justify-center flex-col mx-auto -mt-28 ">
-            <IoFileTraySharp size={96} />
+          <div className="flex items-center justify-center flex-col mx-auto  ">
+            <IoFileTraySharp size={56} />
             <p className="text-xl text-gray-400 font-semibold">
-              You have no registered debt
+              There is no debt record yet
             </p>
           </div>
         )}

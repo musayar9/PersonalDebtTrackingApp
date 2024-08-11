@@ -56,13 +56,13 @@ const DebtDetail = () => {
         </h2>
         {
         userId === user?.user._id ?    <Link
-          className="bg-slate-100 hover:bg-slate-300 hover:text-gray-900 duration-150 ease-linear px-4 py-3 rounded-lg font-semibold text-gray-700"
+          className="btn btn-sm"
           to="/dashboard?tab=debt"
         >
           Return Debt
         </Link>:
           <Link
-          className="bg-slate-100 hover:bg-slate-300 hover:text-gray-900 duration-150 ease-linear px-4 py-3 rounded-lg font-semibold text-gray-700"
+          className="btn btn-sm"
           to={`/dashboard/user_detail/${userId}`}
         >
           Return User Detail 

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Loading from "../../pages/Loading";
 import ErrorMessage from "../../pages/ErrorMessage";
 import UserDetailInfo from "./UserDetailInfo";
@@ -51,6 +51,11 @@ const UserDetail = () => {
   console.log(userDetail, "userDetail");
   return (
     <div className="max-w-6xl mx-auto my-8">
+        <div className="border-b border-slate-200  p-2 flex justify-between">
+        <h2 className="text-2xl font-semibold text-gray-600">User Detail Page</h2>
+        <Link className="btn btn-sm" to="/dashboard?tab=users">Return Users Page</Link>
+        </div>
+    
       <div className="grid gap-4 p-4  md:grid-cols-10">
        
         <UserDetailInfo userDetail={userDetail} />

@@ -31,7 +31,7 @@ const Debt: React.FC = () => {
               Debt Tracking Tables
             </h2>
             <Link
-              className="bg-slate-200 hover:bg-slate-300 hover:text-gray-900 duration-150 ease-linear px-4 py-3 rounded-lg font-semibold text-gray-700"
+              className="btn btn-sm"
               to="/dashboard?tab=debt/create_debt"
             >
               Create Debt
@@ -52,7 +52,7 @@ const Debt: React.FC = () => {
           </p>
 
           <Link
-            className="bg-slate-200 my-4 hover:bg-slate-300 hover:text-gray-900 duration-150 ease-linear px-4 py-3 rounded-lg font-semibold text-gray-700"
+            className="btn btn-md"
             to="/dashboard?tab=debt/create_debt"
           >
             Create Debt

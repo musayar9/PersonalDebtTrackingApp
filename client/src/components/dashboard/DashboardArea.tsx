@@ -23,9 +23,9 @@ const DashboardArea = () => {
   }
 
   return (
-    <div className="">
+    <div className=" max-w-6xl mx-auto">
       {debt.length > 0 || groupDebt.length > 0 ? (
-        <div className="max-w-6xl mx-auto my-4 ">
+        <div className=" my-4 ">
           <DashboardStat debt={debt} />
 
           <div className="grid lg:grid-cols-12">
@@ -47,12 +47,14 @@ const DashboardArea = () => {
           </div>
         </div>
       ) : (
-        <div className="flex items-center justify-center flex-col mx-auto -mt-28 ">
-          <IoFileTraySharp size={96} />
-          <p className="text-xl text-gray-400 font-semibold">
-            You have no registered debt
-          </p>
-        </div>
+
+          <div className=" flex items-center justify-center  flex-col mt-28">
+            <IoFileTraySharp size={96} />
+            <p className="text-xl text-gray-400 font-semibold">
+              You have no registered debt
+            </p>
+          </div>
+     
       )}
     </div>
   );

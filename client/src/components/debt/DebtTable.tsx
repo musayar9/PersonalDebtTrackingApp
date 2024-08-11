@@ -88,7 +88,7 @@ const DebtTable = ({ debt, setDebt }: DebtTableProps) => {
                       : item?.paymentStatus === "Partially Paid"
                       ? "bg-yellow-400"
                       : item.paymentStatus === "Paid" && "bg-green-500"
-                  }  } px-1 py-1.5 rounded-sm text-center text-white text-xs`}
+                  }  } px-1 py-1.5 rounded-md text-center text-white text-xs`}
                 >
                   {item.paymentStatus}
                 </p>

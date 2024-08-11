@@ -1,11 +1,11 @@
 const express = require("express");
 const User = require("../models/userModel");
 const { StatusCodes } = require("http-status-codes");
-const {  BadRequestError } = require("../errors");
+const { BadRequestError } = require("../errors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const getUsers = async (req, res, next) => {
-  const user = await User.find({});
+  const user = await User.find({}).sort({ updatedAt: -1 });
   try {
     res.status(StatusCodes.OK).json(user);
   } catch (error) {
@@ -16,17 +16,15 @@ const getUsers = async (req, res, next) => {
 const getUserId = async (req, res, next) => {
   const { userId } = req.params;
 
-
-  
   try {
-      const user = await User.findById({_id: userId });
-      if (!user) {
-        throw new BadRequestError("User not found");
-      }
-      
-      res.status(StatusCodes.OK).json(user)
+    const user = await User.findById({ _id: userId });
+    if (!user) {
+      throw new BadRequestError("User not found");
+    }
+
+    res.status(StatusCodes.OK).json(user);
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
 
@@ -244,5 +242,5 @@ module.exports = {
   login,
   deleteUser,
   updateUser,
-  getUserId
+  getUserId,
 };

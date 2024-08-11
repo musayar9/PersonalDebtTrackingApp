@@ -52,12 +52,9 @@ const Profile: React.FC = () => {
       handleFileUpload(image);
     }
     
-   
-     setTimeout(() => {
-       setShowSuccessMsg("");
-     }, 3000);
+
   }, [image]);
-  // const [countries, setCountries] = useState<CountryData[]>([]);
+
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -98,13 +95,16 @@ const Profile: React.FC = () => {
        if (userUpdateStatus === "succeeded") {
          setShowSuccessMsg(user?.message);
        }
+       
+       setTimeout(()=>{
+        setShowSuccessMsg("")
+       },3000)
     } else {
   
       setErrorMessage("User ID is not available")
     }
   };
-  console.log(user?.message, "user");
-  console.log(error, "error");
+
   
   if(userStatus ==="loading"){
     return (
