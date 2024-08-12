@@ -2,6 +2,7 @@ const Chat = require("../models/chatModel");
 
 const { StatusCodes } = require("http-status-codes");
 const createChat = async (req, res, next) => {
+  console.log(req.body);
   const { senderId, receiverId } = req.body;
   const newChat = new Chat({
     members: [senderId, receiverId],
@@ -16,6 +17,8 @@ const createChat = async (req, res, next) => {
 };
 
 const userChats = async (req, res, next) => {
+  console.log(req.params, "reqpama");
+
   try {
     const chat = await Chat.find({
       members: { $in: [req.params.userId] },
@@ -26,19 +29,18 @@ const userChats = async (req, res, next) => {
   }
 };
 
+const findChat = async (req, res, next) => {
+  const { firstId, secondId } = req.params;
 
-const findChat = async(req, res, next)=>{
-    const {firstId, secondId} =req.params;
-    
-    try {
-        const chat= await Chat.findOneAndDelete({
-        members:{$all:[firstId, secondId]},
-        })
-        
-        res.status(StatusCodes.OK).json(chat)
-    } catch (error) {
-        next(error)
-    }
-}
+  try {
+    const chat = await Chat.findOneAndDelete({
+      members: { $all: [firstId, secondId] },
+    });
 
-module.exports = {createChat, userChats, findChat}
+    res.status(StatusCodes.OK).json(chat);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { createChat, userChats, findChat };

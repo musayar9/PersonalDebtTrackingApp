@@ -11,6 +11,7 @@ import PaymentPage from "./components/payment/PaymentPage";
 import Success from "./components/Success";
 import { NavbarComponent } from "./components/navbar/Navbar";
 import UserDetail from "./components/Admin/UserDetail";
+import Chat from "./components/chat/Chat";
 
 const App: React.FC = () => {
   return (
@@ -19,6 +20,7 @@ const App: React.FC = () => {
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/chat" element={<Chat/>}/>
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="/dashboard/updateDebt/:id" element={<EditDebt />} />
         <Route path="/dashboard/debtDetail/:userId/:id" element={<DebtDetail />} />

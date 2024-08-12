@@ -16,6 +16,7 @@ import Notifications from "./Notifications";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { signOut } from "../../redux/dataFetch";
 import { UsersState } from "../../lib/types";
+import { FaMessage } from "react-icons/fa6";
 export function NavbarComponent() {
   const { user } = useAppSelector((state: { user: UsersState }) => state.user);
   const dispatch = useAppDispatch();
@@ -71,6 +72,7 @@ console.log(user)
           </div>
         ) : (
           <div className="flex items-center gap-2">
+          <Link to="/chat"><FaMessage/></Link>
           <Notifications/>
             <Dropdown
               arrowIcon={false}
