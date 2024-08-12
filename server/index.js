@@ -9,7 +9,8 @@ const authRoutes = require("./routes/authRoutes");
 const countryRoutes = require("./routes/countryRoutes");
 const debtRoutes = require("./routes/debtRoutes");
 const stripeRoutes = require("./routes/stripeRoutes");
-
+const chatRoutes = require("./routes/chatRoutes");
+const messageRoutes = require("./routes/messageRoutes")
 //extra security packages
 
 const helmet = require("helmet");
@@ -33,6 +34,8 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/countries", countryRoutes);
 app.use("/api/v1/debt", debtRoutes);
 app.use("/api/v1/stripe", stripeRoutes);
+app.use("/api/v1/chat", chatRoutes);
+app.use("/api/v1/message", messageRoutes)
 app.use(errorHandlerMiddleware);
 app.use(notFoundMiddleware);
 const port = process.env.PORT || 5000;
