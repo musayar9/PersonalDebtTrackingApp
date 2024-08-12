@@ -40,17 +40,17 @@ const Conversation = ({ data, currentUser }: ConversationProps) => {
 
   return (
     <>
-      <div className="bg-slate-200 p-3 flex rounded-md  justify-between items-center ">
+      <div className="bg-slate-50 hover:bg-slate-200 transition-all cursor-pointer duration-100 ease-linear m-1 p-2 flex rounded-md  justify-between items-center ">
         <div className="relative flex gap-4">
-          <div className="bg-emerald-600 rounded-full absolute left-10 w-4 h-4"></div>
-          <img src={userData?.profilePicture} className="w-14 h-14 rounded-full" />
-          <div className="flex  flex-col items-start justify-center text-lg font-semibold text-gray-600">
-            <span>{userData?.name}</span>
-            <span>{userData?.surname}</span>
+          <div className="bg-emerald-500 rounded-full absolute left-8 w-3 h-3"></div>
+          <img src={userData?.profilePicture} className="w-12 h-12 rounded-full" />
+          <div className="flex  flex-col items-start justify-center text-md font-semibold text-gray-600">
+            <span>{userData?.name} {userData?.surname}</span>
+            <span className="text-sm font-normal text-gray-500">Online</span>
           </div>
         </div>
       </div>
-   
+   <hr className="my-4 w-full "></hr>
     </>
   );
 };
