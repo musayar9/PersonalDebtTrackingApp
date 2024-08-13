@@ -20,6 +20,7 @@ const addMessage = async (req, res, next) => {
 };
 
 const getMessages = async (req, res, next) => {
+
   const { chatId } = req.params;
   try {
     const message = await Message.find({ chatId });

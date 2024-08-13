@@ -6,12 +6,16 @@
   .custom-input {
     @apply block px-2.5 pb-2.5 pt-4 text-sm  text-gray-900 bg-transparent rounded-md border border-gray-300 appearance-none dark:text-white dark:border-gray-600  focus:ring-0 focus:border-emerald-600;
   }
-  
-  
+
   .custom-gradient {
-  @apply bg-gradient-to-r from-[#f9a225] to-[#f95f35];
-  background-image: linear-gradient(98.63deg, #f9a225 0%, #f95f35 100%);
-}
+    @apply bg-gradient-to-r from-[#f9a225] to-[#f95f35];
+    background-image: linear-gradient(98.63deg, #f9a225 0%, #f95f35 100%);
+  }
+
+  .own {
+    @apply bg-gradient-to-r from-[#24e4f0] to-[#358ff9];
+    background: linear-gradient(98.63deg, #24e4f0 0%, #358ff9 100%);
+  }
 }
 
 /* HTML: <div class="loader"></div> */

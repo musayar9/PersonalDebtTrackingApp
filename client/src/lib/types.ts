@@ -118,12 +118,20 @@ export interface UpcomingDebt {
   description: string;
 }
 
-
-
 export interface Chat {
-  members: string[];           // Üye ID'lerini içeren bir string dizisi
-  _id: string;                 // Chat'in benzersiz ID'si
-  createdAt: string;           // ISO formatında oluşturulma tarihi
-  updatedAt: string;           // ISO formatında güncellenme tarihi
-  __v: number;                 // Versiyon numarası (genellikle MongoDB tarafından kullanılır)
+  members: string[]; // Üye ID'lerini içeren bir string dizisi
+  _id: string; // Chat'in benzersiz ID'si
+  createdAt: string; // ISO formatında oluşturulma tarihi
+  updatedAt: string; // ISO formatında güncellenme tarihi
+  __v: number; // Versiyon numarası (genellikle MongoDB tarafından kullanılır)
+}
+
+export interface Messages {
+  _id: string;
+  text: string;
+  senderId: string;
+  chatId:string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }

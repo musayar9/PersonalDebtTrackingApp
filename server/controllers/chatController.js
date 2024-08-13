@@ -17,7 +17,7 @@ const createChat = async (req, res, next) => {
 };
 
 const userChats = async (req, res, next) => {
-  console.log(req.params, "reqpama");
+
 
   try {
     const chat = await Chat.find({
