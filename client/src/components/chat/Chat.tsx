@@ -68,8 +68,8 @@ const Chat = () => {
             {/* Chat-list */}
             <div className=" flex flex-col gap-2">
               {/* Example conversation item */}
-              {chats?.map((chat) => (
-                <div onClick={() => setCurrentChat(chat)}>
+              {chats?.map((chat, index) => (
+                <div key={index} onClick={() => setCurrentChat(chat)}>
                   <Conversation data={chat} currentUser={user?.user?._id} />
                 </div>
               ))}
