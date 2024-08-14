@@ -162,5 +162,5 @@ export interface OnlineUsers{
 }
 
 export interface MessageState {
-  recieverMessage: null;
+  recieverMessage: RecievedMessage[][];
 }

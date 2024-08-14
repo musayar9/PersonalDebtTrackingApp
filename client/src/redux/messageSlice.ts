@@ -1,20 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { MessageState } from "../lib/types";
+import { MessageState, } from "../lib/types";
 
 const initialState: MessageState = {
-  recieverMessage: null,
+  recieverMessage: [],
 };
 
 const messageSlice = createSlice({
   name: "message",
   initialState,
   reducers: {
-    addMessage: (state, action) => {
+    addMessage: (
+      state,
+      action
+    ) => {
 
-      state.recieverMessage = action.payload;
+      state.recieverMessage =  action.payload
     },
   },
 });
 
-export const {addMessage} = messageSlice.actions;
+export const { addMessage } = messageSlice.actions;
 export default messageSlice.reducer;

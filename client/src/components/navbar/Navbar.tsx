@@ -15,15 +15,16 @@ import { Link, useNavigate } from "react-router-dom";
 import Notifications from "./Notifications";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { signOut } from "../../redux/dataFetch";
-import { UsersState } from "../../lib/types";
+import {  UsersState } from "../../lib/types";
 import { RiMessage3Fill } from "react-icons/ri";
 import { useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 import { addMessage } from "../../redux/messageSlice";
 export function NavbarComponent() {
   const { user } = useAppSelector((state: { user: UsersState }) => state.user);
-  const { recieverMessage }= useAppSelector((state)=>state.message)
+  const { recieverMessage } = useAppSelector((state) => state.message);
   const dispatch = useAppDispatch();
+
   console.log(user);
   const navigate = useNavigate();
   const handleSignOut = async () => {
@@ -38,15 +39,17 @@ export function NavbarComponent() {
 
   const socket = useRef<Socket | null>(null);
   useEffect(() => {
-  socket.current = io("ws://localhost:8800");
+    socket.current = io("ws://localhost:8800");
     socket.current?.on("recieve-message", (data) => {
-
+console.log("data, ", data)
+    
       dispatch(addMessage(data));
     });
   }, []);
+  
 
 
-console.log("reve", recieverMessage);
+  console.log("reve", recieverMessage);
   return (
     <Navbar className="border-b border-slate-300" rounded>
       <NavbarBrand href="https://flowbite-react.com">
