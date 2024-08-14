@@ -1,16 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useAppSelector } from "../../redux/hooks";
+// import { useAppSelector } from "../../redux/hooks";
 import InputEmoji from "react-input-emoji";
 import moment from "moment";
 import "moment/locale/tr";
-import { Chat, Messages, User } from "../../lib/types";
+import {
+  Chat,
+  Messages,
+  RecievedMessage,
+  SendMessage,
+  User,
+} from "../../lib/types";
 import axios from "axios";
-
+import { nanoid } from "nanoid";
 interface ChatBoxProps {
   chat: Chat | null;
   currentUser: string | undefined;
-  receivedMessage: null;
-  setSendMessage: React.Dispatch<React.SetStateAction<null>>;
+  receivedMessage: RecievedMessage | null;
+  setSendMessage: React.Dispatch<React.SetStateAction<SendMessage | null>>;
 }
 
 const ChatBox = ({
@@ -19,7 +25,7 @@ const ChatBox = ({
   receivedMessage,
   setSendMessage,
 }: ChatBoxProps) => {
-  const { user } = useAppSelector((state) => state.user);
+  // const { user } = useAppSelector((state) => state.user);
   const [messages, setMessages] = useState<Messages[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [error, setError] = useState("");
@@ -30,8 +36,8 @@ const ChatBox = ({
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (user && chat) {
-      const userId = chat?.members.find((id) => id !== user?.user._id);
+    if (currentUser && chat) {
+      const userId = chat?.members.find((id) => id !== currentUser);
 
       const getUserId = async () => {
         try {
@@ -74,11 +80,60 @@ const ChatBox = ({
     if (chat !== null) getMessages();
   }, [chat]);
 
-  const handleChange = (message) => {
+  const handleChange = (message: string) => {
     setNewMessage(message);
   };
   console.log(messages, "mess");
   console.log(error);
+
+  const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const message = {
+      _id: nanoid(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      senderId: currentUser,
+      text: newMessage,
+      chatId: chat?._id,
+      __v: 0,
+    };
+
+    const receiverId: string | undefined = chat?.members.find(
+      (id) => id !== currentUser
+    );
+    // send message tı socket serve
+    setSendMessage({ ...message, receiverId });
+
+    // send message to database
+
+    try {
+      const res = await axios.post("/api/v1/message", message);
+      const data = await res.data;
+      setMessages([...messages, data]);
+      setNewMessage("");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setError(error?.response?.data.msg);
+      } else {
+        setError("Request failed");
+      }
+    }
+  };
+
+  useEffect(() => {
+    scroll.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  // reveive message from parent component
+
+  useEffect(() => {
+    console.log("message arrived", receivedMessage);
+    if (receivedMessage !== null && receivedMessage?.chatId === chat?._id) {
+      setMessages([...messages, receivedMessage]);
+    }
+  }, [receivedMessage]);
+  console.log("reeceived", receivedMessage);
 
   const scroll = useRef<HTMLDivElement | null>(null);
   const imageRef: React.MutableRefObject<HTMLInputElement | null> =
@@ -139,9 +194,12 @@ const ChatBox = ({
               shouldReturn={true}
               shouldConvertEmojiToImage={true}
             />
-            <div className="flex items-center justify-center text-white border-none rounded-lg custom-gradient h-[70%] px-4 ">
-              send{" "}
-            </div>
+            <form
+              onSubmit={handleSend}
+              className="flex items-center justify-center text-white border-none rounded-lg custom-gradient h-[70%] px-4 "
+            >
+              <button type="submit">send</button>
+            </form>
             <input
               ref={imageRef}
               type="file"

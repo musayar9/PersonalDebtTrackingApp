@@ -133,5 +133,25 @@ export interface Messages {
   chatId:string;
   createdAt: string;
   updatedAt: string;
+  receiverId?:string,
+  __v: number;
+}
+
+
+export interface SendMessage{
+  senderId:string | undefined,
+    text:string,
+    chatId:string | undefined;
+    receiverId?:string 
+}
+
+export interface RecievedMessage {
+  _id: string;
+  text: string;
+  senderId: string;
+  chatId: string;
+  createdAt: string;
+  updatedAt: string;
+  receiverId?: string;
   __v: number;
 }
