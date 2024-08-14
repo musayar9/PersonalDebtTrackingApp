@@ -9,8 +9,8 @@ import { MdEmail } from "react-icons/md";
 import { User } from "../../lib/types";
 import { formatDateTwo } from "../../utils/functions";
 import axios from "axios";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import ErrorMessage from "../../pages/ErrorMessage";
 import { useAppSelector } from "../../redux/hooks";
 
@@ -19,6 +19,7 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [findChat, setFindChat] = useState(null);
 
   const handleDeleteUser = async ({ id }: { id: string | undefined }) => {
     try {
@@ -34,6 +35,30 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
       }
     }
   };
+
+  useEffect(() => {
+    if (user && userDetail) {
+      const findChat = async () => {
+        try {
+          const res = await axios.get(
+            `/api/v1/chat/find/${user?.user?._id}/${userDetail?._id}`
+          );
+          const data = res.data;
+          setFindChat(data);
+        } catch (error) {
+          if (axios.isAxiosError(error)) {
+            setErrMsg(error.response?.data.msg);
+          } else {
+            setErrMsg("Request failed");
+          }
+        }
+      };
+
+      findChat();
+    }
+  }, [user, userDetail]);
+
+  console.log("findChat", findChat);
 
   console.log(errMsg);
 
@@ -61,10 +86,9 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
       }
     }
   };
-  
-  if(loading){
-    return <div>Chaat yönlenriliyorsunuz</div>
-    
+
+  if (loading) {
+    return <div>Chaat yönlenriliyorsunuz</div>;
   }
 
   return (
@@ -132,27 +156,37 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
               </>
             )}
           </p>
-
-          {!userDetail?.isAdmin && (
+          {user?.user._id !== userDetail?._id && (
             <div className="mt-8">
+              {findChat === null ? (
+                <button
+                  onClick={sendMessage}
+                  className={` btn btn-sm btn-circle mt-8 w-full text-emerald-500 flex items-center`}
+                >
+                  Send Message
+                </button>
+              ) : (
+                <Link
+                  className="
+               btn btn-sm btn-circle mt-8 w-full text-emerald-500 flex items-center"
+                  to="/chat"
+                >
+                  Send Message
+                </Link>
+              )}
+            </div>
+          )}
+          {!userDetail?.isAdmin && (
+            <div className="mt-2">
               <button
                 disabled={userDetail?.isAdmin}
                 onClick={() => handleDeleteUser({ id: userDetail?._id })}
-                className={` btn btn-sm btn-circle mt-8 w-full text-rose-500 flex items-center`}
+                className={` btn btn-sm btn-circle mt-2 w-full text-rose-500 flex items-center`}
               >
                 Delete
               </button>
             </div>
           )}
-
-          <div className="mt-8">
-            <button
-              onClick={sendMessage}
-              className={` btn btn-sm btn-circle mt-8 w-full text-emerald-500 flex items-center`}
-            >
-              send message
-            </button>
-          </div>
         </div>
       </div>
     </div>

@@ -12,6 +12,7 @@ import {
 } from "../../lib/types";
 import axios from "axios";
 import { nanoid } from "nanoid";
+import { FaPaperPlane } from "react-icons/fa";
 interface ChatBoxProps {
   chat: ChatType | null;
   currentUser: string | undefined;
@@ -204,10 +205,10 @@ const ChatBox = ({
                 shouldConvertEmojiToImage={false}
               />
               <button
-                className="flex items-center justify-center text-white border-none rounded-lg custom-gradient h-[70%] px-4"
+                className="flex items-center justify-center text-white border-none rounded-full bg-gradient-to-r from-emerald-500 to-blue-500 h-[70%] -ml-2 p-2 "
                 type="submit"
               >
-                Send
+                <FaPaperPlane />
               </button>
             </form>
 

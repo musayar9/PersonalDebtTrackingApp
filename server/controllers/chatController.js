@@ -31,7 +31,7 @@ const findChat = async (req, res, next) => {
   const { firstId, secondId } = req.params;
 
   try {
-    const chat = await Chat.findOneAndDelete({
+    const chat = await Chat.findOne({
       members: { $all: [firstId, secondId] },
     });
 
