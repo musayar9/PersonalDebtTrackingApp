@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 // import { useAppSelector } from "../../redux/hooks";
-import InputEmoji from "react-input-emoji";
+// import InputEmoji from "react-input-emoji";
 import moment from "moment";
 import "moment/locale/tr";
 import {
@@ -13,6 +13,7 @@ import {
 import axios from "axios";
 import { nanoid } from "nanoid";
 import { FaPaperPlane } from "react-icons/fa";
+
 interface ChatBoxProps {
   chat: ChatType | null;
   currentUser: string | undefined;
@@ -27,10 +28,12 @@ const ChatBox = ({
   setSendMessage,
 }: ChatBoxProps) => {
   // const { user } = useAppSelector((state) => state.user);
+
   const [messages, setMessages] = useState<Messages[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [error, setError] = useState("");
   console.log(chat, "chat");
+
 
   const [userData, setUserData] = useState<User | null>(null);
 
@@ -81,13 +84,14 @@ const ChatBox = ({
     if (chat !== null) getMessages();
   }, [chat]);
 
-  const handleChange = (message:string) => {
+  // const handleChange = (message:string) => {
 
   
-    setNewMessage(message);
-  };
-  console.log(messages, "mess");
+  //   setNewMessage(message);
+  // };
+
   console.log(error);
+
 
   const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -107,6 +111,7 @@ const ChatBox = ({
     );
     // send message tı socket serve
     setSendMessage({ ...message, receiverId });
+   
 
     // send message to database
 
@@ -134,9 +139,10 @@ const ChatBox = ({
     console.log("message arrived", receivedMessage);
     if (receivedMessage !== null && receivedMessage?.chatId === chat?._id) {
       setMessages([...messages, receivedMessage]);
+ 
     }
   }, [receivedMessage]);
-  console.log("reeceived", receivedMessage);
+
 
 
 
@@ -196,14 +202,17 @@ const ChatBox = ({
 
             <form
               onSubmit={handleSend}
-              className="flex items-center gap-2 w-full"
+              className="flex items-center space-x-2 gap-2 w-full"
             >
-              <InputEmoji
+              {/* <InputEmoji
                 value={newMessage}
                 onChange={handleChange}
                 shouldReturn={false}
                 shouldConvertEmojiToImage={false}
-              />
+              /> */}
+              <input 
+              className="border border-gray-200 p-2 rounded-full focus:outline-none w-full"
+              value={newMessage} name="newMessage" onChange={(e)=>setNewMessage(e.target.value)}/>
               <button
                 className="flex items-center justify-center text-white border-none rounded-full bg-gradient-to-r from-emerald-500 to-blue-500 h-[70%] -ml-2 p-2 "
                 type="submit"

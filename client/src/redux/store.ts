@@ -4,9 +4,14 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { Persistor } from "redux-persist";
 import { Action, ThunkAction } from "@reduxjs/toolkit";
-import  debtReducer from "./debtSlice" 
+import debtReducer from "./debtSlice";
+import messageReducer from "./messageSlice";
 // Root reducer'ı combineReducers ile oluşturun
-const rootReducer = combineReducers({ user: userReducer, debt:debtReducer });
+const rootReducer = combineReducers({
+  user: userReducer,
+  debt: debtReducer,
+  message: messageReducer,
+});
 
 // Persist yapılandırmasını oluşturun
 const persistConfig = {

@@ -1,17 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import axios from "axios";
 import Conversation from "./Conversation";
 import ChatBox from "./ChatBox";
 // import { Chat } from "../../lib/types";
 import { io, Socket } from "socket.io-client";
 import { ChatType, OnlineUsers, RecievedMessage, SendMessage } from "../../lib/types";
+import { addMessage } from "../../redux/messageSlice";
 
 
 
 const Chat = () => {
-  const { user } = useAppSelector((state) => state.user);
+
+  const { user } = useAppSelector((state) => state?.user);
+  const dispatch = useAppDispatch()
   const socket = useRef<Socket | null>(null);
   const [chats, setChats] = useState([]);
   const [onlineUsers, setOnlineUsers] = useState<OnlineUsers[] | null >([]);
@@ -40,12 +43,16 @@ const Chat = () => {
   }, []);
 
   useEffect(() => {
-    socket.current = io("ws://localhost:8800");
-    socket.current?.emit("new-user-add", user?.user?._id);
-    socket.current.on("get-users", (users) => {
-      setOnlineUsers(users);
-      console.log("oni", onlineUsers);
-    });
+  if(user){
+   socket.current = io("ws://localhost:8800");
+   socket.current?.emit("new-user-add", user?.user._id);
+   socket.current.on("get-users", (users) => {
+     setOnlineUsers(users);
+     console.log("oni", onlineUsers);
+   });
+  }
+  
+   
   }, [user]);
 
   console.log(chats, "chatd");
@@ -63,6 +70,7 @@ const Chat = () => {
   useEffect(() => {
     socket.current?.on("recieve-message", (data) => {
       setReceivedMessage(data);
+      dispatch(addMessage(data))
     });
   });
 

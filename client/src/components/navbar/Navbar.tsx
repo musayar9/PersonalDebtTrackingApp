@@ -17,21 +17,36 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { signOut } from "../../redux/dataFetch";
 import { UsersState } from "../../lib/types";
 import { RiMessage3Fill } from "react-icons/ri";
-
+import { useEffect, useRef } from "react";
+import { io, Socket } from "socket.io-client";
+import { addMessage } from "../../redux/messageSlice";
 export function NavbarComponent() {
   const { user } = useAppSelector((state: { user: UsersState }) => state.user);
+  const { recieverMessage }= useAppSelector((state)=>state.message)
   const dispatch = useAppDispatch();
   console.log(user);
   const navigate = useNavigate();
   const handleSignOut = async () => {
-  const userId = user?.user?._id;
+    const userId = user?.user?._id;
 
-  if (user && userId) {
-    await dispatch(signOut({ id: userId }));
-    navigate("/login");
-  }
+    if (user && userId) {
+      await dispatch(signOut({ id: userId }));
+      navigate("/login");
+    }
   };
-console.log(user)
+  console.log(user);
+
+  const socket = useRef<Socket | null>(null);
+  useEffect(() => {
+  socket.current = io("ws://localhost:8800");
+    socket.current?.on("recieve-message", (data) => {
+
+      dispatch(addMessage(data));
+    });
+  }, []);
+
+
+console.log("reve", recieverMessage);
   return (
     <Navbar className="border-b border-slate-300" rounded>
       <NavbarBrand href="https://flowbite-react.com">
@@ -74,7 +89,7 @@ console.log(user)
         ) : (
           <div className="flex items-center gap-2">
             <Link to="/chat">
-              <RiMessage3Fill className="text-gray-500" size={28}/>
+              <RiMessage3Fill className="text-gray-500" size={28} />
             </Link>
             <Notifications />
             <Dropdown

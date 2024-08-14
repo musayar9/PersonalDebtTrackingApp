@@ -160,3 +160,7 @@ export interface OnlineUsers{
   userId:string;
   socketId:string
 }
+
+export interface MessageState {
+  recieverMessage: null;
+}
