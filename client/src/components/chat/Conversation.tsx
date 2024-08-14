@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Chat, User } from "../../lib/types";
+import { ChatType, User } from "../../lib/types";
 import axios from "axios";
 
 interface ConversationProps {
-  data: Chat;
+  data: ChatType;
   currentUser: string | undefined;
+  online:boolean
 }
 
-const Conversation = ({ data, currentUser }: ConversationProps) => {
+const Conversation = ({ data, currentUser, online }: ConversationProps) => {
   const [userData, setUserData] = useState<User | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -43,15 +44,26 @@ const Conversation = ({ data, currentUser }: ConversationProps) => {
     <>
       <div className="bg-slate-50 hover:bg-slate-200 transition-all cursor-pointer duration-100 ease-linear m-1 p-2 flex rounded-md  justify-between items-center ">
         <div className="relative flex gap-4 ">
-          <div className="bg-emerald-500 rounded-full absolute left-8 w-3 h-3"></div>
-          <img src={userData?.profilePicture} className="w-12 h-12 rounded-full " />
+          {online && (
+            <div className="bg-emerald-500 rounded-full absolute left-8 w-3 h-3"></div>
+          )}
+
+          <img
+            src={userData?.profilePicture}
+            className="w-12 h-12 rounded-full "
+          />
           <div className=" hidden md:flex  flex-col items-start justify-center text-md font-semibold text-gray-600">
-            <span className="">{userData?.name} {userData?.surname}</span>
-            <span className="text-sm font-normal text-gray-500">Online</span>
+            <span className="">
+              {userData?.name} {userData?.surname}
+            </span>
+            <span className={`${online ?"text-emerald-500":"text-gray-500"} text-sm font-normal `}>
+            
+            {online ? "Online":"Offline"}
+            </span>
           </div>
         </div>
       </div>
-   <hr className="my-4 w-full "></hr>
+      <hr className="my-4 w-full "></hr>
     </>
   );
 };

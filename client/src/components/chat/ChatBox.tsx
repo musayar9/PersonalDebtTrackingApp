@@ -4,7 +4,7 @@ import InputEmoji from "react-input-emoji";
 import moment from "moment";
 import "moment/locale/tr";
 import {
-  Chat,
+  ChatType,
   Messages,
   RecievedMessage,
   SendMessage,
@@ -13,7 +13,7 @@ import {
 import axios from "axios";
 import { nanoid } from "nanoid";
 interface ChatBoxProps {
-  chat: Chat | null;
+  chat: ChatType | null;
   currentUser: string | undefined;
   receivedMessage: RecievedMessage | null;
   setSendMessage: React.Dispatch<React.SetStateAction<SendMessage | null>>;
@@ -135,6 +135,9 @@ const ChatBox = ({
   }, [receivedMessage]);
   console.log("reeceived", receivedMessage);
 
+
+
+
   const scroll = useRef<HTMLDivElement | null>(null);
   const imageRef: React.MutableRefObject<HTMLInputElement | null> =
     useRef(null);
@@ -191,8 +194,8 @@ const ChatBox = ({
             <InputEmoji
               value={newMessage}
               onChange={handleChange}
-              shouldReturn={true}
-              shouldConvertEmojiToImage={true}
+              shouldReturn={false}
+              shouldConvertEmojiToImage={false}
             />
             <form
               onSubmit={handleSend}

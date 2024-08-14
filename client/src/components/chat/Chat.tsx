@@ -6,79 +6,74 @@ import Conversation from "./Conversation";
 import ChatBox from "./ChatBox";
 // import { Chat } from "../../lib/types";
 import { io, Socket } from "socket.io-client";
-import { RecievedMessage, SendMessage } from "../../lib/types";
+import { ChatType, OnlineUsers, RecievedMessage, SendMessage } from "../../lib/types";
+
+
 
 const Chat = () => {
   const { user } = useAppSelector((state) => state.user);
   const socket = useRef<Socket | null>(null);
   const [chats, setChats] = useState([]);
-  const [onlineUsers, setOnlineUsers] = useState(null);
+  const [onlineUsers, setOnlineUsers] = useState<OnlineUsers[] | null >([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [sendMessage, setSendMessage] = useState<SendMessage | null>(null);
-  const [receivedMessage, setReceivedMessage] = useState<RecievedMessage | null>(
-    null
-  );
-  console.log("receivedMessag", receivedMessage)
-    useEffect(() => {
-    if(user){
-    
-       const getChats = async () => {
-         try {
-           const res = await axios.get(`/api/v1/chat/${user?.user._id}`);
-           const data = await res.data;
-           setChats(data);
-         } catch (error) {
-           if (axios.isAxiosError(error)) {
-             console.log(error.response?.data.msg);
-           } else {
-             console.log("request failed");
-           }
-         }
-       };
-       getChats();
+  const [receivedMessage, setReceivedMessage] =
+    useState<RecievedMessage | null>(null);
+  console.log("receivedMessag", receivedMessage);
+  useEffect(() => {
+    if (user) {
+      const getChats = async () => {
+        try {
+          const res = await axios.get(`/api/v1/chat/${user?.user._id}`);
+          const data = await res.data;
+          setChats(data);
+        } catch (error) {
+          if (axios.isAxiosError(error)) {
+            console.log(error.response?.data.msg);
+          } else {
+            console.log("request failed");
+          }
+        }
+      };
+      getChats();
     }
-    
-   
-    }, []);
-  
-    useEffect(() => {
-      socket.current = io("ws://localhost:8800");
-      socket.current?.emit("new-user-add", user?.user?._id);
-      socket.current.on("get-users", (users) => {
-        setOnlineUsers(users);
-        console.log("oni", onlineUsers);
-      });
-    }, [user]);
+  }, []);
+
+  useEffect(() => {
+    socket.current = io("ws://localhost:8800");
+    socket.current?.emit("new-user-add", user?.user?._id);
+    socket.current.on("get-users", (users) => {
+      setOnlineUsers(users);
+      console.log("oni", onlineUsers);
+    });
+  }, [user]);
 
   console.log(chats, "chatd");
-  
+
   //send Meesage to socket server
-  
-  useEffect(()=>{
-    if(sendMessage !== null){
-      socket.current?.emit("send-message", sendMessage)
+
+  useEffect(() => {
+    if (sendMessage !== null) {
+      socket.current?.emit("send-message", sendMessage);
     }
-  }, [sendMessage])
-  
-  
+  }, [sendMessage]);
+
   //get the message from socket server
-  
-  useEffect(()=>{
-    socket.current?.on("recieve-message", (data)=>{
-      setReceivedMessage(data)
-    })
-  })
-  
 
-  // const checkOnlineStatus = (chat:Chat)=>{
-  //     const chatMember = chat.members.find((member)=>member !== user?.user._id);
+  useEffect(() => {
+    socket.current?.on("recieve-message", (data) => {
+      setReceivedMessage(data);
+    });
+  });
 
-  // }
+  const checkOnlineStatus = (chat:ChatType) => {
+    const chatMember = chat?.members.find((member:string) => member !== user?.user._id);
+    const online = onlineUsers?.find((user) => user?.userId === chatMember);
+    return online ? true : false;
+  };
 
-
-  
-  console.log("online", onlineUsers)
-  console.log(sendMessage, "sendMessage")
+  console.log("online", onlineUsers);
+  console.log(sendMessage, "sendMessage");
   return (
     <div>
       <div className="bg-slate-200 relative p-4 grid grid-cols-[22%_auto] gap-4">
@@ -92,7 +87,7 @@ const Chat = () => {
               {/* Example conversation item */}
               {chats?.map((chat, index) => (
                 <div key={index} onClick={() => setCurrentChat(chat)}>
-                  <Conversation data={chat} currentUser={user?.user?._id} />
+                  <Conversation data={chat} currentUser={user?.user?._id}  online={checkOnlineStatus(chat)}/>
                 </div>
               ))}
             </div>

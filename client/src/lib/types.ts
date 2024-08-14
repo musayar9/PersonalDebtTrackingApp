@@ -118,7 +118,7 @@ export interface UpcomingDebt {
   description: string;
 }
 
-export interface Chat {
+export interface ChatType {
   members: string[]; // Üye ID'lerini içeren bir string dizisi
   _id: string; // Chat'in benzersiz ID'si
   createdAt: string; // ISO formatında oluşturulma tarihi
@@ -154,4 +154,9 @@ export interface RecievedMessage {
   updatedAt: string;
   receiverId?: string;
   __v: number;
+}
+
+export interface OnlineUsers{
+  userId:string;
+  socketId:string
 }
