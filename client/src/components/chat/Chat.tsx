@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./Chat.css";
+
 import { useAppSelector } from "../../redux/hooks";
 import axios from "axios";
 import Conversation from "./Conversation";
