@@ -12,10 +12,13 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorMessage from "../../pages/ErrorMessage";
+import { useAppSelector } from "../../redux/hooks";
 
 const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
+  const { user } = useAppSelector((state) => state.user);
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleDeleteUser = async ({ id }: { id: string | undefined }) => {
     try {
@@ -31,11 +34,37 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
       }
     }
   };
+
+  console.log(errMsg);
+
+  if (errMsg) {
+    return <ErrorMessage message={errMsg} />;
+  }
+
+  const chat = {
+    senderId: user?.user._id,
+    receiverId: userDetail?._id,
+  };
+  const sendMessage = async () => {
+    try {
+      setLoading(false);
+      const res = await axios.post("/api/v1/chat", chat);
+      const data = await res.data;
+      console.log(data);
+      setLoading(true);
+      navigate("/chat");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setErrMsg(error.response?.data.msg);
+      } else {
+        setErrMsg("Request Failed");
+      }
+    }
+  };
   
-  console.log(errMsg)
-  
-  if(errMsg){
-    return <ErrorMessage message={errMsg}/>
+  if(loading){
+    return <div>Chaat yönlenriliyorsunuz</div>
+    
   }
 
   return (
@@ -115,6 +144,15 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
               </button>
             </div>
           )}
+
+          <div className="mt-8">
+            <button
+              onClick={sendMessage}
+              className={` btn btn-sm btn-circle mt-8 w-full text-emerald-500 flex items-center`}
+            >
+              send message
+            </button>
+          </div>
         </div>
       </div>
     </div>

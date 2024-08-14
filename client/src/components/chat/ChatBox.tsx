@@ -80,7 +80,9 @@ const ChatBox = ({
     if (chat !== null) getMessages();
   }, [chat]);
 
-  const handleChange = (message: string) => {
+  const handleChange = (message:string) => {
+
+  
     setNewMessage(message);
   };
   console.log(messages, "mess");
@@ -137,7 +139,6 @@ const ChatBox = ({
 
 
 
-
   const scroll = useRef<HTMLDivElement | null>(null);
   const imageRef: React.MutableRefObject<HTMLInputElement | null> =
     useRef(null);
@@ -171,12 +172,12 @@ const ChatBox = ({
                   key={message?._id}
                   className={`${
                     message?.senderId === currentUser
-                      ? "own rounded-tl-[1rem] rounded-tr-[1rem] rounded-br-none rounded-bl-[1rem] self-end"
-                      : "custom-gradient rounded-tl-[1rem] rounded-tr-[1rem] rounded-br-[1rem] rounded-bl-none"
+                      ? " bg-gradient-to-r from-cyan-500 to-blue-500 rounded-tl-[1rem] rounded-tr-[1rem] rounded-br-none rounded-bl-[1rem] self-end"
+                      : "bg-gradient-to-r from-orange-500 to-yellow-400 rounded-tl-[1rem] rounded-tr-[1rem] rounded-br-[1rem] rounded-bl-none"
                   }  text-white p-2  max-w-96 w-fit flex flex-col gap-2`}
                 >
                   <span>{message?.text}</span>
-                  <span className="text-xs text-white self-end">
+                  <span className="text-[10px] text-white self-end">
                     {moment(message.createdAt).fromNow()}
                   </span>
                 </div>
@@ -191,18 +192,25 @@ const ChatBox = ({
             >
               +{" "}
             </div>
-            <InputEmoji
-              value={newMessage}
-              onChange={handleChange}
-              shouldReturn={false}
-              shouldConvertEmojiToImage={false}
-            />
+
             <form
               onSubmit={handleSend}
-              className="flex items-center justify-center text-white border-none rounded-lg custom-gradient h-[70%] px-4 "
+              className="flex items-center gap-2 w-full"
             >
-              <button type="submit">send</button>
+              <InputEmoji
+                value={newMessage}
+                onChange={handleChange}
+                shouldReturn={false}
+                shouldConvertEmojiToImage={false}
+              />
+              <button
+                className="flex items-center justify-center text-white border-none rounded-lg custom-gradient h-[70%] px-4"
+                type="submit"
+              >
+                Send
+              </button>
             </form>
+
             <input
               ref={imageRef}
               type="file"

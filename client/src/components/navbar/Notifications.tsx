@@ -13,7 +13,7 @@ import { UpcomingDebt } from "../../lib/types";
 import { formatDateTwo, formatPrice } from "../../utils/functions";
 
 const Notifications = () => {
-  const { user } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state?.user);
    const [upcomingDebt, setUpcomingDebt] =useState<UpcomingDebt[]>([])
 
   useEffect(() => {

@@ -3,7 +3,10 @@ import { User } from '../../lib/types';
 import { FaCheck } from 'react-icons/fa';
 import { FaX } from 'react-icons/fa6';
 
+
 const UserAccountStatus = ({ userDetail }: { userDetail: User | null }) => {
+
+
   return (
     <div className="shadow-sm">
       <div className="flex  flex-col border rounded-lg gap-4 p-8">

@@ -17,12 +17,10 @@ const createChat = async (req, res, next) => {
 };
 
 const userChats = async (req, res, next) => {
-
-
   try {
     const chat = await Chat.find({
       members: { $in: [req.params.userId] },
-    });
+    }).sort({ updatedAt: -1 });
     res.status(StatusCodes.OK).json(chat);
   } catch (error) {
     next(error);

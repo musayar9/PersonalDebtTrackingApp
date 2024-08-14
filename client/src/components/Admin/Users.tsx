@@ -44,6 +44,9 @@ export const Users = () => {
     return <ErrorMessage message={error} />;
   }
   console.log("errMsg", errMsg);
+  
+  
+  
   return (
     <div className="w-full p-8">
       <>
