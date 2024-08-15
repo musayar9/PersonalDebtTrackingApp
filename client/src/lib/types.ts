@@ -163,4 +163,5 @@ export interface OnlineUsers{
 
 export interface MessageState {
   recieverMessage: RecievedMessage[][];
+  getMessage:[]
 }

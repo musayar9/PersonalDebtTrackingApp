@@ -14,6 +14,7 @@ const initialState: UsersState = {
   userUpdateStatus: "idle",
 userDeleteStatus:"idle",
   error: null,
+  
 };
 
 const userSlice = createSlice({

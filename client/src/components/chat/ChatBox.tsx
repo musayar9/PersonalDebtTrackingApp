@@ -14,6 +14,7 @@ import axios from "axios";
 import { nanoid } from "nanoid";
 import { FaPaperPlane } from "react-icons/fa";
 
+
 interface ChatBoxProps {
   chat: ChatType | null;
   currentUser: string | undefined;
@@ -33,7 +34,6 @@ const ChatBox = ({
   const [newMessage, setNewMessage] = useState("");
   const [error, setError] = useState("");
   console.log(chat, "chat");
-
 
   const [userData, setUserData] = useState<User | null>(null);
 
@@ -86,12 +86,10 @@ const ChatBox = ({
 
   // const handleChange = (message:string) => {
 
-  
   //   setNewMessage(message);
   // };
 
   console.log(error);
-
 
   const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -111,13 +109,13 @@ const ChatBox = ({
     );
     // send message tı socket serve
     setSendMessage({ ...message, receiverId });
-   
 
     // send message to database
 
     try {
       const res = await axios.post("/api/v1/message", message);
       const data = await res.data;
+
       setMessages([...messages, data]);
       setNewMessage("");
     } catch (error) {
@@ -128,6 +126,7 @@ const ChatBox = ({
       }
     }
   };
+  console.log("message", messages);
 
   useEffect(() => {
     scroll.current?.scrollIntoView({ behavior: "smooth" });
@@ -139,11 +138,8 @@ const ChatBox = ({
     console.log("message arrived", receivedMessage);
     if (receivedMessage !== null && receivedMessage?.chatId === chat?._id) {
       setMessages([...messages, receivedMessage]);
- 
     }
   }, [receivedMessage]);
-
-
 
 
   const scroll = useRef<HTMLDivElement | null>(null);
@@ -173,10 +169,10 @@ const ChatBox = ({
 
           <div className="flex flex-col gap-2 p-6 overflow-scroll ">
             <>
-              {messages?.map((message) => (
+              {messages?.map((message, index) => (
                 <div
                   ref={scroll}
-                  key={message?._id}
+                  key={index}
                   className={`${
                     message?.senderId === currentUser
                       ? " bg-gradient-to-r from-cyan-500 to-blue-500 rounded-tl-[1rem] rounded-tr-[1rem] rounded-br-none rounded-bl-[1rem] self-end"
@@ -210,9 +206,12 @@ const ChatBox = ({
                 shouldReturn={false}
                 shouldConvertEmojiToImage={false}
               /> */}
-              <input 
-              className="border border-gray-200 p-2 rounded-full focus:outline-none w-full"
-              value={newMessage} name="newMessage" onChange={(e)=>setNewMessage(e.target.value)}/>
+              <input
+                className="border border-gray-200 p-2 rounded-full focus:outline-none w-full"
+                value={newMessage}
+                name="newMessage"
+                onChange={(e) => setNewMessage(e.target.value)}
+              />
               <button
                 className="flex items-center justify-center text-white border-none rounded-full bg-gradient-to-r from-emerald-500 to-blue-500 h-[70%] -ml-2 p-2 "
                 type="submit"

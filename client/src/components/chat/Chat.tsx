@@ -6,18 +6,21 @@ import Conversation from "./Conversation";
 import ChatBox from "./ChatBox";
 // import { Chat } from "../../lib/types";
 import { io, Socket } from "socket.io-client";
-import { ChatType, OnlineUsers, RecievedMessage, SendMessage } from "../../lib/types";
+import {
+  ChatType,
+  OnlineUsers,
+  RecievedMessage,
+  SendMessage,
+} from "../../lib/types";
 import { addMessage } from "../../redux/messageSlice";
 
-
-
 const Chat = () => {
-
   const { user } = useAppSelector((state) => state?.user);
-  const dispatch = useAppDispatch()
+  const { recieverMessage } = useAppSelector((state) => state.message);
+  const dispatch = useAppDispatch();
   const socket = useRef<Socket | null>(null);
   const [chats, setChats] = useState([]);
-  const [onlineUsers, setOnlineUsers] = useState<OnlineUsers[] | null >([]);
+  const [onlineUsers, setOnlineUsers] = useState<OnlineUsers[] | null>([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [sendMessage, setSendMessage] = useState<SendMessage | null>(null);
   const [receivedMessage, setReceivedMessage] =
@@ -43,19 +46,17 @@ const Chat = () => {
   }, []);
 
   useEffect(() => {
-  if(user){
-   socket.current = io("ws://localhost:8800");
-   socket.current?.emit("new-user-add", user?.user._id);
-   socket.current.on("get-users", (users) => {
-     setOnlineUsers(users);
-     console.log("oni", onlineUsers);
-   });
-  }
-  
-   
+    if (user) {
+      socket.current = io("ws://localhost:8800");
+      socket.current?.emit("new-user-add", user?.user._id);
+      socket.current.on("get-users", (users) => {
+        setOnlineUsers(users);
+        // console.log("oni", onlineUsers);
+      });
+    }
   }, [user]);
 
-  console.log(chats, "chatd");
+  // console.log(chats, "chatd");
 
   //send Meesage to socket server
 
@@ -66,16 +67,22 @@ const Chat = () => {
   }, [sendMessage]);
 
   //get the message from socket server
-
+  const [testData, setTestData] = useState<RecievedMessage[]>([]);
   useEffect(() => {
     socket.current?.on("recieve-message", (data) => {
       setReceivedMessage(data);
-      dispatch(addMessage(data))
+      // dispatch(addMessage(data))
+      setTestData([...testData, data]);
+
+      dispatch(addMessage([...recieverMessage, data]));
     });
   });
-
-  const checkOnlineStatus = (chat:ChatType) => {
-    const chatMember = chat?.members.find((member:string) => member !== user?.user._id);
+  // console.log("add", recieverMessage);
+  // console.log("seete tes", testData);
+  const checkOnlineStatus = (chat: ChatType) => {
+    const chatMember = chat?.members.find(
+      (member: string) => member !== user?.user._id
+    );
     const online = onlineUsers?.find((user) => user?.userId === chatMember);
     return online ? true : false;
   };
@@ -95,7 +102,11 @@ const Chat = () => {
               {/* Example conversation item */}
               {chats?.map((chat, index) => (
                 <div key={index} onClick={() => setCurrentChat(chat)}>
-                  <Conversation data={chat} currentUser={user?.user?._id}  online={checkOnlineStatus(chat)}/>
+                  <Conversation
+                    data={chat}
+                    currentUser={user?.user?._id}
+                    online={checkOnlineStatus(chat)}
+                  />
                 </div>
               ))}
             </div>

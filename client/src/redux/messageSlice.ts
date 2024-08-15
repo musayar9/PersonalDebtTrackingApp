@@ -3,6 +3,7 @@ import { MessageState, } from "../lib/types";
 
 const initialState: MessageState = {
   recieverMessage: [],
+  getMessage:[]
 };
 
 const messageSlice = createSlice({
@@ -16,8 +17,12 @@ const messageSlice = createSlice({
 
       state.recieverMessage =  action.payload
     },
+    
+    deleteMessage :(state, action)=>{
+      state.recieverMessage = action.payload
+    }
   },
 });
 
-export const { addMessage } = messageSlice.actions;
+export const { addMessage,deleteMessage } = messageSlice.actions;
 export default messageSlice.reducer;
