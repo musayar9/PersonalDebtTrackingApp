@@ -130,25 +130,6 @@ export interface Messages {
   _id: string;
   text: string;
   senderId: string;
-  chatId:string;
-  createdAt: string;
-  updatedAt: string;
-  receiverId?:string,
-  __v: number;
-}
-
-
-export interface SendMessage{
-  senderId:string | undefined,
-    text:string,
-    chatId:string | undefined;
-    receiverId?:string 
-}
-
-export interface RecievedMessage {
-  _id: string;
-  text: string;
-  senderId: string;
   chatId: string;
   createdAt: string;
   updatedAt: string;
@@ -156,12 +137,42 @@ export interface RecievedMessage {
   __v: number;
 }
 
-export interface OnlineUsers{
-  userId:string;
-  socketId:string
+export interface SendMessage {
+  senderId: string | undefined;
+  text: string;
+  chatId: string | undefined;
+  receiverId?: string;
+}
+
+export interface RecievedMessage {
+  _id: string;
+  text: string;
+  senderId: string | undefined;
+  chatId: string;
+  createdAt: string;
+  updatedAt: string;
+  receiverId?: string;
+  profilePicture:string,
+  senderName:string,
+  __v: number;
+}
+
+export interface OnlineUsers {
+  userId: string;
+  socketId: string;
+}
+export interface ComingMessages {
+  senderId: string | undefined;
+  receiverId: string | undefined;
+  receiverUser: string | undefined;
+  senderUser: string;
+  message: string;
+  msgDate: string;
+  profilePicture:string
 }
 
 export interface MessageState {
-  recieverMessage: RecievedMessage[][];
-  getMessage:[]
+  recieverMessage:RecievedMessage;
+  inComingMessage: ComingMessages[][];
+  messageCount: number;
 }

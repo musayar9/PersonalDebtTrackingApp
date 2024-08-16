@@ -5,7 +5,7 @@ import moment from "moment";
 import "moment/locale/tr";
 import {
   ChatType,
-  Messages,
+
   RecievedMessage,
   SendMessage,
   User,
@@ -13,6 +13,7 @@ import {
 import axios from "axios";
 import { nanoid } from "nanoid";
 import { FaPaperPlane } from "react-icons/fa";
+import { useAppSelector } from "../../redux/hooks";
 
 
 interface ChatBoxProps {
@@ -28,9 +29,9 @@ const ChatBox = ({
   receivedMessage,
   setSendMessage,
 }: ChatBoxProps) => {
-  // const { user } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.user);
 
-  const [messages, setMessages] = useState<Messages[]>([]);
+  const [messages, setMessages] = useState<RecievedMessage[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [error, setError] = useState("");
   console.log(chat, "chat");
@@ -99,6 +100,8 @@ const ChatBox = ({
       createdAt: new Date(),
       updatedAt: new Date(),
       senderId: currentUser,
+      profilePicture:user?.user.profilePicture,
+      senderName: user?.user.name + " " + user?.user.surname,
       text: newMessage,
       chatId: chat?._id,
       __v: 0,

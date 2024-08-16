@@ -16,7 +16,7 @@ import { addMessage } from "../../redux/messageSlice";
 
 const Chat = () => {
   const { user } = useAppSelector((state) => state?.user);
-  const { recieverMessage } = useAppSelector((state) => state.message);
+
   const dispatch = useAppDispatch();
   const socket = useRef<Socket | null>(null);
   const [chats, setChats] = useState([]);
@@ -25,7 +25,7 @@ const Chat = () => {
   const [sendMessage, setSendMessage] = useState<SendMessage | null>(null);
   const [receivedMessage, setReceivedMessage] =
     useState<RecievedMessage | null>(null);
-  console.log("receivedMessag", receivedMessage);
+
   useEffect(() => {
     if (user) {
       const getChats = async () => {
@@ -74,7 +74,8 @@ const Chat = () => {
       // dispatch(addMessage(data))
       setTestData([...testData, data]);
 
-      dispatch(addMessage([...recieverMessage, data]));
+      // dispatch(addMessage([...recieverMessage, data]));
+      dispatch(addMessage(data));
     });
   });
   // console.log("add", recieverMessage);

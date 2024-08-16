@@ -15,17 +15,19 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Notifications from "./Notifications";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { signOut } from "../../redux/dataFetch";
-import { UsersState } from "../../lib/types";
+import {  UsersState } from "../../lib/types";
 
 import { useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
-import { addMessage } from "../../redux/messageSlice";
+import { addMessage, setInComingMessage } from "../../redux/messageSlice";
 import MessageNotifications from "./MessageNotifications";
+import axios from "axios";
 export function NavbarComponent() {
   const { user } = useAppSelector((state: { user: UsersState }) => state?.user);
   const { pathname } = useLocation();
+
   console.log(pathname, "pathname");
-  const { recieverMessage } = useAppSelector((state) => state?.message);
+  const { recieverMessage, inComingMessage } = useAppSelector((state) => state?.message);
   const dispatch = useAppDispatch();
 
   console.log(user);
@@ -50,7 +52,30 @@ export function NavbarComponent() {
     });
   });
 
+  useEffect(() => {
+    if (recieverMessage) {
+      const senderUser = async () => {
+        const res = await axios.get(
+          `/api/v1/auth/${recieverMessage?.senderId}`
+        );
+        const data = await res.data;
+
+
+
+      if(pathname!=="/chat" && recieverMessage._id !== data._id){
+        dispatch(setInComingMessage([...inComingMessage, recieverMessage]));
+      }
+        // setInComingMessages([...inComingMessages, comingMessages]);
+      
+        console.log(data, "recenacvarn");
+      };
+
+      senderUser();
+    }
+  }, [recieverMessage]);
+
   console.log("reve", recieverMessage);
+console.log("inceoming message,", inComingMessage)
 
   return (
     <Navbar className="border-b border-slate-300" rounded>

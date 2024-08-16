@@ -12,7 +12,7 @@ import Success from "./components/Success";
 import { NavbarComponent } from "./components/navbar/Navbar";
 import UserDetail from "./components/Admin/UserDetail";
 import Chat from "./components/chat/Chat";
-
+import  { Toaster } from "react-hot-toast";
 const App: React.FC = () => {
   return (
     <div>
@@ -36,6 +36,7 @@ const App: React.FC = () => {
         <Route path="/success" element={<Success />} />
         <Route />
       </Routes>
+      <Toaster/>
     </div>
   );
 };
