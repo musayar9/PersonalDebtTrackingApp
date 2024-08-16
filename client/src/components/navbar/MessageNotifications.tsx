@@ -1,18 +1,22 @@
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { RiMessage3Fill } from "react-icons/ri";
 import { setDeleteInComingMessage } from "../../redux/messageSlice";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
+import { RecievedMessage } from "../../lib/types";
 
 const MessageNotifications = () => {
   const { inComingMessage, recieverMessage } = useAppSelector(
     (state) => state.message
   );
+  
+  
 
   const dispatch = useAppDispatch();
+  const { pathname } = useLocation();
   useEffect(() => {
-    if (inComingMessage?.length > 0) {
+    if (pathname !== "/chat" && inComingMessage?.length >= 0) {
       toast.custom((t) => (
         <div
           className={`${
@@ -51,6 +55,26 @@ const MessageNotifications = () => {
     }
   }, [recieverMessage]);
 
+  const messageGroup = inComingMessage?.reduce<
+    Array<Record<string, RecievedMessage[]>>
+  >((acc, person) => {
+    const key = person?.senderName;
+
+    // Önceden var olan grup var mı diye kontrol ediyoruz
+    const group = acc.find((group) => group[key]);
+
+    if (group) {
+      // Eğer grup varsa, mevcut gruba ekliyoruz
+      group[key].push(person);
+    } else {
+      // Eğer grup yoksa, yeni bir grup oluşturup diziye ekliyoruz
+      acc.push({ [key]: [person] });
+    }
+
+    return acc;
+  }, []);
+
+  console.log(messageGroup); // ageGroup dizisinin uzunluğunu verir
   return (
     <div className="relative flex items-center">
       {inComingMessage?.length > 0 && (

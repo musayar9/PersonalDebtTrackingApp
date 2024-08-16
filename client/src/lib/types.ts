@@ -165,7 +165,7 @@ export interface ComingMessages {
   senderId: string | undefined;
   receiverId: string | undefined;
   receiverUser: string | undefined;
-  senderUser: string;
+  senderName: string;
   message: string;
   msgDate: string;
   profilePicture:string
@@ -173,6 +173,6 @@ export interface ComingMessages {
 
 export interface MessageState {
   recieverMessage:RecievedMessage;
-  inComingMessage: ComingMessages[][];
+  inComingMessage: RecievedMessage[] ;
   messageCount: number;
 }
