@@ -1,22 +1,24 @@
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Link, useLocation } from "react-router-dom";
 import { RiMessage3Fill } from "react-icons/ri";
-import { setDeleteInComingMessage } from "../../redux/messageSlice";
+
 import toast from "react-hot-toast";
 import { useEffect } from "react";
+import { Dropdown, DropdownHeader } from "flowbite-react";
+import { formatDateTwo } from "../../utils/functions";
 import { RecievedMessage } from "../../lib/types";
+import moment from "moment";
+import { deleteMessage, setDeleteInComingMessage } from "../../redux/messageSlice";
 
 const MessageNotifications = () => {
-  const { inComingMessage, recieverMessage } = useAppSelector(
+  const { inComingMessage, recieverMessage, messageGroup } = useAppSelector(
     (state) => state.message
   );
-  
-  
-
   const dispatch = useAppDispatch();
+
   const { pathname } = useLocation();
   useEffect(() => {
-    if (pathname !== "/chat" && inComingMessage?.length >= 0) {
+    if (pathname !== "/chat" && inComingMessage?.length >= 0 && recieverMessage) {
       toast.custom((t) => (
         <div
           className={`${
@@ -55,26 +57,26 @@ const MessageNotifications = () => {
     }
   }, [recieverMessage]);
 
-  const messageGroup = inComingMessage?.reduce<
-    Array<Record<string, RecievedMessage[]>>
-  >((acc, person) => {
-    const key = person?.senderName;
+  console.log(messageGroup);
 
-    // Önceden var olan grup var mı diye kontrol ediyoruz
-    const group = acc.find((group) => group[key]);
+  interface MessageGroupMap {
+    name: string;
+    data: RecievedMessage[] | null;
+  }
+  // ageGroup dizisinin uzunluğunu verir
+  const messageGroupMap: MessageGroupMap[] =
+    messageGroup?.map((item) => {
+      // Since each item is an object with one key, we can extract the key and value
+      const [name, data] = Object.entries(item)[0];
 
-    if (group) {
-      // Eğer grup varsa, mevcut gruba ekliyoruz
-      group[key].push(person);
-    } else {
-      // Eğer grup yoksa, yeni bir grup oluşturup diziye ekliyoruz
-      acc.push({ [key]: [person] });
-    }
+      return {
+        name: name,
+        data: data,
+      };
+    }) || [];
 
-    return acc;
-  }, []);
+  console.log(messageGroupMap);
 
-  console.log(messageGroup); // ageGroup dizisinin uzunluğunu verir
   return (
     <div className="relative flex items-center">
       {inComingMessage?.length > 0 && (
@@ -83,9 +85,83 @@ const MessageNotifications = () => {
         </div>
       )}
 
-      <Link to="/chat" onClick={() => dispatch(setDeleteInComingMessage([]))}>
-        <RiMessage3Fill className="text-gray-500" size={28} />
-      </Link>
+      <Dropdown
+        className="w-96  rounded-xl border shadow-sm"
+        arrowIcon={false}
+        inline
+        label={<RiMessage3Fill className="text-gray-500 z-100" size={28} />}
+      >
+        <DropdownHeader className="flex items-center justify-between rounded-lg">
+          <span className="block text-sm font-bold text-slate-600">
+            InComingMessages
+          </span>
+          <span className="block truncate text-sm font-medium">
+            {formatDateTwo(new Date().toDateString())}
+          </span>
+        </DropdownHeader>
+        <div className=" p-2 space-y-2 border-b border-gray-200">
+          {messageGroupMap?.length > 0 ? (
+            <>
+              {messageGroupMap?.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between gap-2 p-2 border-b border-slate-200 hover:bg-yellow-100 rounded-md hover:cursor-pointer"
+                >
+                  <div className="flex items-center gap-2">
+                    {item.data && item.data.length > 0 ? (
+                      <img
+                        className="w-12 h-12 rounded-full"
+                        src={item.data[0].profilePicture}
+                        alt={`Profile picture of ${item.name}`}
+                      />
+                    ) : (
+                      <img src="https://t4.ftcdn.net/jpg/00/65/77/27/360_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg" /> // veya alternatif bir içerik
+                    )}
+                    <div className="flex flex-col items-start justify-center">
+                      <p className="text-md text-slate-600 font-semibold">
+                        {" "}
+                        {item.name}
+                      </p>
+                      <p className="text-sm  italic font-semibold text-slate-400">
+                        {item.data?.length} new message
+                      </p>
+                    </div>
+                  </div>
+                  <p>
+                    {" "}
+                    {item.data && item.data.length > 0 && (
+                      <p className="text-sm text-slate-500">
+                        {moment(
+                          item?.data[item?.data.length - 1].createdAt
+                        ).fromNow()}
+                      </p>
+                    )}
+                  </p>
+                </div>
+              ))}
+            </>
+          ) : (
+            <p className="capitalize text-center text-gray-500 font-semibold">you don't have any new messages</p>
+          )}
+        </div>
+
+        <div className="flex items-center  mt-1 mb-2">
+          <Link
+            className="flex items-center p-2 gap-1 font-semibold group duration-150 ease-in"
+            to="/chat"
+            onClick={() => {dispatch(setDeleteInComingMessage([]))
+            dispatch(deleteMessage([]))
+            }}
+          >
+            <RiMessage3Fill
+              className="text-gray-500 group-hover:text-blue-600"
+              size={28}
+            />
+
+            <span className="group-hover:text-blue-600">Show All Messages</span>
+          </Link>
+        </div>
+      </Dropdown>
     </div>
   );
 };

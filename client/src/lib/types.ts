@@ -152,9 +152,9 @@ export interface RecievedMessage {
   createdAt: string;
   updatedAt: string;
   receiverId?: string;
-  profilePicture:string,
-  senderName:string,
-  __v: number;
+  profilePicture: string;
+  senderName: string;
+  __v?: number;
 }
 
 export interface OnlineUsers {
@@ -168,11 +168,16 @@ export interface ComingMessages {
   senderName: string;
   message: string;
   msgDate: string;
-  profilePicture:string
+  profilePicture: string;
+}
+
+export interface MessageGroup {
+  [senderName: string]: RecievedMessage[];
 }
 
 export interface MessageState {
-  recieverMessage:RecievedMessage;
-  inComingMessage: RecievedMessage[] ;
+  recieverMessage: RecievedMessage | null;
+  inComingMessage: RecievedMessage[];
   messageCount: number;
+  messageGroup: MessageGroup[] | null;
 }

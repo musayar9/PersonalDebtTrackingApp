@@ -15,7 +15,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Notifications from "./Notifications";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { signOut } from "../../redux/dataFetch";
-import {  UsersState } from "../../lib/types";
+import { UsersState } from "../../lib/types";
 
 import { useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
@@ -27,7 +27,9 @@ export function NavbarComponent() {
   const { pathname } = useLocation();
 
   console.log(pathname, "pathname");
-  const { recieverMessage, inComingMessage } = useAppSelector((state) => state?.message);
+  const { recieverMessage, inComingMessage } = useAppSelector(
+    (state) => state?.message
+  );
   const dispatch = useAppDispatch();
 
   console.log(user);
@@ -60,13 +62,11 @@ export function NavbarComponent() {
         );
         const data = await res.data;
 
-
-
-      if(pathname!=="/chat" && recieverMessage._id !== data._id){
-        dispatch(setInComingMessage([...inComingMessage, recieverMessage]));
-      }
+        if (pathname !== "/chat" && recieverMessage._id !== data._id) {
+          dispatch(setInComingMessage([...inComingMessage, recieverMessage]));
+        }
         // setInComingMessages([...inComingMessages, comingMessages]);
-      
+
         console.log(data, "recenacvarn");
       };
 
@@ -75,7 +75,7 @@ export function NavbarComponent() {
   }, [recieverMessage]);
 
   console.log("reve", recieverMessage);
-console.log("inceoming message,", inComingMessage)
+  console.log("inceoming message,", inComingMessage);
 
   return (
     <Navbar className="border-b border-slate-300" rounded>

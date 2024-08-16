@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { MessageState } from "../lib/types";
+import { MessageGroup, MessageState } from "../lib/types";
 
 const initialState: MessageState = {
   recieverMessage: null,
   inComingMessage: [],
   messageCount: 0,
+  messageGroup: [],
 };
 
 const messageSlice = createSlice({
@@ -21,13 +22,30 @@ const messageSlice = createSlice({
 
     setInComingMessage: (state, action) => {
       state.inComingMessage = action.payload;
+      state.messageGroup = state.inComingMessage.reduce<MessageGroup[]>((acc, person) => {
+        const key:string = person.senderName;
+        const group = acc.find((group) => group[key]);
+        if (group) {
+          group[key].push(person);
+        } else {
+          acc.push({ [key]: [person] });
+        }
+
+        return acc;
+      }, []);
     },
-    
-    setDeleteInComingMessage: (state,action)=>{
-      state.inComingMessage = action.payload
-    }
+
+    setDeleteInComingMessage: (state, action) => {
+      state.inComingMessage = action.payload;
+      state.messageGroup= action.payload
+    },
   },
 });
 
-export const { addMessage, deleteMessage, setInComingMessage, setDeleteInComingMessage } = messageSlice.actions;
+export const {
+  addMessage,
+  deleteMessage,
+  setInComingMessage,
+  setDeleteInComingMessage,
+} = messageSlice.actions;
 export default messageSlice.reducer;
