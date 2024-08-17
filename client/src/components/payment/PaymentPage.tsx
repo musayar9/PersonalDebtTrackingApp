@@ -8,25 +8,29 @@ import useDebtData from "../../utils/customHooks";
 import Loading from "../../pages/Loading";
 import CheckoutForm from "../CheckoutForm";
 import PaymentPageDetail from "./PaymentPageDetail";
-
+import ErrorMessage from "../../pages/ErrorMessage";
 
 const PaymentPage = () => {
   const [stripePromise, setStripePromise] = useState<Stripe | null>(null);
 
   const [clientSecret, setClientSecret] = useState("");
   const params = useParams();
-  console.log(params);
+  const [errMsg, setErrMsg] = useState("");
   const { loading } = useDebtData({ id: params?.debtId });
   useEffect(() => {
     const getStripeConfig = async () => {
       try {
         const res = await axios.get("/api/v1/stripe");
         const data = await res.data;
-        console.log("data", data);
+
         const stripe = await loadStripe(data?.publishableKey);
         setStripePromise(stripe);
       } catch (error) {
-        console.log(error);
+        if (axios.isAxiosError(error)) {
+          setErrMsg(error.message);
+        }else{
+          setErrMsg("Request Failed")
+        }
       }
     };
 
@@ -38,13 +42,16 @@ const PaymentPage = () => {
       const createPayment = async () => {
         try {
           const res = await axios.post("/api/v1/stripe/create-payment", params);
-          console.log(res);
+    
           const data = res.data;
 
-          console.log("createPayment data", data);
           setClientSecret(data.clientSecret);
         } catch (error) {
-          console.log(error);
+         if (axios.isAxiosError(error)) {
+           setErrMsg(error.message);
+         } else {
+           setErrMsg("Request Failed");
+         }
         }
       };
 
@@ -52,12 +59,17 @@ const PaymentPage = () => {
     }
   }, []);
 
-  console.log(stripePromise, "stripe");
-  console.log("clientSecret", clientSecret);
+
   if (loading) {
-    return  <div className="flex items-center justify-center h-screen">
-      <Loading />;
-    </div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loading />;
+      </div>
+    );
+  }
+  
+  if(errMsg){
+    return <ErrorMessage message={errMsg}/>
   }
   return (
     <div className="max-w-6xl mx-auto ">
@@ -78,7 +90,10 @@ const PaymentPage = () => {
                 You can make your payment safely using Debit or Credit Card.
               </p>
               <Elements stripe={stripePromise} options={{ clientSecret }}>
-                <CheckoutForm debtId={params.debtId} paymentId={params.paymentId} />
+                <CheckoutForm
+                  debtId={params.debtId}
+                  paymentId={params.paymentId}
+                />
               </Elements>
             </>
           )}

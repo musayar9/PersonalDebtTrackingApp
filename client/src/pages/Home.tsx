@@ -1,23 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useAppSelector } from "../redux/hooks";
-import { fetchCountries } from "../redux/dataFetch";
-import { CountryData } from "../lib/types";
 
+import { useAppSelector } from "../redux/hooks";
 
 const Home: React.FC = () => {
   const { user } = useAppSelector((state) => state.user);
-  const [countries, setCountries] = useState<CountryData[]>([]);
-
-  useEffect(() => {
-    const fetchAndSetCountries = async () => {
-      const countryData = await fetchCountries();
-      setCountries(countryData);
-    };
-
-    fetchAndSetCountries();
-  }, []);
-
-  console.log(countries);
 
   return (
     <div className="max-w-3xl mx-auto">

@@ -35,8 +35,7 @@ const Login = () => {
     dispatch(loginUser({ formData }));
   };
 
-  console.log("user", user);
-  console.log("eerr", error);
+
 
   useEffect(() => {
     if (user && user?.response?.status !== 400) {
@@ -60,7 +59,7 @@ const Login = () => {
       }, 3000);
     }
   }, [user]);
-  console.log("errMsg", errMsg);
+
   return (
     <div className="">
       <div className="flex p-3 max-w-5xl mx-auto flex-col md:flex-row md:items-center gap-5">

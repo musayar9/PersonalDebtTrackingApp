@@ -23,8 +23,6 @@ const CheckoutForm = ({ debtId, paymentId }: CheckoutFormProps) => {
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
 
-  console.log(errMsg);
-  console.log("parmas chec", debtId, paymentId);
   useEffect(() => {
     if (message || errMsg) {
       setTimeout(() => {
@@ -57,7 +55,7 @@ const CheckoutForm = ({ debtId, paymentId }: CheckoutFormProps) => {
           `/api/v1/debt/paymentDebt/${debtId}/${paymentId}`
         );
         const data = await res.data;
-        console.log(data, "data");
+
 
         navigate("/success");
         setMessage(`${paymentIntent.status + data.message}`);

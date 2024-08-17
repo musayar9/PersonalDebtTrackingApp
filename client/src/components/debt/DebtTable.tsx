@@ -25,13 +25,14 @@ const DebtTable = ({ debt, setDebt }: DebtTableProps) => {
       const data = await res.data;
 
       const deleteDebt = debt.filter((d) => d._id !== debtId);
-      console.log(deleteDebt);
+
       setDebt(deleteDebt);
       setShowModal(false);
-      console.log(data);
+
       setErrMsg("");
+      return data
     } catch (error) {
-      console.log(error);
+ 
       if (axios.isAxiosError(error)) {
         setErrMsg(error.response?.data.msg);
       } else {
@@ -44,7 +45,7 @@ const DebtTable = ({ debt, setDebt }: DebtTableProps) => {
       }, 3000);
     }
   };
-  console.log("errMsg", errMsg);
+
   return (
     <div className="overflow-x-auto my-8 ">
       <table className="table table-sm ">

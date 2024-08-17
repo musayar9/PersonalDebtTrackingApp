@@ -3,6 +3,7 @@ import { DebtData, User } from "../lib/types";
 import axios from "axios";
 import { useAppSelector } from "../redux/hooks";
 
+
 const useDebtData = ({ id }: { id: string | undefined }) => {
   const [debt, setDebt] = useState<DebtData>();
   const [loading, setLoading] = useState(true);
@@ -52,7 +53,7 @@ export const useFetchUserDebt = () => {
           setLoading(false);
         } catch (error) {
           setLoading(false);
-          console.log(error);
+
           if (axios.isAxiosError(error)) {
             setErrMsg(error.response?.data.msg);
           } else {
@@ -75,6 +76,7 @@ export const useGetPaymentStatus = ({
   paymentStatus: string;
 }) => {
   const [groupDebt, setGroupDebt] = useState<DebtData[]>([]);
+  const [errMsg, setErrMsg] = useState("")
 
   useEffect(() => {
     const fetchPaymentStatus = async () => {
@@ -83,17 +85,21 @@ export const useGetPaymentStatus = ({
           paymentStatus,
         });
         const data = await res.data;
-        console.log("group data", data);
+
         setGroupDebt(data);
       } catch (error) {
-        console.log(error);
+        if (axios.isAxiosError(error)) {
+          setErrMsg(error.message);
+        } else {
+          setErrMsg("Request Failed");
+        }
       }
     };
 
     fetchPaymentStatus();
   }, []);
 
-  return { groupDebt };
+  return { groupDebt, errMsg };
 };
 
 export const useGetAllUsers = () => {
@@ -121,6 +127,6 @@ export const useGetAllUsers = () => {
 
     getAllUsers();
   }, []);
-  
-  return {allUsers, setAllUsers, loading, error}
+
+  return { allUsers, setAllUsers, loading, error };
 };

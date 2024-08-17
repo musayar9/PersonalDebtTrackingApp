@@ -3,11 +3,12 @@ import { addMonths, format, isToday, isValid, parseISO } from "date-fns";
 import axios from "axios";
 import { MdErrorOutline } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { CreateDebt } from "../../lib/types";
+import { CreateDebt, UpdateDebt } from "../../lib/types";
 import FormInput from "../FormInput";
 import { formattedDate } from "../../utils/functions";
 import FormTextArea from "../FormTextArea";
 import AlertMessage from "../AlertMessage";
+import { FaCheck } from "react-icons/fa";
 
 interface EditDebtProps {
   id: string | undefined;
@@ -20,10 +21,10 @@ const EditDebtPage: React.FC<EditDebtProps> = ({
   formData,
   setFormData,
 }) => {
-  const [updateDebt, setUpdateDebt] = useState(null);
+  const [updateDebt, setUpdateDebt] = useState<UpdateDebt | null>(null);
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  console.log("updetedebt id", id);
+
   
   const navigate = useNavigate()
   
@@ -73,13 +74,13 @@ const EditDebtPage: React.FC<EditDebtProps> = ({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+
 
     try {
       setLoading(true);
       const res = await axios.put(`/api/v1/debt/updateDebt/${id}`, formData);
       const data = await res.data;
-      console.log(data, "data");
+
       setUpdateDebt(data);
       setLoading(false);
       navigate("/dashboard?tab=debt");
@@ -239,6 +240,11 @@ const EditDebtPage: React.FC<EditDebtProps> = ({
           message={errMsg}
         />
       )}
+      
+      {updateDebt && <AlertMessage icon={<FaCheck size={28}/>} 
+      color={"bg-blue-600"}
+      message={updateDebt?.message}
+      />}
       ;
     </div>
   );

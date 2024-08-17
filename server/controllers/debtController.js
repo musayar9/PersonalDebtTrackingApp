@@ -90,7 +90,7 @@ const getDebtId = async (req, res, next) => {
 
   try {
     const debt = await Debt.findById({ _id: id }).exec();
-    // console.log(debt);
+
     if (!debt) {
       throw new BadRequestError("Not Found Debt");
     }
@@ -119,7 +119,7 @@ const getPaymentPlan = async (req, res, next) => {
 };
 
 const createDebt = async (req, res, next) => {
-  // console.log(req.user);
+
   const id = req.user.id;
 
   const debt = new Debt({
@@ -167,7 +167,7 @@ const updateDebt = async (req, res, next) => {
     }
 
     const debt = await Debt.findById({ _id: id });
-    // console.log(debt);
+
     if (!debt) {
       throw new BadRequestError("Kayıtlı borç bullamadır");
     }
@@ -234,7 +234,7 @@ const updatePaymentDebt = async (req, res, next) => {
 
 const getPaymentStatus = async (req, res, next) => {
   const { paymentStatus } = req.body;
-  console.log("server", paymentStatus);
+
   const userId = req.user.id;
   try {
     const checkDebt = await Debt.find({ userId, paymentStatus }).sort({
@@ -254,7 +254,7 @@ const getPaymentStatus = async (req, res, next) => {
 const deleteDebt = async (req, res, next) => {
   const { id } = req.params;
   const userId = req.user.id;
-  // console.log("id", id);
+
 
   try {
     const isDebt = await Debt.findById({ _id: id });

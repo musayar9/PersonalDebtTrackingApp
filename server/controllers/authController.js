@@ -50,15 +50,15 @@ const register = async (req, res, next) => {
         "Success! User Created, A verification code has been sent to your email.",
     });
   } catch (error) {
-    console.log(error);
+
     next(error);
   }
 };
 
 const login = async (req, res, next) => {
-  console.log(req.body);
+
   const { email, password } = req.body;
-  console.log(email, password);
+
   try {
     if (email === "" || password === "") {
       throw new BadRequestError("Please Provide Email and Password");
@@ -81,7 +81,7 @@ const login = async (req, res, next) => {
       process.env.JWT_SECRET,
       { expiresIn: "4h" }
     );
-    // console.log(isUser._doc);
+
     return res
       .status(StatusCodes.OK)
       .cookie("token", token, {
@@ -109,12 +109,11 @@ const updateUser = async (req, res, next) => {
     phone,
     profilePicture,
   } = req.body;
-  console.log(req.body);
+
   const { id } = req.params;
   const userId = req.user.id;
 
-  console.log(req.params.id);
-  console.log(req.user);
+
 
   if (id !== userId) {
     return res.status(400).json({ error: "You mustn't update this user" });

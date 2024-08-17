@@ -15,12 +15,9 @@ const PaymentPageDetail: React.FC<PaymentPageDetailProps> = ({
   paymentId,
 }) => {
 const {user} = useAppSelector((state)=>state.user)
-  const { debt, errMsg } = useDebtData({ id });
+  const { debt} = useDebtData({ id });
   const selectPayment = debt?.paymentPlan?.find((d) => d?._id === paymentId);
-  console.log(selectPayment);
- 
-  console.log(debt);
-  console.log(errMsg);
+
   return (
     <div className="my-4 ">
       <Link

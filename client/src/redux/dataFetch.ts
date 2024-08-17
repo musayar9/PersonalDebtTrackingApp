@@ -26,17 +26,20 @@ export const loginUser: AsyncThunk<
 
 export const signOut: AsyncThunk<
   { message: string },
-  { id: string  | undefined},
+  { id: string | undefined },
   Record<string, never>
-> = createAsyncThunk("user/signOut", async ({ id }: { id: string | undefined }) => {
-  try {
-    const res = await axios.get(`/api/v1/auth/signOut/${id}`);
-    const data = await res.data;
-    return data;
-  } catch (error) {
-    return error;
+> = createAsyncThunk(
+  "user/signOut",
+  async ({ id }: { id: string | undefined }) => {
+    try {
+      const res = await axios.get(`/api/v1/auth/signOut/${id}`);
+      const data = await res.data;
+      return data;
+    } catch (error) {
+      return error;
+    }
   }
-});
+);
 
 interface UpdateUserArgs {
   id: string;
@@ -82,13 +85,16 @@ export const deleteUser = createAsyncThunk<
   }
 });
 
-export const fetchCountries = async (): Promise<CountryData[]> => {
+export const fetchCountries = async () => {
   try {
     const res = await axios.get("/api/v1/countries");
     const data: CountryData[] = await res.data;
     return data;
   } catch (error) {
-    console.log(error);
-    return [];
+    if (axios.isAxiosError(error)) {
+      return error.message;
+    } else {
+      return "request failed";
+    }
   }
 };

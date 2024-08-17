@@ -26,13 +26,12 @@ export function NavbarComponent() {
   const { user } = useAppSelector((state: { user: UsersState }) => state?.user);
   const { pathname } = useLocation();
 
-  console.log(pathname, "pathname");
   const { recieverMessage, inComingMessage } = useAppSelector(
     (state) => state?.message
   );
   const dispatch = useAppDispatch();
 
-  console.log(user);
+
   const navigate = useNavigate();
   const handleSignOut = async () => {
     const userId = user?.user?._id;
@@ -45,13 +44,13 @@ export function NavbarComponent() {
       navigate("/login");
     }
   };
-  console.log(user);
+
 
   const socket = useRef<Socket | null>(null);
   useEffect(() => {
     socket.current = io("ws://localhost:8800");
     socket.current?.on("recieve-message", (data) => {
-      console.log("data, ", data);
+
 
       dispatch(addMessage(data));
     });
@@ -68,17 +67,14 @@ export function NavbarComponent() {
         if (pathname !== "/chat" && recieverMessage._id !== data._id) {
           dispatch(setInComingMessage([...inComingMessage, recieverMessage]));
         }
-        // setInComingMessages([...inComingMessages, comingMessages]);
-
-        console.log(data, "recenacvarn");
+ 
       };
 
       senderUser();
     }
   }, [recieverMessage]);
 
-  console.log("reve", recieverMessage);
-  console.log("inceoming message,", inComingMessage);
+
 
   return (
     <Navbar className="border-b border-slate-300" rounded>

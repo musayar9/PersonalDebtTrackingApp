@@ -32,7 +32,7 @@ const Register = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  console.log(formData);
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -49,13 +49,13 @@ const Register = () => {
 
       if (response.status !== 201) {
         setErrMsg(response.data.msg);
-        console.log("47");
+   
         setError(true);
-        console.log;
+  
       }
 
       const data = await response.data;
-      console.log("data", data);
+
       setInfoMsg(data.message);
       setLoading(false);
       return data;
@@ -65,7 +65,7 @@ const Register = () => {
       if (axios.isAxiosError(error)) {
         setErrMsg(error.response?.data.msg);
       } else {
-        // console.log("An unexpected error occurred", setErrMsg);
+
         setErrMsg("Request failed");
       }
 
@@ -77,7 +77,7 @@ const Register = () => {
       }
     }
   };
-  console.log(errMsg);
+
   return (
     <div className="">
       <div className="flex p-3 max-w-5xl mx-auto flex-col md:flex-row md:items-center gap-5">

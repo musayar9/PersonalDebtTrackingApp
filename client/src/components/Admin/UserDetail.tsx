@@ -9,7 +9,6 @@ import UserDetailDebtInfo from "./UserDetailDebtInfo";
 
 const UserDetail = () => {
   const { userId } = useParams();
-  console.log(userId, "params");
 
   const [userDetail, setUserDetail] = useState<User | null>(null);
   const [error, setError] = useState("");
@@ -48,7 +47,7 @@ const UserDetail = () => {
     return <ErrorMessage message={error} />;
   }
 
-  console.log(userDetail, "userDetail");
+
   return (
     <div className="max-w-6xl mx-auto my-8">
         <div className="border-b border-slate-200  p-2 flex justify-between">

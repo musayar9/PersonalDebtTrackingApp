@@ -22,7 +22,7 @@ export const Users = () => {
       const deleteUser = allUsers.filter((d) => d._id !== id);
       setAllUsers(deleteUser);
 
-      console.log(data);
+return data
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setErrMsg(error.response?.data.msg);
@@ -43,7 +43,7 @@ export const Users = () => {
   if (error) {
     return <ErrorMessage message={error} />;
   }
-  console.log("errMsg", errMsg);
+
   
   
   

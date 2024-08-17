@@ -123,7 +123,6 @@ const handleDeleteUser =async()=>{
   }
 }
 
-console.log("user is deleted")
   return (
     <div className="w-full border p-8">
       <ProfileBreadcrumps />

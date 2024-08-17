@@ -26,7 +26,7 @@ const EditDebt = () => {
 
     paymentPlan: [{ paymentDate: "", paymentAmount: 0, paymentStatus: false }],
   });
-  console.log(id);
+
   useEffect(() => {
     const fetchDebtId = async () => {
       setLoading(true);

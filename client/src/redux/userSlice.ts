@@ -1,20 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ApiResponse, UsersState } from "../lib/types";
-import {
-  deleteUser,
-
-  loginUser,
-  signOut,
-  updateUser,
-} from "./dataFetch";
+import { deleteUser, loginUser, signOut, updateUser } from "./dataFetch";
 
 const initialState: UsersState = {
   user: null, // Başlangıçta user null olarak tanımlanır
   userStatus: "idle",
   userUpdateStatus: "idle",
-userDeleteStatus:"idle",
+  userDeleteStatus: "idle",
   error: null,
-  
 };
 
 const userSlice = createSlice({
@@ -37,16 +30,13 @@ const userSlice = createSlice({
           state.user = action.payload;
         }
       )
-      .addCase(loginUser.rejected, (state, action) => {
+      .addCase(loginUser.rejected, (state) => {
         state.userStatus = "failed";
-        console.log(action);
-
         state.error = true;
       })
       .addCase(updateUser.pending, (state) => {
         state.userUpdateStatus = "loading";
         state.error = null;
-        
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.userUpdateStatus = "succeeded";
@@ -78,16 +68,16 @@ const userSlice = createSlice({
 
       .addCase(deleteUser.fulfilled, (state) => {
         state.userDeleteStatus = "succeeded";
-        state.userStatus="idle"
-        state.userUpdateStatus="idle"
+        state.userStatus = "idle";
+        state.userUpdateStatus = "idle";
         state.user = null;
         state.error = null;
       })
-      
-      .addCase(deleteUser.rejected, (state, action)=>{
-            state.userDeleteStatus = "failed";
-            state.error = action.payload as string;
-      })
+
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.userDeleteStatus = "failed";
+        state.error = action.payload as string;
+      });
   },
 });
 export const { setError } = userSlice.actions;

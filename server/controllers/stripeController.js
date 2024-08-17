@@ -19,18 +19,18 @@ const createPayment = async (req, res, next) => {
 
   try {
     const debt = await Debt.findById({ _id: debtId });
-    console.log("debt", debt);
+
 
     const selectDebt = await debt?.paymentPlan?.find(
       (d) => d?._id?.toString() === paymentId
     );
-    console.log("selectDebt", selectDebt.paymentAmount);
+
     if (!selectDebt) {
       throw new BadRequestError( "Payment plan not found");
     }
 
     const amount = await  selectDebt?.paymentAmount; //
-    console.log( amount)
+   
     const paymentIntent = await stripe.paymentIntents.create({
       currency: "usd",
       amount: Math.round(amount),

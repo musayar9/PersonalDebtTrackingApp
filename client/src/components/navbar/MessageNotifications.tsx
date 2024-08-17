@@ -1,20 +1,62 @@
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { RiMessage3Fill } from "react-icons/ri";
 
 import toast from "react-hot-toast";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Dropdown, DropdownHeader } from "flowbite-react";
 import { formatDateTwo } from "../../utils/functions";
 import { RecievedMessage } from "../../lib/types";
 import moment from "moment";
-import { deleteMessage, setCurrentChatData, setDeleteInComingMessage } from "../../redux/messageSlice";
+import {  deleteMessage, setCurrentChatData, setDeleteInComingMessage } from "../../redux/messageSlice";
+import axios from "axios";
+import ErrorMessage from "../../pages/ErrorMessage";
+
 
 const MessageNotifications = () => {
+const {user} = useAppSelector((state)=>state.user)
   const { inComingMessage, recieverMessage, messageGroup } = useAppSelector(
     (state) => state.message
   );
   const dispatch = useAppDispatch();
+  const [errMsg, setErrMsg] = useState("")
+  const navigate = useNavigate()
+
+useEffect(() => {
+  if (recieverMessage) {
+    const findChat = async () => {
+      try {
+        const res = await axios.get(
+          `/api/v1/chat/find/${recieverMessage.senderId}/${recieverMessage?.receiverId}`
+        );
+        const data =  await res.data;
+
+        dispatch(setCurrentChatData(data));
+   
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          setErrMsg(error.response?.data.msg);
+        } else {
+          setErrMsg("Request failed");
+        }
+      }
+    };
+
+    findChat();
+  }
+}, [user, recieverMessage, dispatch]);
+
+  
+  
+
+  
+  const sendMessage = async () => {
+   navigate("/chat");
+   dispatch(setDeleteInComingMessage([]))
+   dispatch(deleteMessage(null))
+  };
+  
+
 
   const { pathname } = useLocation();
   useEffect(() => {
@@ -55,9 +97,8 @@ const MessageNotifications = () => {
         </div>
       ));
     }
-  }, [recieverMessage]);
+  }, [recieverMessage, inComingMessage, pathname]);
 
-  console.log(messageGroup);
 
   interface MessageGroupMap {
     name: string;
@@ -75,94 +116,111 @@ const MessageNotifications = () => {
       };
     }) || [];
 
-  console.log(messageGroupMap);
+if (errMsg) {
+  return <ErrorMessage message={errMsg} />;
+}
 
   return (
     <div className="relative flex items-center">
+      {inComingMessage.length === 0 && (
+        <Link to="/chat" onClick={() => dispatch(setCurrentChatData(null))}>
+          <RiMessage3Fill className="text-gray-500 z-100" size={28} />{" "}
+        </Link>
+      )}
       {inComingMessage?.length > 0 && (
-        <div className="absolute flex items-center justify-center -top-2 right-0 w-5 h-5 text-xs bg-blue-500 text-white rounded-full p-1">
-          <span>{inComingMessage?.length} </span>
-        </div>
+        <>
+          <div className="absolute flex items-center justify-center -top-2 right-0 w-5 h-5 text-xs bg-blue-500 text-white rounded-full p-1">
+            <span>{inComingMessage?.length} </span>
+          </div>
+        </>
       )}
 
-      <Dropdown
-        className="w-96  rounded-xl border shadow-sm"
-        arrowIcon={false}
-        inline
-        label={<RiMessage3Fill className="text-gray-500 z-100" size={28} />}
-      >
-        <DropdownHeader className="flex items-center justify-between rounded-lg">
-          <span className="block text-sm font-bold text-slate-600">
-            InComingMessages
-          </span>
-          <span className="block truncate text-sm font-medium">
-            {formatDateTwo(new Date().toDateString())}
-          </span>
-        </DropdownHeader>
-        <div className=" p-2 space-y-2 border-b border-gray-200">
-          {messageGroupMap?.length > 0 ? (
-            <>
-              {messageGroupMap?.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between gap-2 p-2 border-b border-slate-200 hover:bg-yellow-100 rounded-md hover:cursor-pointer"
-                >
-                  <div className="flex items-center gap-2">
-                    {item.data && item.data.length > 0 ? (
-                      <img
-                        className="w-12 h-12 rounded-full"
-                        src={item.data[0].profilePicture}
-                        alt={`Profile picture of ${item.name}`}
-                      />
-                    ) : (
-                      <img src="https://t4.ftcdn.net/jpg/00/65/77/27/360_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg" /> // veya alternatif bir içerik
-                    )}
-                    <div className="flex flex-col items-start justify-center">
-                      <p className="text-md text-slate-600 font-semibold">
-                        {" "}
-                        {item.name}
-                      </p>
-                      <p className="text-sm  italic font-semibold text-slate-400">
-                        {item.data?.length} new message
-                      </p>
+      {inComingMessage.length !== 0 && messageGroup?.length !== 0 && (
+        <Dropdown
+          className="w-96  rounded-xl border shadow-sm"
+          arrowIcon={false}
+          inline
+          label={<RiMessage3Fill className="text-gray-500 z-100" size={28} />}
+        >
+          <DropdownHeader className="flex items-center justify-between rounded-lg">
+            <span className="block text-sm font-bold text-slate-600">
+              InComingMessages
+            </span>
+            <span className="block truncate text-sm font-medium">
+              {formatDateTwo(new Date().toDateString())}
+            </span>
+          </DropdownHeader>
+          <div className=" p-2 space-y-2 border-b border-gray-200">
+            {messageGroupMap?.length > 0 ? (
+              <>
+                {messageGroupMap?.map((item, index) => (
+                  <div
+                    onClick={sendMessage}
+                    key={index}
+                    className="flex items-center justify-between gap-2 p-2 border-b border-slate-200 hover:bg-yellow-100 rounded-md hover:cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2">
+                      {item.data && item.data.length > 0 ? (
+                        <img
+                          className="w-12 h-12 rounded-full"
+                          src={item.data[0].profilePicture}
+                          alt={`Profile picture of ${item.name}`}
+                        />
+                      ) : (
+                        <img src="https://t4.ftcdn.net/jpg/00/65/77/27/360_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg" /> // veya alternatif bir içerik
+                      )}
+                      <div className="flex flex-col items-start justify-center">
+                        <p className="text-md text-slate-600 font-semibold">
+                          {" "}
+                          {item.name}
+                        </p>
+                        <p className="text-sm  italic font-semibold text-slate-400">
+                          {item.data?.length} new message
+                        </p>
+                      </div>
                     </div>
+                    <p>
+                      {" "}
+                      {item.data && item.data.length > 0 && (
+                        <p className="text-sm text-slate-500">
+                          {moment(
+                            item?.data[item?.data.length - 1].createdAt
+                          ).fromNow()}
+                        </p>
+                      )}
+                    </p>
                   </div>
-                  <p>
-                    {" "}
-                    {item.data && item.data.length > 0 && (
-                      <p className="text-sm text-slate-500">
-                        {moment(
-                          item?.data[item?.data.length - 1].createdAt
-                        ).fromNow()}
-                      </p>
-                    )}
-                  </p>
-                </div>
-              ))}
-            </>
-          ) : (
-            <p className="capitalize text-center text-gray-500 font-semibold">you don't have any new messages</p>
-          )}
-        </div>
+                ))}
+              </>
+            ) : (
+              <p className="capitalize text-center text-gray-500 font-semibold">
+                you don't have any new messages
+              </p>
+            )}
+          </div>
 
-        <div className="flex items-center  mt-1 mb-2">
-          <Link
-            className="flex items-center p-2 gap-1 font-semibold group duration-150 ease-in"
-            to="/chat"
-            onClick={() => {dispatch(setDeleteInComingMessage([]))
-            dispatch(deleteMessage([]))
-            dispatch(setCurrentChatData(null))
-            }}
-          >
-            <RiMessage3Fill
-              className="text-gray-500 group-hover:text-blue-600"
-              size={28}
-            />
+          {/* <div className="flex items-center  mt-1 mb-2">
+            <Link
+              className="flex items-center p-2 gap-1 font-semibold group duration-150 ease-in"
+              to="/chat"
+              onClick={() => {
+                dispatch(setDeleteInComingMessage([]));
+                dispatch(deleteMessage([]));
+                dispatch(setCurrentChatData(null));
+              }}
+            >
+              <RiMessage3Fill
+                className="text-gray-500 group-hover:text-blue-600"
+                size={28}
+              />
 
-            <span className="group-hover:text-blue-600">Show All Messages</span>
-          </Link>
-        </div>
-      </Dropdown>
+              <span className="group-hover:text-blue-600">
+                Show All Messages
+              </span>
+            </Link>
+          </div> */}
+        </Dropdown>
+      )}
     </div>
   );
 };

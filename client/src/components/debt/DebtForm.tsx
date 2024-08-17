@@ -83,7 +83,7 @@ const DebtForm = () => {
 
       const res = await axios.post("/api/v1/debt", formData);
       const data = await res.data;
-      console.log(data);
+
       setMsg(data?.message);
       setLoading(false);
       navigate("/dashboard?tab=debt");
@@ -92,7 +92,7 @@ const DebtForm = () => {
       }, 3000);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.log(error);
+
 
         setErrMsg(error.response?.data?.message);
       } else {

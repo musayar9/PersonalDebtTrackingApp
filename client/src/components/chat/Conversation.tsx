@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ChatType, User } from "../../lib/types";
 import axios from "axios";
+import ErrorMessage from "../../pages/ErrorMessage";
 
 interface ConversationProps {
   data: ChatType;
@@ -12,8 +13,6 @@ const Conversation = ({ data, currentUser, online }: ConversationProps) => {
   const [userData, setUserData] = useState<User | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  
-
   useEffect(() => {
     const userId = data.members.find((id) => id !== currentUser);
 
@@ -35,14 +34,16 @@ const Conversation = ({ data, currentUser, online }: ConversationProps) => {
     };
 
     getUserId();
-  }, []);
+  }, [data, currentUser]);
   
-  console.log(loading)
-  console.log(error);
-  console.log(userData)
+if(error){
+  return <ErrorMessage message={error}/>
+}
 
   return (
     <>
+    
+    {loading && <p>loading....</p>}
       <div className="bg-slate-50 hover:bg-slate-200 transition-all cursor-pointer duration-100 ease-linear m-1 p-2 flex rounded-md  justify-between items-center ">
         <div className="relative flex gap-4 ">
           {online && (

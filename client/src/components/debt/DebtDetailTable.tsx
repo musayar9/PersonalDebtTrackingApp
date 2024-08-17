@@ -22,8 +22,6 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
 
-  console.log("loading", loading);
-  console.log("errmsg", errMsg);
   
 
 
@@ -48,7 +46,6 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
     fetchDebtId();
   }, [id]);
 
-  console.log(debt);
    if (loading) {
      return (
        <div className="ml-4 hidden">

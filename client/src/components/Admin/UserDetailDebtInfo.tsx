@@ -4,8 +4,11 @@ import axios from "axios";
 import UserAccountStatus from "./UserAccountStatus";
 import UserDebtStatus from "./UserDebtStatus";
 
+import ErrorMessage from "../../pages/ErrorMessage";
+
 const UserDetailDebtInfo = ({ userDetail }: { userDetail: User | null }) => {
   const [debt, setDebt] = useState<DebtData[] >([]);
+  const [errMsg, setErrMsg] = useState("")
 
   useEffect(() => {
     if (userDetail?._id) {
@@ -14,12 +17,12 @@ const UserDetailDebtInfo = ({ userDetail }: { userDetail: User | null }) => {
           const res = await axios.get(`/api/v1/debt/${userDetail?._id}`);
           const data: DebtData[] =  res.data;
           setDebt(data);
-          console.log(data, "user detail data");
+       
         } catch (error) {
           if (axios.isAxiosError(error)) {
-            console.log(error.response?.data.msg);
+    setErrMsg(error.response?.data.msg);
           } else {
-            console.log("request failed");
+          setErrMsg("request failed");
           }
         }
       };
@@ -27,6 +30,10 @@ const UserDetailDebtInfo = ({ userDetail }: { userDetail: User | null }) => {
       getUserDebt();
     }
   }, [userDetail?._id]);
+  
+  if(errMsg){
+    return <ErrorMessage message={errMsg}/>
+  }
 
   return (
     <div className="md:col-span-7 space-y-6">

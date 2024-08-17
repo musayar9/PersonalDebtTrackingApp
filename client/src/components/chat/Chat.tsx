@@ -13,6 +13,7 @@ import {
   SendMessage,
 } from "../../lib/types";
 import { addMessage, setCurrentChatData } from "../../redux/messageSlice";
+import ErrorMessage from "../../pages/ErrorMessage";
 
 const Chat = () => {
   const { user } = useAppSelector((state) => state?.user);
@@ -22,7 +23,7 @@ const Chat = () => {
   const socket = useRef<Socket | null>(null);
   const [chats, setChats] = useState([]);
   const [onlineUsers, setOnlineUsers] = useState<OnlineUsers[] | null>([]);
-  const [currentChat, setCurrentChat] = useState(null);
+  const [errMsg, setErrMsg] = useState("")
   const [sendMessage, setSendMessage] = useState<SendMessage | null>(null);
   const [receivedMessage, setReceivedMessage] =
     useState<RecievedMessage | null>(null);
@@ -37,15 +38,15 @@ const Chat = () => {
 
         } catch (error) {
           if (axios.isAxiosError(error)) {
-            console.log(error.response?.data.msg);
+            setErrMsg(error.response?.data.msg);
           } else {
-            console.log("request failed");
+            setErrMsg("request failed");
           }
         }
       };
       getChats();
     }
-  }, []);
+  }, [user, dispatch]);
 
   useEffect(() => {
     if (user) {
@@ -53,14 +54,10 @@ const Chat = () => {
       socket.current?.emit("new-user-add", user?.user._id);
       socket.current.on("get-users", (users) => {
         setOnlineUsers(users);
-        // console.log("oni", onlineUsers);
+ 
       });
     }
   }, [user]);
-
-  // console.log(chats, "chatd");
-
-  //send Meesage to socket server
 
   useEffect(() => {
     if (sendMessage !== null) {
@@ -68,20 +65,16 @@ const Chat = () => {
     }
   }, [sendMessage]);
 
-  //get the message from socket server
-  const [testData, setTestData] = useState<RecievedMessage[]>([]);
+
   useEffect(() => {
     socket.current?.on("recieve-message", (data) => {
       setReceivedMessage(data);
-      // dispatch(addMessage(data))
-      setTestData([...testData, data]);
 
-      // dispatch(addMessage([...recieverMessage, data]));
+
       dispatch(addMessage(data));
     });
   });
-  // console.log("add", recieverMessage);
-  // console.log("seete tes", testData);
+
   const checkOnlineStatus = (chat: ChatType) => {
     const chatMember = chat?.members.find(
       (member: string) => member !== user?.user._id
@@ -90,8 +83,9 @@ const Chat = () => {
     return online ? true : false;
   };
 
-  console.log("online", onlineUsers);
-    console.log("currentChat", currentChat);
+if(errMsg){
+  return <ErrorMessage message={errMsg}/>
+}
 
 
 

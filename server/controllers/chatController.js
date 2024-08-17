@@ -2,7 +2,7 @@ const Chat = require("../models/chatModel");
 
 const { StatusCodes } = require("http-status-codes");
 const createChat = async (req, res, next) => {
-  console.log(req.body);
+
   const { senderId, receiverId } = req.body;
   const newChat = new Chat({
     members: [senderId, receiverId],

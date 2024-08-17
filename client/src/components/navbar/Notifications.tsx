@@ -11,11 +11,12 @@ import {IoFileTraySharp} from "react-icons/io5";
 import { useAppSelector } from "../../redux/hooks";
 import { UpcomingDebt } from "../../lib/types";
 import { formatDateTwo, formatPrice } from "../../utils/functions";
+import ErrorMessage from "../../pages/ErrorMessage";
 
 const Notifications = () => {
   const { user } = useAppSelector((state) => state?.user);
    const [upcomingDebt, setUpcomingDebt] =useState<UpcomingDebt[]>([])
-
+  const [errMsg, setErrMsg] = useState<string | undefined>("")
   useEffect(() => {
     const upcomingDebt = async () => {
       try {
@@ -23,20 +24,24 @@ const Notifications = () => {
           `/api/v1/debt/upcomingDebt/${user?.user._id}`
         );
         const data:UpcomingDebt[] = await res.data;
-        console.log(data, "upcoming");
+
         setUpcomingDebt(data)
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          console.log(error);
+          setErrMsg(error?.response?.statusText);
         } else {
-          console.log("request failed");
+       setErrMsg("request failed");
         }
       }
     };
 
     upcomingDebt();
-  }, []);
-  console.log("upcoming", upcomingDebt)
+  }, [user]);
+
+
+if (errMsg){
+  return <ErrorMessage message={errMsg}/>
+}
   return (
     <div className="relative flex items-center">
       {upcomingDebt?.length > 0 && (
@@ -52,7 +57,9 @@ const Notifications = () => {
         label={<FaBell className="text-gray-500 z-100" size={28} />}
       >
         <DropdownHeader className="flex items-center justify-between rounded-lg">
-          <span className="block text-sm font-bold text-slate-600">Upcoming Debts</span>
+          <span className="block text-sm font-bold text-slate-600">
+            Upcoming Debts
+          </span>
           <span className="block truncate text-sm font-medium">
             {formatDateTwo(new Date().toDateString())}
           </span>

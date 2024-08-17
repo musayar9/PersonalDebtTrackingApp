@@ -28,7 +28,7 @@ const ProfileChangePassword: React.FC = () => {
   const [newPassShow, setNewPassShow] = useState(false);
 
   const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.name);
+
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -44,7 +44,7 @@ const ProfileChangePassword: React.FC = () => {
         formData
       );
       const data = await res.data;
-      console.log(data);
+
       setLoading(false);
       setSuccess(data.message);
 
@@ -67,7 +67,7 @@ const ProfileChangePassword: React.FC = () => {
       }, 3000);
     }
   };
-  console.log(passMsg);
+
   return (
     <div className="w-full p-8">
       <ProfileBreadcrumps />

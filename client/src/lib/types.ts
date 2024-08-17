@@ -104,6 +104,11 @@ export interface DebtResponse {
   message: string;
 }
 
+export interface UpdateDebt{
+  updateDebt:DebtData;
+  message:string
+  
+}
 export interface DebtState {
   debt: DebtData[] | null;
   debtStatus: "idle" | "succeeded" | "loading" | "failed";

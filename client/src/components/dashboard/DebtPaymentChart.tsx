@@ -16,7 +16,7 @@ const unpaid = useGetPaymentStatus({paymentStatus:"Unpaid"}).groupDebt.length
 const partiallyPaid = useGetPaymentStatus({ paymentStatus: "Partially Paid" })
   .groupDebt.length;
 const paid = useGetPaymentStatus({ paymentStatus: "Paid" }).groupDebt.length
-console.log(unpaid, partiallyPaid, paid)
+
 
 const data = [
   { name: "Unpaid", value: unpaid },

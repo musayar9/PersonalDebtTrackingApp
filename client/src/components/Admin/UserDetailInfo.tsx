@@ -27,7 +27,7 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
       const res = await axios.delete(`/api/v1/auth/${id}`);
       const data = await res.data;
       navigate("/dashboard?tab=users");
-      console.log(data);
+     return data
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setErrMsg(error.response?.data.msg);
@@ -58,11 +58,9 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
 
       findChat();
     }
-  }, [user, userDetail]);
+  }, [user, userDetail, dispatch]);
 
-  console.log("findChat", findChat);
 
-  console.log(errMsg);
 
   if (errMsg) {
     return <ErrorMessage message={errMsg} />;
@@ -77,9 +75,10 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
       setLoading(false);
       const res = await axios.post("/api/v1/chat", chat);
       const data = await res.data;
-      console.log(data);
+
       setLoading(true);
       navigate("/chat");
+      return data
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setErrMsg(error.response?.data.msg);
@@ -93,7 +92,7 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
     return <div>Chaat yönlenriliyorsunuz</div>;
   }
 
-console.log("find", findChat)
+
 
   return (
     <div className="md:col-span-3   ">

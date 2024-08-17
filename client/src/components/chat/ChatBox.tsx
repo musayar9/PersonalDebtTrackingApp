@@ -3,18 +3,12 @@ import React, { useEffect, useRef, useState } from "react";
 // import InputEmoji from "react-input-emoji";
 import moment from "moment";
 import "moment/locale/tr";
-import {
-  ChatType,
-
-  RecievedMessage,
-  SendMessage,
-  User,
-} from "../../lib/types";
+import { ChatType, RecievedMessage, SendMessage, User } from "../../lib/types";
 import axios from "axios";
 import { nanoid } from "nanoid";
 import { FaPaperPlane } from "react-icons/fa";
 import { useAppSelector } from "../../redux/hooks";
-
+import ErrorMessage from "../../pages/ErrorMessage";
 
 interface ChatBoxProps {
   chat: ChatType | null;
@@ -30,14 +24,10 @@ const ChatBox = ({
   setSendMessage,
 }: ChatBoxProps) => {
   const { user } = useAppSelector((state) => state.user);
-
   const [messages, setMessages] = useState<RecievedMessage[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [error, setError] = useState("");
-  console.log(chat, "chat");
-
   const [userData, setUserData] = useState<User | null>(null);
-
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -64,9 +54,6 @@ const ChatBox = ({
     }
   }, [chat, currentUser]);
 
-  console.log("loading", loading);
-  console.log(userData, "USERdATA");
-
   useEffect(() => {
     const getMessages = async () => {
       try {
@@ -85,12 +72,7 @@ const ChatBox = ({
     if (chat !== null) getMessages();
   }, [chat]);
 
-  // const handleChange = (message:string) => {
 
-  //   setNewMessage(message);
-  // };
-
-  console.log(error);
 
   const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -100,7 +82,7 @@ const ChatBox = ({
       createdAt: new Date(),
       updatedAt: new Date(),
       senderId: currentUser,
-      profilePicture:user?.user.profilePicture,
+      profilePicture: user?.user.profilePicture,
       senderName: user?.user.name + " " + user?.user.surname,
       text: newMessage,
       chatId: chat?._id,
@@ -110,10 +92,8 @@ const ChatBox = ({
     const receiverId: string | undefined = chat?.members.find(
       (id) => id !== currentUser
     );
-    // send message tı socket serve
-    setSendMessage({ ...message, receiverId });
 
-    // send message to database
+    setSendMessage({ ...message, receiverId });
 
     try {
       const res = await axios.post("/api/v1/message", message);
@@ -129,25 +109,24 @@ const ChatBox = ({
       }
     }
   };
-  console.log("message", messages);
 
   useEffect(() => {
     scroll.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // reveive message from parent component
-
   useEffect(() => {
-    console.log("message arrived", receivedMessage);
     if (receivedMessage !== null && receivedMessage?.chatId === chat?._id) {
       setMessages([...messages, receivedMessage]);
     }
   }, [receivedMessage]);
 
-
   const scroll = useRef<HTMLDivElement | null>(null);
   const imageRef: React.MutableRefObject<HTMLInputElement | null> =
     useRef(null);
+    
+    if(error){
+      return <ErrorMessage message={error}/>
+    }
 
   return (
     <div className="bg-[rgba(234, 36, 36, 0.64)] rounded-2xl grid  grid-rows-[14vh_60vh_13vh]">
@@ -165,6 +144,7 @@ const ChatBox = ({
                   <span>{userData?.username}</span>
                 </div>
               </div>
+              {loading && <>loading...</>}
             </div>
 
             <hr className="w-[95%] border border-slate-100 mt-5"></hr>
