@@ -119,11 +119,11 @@ export interface UpcomingDebt {
 }
 
 export interface ChatType {
-  members: string[]; // Üye ID'lerini içeren bir string dizisi
-  _id: string; // Chat'in benzersiz ID'si
-  createdAt: string; // ISO formatında oluşturulma tarihi
-  updatedAt: string; // ISO formatında güncellenme tarihi
-  __v: number; // Versiyon numarası (genellikle MongoDB tarafından kullanılır)
+  members: string[]; 
+  _id: string; 
+  createdAt: string; 
+  updatedAt: string; 
+  __v: number;
 }
 
 export interface Messages {
@@ -180,4 +180,7 @@ export interface MessageState {
   inComingMessage: RecievedMessage[];
   messageCount: number;
   messageGroup: MessageGroup[] | null;
+  allChats:ChatType[] | null,
+  currentChatData:ChatType | null,
+  chatloading:boolean
 }

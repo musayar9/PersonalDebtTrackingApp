@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import axios from "axios";
@@ -12,10 +12,11 @@ import {
   RecievedMessage,
   SendMessage,
 } from "../../lib/types";
-import { addMessage } from "../../redux/messageSlice";
+import { addMessage, setCurrentChatData } from "../../redux/messageSlice";
 
 const Chat = () => {
   const { user } = useAppSelector((state) => state?.user);
+  const {currentChatData} = useAppSelector((state)=>state.message)
 
   const dispatch = useAppDispatch();
   const socket = useRef<Socket | null>(null);
@@ -33,6 +34,7 @@ const Chat = () => {
           const res = await axios.get(`/api/v1/chat/${user?.user._id}`);
           const data = await res.data;
           setChats(data);
+
         } catch (error) {
           if (axios.isAxiosError(error)) {
             console.log(error.response?.data.msg);
@@ -89,7 +91,10 @@ const Chat = () => {
   };
 
   console.log("online", onlineUsers);
-  console.log(sendMessage, "sendMessage");
+    console.log("currentChat", currentChat);
+
+
+
   return (
     <div>
       <div className="bg-slate-200 relative p-4 grid grid-cols-[22%_auto] gap-4">
@@ -102,7 +107,7 @@ const Chat = () => {
             <div className=" flex flex-col gap-2">
               {/* Example conversation item */}
               {chats?.map((chat, index) => (
-                <div key={index} onClick={() => setCurrentChat(chat)}>
+                <div key={index} onClick={() => dispatch(setCurrentChatData(chat))}>
                   <Conversation
                     data={chat}
                     currentUser={user?.user?._id}
@@ -119,7 +124,7 @@ const Chat = () => {
           {/* Chat-container */}
 
           <ChatBox
-            chat={currentChat}
+            chat={currentChatData}
             currentUser={user?.user._id}
             setSendMessage={setSendMessage}
             receivedMessage={receivedMessage}

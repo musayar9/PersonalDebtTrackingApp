@@ -19,7 +19,7 @@ import { UsersState } from "../../lib/types";
 
 import { useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
-import { addMessage, setInComingMessage } from "../../redux/messageSlice";
+import {addMessage, setDeleteInComingMessage, setInComingMessage, deleteMessage} from "../../redux/messageSlice";
 import MessageNotifications from "./MessageNotifications";
 import axios from "axios";
 export function NavbarComponent() {
@@ -39,6 +39,9 @@ export function NavbarComponent() {
 
     if (user && userId) {
       await dispatch(signOut({ id: userId }));
+       dispatch(setDeleteInComingMessage([]));
+       dispatch(deleteMessage([]));
+
       navigate("/login");
     }
   };

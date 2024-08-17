@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ChatType, User } from "../../lib/types";
 import axios from "axios";
 
@@ -12,6 +12,7 @@ const Conversation = ({ data, currentUser, online }: ConversationProps) => {
   const [userData, setUserData] = useState<User | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  
 
   useEffect(() => {
     const userId = data.members.find((id) => id !== currentUser);

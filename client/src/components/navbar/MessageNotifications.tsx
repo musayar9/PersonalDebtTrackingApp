@@ -8,7 +8,7 @@ import { Dropdown, DropdownHeader } from "flowbite-react";
 import { formatDateTwo } from "../../utils/functions";
 import { RecievedMessage } from "../../lib/types";
 import moment from "moment";
-import { deleteMessage, setDeleteInComingMessage } from "../../redux/messageSlice";
+import { deleteMessage, setCurrentChatData, setDeleteInComingMessage } from "../../redux/messageSlice";
 
 const MessageNotifications = () => {
   const { inComingMessage, recieverMessage, messageGroup } = useAppSelector(
@@ -18,7 +18,7 @@ const MessageNotifications = () => {
 
   const { pathname } = useLocation();
   useEffect(() => {
-    if (pathname !== "/chat" && inComingMessage?.length >= 0 && recieverMessage) {
+    if (pathname !== "/chat" && inComingMessage?.length >= 0 && recieverMessage !== null) {
       toast.custom((t) => (
         <div
           className={`${
@@ -151,6 +151,7 @@ const MessageNotifications = () => {
             to="/chat"
             onClick={() => {dispatch(setDeleteInComingMessage([]))
             dispatch(deleteMessage([]))
+            dispatch(setCurrentChatData(null))
             }}
           >
             <RiMessage3Fill

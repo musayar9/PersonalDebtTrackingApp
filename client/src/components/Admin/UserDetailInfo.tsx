@@ -12,7 +12,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ErrorMessage from "../../pages/ErrorMessage";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import {  setCurrentChatData } from "../../redux/messageSlice";
 
 const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
   const { user } = useAppSelector((state) => state.user);
@@ -20,7 +21,7 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [findChat, setFindChat] = useState(null);
-
+  const dispatch  = useAppDispatch()
   const handleDeleteUser = async ({ id }: { id: string | undefined }) => {
     try {
       const res = await axios.delete(`/api/v1/auth/${id}`);
@@ -45,6 +46,7 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
           );
           const data = res.data;
           setFindChat(data);
+        dispatch(setCurrentChatData(data))
         } catch (error) {
           if (axios.isAxiosError(error)) {
             setErrMsg(error.response?.data.msg);
@@ -90,6 +92,8 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
   if (loading) {
     return <div>Chaat yönlenriliyorsunuz</div>;
   }
+
+console.log("find", findChat)
 
   return (
     <div className="md:col-span-3   ">
@@ -169,7 +173,7 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
                 <Link
                   className="
                btn btn-sm btn-circle mt-8 w-full text-emerald-500 flex items-center"
-                  to="/chat"
+                  to={`/chat`}
                 >
                   Send Message
                 </Link>
