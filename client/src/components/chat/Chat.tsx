@@ -8,11 +8,13 @@ import ChatBox from "./ChatBox";
 import { io, Socket } from "socket.io-client";
 import {
   ChatType,
+
   OnlineUsers,
+
   RecievedMessage,
   SendMessage,
 } from "../../lib/types";
-import { addMessage, setCurrentChatData } from "../../redux/messageSlice";
+import { addMessage,  setCurrentChatData } from "../../redux/messageSlice";
 import ErrorMessage from "../../pages/ErrorMessage";
 
 const Chat = () => {
@@ -22,7 +24,7 @@ const Chat = () => {
   const dispatch = useAppDispatch();
   const socket = useRef<Socket | null>(null);
   const [chats, setChats] = useState([]);
-  const [onlineUsers, setOnlineUsers] = useState<OnlineUsers[] | null>([]);
+ const [onlineUsers, setOnlineUsers] = useState<OnlineUsers[] | null>([]);
   const [errMsg, setErrMsg] = useState("")
   const [sendMessage, setSendMessage] = useState<SendMessage | null>(null);
   const [receivedMessage, setReceivedMessage] =
@@ -35,7 +37,8 @@ const Chat = () => {
           const res = await axios.get(`/api/v1/chat/${user?.user._id}`);
           const data = await res.data;
           setChats(data);
-
+          
+         
         } catch (error) {
           if (axios.isAxiosError(error)) {
             setErrMsg(error.response?.data.msg);
@@ -46,14 +49,14 @@ const Chat = () => {
       };
       getChats();
     }
-  }, [user, dispatch]);
+  }, [user]);
 
   useEffect(() => {
     if (user) {
       socket.current = io("ws://localhost:8800");
       socket.current?.emit("new-user-add", user?.user._id);
       socket.current.on("get-users", (users) => {
-        setOnlineUsers(users);
+        setOnlineUsers(users)
  
       });
     }

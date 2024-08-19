@@ -6,61 +6,93 @@ import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { Dropdown, DropdownHeader } from "flowbite-react";
 import { formatDateTwo } from "../../utils/functions";
-import { RecievedMessage } from "../../lib/types";
+import { ChatType, RecievedMessage } from "../../lib/types";
 import moment from "moment";
-import {  deleteMessage, setCurrentChatData, setDeleteInComingMessage } from "../../redux/messageSlice";
+import {
+  deleteMessage,
+  setAllChats,
+  setCurrentChatData,
+  setDeleteInComingMessage,
+} from "../../redux/messageSlice";
 import axios from "axios";
-import ErrorMessage from "../../pages/ErrorMessage";
-
+// import ErrorMessage from "../../pages/ErrorMessage";
 
 const MessageNotifications = () => {
-const {user} = useAppSelector((state)=>state.user)
-  const { inComingMessage, recieverMessage, messageGroup } = useAppSelector(
-    (state) => state.message
-  );
+  const { user } = useAppSelector((state) => state.user);
+  const { inComingMessage, recieverMessage, messageGroup, allChats } =
+    useAppSelector((state) => state.message);
   const dispatch = useAppDispatch();
-  const [errMsg, setErrMsg] = useState("")
-  const navigate = useNavigate()
+  const [errMsg, setErrMsg] = useState("");
+  const navigate = useNavigate();
+  console.log(errMsg);
+  useEffect(() => {
+    if (recieverMessage) {
+      const findChat = async () => {
+        try {
+          const res = await axios.get(
+            `/api/v1/chat/find/${recieverMessage.senderId}/${recieverMessage?.receiverId}`
+          );
+          const data = await res.data;
 
-useEffect(() => {
-  if (recieverMessage) {
-    const findChat = async () => {
-      try {
-        const res = await axios.get(
-          `/api/v1/chat/find/${recieverMessage.senderId}/${recieverMessage?.receiverId}`
-        );
-        const data =  await res.data;
-
-        dispatch(setCurrentChatData(data));
-   
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          setErrMsg(error.response?.data.msg);
-        } else {
-          setErrMsg("Request failed");
+          dispatch(setCurrentChatData(data));
+        } catch (error) {
+          if (axios.isAxiosError(error)) {
+            setErrMsg(error.response?.data.msg);
+          } else {
+            setErrMsg("Request failed");
+          }
         }
+      };
+
+      findChat();
+    }
+  }, [recieverMessage]);
+
+  useEffect(() => {
+    if (user) {
+      const getChats = async () => {
+        try {
+          const res = await axios.get(`/api/v1/chat/${user?.user._id}`);
+          const data = await res.data;
+
+          dispatch(setAllChats(data));
+          //  navigate("/chat");
+        } catch (error) {
+          if (axios.isAxiosError(error)) {
+            setErrMsg(error.response?.data.msg);
+          } else {
+            setErrMsg("request failed");
+          }
+        }
+      };
+      getChats();
+    }
+  }, [user]);
+
+
+  const sendMessage = async (senderId: string | undefined) => {
+    if (allChats) {
+      // Dizideki her bir chat için `members` özelliğini kontrol et
+      const isChat: ChatType | undefined = allChats.find((chat) =>
+        chat.members.includes(senderId || "")
+      );
+
+      if (isChat) {
+        navigate("/chat");
+        dispatch(setCurrentChatData(isChat))
+        dispatch(setDeleteInComingMessage([]));
+        dispatch(deleteMessage(null));
       }
-    };
-
-    findChat();
-  }
-}, [user, recieverMessage, dispatch]);
-
-  
-  
-
-  
-  const sendMessage = async () => {
-   navigate("/chat");
-   dispatch(setDeleteInComingMessage([]))
-   dispatch(deleteMessage(null))
+    }
   };
-  
-
 
   const { pathname } = useLocation();
   useEffect(() => {
-    if (pathname !== "/chat" && inComingMessage?.length >= 0 && recieverMessage !== null) {
+    if (
+      pathname !== "/chat" &&
+      inComingMessage?.length >= 0 &&
+      recieverMessage !== null
+    ) {
       toast.custom((t) => (
         <div
           className={`${
@@ -97,28 +129,26 @@ useEffect(() => {
         </div>
       ));
     }
-  }, [recieverMessage, inComingMessage, pathname]);
-
+  }, [recieverMessage]);
 
   interface MessageGroupMap {
     name: string;
     data: RecievedMessage[] | null;
   }
-  // ageGroup dizisinin uzunluğunu verir
+
   const messageGroupMap: MessageGroupMap[] =
     messageGroup?.map((item) => {
-      // Since each item is an object with one key, we can extract the key and value
       const [name, data] = Object.entries(item)[0];
-
       return {
         name: name,
         data: data,
       };
     }) || [];
 
-if (errMsg) {
-  return <ErrorMessage message={errMsg} />;
-}
+  // if (errMsg) {
+  //   return <ErrorMessage message={errMsg} />;
+  // }
+
 
   return (
     <div className="relative flex items-center">
@@ -155,7 +185,19 @@ if (errMsg) {
               <>
                 {messageGroupMap?.map((item, index) => (
                   <div
-                    onClick={sendMessage}
+                    onClick={() => {
+                      if (item.data && item.data[0]) {
+                        sendMessage(item.data[0].senderId);
+                      } else {
+                        // Eğer item.data null ise yapılacak işlemler
+                        console.log(
+                          "item.data is null or item.data[0] does not exist"
+                        );
+                        setErrMsg(
+                          "item.data is null or item.data[0] does not exist"
+                        );
+                      }
+                    }}
                     key={index}
                     className="flex items-center justify-between gap-2 p-2 border-b border-slate-200 hover:bg-yellow-100 rounded-md hover:cursor-pointer"
                   >

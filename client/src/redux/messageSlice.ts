@@ -9,6 +9,7 @@ const initialState: MessageState = {
   allChats: [],
   currentChatData: null,
   chatloading: false,
+
 };
 
 const messageSlice = createSlice({
@@ -54,10 +55,12 @@ const messageSlice = createSlice({
       state.currentChatData = action.payload;
       state.chatloading = true;
 
-      setTimeout(() => {
-        state.chatloading = false;
-      }, 1000);
+     
     },
+
+    
+    
+    
   },
 });
 
@@ -67,6 +70,7 @@ export const {
   setInComingMessage,
   setDeleteInComingMessage,
   setAllChats,
-  setCurrentChatData,
+setCurrentChatData
+
 } = messageSlice.actions;
 export default messageSlice.reducer;

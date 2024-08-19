@@ -6,7 +6,7 @@ import {
   DropdownItem,
   Navbar,
   NavbarBrand,
-  NavbarCollapse,
+
   NavbarToggle,
 } from "flowbite-react";
 import { CiUser } from "react-icons/ci";
@@ -19,7 +19,13 @@ import { UsersState } from "../../lib/types";
 
 import { useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
-import {addMessage, setDeleteInComingMessage, setInComingMessage, deleteMessage} from "../../redux/messageSlice";
+import {
+  addMessage,
+  setDeleteInComingMessage,
+  setInComingMessage,
+  deleteMessage,
+
+} from "../../redux/messageSlice";
 import MessageNotifications from "./MessageNotifications";
 import axios from "axios";
 export function NavbarComponent() {
@@ -31,30 +37,30 @@ export function NavbarComponent() {
   );
   const dispatch = useAppDispatch();
 
-
   const navigate = useNavigate();
   const handleSignOut = async () => {
     const userId = user?.user?._id;
 
     if (user && userId) {
       await dispatch(signOut({ id: userId }));
-       dispatch(setDeleteInComingMessage([]));
-       dispatch(deleteMessage([]));
+      dispatch(setDeleteInComingMessage([]));
+      dispatch(deleteMessage(null));
 
       navigate("/login");
     }
   };
 
-
   const socket = useRef<Socket | null>(null);
   useEffect(() => {
     socket.current = io("ws://localhost:8800");
     socket.current?.on("recieve-message", (data) => {
-
-
       dispatch(addMessage(data));
     });
-  });
+
+
+  }, []);
+
+
 
   useEffect(() => {
     if (recieverMessage) {
@@ -67,13 +73,12 @@ export function NavbarComponent() {
         if (pathname !== "/chat" && recieverMessage._id !== data._id) {
           dispatch(setInComingMessage([...inComingMessage, recieverMessage]));
         }
- 
       };
 
       senderUser();
     }
   }, [recieverMessage]);
-
+  
 
 
   return (
@@ -150,9 +155,9 @@ export function NavbarComponent() {
 
         <NavbarToggle />
       </div>
-      <NavbarCollapse>
+      {/* <NavbarCollapse>
         <Link to="/">Home</Link>
-      </NavbarCollapse>
+      </NavbarCollapse> */}
     </Navbar>
   );
 }

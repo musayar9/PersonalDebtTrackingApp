@@ -1,8 +1,9 @@
 const express = require("express");
 const { allCountry, addCountry } = require("../controllers/countryControllers");
+const verifyToken = require("../middleware/verifyToken");
 const router = express.Router();
 
-router.get("/", allCountry);
-router.post("/", addCountry);
+router.get("/", verifyToken, allCountry);
+router.post("/", verifyToken, addCountry);
 
 module.exports = router;

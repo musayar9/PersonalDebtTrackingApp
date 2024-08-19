@@ -4,12 +4,12 @@ const { UnauthenticatedError } = require("../errors");
 const verifyToken = async (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {
-    throw new UnauthenticatedError("Authentication Invalid");
+   return res.status(401).json("Authentication Invalid");
   }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
-      throw new UnauthenticatedError("User Not Authorized");
+  return res.status(401).json("User Not Authorized");
     }
 
     req.user = user;

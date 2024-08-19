@@ -14,9 +14,9 @@ const {
 const verifyToken = require("../middleware/verifyToken");
 const router = express.Router();
 
-router.get("/", getAllDebt);
+router.get("/", verifyToken, getAllDebt);
 router.post("/", verifyToken, createDebt);
-router.get("/:userId", getUserDebt);
+router.get("/:userId", verifyToken, getUserDebt);
 router.delete("/:id", verifyToken, deleteDebt);
 router.put("/updateDebt/:id", verifyToken, updateDebt);
 router.get("/getDebt/:id", verifyToken, getDebtId);

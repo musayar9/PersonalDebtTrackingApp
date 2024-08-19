@@ -12,7 +12,7 @@ const {
 const verifyToken = require("../middleware/verifyToken");
 const router = express.Router();
 router.get("/", getUsers);
-router.get("/:userId", getUserId)
+router.get("/:userId", verifyToken, getUserId)
 router.post("/register", register);
 router.post("/login", login);
 router.put("/updateUser/:id", verifyToken, updateUser);

@@ -139,6 +139,7 @@ export interface Messages {
   createdAt: string;
   updatedAt: string;
   receiverId?: string;
+
   __v: number;
 }
 
@@ -180,12 +181,18 @@ export interface MessageGroup {
   [senderName: string]: RecievedMessage[];
 }
 
+
+export interface OnlineUsers{
+  socketId:string,
+  userId:string
+}
 export interface MessageState {
   recieverMessage: RecievedMessage | null;
   inComingMessage: RecievedMessage[];
   messageCount: number;
   messageGroup: MessageGroup[] | null;
-  allChats:ChatType[] | null,
-  currentChatData:ChatType | null,
-  chatloading:boolean
+  allChats: ChatType[] | null;
+  currentChatData: ChatType | null;
+  chatloading: boolean;
+
 }

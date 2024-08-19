@@ -39,9 +39,9 @@ const Notifications = () => {
   }, [user]);
 
 
-if (errMsg){
-  return <ErrorMessage message={errMsg}/>
-}
+// if (errMsg){
+//   return <ErrorMessage message={errMsg}/>
+// }
   return (
     <div className="relative flex items-center">
       {upcomingDebt?.length > 0 && (
