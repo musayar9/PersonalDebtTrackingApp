@@ -8,15 +8,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 import {IoFileTraySharp} from "react-icons/io5";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { UpcomingDebt } from "../../lib/types";
 import { formatDateTwo, formatPrice } from "../../utils/functions";
-import ErrorMessage from "../../pages/ErrorMessage";
+
+import { setChatErrorMessage } from "../../redux/messageSlice";
 
 const Notifications = () => {
   const { user } = useAppSelector((state) => state?.user);
    const [upcomingDebt, setUpcomingDebt] =useState<UpcomingDebt[]>([])
-  const [errMsg, setErrMsg] = useState<string | undefined>("")
+  const dispatch = useAppDispatch()
   useEffect(() => {
     const upcomingDebt = async () => {
       try {
@@ -28,9 +29,9 @@ const Notifications = () => {
         setUpcomingDebt(data)
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          setErrMsg(error?.response?.statusText);
+          dispatch(setChatErrorMessage(error?.response?.statusText)) 
         } else {
-       setErrMsg("request failed");
+      dispatch(setChatErrorMessage("Request Failed")); 
         }
       }
     };

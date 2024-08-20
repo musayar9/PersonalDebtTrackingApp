@@ -17,6 +17,7 @@ import {  setCurrentChatData } from "../../redux/messageSlice";
 
 const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
   const { user } = useAppSelector((state) => state.user);
+  const {currentChatData} = useAppSelector((state)=>state.message)
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -44,7 +45,7 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
           const res = await axios.get(
             `/api/v1/chat/find/${user?.user?._id}/${userDetail?._id}`
           );
-          const data = res.data;
+          const data = await res.data;
           setFindChat(data);
         dispatch(setCurrentChatData(data))
         } catch (error) {
@@ -75,10 +76,12 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
       setLoading(false);
       const res = await axios.post("/api/v1/chat", chat);
       const data = await res.data;
-
+      if(findChat === null){
+        dispatch(setCurrentChatData(data))
+      }
       setLoading(true);
       navigate("/chat");
-      return data
+
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setErrMsg(error.response?.data.msg);
@@ -87,6 +90,8 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
       }
     }
   };
+
+
 
   if (loading) {
     return <div>Chaat yönlenriliyorsunuz</div>;
@@ -161,7 +166,7 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
           </p>
           {user?.user._id !== userDetail?._id && (
             <div className="mt-8">
-              {findChat === null ? (
+              {currentChatData === null ? (
                 <button
                   onClick={sendMessage}
                   className={` btn btn-sm btn-circle mt-8 w-full text-emerald-500 flex items-center`}
@@ -179,7 +184,7 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
               )}
             </div>
           )}
-          {!userDetail?.isAdmin && (
+          {user?.user?.isAdmin && (
             <div className="mt-2">
               <button
                 disabled={userDetail?.isAdmin}

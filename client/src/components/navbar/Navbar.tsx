@@ -55,6 +55,7 @@ export function NavbarComponent() {
     socket.current = io("ws://localhost:8800");
     socket.current?.on("recieve-message", (data) => {
       dispatch(addMessage(data));
+
     });
 
 

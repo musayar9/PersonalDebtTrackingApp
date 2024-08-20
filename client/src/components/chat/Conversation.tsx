@@ -1,51 +1,55 @@
 import { useEffect, useState } from "react";
 import { ChatType, User } from "../../lib/types";
 import axios from "axios";
-import ErrorMessage from "../../pages/ErrorMessage";
+import { FaTrashCan } from "react-icons/fa6";
+import { useAppDispatch } from "../../redux/hooks.ts";
+import { setChatErrorMessage } from "../../redux/messageSlice.ts";
 
 interface ConversationProps {
   data: ChatType;
   currentUser: string | undefined;
-  online:boolean
+  online: boolean;
+  handleDeleteChat: (params: { chatId: string | undefined }) => Promise<void>;
+  loading: boolean;
 }
 
-const Conversation = ({ data, currentUser, online }: ConversationProps) => {
+const Conversation = ({
+  data,
+  currentUser,
+  online,
+  handleDeleteChat,
+  loading,
+}: ConversationProps) => {
   const [userData, setUserData] = useState<User | null>(null);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+
+  const dispatch = useAppDispatch();
   useEffect(() => {
     const userId = data.members.find((id) => id !== currentUser);
 
     const getUserId = async () => {
       try {
-        setLoading(true);
         const res = await axios.get(`/api/v1/auth/${userId}`);
         const data: User = await res.data;
-        setLoading(false);
         setUserData(data);
       } catch (error) {
-        setLoading(false);
         if (axios.isAxiosError(error)) {
-          setError(error.response?.data.msg);
+          dispatch(setChatErrorMessage(error.response?.data.msg));
         } else {
-          setError("Request Failed");
+          dispatch(setChatErrorMessage("request failed"));
         }
       }
     };
 
     getUserId();
   }, [data, currentUser]);
-  
-if(error){
-  return <ErrorMessage message={error}/>
-}
+
+
 
   return (
     <>
-    
-    {loading && <p>loading....</p>}
-      <div className="bg-slate-50 hover:bg-slate-200 transition-all cursor-pointer duration-100 ease-linear m-1 p-2 flex rounded-md  justify-between items-center ">
-        <div className="relative flex gap-4 ">
+      {loading && <p>loading....</p>}
+      <div className="bg-slate-50 group hover:bg-slate-200 transition-all cursor-pointer duration-100 ease-linear m-1 p-2 flex rounded-md  justify-between items-center ">
+        <div className="relative flex flex-col md:flex-row gap-4 ">
           {online && (
             <div className="bg-emerald-500 rounded-full absolute left-8 w-3 h-3"></div>
           )}
@@ -53,19 +57,31 @@ if(error){
           <img
             src={userData?.profilePicture}
             className="w-12 h-12 rounded-full "
+            alt={"img"}
           />
-          <div className=" hidden md:flex  flex-col items-start justify-center text-md font-semibold text-gray-600">
-            <span className="">
+          <div className="  flex  flex-col items-start justify-center text-md font-semibold text-gray-600">
+            <span className="hidden md:flex">
               {userData?.name} {userData?.surname}
             </span>
-            <span className={`${online ?"text-emerald-500":"text-gray-500"} text-sm font-normal `}>
-            
-            {online ? "Online":"Offline"}
+            <span
+              className={`${
+                online ? "text-emerald-500" : "text-gray-500"
+              } text-sm font-normal flex `}
+            >
+              {online ? "Online" : "Offline"}
             </span>
           </div>
         </div>
+        <div className="flex flex-col items-end justify-center">
+          <button
+            onClick={() => handleDeleteChat({ chatId: data?._id })}
+            className="hidden md:flex ps-2 translate-x-8 duration-150 ease-in opacity-0 group-hover:opacity-80 group-hover:translate-x-0"
+          >
+            <FaTrashCan className="hover:text-red-600 " size={24} />
+          </button>
+        </div>
       </div>
-      <hr className="my-4 w-full "></hr>
+      <hr className="my-4 w-full hidden md:flex"></hr>
     </>
   );
 };

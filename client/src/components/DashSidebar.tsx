@@ -4,12 +4,8 @@ import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { Link, useLocation } from "react-router-dom";
 import { FaUsers } from "react-icons/fa";
 import { FcDebt } from "react-icons/fc";
-import {
-  HiArrowSmRight,
-
-  HiUser,
-
-} from "react-icons/hi";
+import { HiArrowSmRight,HiUser,} from "react-icons/hi";
+import { PiInvoiceBold } from "react-icons/pi";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { signOut } from "../redux/dataFetch";
 
@@ -63,16 +59,27 @@ const DashSidebar = () => {
 
           <Link to="/dashboard?tab=users">
             <Sidebar.Item
-                active={tab === "users"}
-                icon={FaUsers}
-                label={"Admin"}
-                as="div"
-                labelColor="dark"
+              active={tab === "users"}
+              icon={FaUsers}
+              label={"Admin"}
+              as="div"
+              labelColor="dark"
             >
               Users
             </Sidebar.Item>{" "}
           </Link>
 
+          <Link to="/dashboard?tab=users/debts">
+            <Sidebar.Item
+              active={tab === "users/debts"}
+              icon={PiInvoiceBold}
+              label={"Admin"}
+              as="div"
+              labelColor="dark"
+            >
+              All Debts
+            </Sidebar.Item>{" "}
+          </Link>
 
           <Link to="/dashboard?tab=debt">
             <Sidebar.Item
@@ -84,8 +91,7 @@ const DashSidebar = () => {
               Debt
             </Sidebar.Item>{" "}
           </Link>
-          
-          
+
           <Sidebar.Item
             icon={HiArrowSmRight}
             as="div"

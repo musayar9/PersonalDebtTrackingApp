@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-// import { useAppSelector } from "../../redux/hooks";
-// import InputEmoji from "react-input-emoji";
 import moment from "moment";
 import "moment/locale/tr";
 import { ChatType, RecievedMessage, SendMessage, User } from "../../lib/types";
 import axios from "axios";
 import { nanoid } from "nanoid";
 import { FaPaperPlane } from "react-icons/fa";
-import { useAppSelector } from "../../redux/hooks";
-import ErrorMessage from "../../pages/ErrorMessage";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import 'moment-timezone';
+import {BiSolidMessageDetail} from "react-icons/bi";
+import { setChatErrorMessage } from "../../redux/messageSlice";
 
 interface ChatBoxProps {
   chat: ChatType | null;
@@ -26,10 +26,10 @@ const ChatBox = ({
   const { user } = useAppSelector((state) => state.user);
   const [messages, setMessages] = useState<RecievedMessage[]>([]);
   const [newMessage, setNewMessage] = useState("");
-  const [error, setError] = useState("");
+
   const [userData, setUserData] = useState<User | null>(null);
   const [loading, setLoading] = useState(false);
-
+const dispatch = useAppDispatch()
   useEffect(() => {
     if (currentUser && chat) {
       const userId = chat?.members.find((id) => id !== currentUser);
@@ -43,11 +43,11 @@ const ChatBox = ({
           setUserData(data);
         } catch (error) {
           setLoading(false);
-          if (axios.isAxiosError(error)) {
-            setError(error.response?.data.msg);
-          } else {
-            setError("Request Failed");
-          }
+        if (axios.isAxiosError(error)) {
+          dispatch(setChatErrorMessage(error.response?.data.msg));
+        } else {
+          dispatch(setChatErrorMessage("Request Failed"));
+        }
         }
       };
       getUserId();
@@ -61,11 +61,11 @@ const ChatBox = ({
         const data = await res.data;
         setMessages(data);
       } catch (error) {
-        if (axios.isAxiosError(error)) {
-          setError(error.response?.data.msg);
-        } else {
-          setError("request failed");
-        }
+       if (axios.isAxiosError(error)) {
+         dispatch(setChatErrorMessage(error.response?.data.msg));
+       } else {
+         dispatch(setChatErrorMessage("Request Failed"));
+       }
       }
     };
 
@@ -100,12 +100,13 @@ const ChatBox = ({
       const data = await res.data;
 
       setMessages([...messages, data]);
+
       setNewMessage("");
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        setError(error?.response?.data.msg);
+         dispatch(setChatErrorMessage(error.response?.data.msg));
       } else {
-        setError("Request failed");
+         dispatch(setChatErrorMessage("Request Failed"));
       }
     }
   };
@@ -124,9 +125,6 @@ const ChatBox = ({
   const imageRef: React.MutableRefObject<HTMLInputElement | null> =
     useRef(null);
     
-    if(error){
-      return <ErrorMessage message={error}/>
-    }
 
   return (
     <div className="bg-[rgba(234, 36, 36, 0.64)] rounded-2xl grid  grid-rows-[14vh_60vh_13vh]">
@@ -164,7 +162,7 @@ const ChatBox = ({
                 >
                   <span>{message?.text}</span>
                   <span className="text-[10px] text-white self-end">
-                    {moment(message.createdAt).fromNow()}
+                    {moment(message.createdAt).tz('Europe/Istanbul').format('HH:mm')}
                   </span>
                 </div>
               ))}
@@ -183,12 +181,7 @@ const ChatBox = ({
               onSubmit={handleSend}
               className="flex items-center space-x-2 gap-2 w-full"
             >
-              {/* <InputEmoji
-                value={newMessage}
-                onChange={handleChange}
-                shouldReturn={false}
-                shouldConvertEmojiToImage={false}
-              /> */}
+          
               <input
                 className="border border-gray-200 p-2 rounded-full focus:outline-none w-full"
                 value={newMessage}
@@ -213,7 +206,13 @@ const ChatBox = ({
           </div>
         </>
       ) : (
-        <span>Tap on a chat to start conversation...</span>
+        <div className={"flex flex-col items-center justify-center  h-[50vh]"}>
+          <BiSolidMessageDetail  size={64} className={"text-slate-400"}/>
+          <span className={"text-2xl font-semibold text-slate-500 tracking-widest text-center"}>
+
+              Tap on a chat to start conversation...
+          </span>
+        </div>
       )}
     </div>
   );

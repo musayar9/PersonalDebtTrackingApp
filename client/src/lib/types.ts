@@ -189,10 +189,9 @@ export interface OnlineUsers{
 export interface MessageState {
   recieverMessage: RecievedMessage | null;
   inComingMessage: RecievedMessage[];
-  messageCount: number;
   messageGroup: MessageGroup[] | null;
   allChats: ChatType[] | null;
   currentChatData: ChatType | null;
   chatloading: boolean;
-
+  chatError:string;
 }

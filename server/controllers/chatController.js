@@ -1,6 +1,8 @@
 const Chat = require("../models/chatModel");
-
+const Message = require("../models/messageModel");
 const { StatusCodes } = require("http-status-codes");
+const {BadRequestError} = require("../errors");
+
 const createChat = async (req, res, next) => {
 
   const { senderId, receiverId } = req.body;
@@ -41,4 +43,21 @@ const findChat = async (req, res, next) => {
   }
 };
 
-module.exports = { createChat, userChats, findChat };
+
+const deleteChat = async(req, res,next) => {
+  const {chatId} = req.params;
+
+  const isChat = Chat.findById({_id:chatId});
+    if(!isChat){
+        return BadRequestError("Chat not found");
+    }
+  try {
+    const chat = await Chat.findByIdAndDelete({_id:chatId});
+    const messages = await Message.deleteMany({chatId:chat._id});
+    res.status(StatusCodes.OK).json(chat);
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { createChat, userChats, findChat, deleteChat };

@@ -8,6 +8,7 @@ import Debt from "../components/debt/Debt";
 import DebtForm from "../components/debt/DebtForm";
 import DashboardArea from "../components/dashboard/DashboardArea";
 import Users from "../components/Admin/Users.tsx";
+import UsersDebts from "../components/debt/UsersDebts.tsx";
 
 
 const Dashboard = () => {
@@ -37,6 +38,7 @@ const Dashboard = () => {
 
       {tab === "debt" && <Debt />}
       {tab === "debt/create_debt" && <DebtForm />}
+      {tab === "users/debts" && <UsersDebts/>}
       {/* {tab === "debt/payment_debt/:debtId/debt/:paymentId" && <PaymentPage />} */}
 
       {tab === "dash" && <DashboardArea />}

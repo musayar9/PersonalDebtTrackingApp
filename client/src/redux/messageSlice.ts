@@ -4,12 +4,12 @@ import { MessageGroup, MessageState } from "../lib/types";
 const initialState: MessageState = {
   recieverMessage: null,
   inComingMessage: [],
-  messageCount: 0,
+
   messageGroup: [],
   allChats: [],
   currentChatData: null,
   chatloading: false,
-
+  chatError: "",
 };
 
 const messageSlice = createSlice({
@@ -54,13 +54,11 @@ const messageSlice = createSlice({
     setCurrentChatData: (state, action) => {
       state.currentChatData = action.payload;
       state.chatloading = true;
-
-     
     },
 
-    
-    
-    
+    setChatErrorMessage: (state, action) => {
+      state.chatError = action.payload;
+    },
   },
 });
 
@@ -70,7 +68,7 @@ export const {
   setInComingMessage,
   setDeleteInComingMessage,
   setAllChats,
-setCurrentChatData
-
+  setCurrentChatData,
+  setChatErrorMessage,
 } = messageSlice.actions;
 export default messageSlice.reducer;

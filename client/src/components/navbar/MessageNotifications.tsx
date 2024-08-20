@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { RiMessage3Fill } from "react-icons/ri";
 
 import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { useEffect, } from "react";
 import { Dropdown, DropdownHeader } from "flowbite-react";
 import { formatDateTwo } from "../../utils/functions";
 import { ChatType, RecievedMessage } from "../../lib/types";
@@ -11,6 +11,7 @@ import moment from "moment";
 import {
   deleteMessage,
   setAllChats,
+  setChatErrorMessage,
   setCurrentChatData,
   setDeleteInComingMessage,
 } from "../../redux/messageSlice";
@@ -22,9 +23,11 @@ const MessageNotifications = () => {
   const { inComingMessage, recieverMessage, messageGroup, allChats } =
     useAppSelector((state) => state.message);
   const dispatch = useAppDispatch();
-  const [errMsg, setErrMsg] = useState("");
+
   const navigate = useNavigate();
-  console.log(errMsg);
+
+
+
   useEffect(() => {
     if (recieverMessage) {
       const findChat = async () => {
@@ -36,11 +39,11 @@ const MessageNotifications = () => {
 
           dispatch(setCurrentChatData(data));
         } catch (error) {
-          if (axios.isAxiosError(error)) {
-            setErrMsg(error.response?.data.msg);
-          } else {
-            setErrMsg("Request failed");
-          }
+         if (axios.isAxiosError(error)) {
+           dispatch(setChatErrorMessage(error.response?.data.msg));
+         } else {
+           dispatch(setChatErrorMessage("Request Failed"));
+         }
         }
       };
 
@@ -58,11 +61,11 @@ const MessageNotifications = () => {
           dispatch(setAllChats(data));
           //  navigate("/chat");
         } catch (error) {
-          if (axios.isAxiosError(error)) {
-            setErrMsg(error.response?.data.msg);
-          } else {
-            setErrMsg("request failed");
-          }
+         if (axios.isAxiosError(error)) {
+           dispatch(setChatErrorMessage(error.response?.data.msg));
+         } else {
+           dispatch(setChatErrorMessage("Request Failed"));
+         }
         }
       };
       getChats();
@@ -145,9 +148,7 @@ const MessageNotifications = () => {
       };
     }) || [];
 
-  // if (errMsg) {
-  //   return <ErrorMessage message={errMsg} />;
-  // }
+
 
 
   return (
@@ -190,12 +191,12 @@ const MessageNotifications = () => {
                         sendMessage(item.data[0].senderId);
                       } else {
                         // Eğer item.data null ise yapılacak işlemler
-                        console.log(
+                      dispatch(
+                        setChatErrorMessage(
                           "item.data is null or item.data[0] does not exist"
-                        );
-                        setErrMsg(
-                          "item.data is null or item.data[0] does not exist"
-                        );
+                        )
+                      );
+                        
                       }
                     }}
                     key={index}
