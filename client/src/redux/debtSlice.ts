@@ -23,6 +23,7 @@ const debtSlice = createSlice({
         (state, action: PayloadAction<DebtData[]>) => {
           state.debtStatus = "succeeded";
           state.debt = action.payload;
+      
         }
       )
       .addCase(getAllDebt.rejected, (state, action) => {

@@ -8,8 +8,7 @@ import Debt from "../components/debt/Debt";
 import DebtForm from "../components/debt/DebtForm";
 import DashboardArea from "../components/dashboard/DashboardArea";
 import Users from "../components/Admin/Users.tsx";
-import UsersDebts from "../components/debt/UsersDebts.tsx";
-
+import UsersDebts from "../components/Admin/usersdebt/UsersDebts.tsx";
 
 const Dashboard = () => {
   const location = useLocation();
@@ -34,11 +33,11 @@ const Dashboard = () => {
       {tab === "profile/change-password" && <ProfileChangePassword />}
       {tab === "profile/contactPreference" && <ProfileContactPreference />}
 
-      {tab === "users" && <Users/>}
+      {tab === "users" && <Users />}
 
       {tab === "debt" && <Debt />}
       {tab === "debt/create_debt" && <DebtForm />}
-      {tab === "users/debts" && <UsersDebts/>}
+      {tab === "users/debts" && <UsersDebts />}
       {/* {tab === "debt/payment_debt/:debtId/debt/:paymentId" && <PaymentPage />} */}
 
       {tab === "dash" && <DashboardArea />}
