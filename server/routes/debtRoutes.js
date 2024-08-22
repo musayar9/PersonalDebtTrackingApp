@@ -10,11 +10,13 @@ const {
   updatePaymentDebt,
   getPaymentStatus,
   upcomingDebts,
+  getDebt,
 } = require("../controllers/debtController");
 const verifyToken = require("../middleware/verifyToken");
 const router = express.Router();
 
 router.get("/", verifyToken, getAllDebt);
+router.get("/getDebt", getDebt);
 router.post("/", verifyToken, createDebt);
 router.get("/:userId", verifyToken, getUserDebt);
 router.delete("/:id", verifyToken, deleteDebt);

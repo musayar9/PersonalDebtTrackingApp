@@ -36,9 +36,9 @@ const UsersDebtSearch = () => {
             </span>
           </label>
           <select name="payment" className="select select-bordered select-sm text-xs">
-            {/* <option disabled selected>
+            <option disabled>
               Pick one
-            </option> */}
+            </option>
             <option>Unpaid</option>
             <option>Partially Paid</option>
             <option>Paid</option>

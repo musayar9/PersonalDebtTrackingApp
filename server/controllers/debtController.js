@@ -25,14 +25,47 @@ const getAllDebt = async (req, res, next) => {
   }
 };
 
+const getDebt = async (req, res, next) => {
+  console.log(req.query, "req querty");
+  try {
+    const debts = await Debt.find({
+      ...(req.query.lender && {
+        lender: { $regex: req.query.lender, $options: "i" },
+      }),
+      ...(req.query.borrower && {
+        borrower: { $regex: req.query.borrower, $options: "i" },
+      }),
+      ...(req.query.paymentStatus && {
+        paymentStatus: req.query.paymentStatus,
+      }),
+    });
+    const totalDebts = await Debt.countDocuments();
+
+    const now = new Date();
+    const oneMonthAgo = new Date(
+      now.getFullYear(),
+      now.getMonth() - 1,
+      now.getDate()
+    );
+    const lastMonthDebts = await Debt.countDocuments({
+      createdAt: { $gte: oneMonthAgo },
+    });
+
+    res.status(200).json({
+      debts,
+      totalDebts,
+      lastMonthDebts,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getUserDebt = async (req, res, next) => {
   const { userId } = req.params;
 
-
   try {
     const debt = await Debt.find({ userId }).sort({ updatedAt: -1 }).exec();
-    
-    
 
     if (!debt) {
       throw new BadRequestError("Data is not found");
@@ -70,7 +103,6 @@ const upcomingDebts = async (req, res, next) => {
           return paymentDate.isBetween(now, tenDaysLater, undefined, "[)");
         })
         .map((plan) => ({
-
           lender: debt.lender,
           borrower: debt.borrower,
           description: debt.description,
@@ -119,7 +151,6 @@ const getPaymentPlan = async (req, res, next) => {
 };
 
 const createDebt = async (req, res, next) => {
-
   const id = req.user.id;
 
   const debt = new Debt({
@@ -255,7 +286,6 @@ const deleteDebt = async (req, res, next) => {
   const { id } = req.params;
   const userId = req.user.id;
 
-
   try {
     const isDebt = await Debt.findById({ _id: id });
 
@@ -272,6 +302,7 @@ const deleteDebt = async (req, res, next) => {
 };
 
 module.exports = {
+  getDebt,
   getAllDebt,
   createDebt,
   getUserDebt,

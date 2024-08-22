@@ -1,16 +1,37 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { getAllDebt } from "../../../redux/debtFetch";
 import Loading from "../../../pages/Loading";
 import UsersDebtSearch from "./Filter";
 import UsersDebtTable from "./UsersDebtTable";
+import { useLocation, useNavigate } from "react-router-dom";
 
+// interface Filter {
+//   lender: string;
+//   borrower: string;
+//   paymentStatus: string;
+// }
 const UsersDebts = () => {
   const { debt, debtStatus } = useAppSelector((state) => state.debt);
   const dispatch = useAppDispatch();
+
+  const [filter, setFilter] = useState({
+    lender: "",
+    borrower: "",
+    paymentStatus: "",
+  });
+
   console.log(debt);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const lender = urlParams.get("lender");
+    const borrower = urlParams.get("borrower");
+    const paymentStatus = urlParams.get("paymentStatus");
+    
+    console.log(lender, borrower, paymentStatus)
     if (debtStatus) {
       dispatch(getAllDebt());
     }
@@ -23,8 +44,7 @@ const UsersDebts = () => {
       </div>
     );
   }
-  
-  
+
   return (
     <>
       {debt!.length > 0 ? (
@@ -35,9 +55,9 @@ const UsersDebts = () => {
             </h2>
           </div>
 
-         <UsersDebtSearch/>
-         
-         <UsersDebtTable debt={debt}/>
+          <UsersDebtSearch />
+
+          <UsersDebtTable debt={debt} />
         </div>
       ) : (
         <>Not foun debt</>
