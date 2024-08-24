@@ -1,17 +1,15 @@
-import { FormEvent, useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { getAllDebt } from "../../../redux/debtFetch";
-import Loading from "../../../pages/Loading";
+import {  useEffect, useState } from "react";
+
 import UsersDebtSearch from "./Filter";
 import UsersDebtTable from "./UsersDebtTable";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Filter } from "../../../lib/types";
+import { useLocation } from "react-router-dom";
+import { DebtData, Filter } from "../../../lib/types";
 import axios from "axios";
 
 const UsersDebts = () => {
-  const { debt, debtStatus } = useAppSelector((state) => state.debt);
 
-  const dispatch = useAppDispatch();
+  const [debts, setDebts ] = useState<DebtData[] |undefined | null>([])
+
 
   const [filter, setFilter] = useState<Filter>({
     lender: "",
@@ -19,7 +17,6 @@ const UsersDebts = () => {
     paymentStatus: "",
   });
 
-  console.log(debt);
   const location = useLocation();
 
   useEffect(() => {
@@ -40,35 +37,27 @@ const UsersDebts = () => {
     const searchQuery = urlParams.toString();
     console.log("searchQuery", searchQuery);
     const getDebtAll = async () => {
-      if (searchQuery) {
+    
         try {
           const res = await axios.get(`/api/v1/debt/getDebt?${searchQuery}`);
-          const data = await res.data;
+          const data:DebtData[] = await res?.data?.debts;
           console.log("dataaa", data);
+          setDebts(data)
         } catch (error) {
           console.log(error);
         }
-      }
+      
     };
     getDebtAll();
 
-    if (debtStatus) {
-      dispatch(getAllDebt());
-    }
-  }, [location.search]);
-  console.log(filter, "filter");
 
-  if (debtStatus === "loading") {
-    return (
-      <div className="flex items-center mx-auto h-[50vh]">
-        <Loading />
-      </div>
-    );
-  }
+  }, [location.search]);
+
+
 
   return (
     <>
-      {debt!.length > 0 ? (
+      {debts!.length > 0 ? (
         <div className="w-full p-8">
           <div className="border-b border-slate-100 p-4 ">
             <h2 className="font-semibold text-2xl pl-4 text-slate-600 capitalize">
@@ -78,7 +67,7 @@ const UsersDebts = () => {
 
           <UsersDebtSearch filter={filter} setFilter={setFilter} />
 
-          <UsersDebtTable debt={debt} />
+          <UsersDebtTable debt={debts} />
         </div>
       ) : (
         <>Not foun debt</>
