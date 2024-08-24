@@ -1,21 +1,19 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { getAllDebt } from "../../../redux/debtFetch";
 import Loading from "../../../pages/Loading";
 import UsersDebtSearch from "./Filter";
 import UsersDebtTable from "./UsersDebtTable";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Filter } from "../../../lib/types";
+import axios from "axios";
 
-// interface Filter {
-//   lender: string;
-//   borrower: string;
-//   paymentStatus: string;
-// }
 const UsersDebts = () => {
   const { debt, debtStatus } = useAppSelector((state) => state.debt);
+
   const dispatch = useAppDispatch();
 
-  const [filter, setFilter] = useState({
+  const [filter, setFilter] = useState<Filter>({
     lender: "",
     borrower: "",
     paymentStatus: "",
@@ -23,19 +21,42 @@ const UsersDebts = () => {
 
   console.log(debt);
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
-    const lender = urlParams.get("lender");
-    const borrower = urlParams.get("borrower");
-    const paymentStatus = urlParams.get("paymentStatus");
-    
-    console.log(lender, borrower, paymentStatus)
+
+    const lenderFromUrl = urlParams.get("lender");
+    const borrowerFromUrl = urlParams.get("borrower");
+    const paymentStatusFromUrl = urlParams.get("paymentStatus");
+
+    if (lenderFromUrl || borrowerFromUrl || paymentStatusFromUrl) {
+      setFilter({
+        ...filter,
+        lender: lenderFromUrl,
+        borrower: borrowerFromUrl,
+        paymentStatus: paymentStatusFromUrl,
+      });
+    }
+    const searchQuery = urlParams.toString();
+    console.log("searchQuery", searchQuery);
+    const getDebtAll = async () => {
+      if (searchQuery) {
+        try {
+          const res = await axios.get(`/api/v1/debt/getDebt?${searchQuery}`);
+          const data = await res.data;
+          console.log("dataaa", data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    getDebtAll();
+
     if (debtStatus) {
       dispatch(getAllDebt());
     }
-  }, []);
+  }, [location.search]);
+  console.log(filter, "filter");
 
   if (debtStatus === "loading") {
     return (
@@ -55,7 +76,7 @@ const UsersDebts = () => {
             </h2>
           </div>
 
-          <UsersDebtSearch />
+          <UsersDebtSearch filter={filter} setFilter={setFilter} />
 
           <UsersDebtTable debt={debt} />
         </div>

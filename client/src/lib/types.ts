@@ -104,10 +104,9 @@ export interface DebtResponse {
   message: string;
 }
 
-export interface UpdateDebt{
-  updateDebt:DebtData;
-  message:string
-  
+export interface UpdateDebt {
+  updateDebt: DebtData;
+  message: string;
 }
 export interface DebtState {
   debt: DebtData[] | null;
@@ -124,10 +123,10 @@ export interface UpcomingDebt {
 }
 
 export interface ChatType {
-  members: string[]; 
-  _id: string; 
-  createdAt: string; 
-  updatedAt: string; 
+  members: string[];
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
   __v: number;
 }
 
@@ -181,10 +180,9 @@ export interface MessageGroup {
   [senderName: string]: RecievedMessage[];
 }
 
-
-export interface OnlineUsers{
-  socketId:string,
-  userId:string
+export interface OnlineUsers {
+  socketId: string;
+  userId: string;
 }
 export interface MessageState {
   recieverMessage: RecievedMessage | null;
@@ -193,5 +191,11 @@ export interface MessageState {
   allChats: ChatType[] | null;
   currentChatData: ChatType | null;
   chatloading: boolean;
-  chatError:string;
+  chatError: string;
+}
+
+export interface Filter {
+  lender: string | null;
+  borrower: string | null;
+  paymentStatus: string | null;
 }

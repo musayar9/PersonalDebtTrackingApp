@@ -14,6 +14,7 @@ import UserDetail from "./components/Admin/UserDetail";
 import Chat from "./components/chat/Chat";
 import { Toaster } from "react-hot-toast";
 import PrivateRoute from "./components/PrivateRoute";
+import UsersDebts from "./components/Admin/usersdebt/UsersDebts";
 const App: React.FC = () => {
   return (
     <div>
@@ -25,6 +26,7 @@ const App: React.FC = () => {
           <Route path="/chat" element={<Chat />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="/dashboard/updateDebt/:id" element={<EditDebt />} />
+          
           <Route
             path="/dashboard/debtDetail/:userId/:id"
             element={<DebtDetail />}
@@ -40,6 +42,8 @@ const App: React.FC = () => {
           />
 
           <Route path="/success" element={<Success />} />
+          
+          <Route path="/dashboard/users/debts" element={<UsersDebts/>}/>
         </Route>
 
         <Route path="/register" element={<Register />} />

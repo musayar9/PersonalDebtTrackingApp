@@ -69,7 +69,7 @@ const DashSidebar = () => {
             </Sidebar.Item>{" "}
           </Link>
 
-          <Link to="/dashboard?tab=users/debts">
+          <Link to="/dashboard/users/debts">
             <Sidebar.Item
               active={tab === "users/debts"}
               icon={PiInvoiceBold}
