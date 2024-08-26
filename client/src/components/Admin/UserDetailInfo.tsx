@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ErrorMessage from "../../pages/ErrorMessage";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {  setCurrentChatData } from "../../redux/messageSlice";
+import Loading from "../../pages/Loading";
 
 const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
   const { user } = useAppSelector((state) => state.user);
@@ -94,13 +95,13 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
 
 
   if (loading) {
-    return <div>Chaat yönlenriliyorsunuz</div>;
+    return <Loading/>
   }
 
 
 
   return (
-    <div className="md:col-span-3   ">
+    <div className="md:col-span-3  ">
       <div className="shadow-md rounded-lg">
         <div className="bg-emerald-400 p-10 rounded-b-none rounded-t-lg "></div>
         <div className=" flex flex-col items-center justify-center  -mt-12 ">

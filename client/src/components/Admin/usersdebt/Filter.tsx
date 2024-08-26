@@ -20,17 +20,17 @@ const UsersDebtSearch = ({ filter, setFilter }: FilterProps) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const urlParams = new URLSearchParams(location.search);
-    urlParams.set("lender", filter?.lender);
-    urlParams.set("borrower", filter?.borrower);
-    urlParams.set("paymentStatus", filter?.paymentStatus);
+    urlParams.set("lender", filter?.lender || "");
+    urlParams.set("borrower", filter?.borrower || "");
+    urlParams.set("paymentStatus", filter?.paymentStatus || "");
 
     const searchQuery = urlParams.toString();
 
-    navigate(`/dashboard/users/debts?${searchQuery}`);
+    navigate(`/allUsers/debts?${searchQuery}`);
   };
 
   const handleReset = () => {
-    navigate("/dashboard/users/debts");
+    navigate("/allUsers/debts");
   };
 
   return (
@@ -49,7 +49,7 @@ const UsersDebtSearch = ({ filter, setFilter }: FilterProps) => {
             type="text"
             placeholder="Enter Lender"
             name="lender"
-            value={filter?.lender ?? undefined}
+            value={filter?.lender || ""}
             className="input input-bordered input-sm rounded-lg w-full max-w-xs"
             onChange={handleChange}
           />
@@ -63,7 +63,7 @@ const UsersDebtSearch = ({ filter, setFilter }: FilterProps) => {
           <input
             type="text"
             name="borrower"
-            value={filter?.borrower ?? undefined}
+            value={filter?.borrower || ""}
             placeholder="Enter Borrower"
             className="input input-bordered input-sm rounded-lg w-full max-w-xs"
             onChange={handleChange}
@@ -77,7 +77,7 @@ const UsersDebtSearch = ({ filter, setFilter }: FilterProps) => {
             </span>
           </label>
           <select
-       
+            // value={filter.paymentStatus || ""}
             name="paymentStatus"
             className="select select-bordered select-sm text-xs"
             onChange={handleChange}

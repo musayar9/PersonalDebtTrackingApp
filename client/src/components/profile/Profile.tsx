@@ -44,15 +44,13 @@ const Profile: React.FC = () => {
   const [imageError, setImageError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const imageRef = useRef<HTMLInputElement | null>(null);
-  const [showSuccessMsg, setShowSuccessMsg] = useState<string | undefined>("")
-  const navigate = useNavigate()
+  const [showSuccessMsg, setShowSuccessMsg] = useState<string | undefined>("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (image) {
       handleFileUpload(image);
     }
-    
-
   }, [image]);
 
   const handleChange = (
@@ -63,8 +61,6 @@ const Profile: React.FC = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
-
 
   const handleFileUpload = async (image: File) => {
     const storage = getStorage(app);
@@ -92,36 +88,30 @@ const Profile: React.FC = () => {
     e.preventDefault();
     if (user?.user?._id) {
       await dispatch(updateUser({ id: user?.user?._id, formData }));
-       if (userUpdateStatus === "succeeded") {
-         setShowSuccessMsg(user?.message);
-       }
-       
-       setTimeout(()=>{
-        setShowSuccessMsg("")
-       },3000)
+      if (userUpdateStatus === "succeeded") {
+        setShowSuccessMsg(user?.message);
+      }
+
+      setTimeout(() => {
+        setShowSuccessMsg("");
+      }, 3000);
     } else {
-  
-      setErrorMessage("User ID is not available")
+      setErrorMessage("User ID is not available");
     }
   };
 
-  
-  if(userStatus ==="loading"){
-    return (
-   <Loading/>
-    );
+  if (userStatus === "loading") {
+    return <Loading />;
   }
-  
-  
-const handleDeleteUser =async()=>{
-  if (user?.user?._id) {
-    await dispatch(deleteUser({ id: user?.user?._id }));
-    navigate("/login")
-    
-  } else {
-    setErrorMessage("User ID is not available");
-  }
-}
+
+  const handleDeleteUser = async () => {
+    if (user?.user?._id) {
+      await dispatch(deleteUser({ id: user?.user?._id }));
+      navigate("/login");
+    } else {
+      setErrorMessage("User ID is not available");
+    }
+  };
 
   return (
     <div className="w-full border p-8">
@@ -289,7 +279,10 @@ const handleDeleteUser =async()=>{
           </form>
 
           <div className="flex justify-end pr-4">
-            <button onClick={handleDeleteUser} className=" text-red-600 hover:underline ">
+            <button
+              onClick={handleDeleteUser}
+              className=" text-red-600 hover:underline "
+            >
               Delete Account
             </button>
           </div>

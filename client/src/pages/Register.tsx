@@ -79,7 +79,7 @@ const Register = () => {
   };
 
   return (
-    <div className="">
+    <div className="mt-12">
       <div className="flex p-3 max-w-5xl mx-auto flex-col md:flex-row md:items-center gap-5">
         <div className="flex-1 items-center justify-center">
           <h2 className="text-4xl  font-bold   rounded-lg   py-1 ">

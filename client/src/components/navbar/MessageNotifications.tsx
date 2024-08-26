@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { RiMessage3Fill } from "react-icons/ri";
+import { RiMessage3Fill, RiMessage3Line } from "react-icons/ri";
 
 import toast from "react-hot-toast";
 import { useEffect, } from "react";
@@ -155,8 +155,7 @@ const MessageNotifications = () => {
     <div className="relative flex items-center">
       {inComingMessage.length === 0 && (
         <Link to="/chat" onClick={() => dispatch(setCurrentChatData(null))}>
-          <RiMessage3Fill className="text-gray-500 z-100" size={28} />{" "}
-        </Link>
+          <RiMessage3Line className="text-slate-600 z-100 italic" size={28} />{" "}        </Link>
       )}
       {inComingMessage?.length > 0 && (
         <>
@@ -191,12 +190,11 @@ const MessageNotifications = () => {
                         sendMessage(item.data[0].senderId);
                       } else {
                         // Eğer item.data null ise yapılacak işlemler
-                      dispatch(
-                        setChatErrorMessage(
-                          "item.data is null or item.data[0] does not exist"
-                        )
-                      );
-                        
+                        dispatch(
+                          setChatErrorMessage(
+                            "item.data is null or item.data[0] does not exist"
+                          )
+                        );
                       }
                     }}
                     key={index}

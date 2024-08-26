@@ -10,17 +10,12 @@ const Debt: React.FC = () => {
   const { debt, loading, errMsg, setDebt } = useFetchUserDebt();
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-between mx-auto max-w-4xl">
-        <Loading />
-      </div>
-    );
+    return <Loading />;
   }
 
   if (errMsg) {
     return <ErrorMessage message={errMsg} />;
   }
-
 
   return (
     <>
@@ -30,10 +25,7 @@ const Debt: React.FC = () => {
             <h2 className="font-semibold text-2xl tracking-wider pl-4 text-slate-600">
               Debt Tracking Tables
             </h2>
-            <Link
-              className="btn btn-sm"
-              to="/dashboard?tab=debt/create_debt"
-            >
+            <Link className="btn btn-sm" to="/debts/create_debt">
               Create Debt
             </Link>
           </div>
@@ -51,10 +43,7 @@ const Debt: React.FC = () => {
             You have no registered debt
           </p>
 
-          <Link
-            className="btn btn-md"
-            to="/dashboard?tab=debt/create_debt"
-          >
+          <Link className="btn btn-md" to="/debts/create_debt">
             Create Debt
           </Link>
         </div>

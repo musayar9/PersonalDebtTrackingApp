@@ -8,7 +8,7 @@ const Success = () => {
         <FaCircleCheck size={96} className="text-emerald-500" />
         <h2 className="text-2xl font-semibold text-emerald-500">Success</h2>
         <p className="text-sm text-gray-500">Payment was made successfully</p>
-        <Link className="btn " to="/dashboard?tab=debt">
+        <Link className="btn " to="/debts">
           Return Debt Page{" "}
         </Link>
       </div>

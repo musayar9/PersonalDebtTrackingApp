@@ -13,6 +13,7 @@ import { UpcomingDebt } from "../../lib/types";
 import { formatDateTwo, formatPrice } from "../../utils/functions";
 
 import { setChatErrorMessage } from "../../redux/messageSlice";
+import { FaRegBell } from "react-icons/fa";
 
 const Notifications = () => {
   const { user } = useAppSelector((state) => state?.user);
@@ -55,7 +56,7 @@ const Notifications = () => {
         className="w-72 rounded-xl border shadow-sm"
         arrowIcon={false}
         inline
-        label={<FaBell className="text-gray-500 z-100" size={28} />}
+        label={<FaRegBell className="text-slate-600 z-100" size={28} />}
       >
         <DropdownHeader className="flex items-center justify-between rounded-lg">
           <span className="block text-sm font-bold text-slate-600">

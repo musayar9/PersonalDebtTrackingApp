@@ -22,7 +22,7 @@ export const Users = () => {
       const deleteUser = allUsers.filter((d) => d._id !== id);
       setAllUsers(deleteUser);
 
-return data
+      return data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setErrMsg(error.response?.data.msg);
@@ -33,29 +33,22 @@ return data
   };
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center mx-auto">
-        <Loading />
-      </div>
-    );
+    return <Loading />;
   }
 
   if (error) {
     return <ErrorMessage message={error} />;
   }
 
-  
-  
-  
   return (
     <div className="w-full p-8">
       <>
         {allUsers?.length > 0 ? (
           <>
-             
-          
             <div className="border-b border-slate-400 m-4">
-              <h2 className="text-2xl text-gray-600 font-semibold my-2">Users</h2>
+              <h2 className="text-2xl text-gray-600 font-semibold my-2">
+                Users
+              </h2>
             </div>
             <div className="mx-auto max-w-6xl ">
               <div className="overflow-x-auto ">
@@ -115,7 +108,12 @@ return data
                           </button>
                         </td>
                         <td>
-                        <Link className=" text-emerald-500" to={`/dashboard/user_detail/${item?._id}`}>Detail</Link>
+                          <Link
+                            className=" text-emerald-500"
+                            to={`/users/user_detail/${item?._id}`}
+                          >
+                            Detail
+                          </Link>
                         </td>
                       </tr>
                     ))}
@@ -139,8 +137,6 @@ return data
               <p className="text-xl text-gray-400 font-semibold">
                 You have no registered user
               </p>
-
-            
             </div>
           </div>
         )}

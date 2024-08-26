@@ -12,15 +12,15 @@ const ProfileBreadcrumps = () => {
       <div className="breadcrumbs text-md font-bold  my-4 ">
         <ul>
           <li>
-            <Link to="/dashboard?tab=profile">User Information</Link>
+            <Link to="/profile">User Information</Link>
           </li>
           <li>
-            <Link to="/dashboard?tab=profile/change-password">
+            <Link to="/profile/change-password">
               Change Password
             </Link>
           </li>
           <li>
-            <Link to="/dashboard?tab=profile/contactPreference">
+            <Link to="/profile/contactPreference">
               Contact Preferences
             </Link>
           </li>

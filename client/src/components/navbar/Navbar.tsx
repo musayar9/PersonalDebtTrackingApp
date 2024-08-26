@@ -83,9 +83,12 @@ export function NavbarComponent() {
 
 
   return (
-    <Navbar className="border-b border-slate-300" rounded>
+    <Navbar
+      className="border-b shadow-none w-full mb-12 z-20 flex  left-0 top-0 fixed border-slate-300"
+      rounded
+    >
       <NavbarBrand href="https://flowbite-react.com">
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+        <span className="self-center  text-xl font-semibold ">
           Personal Debt Tracking
         </span>
       </NavbarBrand>
@@ -144,7 +147,7 @@ export function NavbarComponent() {
                 </span>
               </DropdownHeader>
               <DropdownItem>
-                <Link to="/dashboard?tab=dash">Dashboard</Link>
+                <Link to="/">Dashboard</Link>
               </DropdownItem>
               <DropdownItem>Settings</DropdownItem>
               <DropdownItem>Earnings</DropdownItem>

@@ -104,12 +104,12 @@ const DebtTable = ({ debt, setDebt }: DebtTableProps) => {
                 Delete
               </td>
               <td className="text-blue-600 font-semibold hover:underline cursor-pointer">
-                <Link to={`/dashboard/updateDebt/${item?._id}`}>
+                <Link to={`/debts/updateDebt/${item?._id}`}>
                   Edit
                 </Link>
               </td>
               <td className="text-emerald-500 font-semibold hover:underline cursor-pointer">
-                <Link to={`/dashboard/debtDetail/${item.userId}/${item?._id}`}>Detail</Link>
+                <Link to={`/debts/debtDetail/${item.userId}/${item?._id}`}>Detail</Link>
               </td>
             </tr>
           ))}

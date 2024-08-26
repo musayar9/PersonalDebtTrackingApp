@@ -5,11 +5,12 @@ import UsersDebtTable from "./UsersDebtTable";
 import { useLocation } from "react-router-dom";
 import { DebtData, Filter } from "../../../lib/types";
 import axios from "axios";
+import Loading from "../../../pages/Loading";
 
 const UsersDebts = () => {
 
   const [debts, setDebts ] = useState<DebtData[] |undefined | null>([])
-
+  const [loading, setLoading] = useState(false)
 
   const [filter, setFilter] = useState<Filter>({
     lender: "",
@@ -39,8 +40,10 @@ const UsersDebts = () => {
     const getDebtAll = async () => {
     
         try {
+        setLoading(true)
           const res = await axios.get(`/api/v1/debt/getDebt?${searchQuery}`);
           const data:DebtData[] = await res?.data?.debts;
+          setLoading(false)
           console.log("dataaa", data);
           setDebts(data)
         } catch (error) {
@@ -53,7 +56,7 @@ const UsersDebts = () => {
 
   }, [location.search]);
 
-
+if(loading){ return <Loading/>}
 
   return (
     <>
@@ -70,7 +73,7 @@ const UsersDebts = () => {
           <UsersDebtTable debt={debts} />
         </div>
       ) : (
-        <>Not foun debt</>
+        <>Not found debt</>
       )}
     </>
   );

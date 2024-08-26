@@ -28,8 +28,8 @@ const PaymentPage = () => {
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setErrMsg(error.message);
-        }else{
-          setErrMsg("Request Failed")
+        } else {
+          setErrMsg("Request Failed");
         }
       }
     };
@@ -42,16 +42,16 @@ const PaymentPage = () => {
       const createPayment = async () => {
         try {
           const res = await axios.post("/api/v1/stripe/create-payment", params);
-    
+
           const data = res.data;
 
           setClientSecret(data.clientSecret);
         } catch (error) {
-         if (axios.isAxiosError(error)) {
-           setErrMsg(error.message);
-         } else {
-           setErrMsg("Request Failed");
-         }
+          if (axios.isAxiosError(error)) {
+            setErrMsg(error.message);
+          } else {
+            setErrMsg("Request Failed");
+          }
         }
       };
 
@@ -59,20 +59,15 @@ const PaymentPage = () => {
     }
   }, []);
 
-
   if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <Loading />;
-      </div>
-    );
+    return <Loading />;
   }
-  
-  if(errMsg){
-    return <ErrorMessage message={errMsg}/>
+
+  if (errMsg) {
+    return <ErrorMessage message={errMsg} />;
   }
   return (
-    <div className="max-w-6xl mx-auto ">
+    <div className="max-w-6xl mx-auto p-4">
       <div className="border-b border-gray-200 my-4 p-2">
         <h2 className="text-2xl text-gray-500 font-semibold">
           Payment Information

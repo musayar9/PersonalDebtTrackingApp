@@ -15,15 +15,11 @@ const DashboardArea = () => {
   const { groupDebt } = useGetPaymentStatus({ paymentStatus: "Paid" });
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center mx-auto">
-        <Loading />
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
-    <div className=" max-w-6xl mx-auto">
+    <div className=" max-w-6xl mx-auto flex mt-14">
       {debt.length > 0 || groupDebt.length > 0 ? (
         <div className=" my-4 ">
           <DashboardStat debt={debt} />
@@ -47,14 +43,12 @@ const DashboardArea = () => {
           </div>
         </div>
       ) : (
-
-          <div className=" flex items-center justify-center  flex-col mt-28">
-            <IoFileTraySharp size={96} />
-            <p className="text-xl text-gray-400 font-semibold">
-              You have no registered debt
-            </p>
-          </div>
-     
+        <div className=" flex items-center justify-center  flex-col mt-28">
+          <IoFileTraySharp size={96} />
+          <p className="text-xl text-gray-400 font-semibold">
+            You have no registered debt
+          </p>
+        </div>
       )}
     </div>
   );

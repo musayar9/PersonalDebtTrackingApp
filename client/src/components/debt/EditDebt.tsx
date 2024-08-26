@@ -7,8 +7,6 @@ import ErrorMessage from "../../pages/ErrorMessage";
 import EditDebtPage from "./EditDebtPage";
 import { CreateDebt } from "../../lib/types";
 
-
-
 const EditDebt = () => {
   const { id } = useParams();
 
@@ -49,13 +47,7 @@ const EditDebt = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className=" mx-auto max-w-4xl my-24">
-        <div className="flex items-center justify-center">
-          <Loading />
-        </div>
-      </div>
-    );
+    return <Loading />;
   }
 
   if (errMsg) {
@@ -68,7 +60,7 @@ const EditDebt = () => {
         <h2 className="text-2xl font-semibold text-gray-500 ">Edit Debt</h2>
         <Link
           className="bg-slate-200 hover:bg-slate-300 hover:text-gray-900 duration-150 ease-linear px-4 py-3 rounded-lg font-semibold text-gray-700"
-          to="/dashboard?tab=debt"
+          to="/debts"
         >
           Return Debt
         </Link>

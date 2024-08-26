@@ -36,27 +36,25 @@ const UserDetail = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <Loading />
-      </div>
-    );
+    return <Loading />;
   }
 
   if (error) {
     return <ErrorMessage message={error} />;
   }
 
-
   return (
-    <div className="max-w-6xl mx-auto my-8">
-        <div className="border-b border-slate-200  p-2 flex justify-between">
-        <h2 className="text-2xl font-semibold text-gray-600">User Detail Page</h2>
-        <Link className="btn btn-sm" to="/dashboard?tab=users">Return Users Page</Link>
-        </div>
-    
-      <div className="grid gap-4 p-4  md:grid-cols-10">
-       
+    <div className="max-w-6xl mx-auto my-8 p-4">
+      <div className="border-b border-slate-200  p-2 flex justify-between">
+        <h2 className="text-2xl font-semibold text-gray-600">
+          User Detail Page
+        </h2>
+        <Link className="btn btn-sm" to="/users">
+          Return Users Page
+        </Link>
+      </div>
+
+      <div className="grid gap-4 p-4  md:grid-cols-12">
         <UserDetailInfo userDetail={userDetail} />
 
         <UserDetailDebtInfo userDetail={userDetail} />

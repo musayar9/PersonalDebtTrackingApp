@@ -36,7 +36,7 @@ const UserDetailDebtInfo = ({ userDetail }: { userDetail: User | null }) => {
   }
 
   return (
-    <div className="md:col-span-7 space-y-6">
+    <div className="md:col-span-9 space-y-6">
       <UserAccountStatus userDetail={userDetail} />
 
       <UserDebtStatus debt={debt} />

@@ -109,7 +109,7 @@ const Chat = () => {
 
   return (
     <div>
-      <div className="bg-slate-200 relative p-4 grid md:grid-cols-[22%_auto] gap-4">
+      <div className="bg-slate-200 relative mt-14 p-4 grid md:grid-cols-[22%_auto] gap-4">
         {/* Left-side-chat */}
         <div className="flex flex-col gap-4 bg-white p-4 md:p-8 rounded-lg">
           <div className=" flex flex-col rounded-2xl p-2 md:min-h-[80vh] gap-4 bg-[rgba(255, 255, 255, 0.64)]">

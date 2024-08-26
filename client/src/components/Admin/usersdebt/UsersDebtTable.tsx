@@ -67,7 +67,7 @@ const UsersDebtTable = ({ debt }: { debt: DebtData[] | null | undefined}) => {
                 </td>
                 <td className="text-emerald-500 font-semibold hover:underline cursor-pointer">
                   <Link
-                    to={`/dashboard/debtDetail/${item.userId}/${item?._id}`}
+                    to={`/debts/debtDetail/${item.userId}/${item?._id}`}
                   >
                     Detail
                   </Link>

@@ -11,7 +11,7 @@ import { useAppSelector } from "../../redux/hooks";
 
 const DebtDetail = () => {
   const { id, userId } = useParams();
-  const {user} = useAppSelector((state)=>state.user)
+  const { user } = useAppSelector((state) => state.user);
   const [debt, setDebt] = useState<DebtData>();
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
@@ -37,11 +37,7 @@ const DebtDetail = () => {
   }, [id]);
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <Loading />
-      </div>
-    );
+    return <Loading />;
   }
 
   if (errMsg) {
@@ -54,28 +50,20 @@ const DebtDetail = () => {
         <h2 className="text-xl font-semibold text-gray-500  capitalize">
           {debt && debt.description}
         </h2>
-        {
-        userId === user?.user._id ?    <Link
-          className="btn btn-sm"
-          to="/dashboard?tab=debt"
-        >
-          Return Debt
-        </Link>:
-          <Link
-          className="btn btn-sm"
-          to={`/dashboard/user_detail/${userId}`}
-        >
-          Return User Detail 
-        </Link>
-        
-        }
-
-     
+        {userId === user?.user._id ? (
+          <Link className="btn btn-sm" to="/debts">
+            Return Debt
+          </Link>
+        ) : (
+          <Link className="btn btn-sm" to={`/users/user_detail/${userId}`}>
+            Return User Detail
+          </Link>
+        )}
       </div>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-12">
         <div className="lg:col-span-8">
-          <DebtDetailTable  id={id} />
+          <DebtDetailTable id={id} />
         </div>
         <div className="lg:col-span-4 lg:pl-4">
           <DebtDetailItem debt={debt} />

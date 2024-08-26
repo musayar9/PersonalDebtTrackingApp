@@ -3,8 +3,9 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import ErrorMessage from "../../pages/ErrorMessage";
 import { formatDateTwo, formatPrice } from "../../utils/functions";
-import { Audio } from "react-loader-spinner";
+
 import { useAppSelector } from "../../redux/hooks";
+import Loading from "../../pages/Loading";
 // import { useAppSelector } from "../../redux/hooks";
 
 interface PaymentPlan {
@@ -15,15 +16,12 @@ interface PaymentPlan {
 }
 
 const DebtDetailTable = ({ id }: { id: string | undefined }) => {
-    const { userId } = useParams();
-  const {user} = useAppSelector((state)=>state.user)
+  const { userId } = useParams();
+  const { user } = useAppSelector((state) => state.user);
   const [debt, setDebt] = useState<PaymentPlan[]>([]);
 
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-
-  
-
 
   useEffect(() => {
     const fetchDebtId = async () => {
@@ -46,27 +44,14 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
     fetchDebtId();
   }, [id]);
 
-   if (loading) {
-     return (
-       <div className="ml-4 hidden">
-         <Audio
-           height="75"
-           width="75"
-           color="#4fa94d"
-           ariaLabel="audio-loading"
-           wrapperStyle={{}}
-           wrapperClass="wrapper-class"
-           visible={true}
-         />
-       </div>
-     );
-   }
-  
-  
-    if (errMsg) {
-      return <ErrorMessage message={errMsg} />;
-    }
-  
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (errMsg) {
+    return <ErrorMessage message={errMsg} />;
+  }
+
   return (
     <div className="overflow-x-auto my-10  border border-slate-200 rounded-md">
       <table className="table ">
@@ -106,7 +91,7 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
                   ) : (
                     <Link
                       className="text-blue-600 btn btn-xs "
-                      to={`/dashboard/payment_debt/${id}/debt/${item._id}`}
+                      to={`/debts/payment_debt/${id}/debt/${item._id}`}
                     >
                       Pay Debt
                     </Link>
