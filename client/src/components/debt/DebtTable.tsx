@@ -6,6 +6,7 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { DebtData } from "../../lib/types";
 import { formatPercentage, formatPrice } from "../../utils/functions";
+import api from "../../utils/api";
 
 interface DebtTableProps {
   debt: DebtData[];
@@ -19,8 +20,8 @@ const DebtTable = ({ debt, setDebt }: DebtTableProps) => {
   const [errMsg, setErrMsg] = useState("");
   const handleDeleteDebt = async () => {
     try {
-      const res = await axios.delete(
-        `/api/v1/debt/${debtId}`
+      const res = await api.delete(
+        `/v1/debt/${debtId}`
       );
       const data = await res.data;
 

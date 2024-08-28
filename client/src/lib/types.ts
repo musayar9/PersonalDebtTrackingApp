@@ -26,6 +26,7 @@ export type RegisterUser = {
 export interface ApiResponse {
   user: User;
   message: string;
+  token:"string"
   response?: {
     status: number;
     data?: unknown; // Gelen verinin türüne göre uygun şekilde tanımlayın
@@ -38,6 +39,7 @@ export interface UsersState {
   userUpdateStatus: "idle" | "loading" | "succeeded" | "failed";
   userDeleteStatus: "idle" | "loading" | "succeeded" | "failed";
   error: string | null | boolean;
+  token:string
 }
 
 export interface Country {

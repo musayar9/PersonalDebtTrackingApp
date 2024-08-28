@@ -8,6 +8,7 @@ import Loading from "../../pages/Loading";
 import ErrorMessage from "../../pages/ErrorMessage";
 
 import { useAppSelector } from "../../redux/hooks";
+import api from "../../utils/api";
 
 const DebtDetail = () => {
   const { id, userId } = useParams();
@@ -20,7 +21,7 @@ const DebtDetail = () => {
     const fetchDebtId = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`/api/v1/debt/getDebt/${id}`);
+        const res = await api.get(`/v1/debt/getDebt/${id}`);
         const data: DebtData = await res.data;
         setDebt(data);
         setLoading(false);

@@ -5,6 +5,7 @@ import UserAccountStatus from "./UserAccountStatus";
 import UserDebtStatus from "./UserDebtStatus";
 
 import ErrorMessage from "../../pages/ErrorMessage";
+import api from "../../utils/api";
 
 const UserDetailDebtInfo = ({ userDetail }: { userDetail: User | null }) => {
   const [debt, setDebt] = useState<DebtData[] >([]);
@@ -14,7 +15,7 @@ const UserDetailDebtInfo = ({ userDetail }: { userDetail: User | null }) => {
     if (userDetail?._id) {
       const getUserDebt = async () => {
         try {
-          const res = await axios.get(`/api/v1/debt/${userDetail?._id}`);
+          const res = await api.get(`/v1/debt/${userDetail?._id}`);
           const data: DebtData[] =  res.data;
           setDebt(data);
        

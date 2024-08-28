@@ -14,6 +14,7 @@ import {
 } from "../../lib/types";
 import { addMessage, setCurrentChatData } from "../../redux/messageSlice";
 import ErrorMessage from "../../pages/ErrorMessage";
+import api from "../../utils/api";
 
 const Chat = () => {
   const { user } = useAppSelector((state) => state?.user);
@@ -33,7 +34,7 @@ const Chat = () => {
     if (user) {
       const getChats = async () => {
         try {
-          const res = await axios.get(`/api/v1/chat/${user?.user._id}`);
+          const res = await api.get(`/v1/chat/${user?.user._id}`);
           const data = await res.data;
           setChats(data);
         } catch (error) {
@@ -90,7 +91,7 @@ const Chat = () => {
   }) => {
     try {
       setLoading(true);
-      const res = await axios.delete(`/api/v1/chat/${chatId}`);
+      const res = await api.delete(`/v1/chat/${chatId}`);
       const data = await res.data;
 
       const deleteChat = chats.filter((d) => d?._id !== chatId);

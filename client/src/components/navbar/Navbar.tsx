@@ -27,7 +27,8 @@ import {
 
 } from "../../redux/messageSlice";
 import MessageNotifications from "./MessageNotifications";
-import axios from "axios";
+
+import api from "../../utils/api";
 export function NavbarComponent() {
   const { user } = useAppSelector((state: { user: UsersState }) => state?.user);
   const { pathname } = useLocation();
@@ -66,8 +67,8 @@ export function NavbarComponent() {
   useEffect(() => {
     if (recieverMessage) {
       const senderUser = async () => {
-        const res = await axios.get(
-          `/api/v1/auth/${recieverMessage?.senderId}`
+        const res = await api.get(
+          `/v1/auth/${recieverMessage?.senderId}`
         );
         const data = await res.data;
 

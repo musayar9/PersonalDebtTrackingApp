@@ -50,13 +50,11 @@ const register = async (req, res, next) => {
         "Success! User Created, A verification code has been sent to your email.",
     });
   } catch (error) {
-
     next(error);
   }
 };
 
 const login = async (req, res, next) => {
-
   const { email, password } = req.body;
 
   try {
@@ -82,15 +80,72 @@ const login = async (req, res, next) => {
       { expiresIn: "4h" }
     );
 
+    const refreshToken = jwt.sign(
+      { id: isUser._id, name: isUser.name, isAdmin: isUser.isAdmin },
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
     return res
       .status(StatusCodes.OK)
       .cookie("token", token, {
+        secure: process.env.NODE_ENV === "production",
         httpOnly: true,
-      //  maxAge: 4 * 60 * 60 * 1000,
+        // maxAge: 30 * 60 * 1000,
+         maxAge: 4 * 60 * 60 * 1000,
         // maxAge: 1 * 24 * 60 * 60 * 1000,
         sameSite: "strict", // CSRF: saldirilara karsi onlemek icin
       })
-      .json({ user: rest, message: " Otp code Your send email address" });
+      .json({
+        user: rest,
+        message: " Otp code Your send email address",
+        token,
+      });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const refreshToken = async (req, res, next) => {
+  const { refreshToken } = req.cookies;
+  if (!refreshToken) {
+    return res
+      .status(StatusCodes.FORBIDDEN)
+      .json({ message: "Refresh Token is missing" });
+  }
+
+  try {
+    const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const isUser = await User.findById(decoded.id);
+    if (!isUser) {
+      return res
+        .status(StatusCodes.FORBIDDEN)
+        .json({ message: "Invalid refresh Token" });
+    }
+
+    const newAccessToken = jwt.sign(
+      { id: isUser._id, name: isUser.name, isAdmin: isUser.isAdmin },
+      process.env.JWT_SECRET,
+      { expiresIn: "4h" }
+    );
+
+    return res
+      .status(StatusCodes.OK)
+      .cookie("token", newAccessToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameStrict: "strict",
+        // maxAge: 30 * 60 * 1000,
+        maxAge: 4 * 60 * 60 * 1000,
+      })
+      .json({ message: "Access Token refreshed", token: newAccessToken });
   } catch (error) {
     next(error);
   }
@@ -112,8 +167,6 @@ const updateUser = async (req, res, next) => {
 
   const { id } = req.params;
   const userId = req.user.id;
-
-
 
   if (id !== userId) {
     return res.status(400).json({ error: "You mustn't update this user" });
@@ -200,7 +253,11 @@ const signOut = async (req, res, next) => {
     throw new BadRequestError("User is not found");
   }
 
-  res.clearCookie("token").status(200).json({ message: "Sign Out" });
+  res
+    .clearCookie("token")
+    .clearCookie("refreshToken")
+    .status(200)
+    .json({ message: "Sign Out" });
 };
 
 const changePassword = async (req, res, next) => {
@@ -242,4 +299,5 @@ module.exports = {
   deleteUser,
   updateUser,
   getUserId,
+  refreshToken,
 };

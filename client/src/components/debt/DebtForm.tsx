@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import FormInput from "../FormInput";
 import FormTextArea from "../FormTextArea";
 import AlertMessage from "../AlertMessage";
+import api from "../../utils/api";
 const DebtForm = () => {
   const [formData, setFormData] = useState({
     lender: "",
@@ -81,19 +82,17 @@ const DebtForm = () => {
     try {
       setLoading(true);
 
-      const res = await axios.post("/api/v1/debt", formData);
+      const res = await api.post("/v1/debt", formData);
       const data = await res.data;
 
       setMsg(data?.message);
       setLoading(false);
-      navigate("/dashboard?tab=debt");
+      navigate("/debts");
       setTimeout(() => {
         setMsg("");
       }, 3000);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-
-
         setErrMsg(error.response?.data?.message);
       } else {
         setErrMsg("request failed");

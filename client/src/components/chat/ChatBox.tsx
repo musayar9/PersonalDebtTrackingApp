@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import 'moment-timezone';
 import {BiSolidMessageDetail} from "react-icons/bi";
 import { setChatErrorMessage } from "../../redux/messageSlice";
+import api from "../../utils/api";
 
 interface ChatBoxProps {
   chat: ChatType | null;
@@ -37,7 +38,7 @@ const dispatch = useAppDispatch()
       const getUserId = async () => {
         try {
           setLoading(true);
-          const res = await axios.get(`/api/v1/auth/${userId}`);
+          const res = await api.get(`/v1/auth/${userId}`);
           const data = await res.data;
           setLoading(false);
           setUserData(data);
@@ -57,7 +58,7 @@ const dispatch = useAppDispatch()
   useEffect(() => {
     const getMessages = async () => {
       try {
-        const res = await axios.get(`/api/v1/message/${chat?._id}`);
+        const res = await api.get(`/v1/message/${chat?._id}`);
         const data = await res.data;
         setMessages(data);
       } catch (error) {
@@ -96,7 +97,7 @@ const dispatch = useAppDispatch()
     setSendMessage({ ...message, receiverId });
 
     try {
-      const res = await axios.post("/api/v1/message", message);
+      const res = await api.post("/v1/message", message);
       const data = await res.data;
 
       setMessages([...messages, data]);

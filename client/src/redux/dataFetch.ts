@@ -1,6 +1,7 @@
 import { AsyncThunk, createAsyncThunk } from "@reduxjs/toolkit";
 import { ApiResponse, CountryData, User } from "../lib/types";
 import axios from "axios";
+import api from "../utils/api";
 
 interface LoginInterface {
   email: string;
@@ -15,7 +16,10 @@ export const loginUser: AsyncThunk<
   "user/login",
   async ({ formData }: { formData: LoginInterface }) => {
     try {
-      const res = await axios.post("/api/v1/auth/login", formData);
+      const res = await api.post(
+        "/v1/auth/login",
+        formData
+      );
       const data = await res.data;
       return data;
     } catch (error) {
@@ -32,7 +36,7 @@ export const signOut: AsyncThunk<
   "user/signOut",
   async ({ id }: { id: string | undefined }) => {
     try {
-      const res = await axios.get(`/api/v1/auth/signOut/${id}`);
+      const res = await api.get(`/v1/auth/signOut/${id}`);
       const data = await res.data;
       return data;
     } catch (error) {
@@ -54,7 +58,7 @@ export const updateUser = createAsyncThunk<
   "user/updateUser",
   async ({ id, formData }: UpdateUserArgs, { rejectWithValue }) => {
     try {
-      const res = await axios.put(`/api/v1/auth/updateUser/${id}`, formData);
+      const res = await api.put(`/v1/auth/updateUser/${id}`, formData);
       return res.data;
     } catch (error: unknown) {
       console.error("Error updating user:", error);
@@ -73,7 +77,7 @@ export const deleteUser = createAsyncThunk<
   { rejectValue: string }
 >("user/deleteUser", async ({ id }: { id: string }, { rejectWithValue }) => {
   try {
-    const res = await axios.delete(`/api/v1/auth/${id}`);
+    const res = await api.delete(`/v1/auth/${id}`);
     const data = await res.data;
     return data;
   } catch (error) {
@@ -87,7 +91,7 @@ export const deleteUser = createAsyncThunk<
 
 export const fetchCountries = async () => {
   try {
-    const res = await axios.get("/api/v1/countries");
+    const res = await api.get("/v1/countries");
     const data: CountryData[] = await res.data;
     return data;
   } catch (error) {

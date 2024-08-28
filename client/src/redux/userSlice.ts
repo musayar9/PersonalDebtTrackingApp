@@ -8,6 +8,7 @@ const initialState: UsersState = {
   userUpdateStatus: "idle",
   userDeleteStatus: "idle",
   error: null,
+  token: "",
 };
 
 const userSlice = createSlice({
@@ -26,8 +27,11 @@ const userSlice = createSlice({
       .addCase(
         loginUser.fulfilled,
         (state, action: PayloadAction<ApiResponse>) => {
+          const { token } = action.payload;
+          localStorage.setItem("token", token);
           state.userStatus = "succeeded";
           state.user = action.payload;
+          state.token = token;
         }
       )
       .addCase(loginUser.rejected, (state) => {
@@ -55,6 +59,7 @@ const userSlice = createSlice({
       .addCase(signOut.fulfilled, (state) => {
         state.userStatus = "succeeded";
         state.user = null;
+        localStorage.clear();
       })
 
       .addCase(signOut.rejected, (state) => {

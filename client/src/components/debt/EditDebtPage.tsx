@@ -9,6 +9,7 @@ import { formattedDate } from "../../utils/functions";
 import FormTextArea from "../FormTextArea";
 import AlertMessage from "../AlertMessage";
 import { FaCheck } from "react-icons/fa";
+import api from "../../utils/api";
 
 interface EditDebtProps {
   id: string | undefined;
@@ -78,7 +79,7 @@ const EditDebtPage: React.FC<EditDebtProps> = ({
 
     try {
       setLoading(true);
-      const res = await axios.put(`/api/v1/debt/updateDebt/${id}`, formData);
+      const res = await api.put(`/v1/debt/updateDebt/${id}`, formData);
       const data = await res.data;
 
       setUpdateDebt(data);

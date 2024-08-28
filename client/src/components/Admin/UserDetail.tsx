@@ -6,6 +6,7 @@ import ErrorMessage from "../../pages/ErrorMessage";
 import UserDetailInfo from "./UserDetailInfo";
 import { User } from "../../lib/types";
 import UserDetailDebtInfo from "./UserDetailDebtInfo";
+import api from "../../utils/api";
 
 const UserDetail = () => {
   const { userId } = useParams();
@@ -18,7 +19,7 @@ const UserDetail = () => {
     const getUserId = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`/api/v1/auth/${userId}`);
+        const res = await api.get(`/v1/auth/${userId}`);
         const data: User = await res.data;
         setLoading(false);
         setUserDetail(data);

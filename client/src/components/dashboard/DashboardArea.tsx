@@ -43,7 +43,7 @@ const DashboardArea = () => {
           </div>
         </div>
       ) : (
-        <div className=" flex items-center justify-center  flex-col mt-28">
+        <div className=" flex items-center justify-center mx-auto  flex-col mt-28">
           <IoFileTraySharp size={96} />
           <p className="text-xl text-gray-400 font-semibold">
             You have no registered debt

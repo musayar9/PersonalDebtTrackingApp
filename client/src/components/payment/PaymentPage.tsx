@@ -9,6 +9,7 @@ import Loading from "../../pages/Loading";
 import CheckoutForm from "../CheckoutForm";
 import PaymentPageDetail from "./PaymentPageDetail";
 import ErrorMessage from "../../pages/ErrorMessage";
+import api from "../../utils/api";
 
 const PaymentPage = () => {
   const [stripePromise, setStripePromise] = useState<Stripe | null>(null);
@@ -20,7 +21,7 @@ const PaymentPage = () => {
   useEffect(() => {
     const getStripeConfig = async () => {
       try {
-        const res = await axios.get("/api/v1/stripe");
+        const res = await api.get("/v1/stripe");
         const data = await res.data;
 
         const stripe = await loadStripe(data?.publishableKey);
@@ -41,7 +42,7 @@ const PaymentPage = () => {
     if (params) {
       const createPayment = async () => {
         try {
-          const res = await axios.post("/api/v1/stripe/create-payment", params);
+          const res = await api.post("/v1/stripe/create-payment", params);
 
           const data = res.data;
 

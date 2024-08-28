@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { DebtData, User } from "../lib/types";
 import axios from "axios";
 import { useAppSelector } from "../redux/hooks";
-
+import api from "./api";
 
 const useDebtData = ({ id }: { id: string | undefined }) => {
   const [debt, setDebt] = useState<DebtData>();
@@ -13,7 +13,7 @@ const useDebtData = ({ id }: { id: string | undefined }) => {
     const fetchDebtId = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`/api/v1/debt/getDebt/${id}`);
+        const res = await api.get(`/v1/debt/getDebt/${id}`);
         const data: DebtData = await res.data;
         setDebt(data);
         setLoading(false);
@@ -43,26 +43,24 @@ export const useFetchUserDebt = () => {
   useEffect(() => {
     // dispatch(getAllDebt());
 
-    if (user) {
-      const fetchData = async () => {
-        try {
-          setLoading(true);
-          const res = await axios.get(`/api/v1/debt/${user?.user._id}`);
-          const data = await res.data;
-          setDebt(data);
-          setLoading(false);
-        } catch (error) {
-          setLoading(false);
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const res = await api.get(`/v1/debt/${user?.user._id}`);
+        const data = await res.data;
+        setDebt(data);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
 
-          if (axios.isAxiosError(error)) {
-            setErrMsg(error.response?.data.msg);
-          } else {
-            setErrMsg("Request Failed");
-          }
+        if (axios.isAxiosError(error)) {
+          setErrMsg(error.response?.data.msg);
+        } else {
+          setErrMsg("Request Failed");
         }
-      };
-      fetchData();
-    }
+      }
+    };
+    fetchData();
   }, [user]);
 
   return { debt, loading, errMsg, setDebt };
@@ -76,12 +74,12 @@ export const useGetPaymentStatus = ({
   paymentStatus: string;
 }) => {
   const [groupDebt, setGroupDebt] = useState<DebtData[]>([]);
-  const [errMsg, setErrMsg] = useState("")
+  const [errMsg, setErrMsg] = useState("");
 
   useEffect(() => {
     const fetchPaymentStatus = async () => {
       try {
-        const res = await axios.post(`/api/v1/debt/checkPaymentStatus`, {
+        const res = await api.post(`/v1/debt/checkPaymentStatus`, {
           paymentStatus,
         });
         const data = await res.data;
@@ -111,7 +109,7 @@ export const useGetAllUsers = () => {
     const getAllUsers = async () => {
       try {
         setLoading(true);
-        const res = await axios.get("/api/v1/auth");
+        const res = await api.get("/v1/auth");
         const data = await res.data;
 
         setAllUsers(data);

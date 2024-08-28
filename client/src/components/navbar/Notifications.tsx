@@ -2,7 +2,7 @@ import {
   Dropdown,
   DropdownHeader,
 } from "flowbite-react";
-import { FaBell } from "react-icons/fa6";
+
 
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -14,6 +14,7 @@ import { formatDateTwo, formatPrice } from "../../utils/functions";
 
 import { setChatErrorMessage } from "../../redux/messageSlice";
 import { FaRegBell } from "react-icons/fa";
+import api from "../../utils/api";
 
 const Notifications = () => {
   const { user } = useAppSelector((state) => state?.user);
@@ -22,8 +23,8 @@ const Notifications = () => {
   useEffect(() => {
     const upcomingDebt = async () => {
       try {
-        const res = await axios.get(
-          `/api/v1/debt/upcomingDebt/${user?.user._id}`
+        const res = await api.get(
+          `/v1/debt/upcomingDebt/${user?.user._id}`
         );
         const data:UpcomingDebt[] = await res.data;
 

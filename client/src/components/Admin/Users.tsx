@@ -17,7 +17,7 @@ export const Users = () => {
 
   const handleDeleteUser = async ({ id }: { id: string | undefined }) => {
     try {
-      const res = await axios.delete(`/api/v1/auth/${id}`);
+      const res = await axios.delete(`/v1/auth/${id}`);
       const data = await res.data;
       const deleteUser = allUsers.filter((d) => d._id !== id);
       setAllUsers(deleteUser);

@@ -6,6 +6,7 @@ import Loading from "../../pages/Loading";
 import ErrorMessage from "../../pages/ErrorMessage";
 import EditDebtPage from "./EditDebtPage";
 import { CreateDebt } from "../../lib/types";
+import api from "../../utils/api";
 
 const EditDebt = () => {
   const { id } = useParams();
@@ -30,7 +31,7 @@ const EditDebt = () => {
       setLoading(true);
 
       try {
-        const res = await axios.get(`/api/v1/debt/getDebt/${id}`);
+        const res = await api.get(`/v1/debt/getDebt/${id}`);
         const data = await res.data;
         setFormData(data);
         setLoading(false);

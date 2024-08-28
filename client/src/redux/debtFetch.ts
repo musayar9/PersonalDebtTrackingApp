@@ -1,12 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import {  DebtData, } from "../lib/types";
+import api from "../utils/api";
 
 export const getAllDebt = createAsyncThunk<DebtData[], void,  {rejectValue:string}>(
   "debt/getAllDebt",
   async (_,{ rejectWithValue }) => {
     try {
-    const res = await axios.get("/api/v1/debt")
+    const res = await api.get("/v1/debt")
     return res.data as DebtData[];
     
     

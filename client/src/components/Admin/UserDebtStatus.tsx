@@ -3,8 +3,7 @@ import { DebtData } from "../../lib/types";
 import { formatPrice } from "../../utils/functions";
 import { IoFileTraySharp } from "react-icons/io5";
 
-
-const UserDebtStatus = ({ debt }: { debt: DebtData[] | undefined  }) => {
+const UserDebtStatus = ({ debt }: { debt: DebtData[] | undefined }) => {
   return (
     <div className="shadow-sm">
       <div className="flex  flex-col border rounded-lg gap-4 p-8">
@@ -50,7 +49,7 @@ const UserDebtStatus = ({ debt }: { debt: DebtData[] | undefined  }) => {
 
                     <td className="text-emerald-500 font-semibold hover:underline cursor-pointer">
                       <Link
-                        to={`/dashboard/debtDetail/${item?.userId}/${item?._id}`}
+                        to={`/debts/debtDetail/${item?.userId}/${item?._id}`}
                       >
                         Detail
                       </Link>

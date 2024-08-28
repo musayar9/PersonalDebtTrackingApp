@@ -1,17 +1,17 @@
-import {  useEffect, useState } from "react";
-
+import { useEffect, useState } from "react";
 import UsersDebtSearch from "./Filter";
 import UsersDebtTable from "./UsersDebtTable";
 import { useLocation } from "react-router-dom";
 import { DebtData, Filter } from "../../../lib/types";
-import axios from "axios";
 import Loading from "../../../pages/Loading";
+import api from "../../../utils/api";
+import axios from "axios";
+import ErrorMessage from "../../../pages/ErrorMessage";
 
 const UsersDebts = () => {
-
-  const [debts, setDebts ] = useState<DebtData[] |undefined | null>([])
-  const [loading, setLoading] = useState(false)
-
+  const [debts, setDebts] = useState<DebtData[] | undefined | null>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [filter, setFilter] = useState<Filter>({
     lender: "",
     borrower: "",
@@ -38,25 +38,31 @@ const UsersDebts = () => {
     const searchQuery = urlParams.toString();
     console.log("searchQuery", searchQuery);
     const getDebtAll = async () => {
-    
-        try {
-        setLoading(true)
-          const res = await axios.get(`/api/v1/debt/getDebt?${searchQuery}`);
-          const data:DebtData[] = await res?.data?.debts;
-          setLoading(false)
-          console.log("dataaa", data);
-          setDebts(data)
-        } catch (error) {
-          console.log(error);
+      try {
+        setLoading(true);
+        const res = await api.get(`/v1/debt/getDebt?${searchQuery}`);
+        const data: DebtData[] = await res?.data?.debts;
+        setLoading(false);
+        console.log("dataaa", data);
+        setDebts(data);
+      } catch (error) {
+        setLoading(false);
+        if (axios.isAxiosError(error)) {
+          setError(error.response?.data.msg);
+        } else {
+          setError("Request Failed");
         }
-      
+      }
     };
     getDebtAll();
-
-
   }, [location.search]);
 
-if(loading){ return <Loading/>}
+  if (loading) {
+    return <Loading />;
+  }
+  if (error) {
+    return <ErrorMessage message={error} />;
+  }
 
   return (
     <>

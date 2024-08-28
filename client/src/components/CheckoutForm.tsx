@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AlertMessage from "./AlertMessage";
 import { MdErrorOutline } from "react-icons/md";
+import api from "../utils/api";
 
 interface CheckoutFormProps {
   debtId: string | undefined;
@@ -51,11 +52,10 @@ const CheckoutForm = ({ debtId, paymentId }: CheckoutFormProps) => {
       });
 
       if (paymentIntent && paymentIntent.status === "succeeded") {
-        const res = await axios.patch(
-          `/api/v1/debt/paymentDebt/${debtId}/${paymentId}`
+        const res = await api.patch(
+          `/v1/debt/paymentDebt/${debtId}/${paymentId}`
         );
         const data = await res.data;
-
 
         navigate("/success");
         setMessage(`${paymentIntent.status + data.message}`);

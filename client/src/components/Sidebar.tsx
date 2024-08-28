@@ -64,7 +64,7 @@ const Sidebar = () => {
 
       <div className="w-full absolute bottom-5 space-y-3 left-0 px-4 py-2 cursor-pointer text-center">
         <button
-          className="flex items-center space-x-2 text-xs text-white py-2 px-5 w-full bg-gradient-to-r from-emerald-500 to-blue-600 rounded-full hover:opacity-80"
+          className="flex items-center justify-center space-x-2 text-xs text-white py-2 px-5 w-full bg-gradient-to-r from-emerald-500 to-blue-600 rounded-full hover:opacity-80"
           onClick={handleSignOut}
         >
           <span>
@@ -72,7 +72,7 @@ const Sidebar = () => {
           </span>
           <span className="hidden md:flex "> Sign Out</span>
         </button>
-        <p className="flex items-center space-x-2 text-xs text-white py-2 px-5 bg-gradient-to-r from-indigo-500 to-violet-600 rounded-full">
+        <p className="flex items-center  space-x-2 text-xs text-white py-2 px-5 bg-gradient-to-r from-indigo-500 to-violet-600 rounded-full">
           {" "}
           <span>?</span> <span className="hidden md:flex">Need Help</span>
         </p>

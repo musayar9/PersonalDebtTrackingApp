@@ -16,6 +16,7 @@ import {
   setDeleteInComingMessage,
 } from "../../redux/messageSlice";
 import axios from "axios";
+import api from "../../utils/api";
 // import ErrorMessage from "../../pages/ErrorMessage";
 
 const MessageNotifications = () => {
@@ -32,8 +33,8 @@ const MessageNotifications = () => {
     if (recieverMessage) {
       const findChat = async () => {
         try {
-          const res = await axios.get(
-            `/api/v1/chat/find/${recieverMessage.senderId}/${recieverMessage?.receiverId}`
+          const res = await api.get(
+            `/v1/chat/find/${recieverMessage.senderId}/${recieverMessage?.receiverId}`
           );
           const data = await res.data;
 
@@ -55,7 +56,7 @@ const MessageNotifications = () => {
     if (user) {
       const getChats = async () => {
         try {
-          const res = await axios.get(`/api/v1/chat/${user?.user._id}`);
+          const res = await api.get(`/v1/chat/${user?.user._id}`);
           const data = await res.data;
 
           dispatch(setAllChats(data));

@@ -7,6 +7,7 @@ import { AiFillLike } from "react-icons/ai";
 import { useAppSelector } from "../../redux/hooks";
 import ProfileBreadcrumps from "./ProfileBreadcrumps";
 import AlertMessage from "../AlertMessage";
+import api from "../../utils/api";
 
 interface PasswordData {
   currentPassword: string;
@@ -39,8 +40,8 @@ const ProfileChangePassword: React.FC = () => {
     try {
       setLoading(true);
 
-      const res = await axios.patch(
-        `/api/v1/auth/changePassword/${user?.user._id}`,
+      const res = await api.patch(
+        `/v1/auth/changePassword/${user?.user._id}`,
         formData
       );
       const data = await res.data;

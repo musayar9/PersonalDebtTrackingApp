@@ -4,6 +4,7 @@ import axios from "axios";
 import { FaTrashCan } from "react-icons/fa6";
 import { useAppDispatch } from "../../redux/hooks.ts";
 import { setChatErrorMessage } from "../../redux/messageSlice.ts";
+import api from "../../utils/api.ts";
 
 interface ConversationProps {
   data: ChatType;
@@ -28,7 +29,7 @@ const Conversation = ({
 
     const getUserId = async () => {
       try {
-        const res = await axios.get(`/api/v1/auth/${userId}`);
+        const res = await api.get(`/v1/auth/${userId}`);
         const data: User = await res.data;
         setUserData(data);
       } catch (error) {

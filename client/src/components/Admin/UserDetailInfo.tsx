@@ -15,6 +15,7 @@ import ErrorMessage from "../../pages/ErrorMessage";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {  setCurrentChatData } from "../../redux/messageSlice";
 import Loading from "../../pages/Loading";
+import api from "../../utils/api";
 
 const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
   const { user } = useAppSelector((state) => state.user);
@@ -26,7 +27,7 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
   const dispatch  = useAppDispatch()
   const handleDeleteUser = async ({ id }: { id: string | undefined }) => {
     try {
-      const res = await axios.delete(`/api/v1/auth/${id}`);
+      const res = await api.delete(`/v1/auth/${id}`);
       const data = await res.data;
       navigate("/dashboard?tab=users");
      return data
@@ -43,8 +44,8 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
     if (user && userDetail) {
       const findChat = async () => {
         try {
-          const res = await axios.get(
-            `/api/v1/chat/find/${user?.user?._id}/${userDetail?._id}`
+          const res = await api.get(
+            `/v1/chat/find/${user?.user?._id}/${userDetail?._id}`
           );
           const data = await res.data;
           setFindChat(data);
@@ -75,7 +76,7 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
   const sendMessage = async () => {
     try {
       setLoading(false);
-      const res = await axios.post("/api/v1/chat", chat);
+      const res = await api.post("/v1/chat", chat);
       const data = await res.data;
       if(findChat === null){
         dispatch(setCurrentChatData(data))

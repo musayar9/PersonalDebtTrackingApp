@@ -6,6 +6,7 @@ import { formatDateTwo, formatPrice } from "../../utils/functions";
 
 import { useAppSelector } from "../../redux/hooks";
 import Loading from "../../pages/Loading";
+import api from "../../utils/api";
 // import { useAppSelector } from "../../redux/hooks";
 
 interface PaymentPlan {
@@ -27,7 +28,7 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
     const fetchDebtId = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`/api/v1/debt/paymentPlan/${id}`);
+        const res = await api.get(`/v1/debt/paymentPlan/${id}`);
 
         const data: PaymentPlan[] = await res.data;
         setDebt(data);
