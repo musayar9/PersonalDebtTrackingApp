@@ -143,7 +143,7 @@ const refreshToken = async (req, res, next) => {
         secure: process.env.NODE_ENV === "production",
         sameStrict: "strict",
         // maxAge: 30 * 60 * 1000,
-        maxAge: 4 * 60 * 60 * 1000,
+            maxAge: 4 * 60 * 60 * 1000,
       })
       .json({ message: "Access Token refreshed", token: newAccessToken });
   } catch (error) {

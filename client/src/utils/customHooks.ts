@@ -39,28 +39,33 @@ export const useFetchUserDebt = () => {
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [debt, setDebt] = useState<DebtData[]>([]);
-
+  const token = localStorage.getItem("token");
   useEffect(() => {
     // dispatch(getAllDebt());
+    if (user) {
+      const fetchData = async () => {
+        try {
+          setLoading(true);
+          const res = await api.get(`/v1/debt/${user?.user._id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
 
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const res = await api.get(`/v1/debt/${user?.user._id}`);
-        const data = await res.data;
-        setDebt(data);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
+          const data = await res.data;
+          setDebt(data);
+          setLoading(false);
+        } catch (error) {
+          setLoading(false);
 
-        if (axios.isAxiosError(error)) {
-          setErrMsg(error.response?.data.msg);
-        } else {
-          setErrMsg("Request Failed");
+          if (axios.isAxiosError(error)) {
+            setErrMsg(error.response?.data.msg);
+          } else {
+            setErrMsg("Request Failed");
+          }
         }
-      }
-    };
-    fetchData();
+      };
+
+      fetchData();
+    }
   }, [user]);
 
   return { debt, loading, errMsg, setDebt };

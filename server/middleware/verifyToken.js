@@ -2,8 +2,10 @@ const jwt = require("jsonwebtoken");
 const { UnauthenticatedError } = require("../errors");
 
 const verifyToken = async (req, res, next) => {
-  const token = req.cookies.token || req.headers.authorization;
+  const token =
+    req.cookies.token || req.headers.authorization || req.headers.Authorization;
   console.log("req authorization", req.headers.authorization);
+  console.log("reqgf", req.headers.Authorization);
   if (!token) {
     return res.status(401).json("Authentication Invalid");
   }
