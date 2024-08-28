@@ -36,14 +36,14 @@ const UsersDebts = () => {
       });
     }
     const searchQuery = urlParams.toString();
-    console.log("searchQuery", searchQuery);
+  
     const getDebtAll = async () => {
       try {
         setLoading(true);
         const res = await api.get(`/v1/debt/getDebt?${searchQuery}`);
         const data: DebtData[] = await res?.data?.debts;
         setLoading(false);
-        console.log("dataaa", data);
+   
         setDebts(data);
       } catch (error) {
         setLoading(false);

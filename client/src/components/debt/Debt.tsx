@@ -4,33 +4,12 @@ import { useFetchUserDebt } from "../../utils/customHooks";
 import Loading from "../../pages/Loading";
 import ErrorMessage from "../../pages/ErrorMessage";
 import DebtTable from "./DebtTable";
-import { useEffect, useState } from "react";
+
 
 const Debt: React.FC = () => {
   // const { debt } = useAppSelector((state) => state.debt);
   const { debt, loading, errMsg, setDebt } = useFetchUserDebt();
-  console.log(localStorage.getItem("token"));
-
-  const [token, setToken] = useState<string | undefined>(undefined);
-console.log(document.cookie)
-  useEffect(() => {
-    const getTokenFromCookies = (): string | undefined => {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; token=`);
-      if (parts.length === 2) {
-        const lastPart = parts.pop();
-        if (lastPart !== undefined) {
-          return lastPart.split(";").shift();
-        }
-      }
-      return undefined; // Token bulunamazsa undefined döner
-    };
-
-    setToken(getTokenFromCookies());
-  }, []);
-
-
-  console.log(token);
+  
 
   if (loading) {
     return <Loading />;

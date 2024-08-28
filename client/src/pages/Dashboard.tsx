@@ -14,39 +14,15 @@ import Sidebar from "../components/Sidebar.tsx";
 
 const Dashboard = () => {
   const location = useLocation();
-  const [tab, setTab] = useState("");
-  useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
-    const tabFromUrl = urlParams.get("tab");
 
-    if (tabFromUrl) {
-      setTab(tabFromUrl);
-    }
-  }, [location.search]);
-console.log(tab)
+
   return (
     <div className="flex">
       <Sidebar />
-      <div className="w-full ml-16 md:ml-56 mt-14">{/* <DashSidebar /> */}
-      {/* <NavbarComponent/> */}
+      <div className="w-full ml-16 md:ml-56 mt-14">
       {location.pathname === "/" && <DashboardArea/>}
-      
       <Outlet/>
       </div>
-
-      {/* {tab === "profile" && <Profile />}
-
-      {tab === "profile/change-password" && <ProfileChangePassword />}
-      {tab === "profile/contactPreference" && <ProfileContactPreference />}
-
-      {tab === "users" && <Users />}
-
-      {tab === "debt" && <Debt />}
-      {tab === "debt/create_debt" && <DebtForm />}
-      {tab === "users/debts" && <UsersDebts />} */}
-      {/* {tab === "debt/payment_debt/:debtId/debt/:paymentId" && <PaymentPage />} */}
-
-      {/* {tab === "dash" && <DashboardArea />} */}
     </div>
   );
 };

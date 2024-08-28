@@ -95,7 +95,7 @@ const EditDebtPage: React.FC<EditDebtProps> = ({
     }
   };
 
-  console.log("updateDebt", updateDebt);
+
   return (
     <div className="max-w-2xl mx-auto">
       <form className="flex flex-col gap-2 p-4" onSubmit={handleSubmit}>

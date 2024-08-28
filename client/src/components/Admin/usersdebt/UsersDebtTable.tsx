@@ -6,7 +6,7 @@ import ReactPaginate from "react-paginate";
 
 const UsersDebtTable = ({ debt }: { debt: DebtData[] | null | undefined}) => {
   const validDebt = debt || [] ;
-  console.log(validDebt);
+
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 8;
 

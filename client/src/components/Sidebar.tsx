@@ -1,10 +1,9 @@
-
 import { FaUsers } from "react-icons/fa";
 import { FcDebt } from "react-icons/fc";
 import { HiArrowSmRight, HiUser } from "react-icons/hi";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { PiInvoiceBold } from "react-icons/pi";
-import {  NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { signOut } from "../redux/dataFetch";
 
@@ -15,23 +14,21 @@ const Sidebar = () => {
   //   setActiveLink(index);
   // };
 
-  const {user} = useAppSelector((state)=>state.user)
-  const dispatch = useAppDispatch()
+  const { user } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
   const SIDEBAR_LINKS = [
     { id: 1, path: "/", name: "Dashboard", icon: MdOutlineSpaceDashboard },
     { id: 2, path: "profile", name: "Profile", icon: HiUser },
     { id: 3, path: "/users", name: "Users", icon: FaUsers },
     { id: 4, path: "/allUsers/debts", name: "All Debts", icon: PiInvoiceBold },
     { id: 5, path: "/debts", name: "Debts", icon: FcDebt },
-
   ];
-  
-    const handleSignOut = async() =>{
-      if(user && user?.user){
-        dispatch(signOut({id:user?.user._id}))
-      }
-  
-  }
+
+  const handleSignOut = async () => {
+    if (user && user?.user) {
+      dispatch(signOut({ id: user?.user._id }));
+    }
+  };
 
   return (
     <div className="w-16 md:w-56  fixed z-10 md:z-0  h-screen border-r pt-9  bg-[#ffffff]">
@@ -68,11 +65,11 @@ const Sidebar = () => {
           onClick={handleSignOut}
         >
           <span>
-            <HiArrowSmRight size={18}/>
+            <HiArrowSmRight size={18} />
           </span>
           <span className="hidden md:flex "> Sign Out</span>
         </button>
-        <p className="flex items-center  space-x-2 text-xs text-white py-2 px-5 bg-gradient-to-r from-indigo-500 to-violet-600 rounded-full">
+        <p className="flex items-center justify-center  space-x-2 text-xs text-white py-2 px-5 bg-gradient-to-r from-indigo-500 to-violet-600 rounded-full">
           {" "}
           <span>?</span> <span className="hidden md:flex">Need Help</span>
         </p>

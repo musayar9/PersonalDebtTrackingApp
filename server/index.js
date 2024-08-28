@@ -11,6 +11,7 @@ const debtRoutes = require("./routes/debtRoutes");
 const stripeRoutes = require("./routes/stripeRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
+const resetPasswordRoutes = require("./routes/resetPasswordRoutes");
 //extra security packages
 
 const helmet = require("helmet");
@@ -22,7 +23,6 @@ const errorHandlerMiddleware = require("./middleware/errorHandler");
 const notFoundMiddleware = require("./middleware/notFound");
 
 const socket = require("./middleware/socketio");
-
 
 app.use(express.json());
 app.use(cookieParser());
@@ -39,6 +39,7 @@ app.use("/api/v1/debt", debtRoutes);
 app.use("/api/v1/stripe", stripeRoutes);
 app.use("/api/v1/chat", chatRoutes);
 app.use("/api/v1/message", messageRoutes);
+app.use("/api/v1/resetPassword", resetPasswordRoutes);
 app.use(errorHandlerMiddleware);
 app.use(notFoundMiddleware);
 
