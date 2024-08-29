@@ -3,6 +3,8 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { IoMdEyeOff } from "react-icons/io";
 import { useNavigate, useParams } from "react-router-dom";
+import AlertMessage from "../components/AlertMessage";
+import { MdError } from "react-icons/md";
 
 const ChangePassword = () => {
   const { userId, token } = useParams();
@@ -15,6 +17,7 @@ const ChangePassword = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,7 +55,10 @@ const ChangePassword = () => {
 
       const res = await axios.put(
         `/api/v1/resetPassword/${userId}/token/${token}`,
-        { password }
+        {
+          newPassword: password.newPassword,
+          newPasswordConfirm: password.newPasswordConfirm,
+        }
       );
 
       const data = res.data;
@@ -62,9 +68,9 @@ const ChangePassword = () => {
     } catch (error) {
       setLoading(false);
       if (axios.isAxiosError(error)) {
-        setError(error.response?.data.msg);
+        setErrMsg(error.response?.data.msg);
       } else {
-        setError("request failed");
+        setErrMsg("request failed");
       }
     }
   };
@@ -77,7 +83,10 @@ const ChangePassword = () => {
           Password must be contain at least 8 characters
         </p>
       </div>
-      <form className="flex gap-4 flex-col flex-1 my-4" onSubmit={handleSubmitPassword}>
+      <form
+        className="flex gap-4 flex-col flex-1 my-4"
+        onSubmit={handleSubmitPassword}
+      >
         <div className="relative">
           <div className="relative">
             <button
@@ -147,9 +156,20 @@ const ChangePassword = () => {
         </div>
 
         <button className="bg-emerald-600 hover:opacity-80 p-2 text-sm text-white rounded-md">
-          Change Password
+          {loading ? (
+            <div className="flex items-center justify-center gap-2">
+              <span className="loading loading-infinity loading-xs"></span>
+              <span className="text-sm">password is being changed</span>
+            </div>
+          ) : (
+            <p>Change Password</p>
+          )}
         </button>
       </form>
+
+      {error && (
+        <AlertMessage message={errMsg} icon={<MdError />} color="bg-red-600" />
+      )}
     </div>
   );
 };

@@ -10,13 +10,15 @@ const resetPassword = async (req, res, next) => {
   const { email } = req.body;
 
   if (!email || email === "") {
-    throw new BadRequestError("Email is required");
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ msg: "Email is required" });
   }
 
   const user = await User.findOne({ email });
 
   if (!user) {
-    throw new BadRequestError("User not Found");
+    return res.status(StatusCodes.BAD_REQUEST).json({ msg: "User not Found" });
   }
 
   try {
@@ -39,16 +41,21 @@ const resetPassword = async (req, res, next) => {
 
 const resetPasswordChange = async (req, res, next) => {
   const { userId, token } = req.params;
+  console.log(req.body);
   const { newPassword, newPasswordConfirm } = req.body;
 
   const resetToken = await PasswordToken.findOne({ userId, token });
 
   if (!resetToken) {
-    throw new BadRequestError("The provided token is invalid");
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ msg: "The provided token is invalid" });
   }
 
   if (newPassword !== newPasswordConfirm) {
-    throw new BadRequestError("Password not match check it repeat");
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ msg: "Password not match check it repeat" });
   }
 
   const hashedPassword = bcryptjs.hashSync(newPassword, 12);
@@ -77,12 +84,16 @@ const changePasswordGet = async (req, res, next) => {
   try {
     const user = await User.findById(userId);
     if (!user) {
-      throw new NotFoundError("User not found");
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ msg: "User not found" });
     }
 
     const resetToken = await PasswordToken.findOne({ userId, token });
     if (!resetToken) {
-      throw new BadRequestError("The provided token is invalid");
+        return res
+          .status(StatusCodes.BAD_REQUEST)
+          .json({msg:"The provided token is invalid"});
     }
 
     res.status(StatusCodes.OK).json({ message: "Change Password" });

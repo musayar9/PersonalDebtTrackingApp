@@ -5,7 +5,6 @@ import AlertMessage from "../components/AlertMessage";
 import { IoInformationOutline } from "react-icons/io5";
 import { MdError } from "react-icons/md";
 
-
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -18,19 +17,17 @@ const ResetPassword = () => {
         setErrMsg("");
       }
     }, 3000);
-  }, []);
+  }, [errMsg]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post(
-        `/api/v1/resetPassword`,
-       { email}
-      );
+      const res = await axios.post(`/api/v1/resetPassword`, { email });
       const data = await res.data;
       setLoading(false);
       setMessage(data.message);
+      console.log(data);
     } catch (error) {
       setLoading(false);
       if (axios.isAxiosError(error)) {
@@ -93,7 +90,7 @@ const ResetPassword = () => {
       </form>
 
       <Link to="/login">
-        <button  className="bg-slate-600 my-4 w-full hover:opacity-80 text-gray-50 rounded-md text-sm py-2">
+        <button className="bg-slate-600 my-4 w-full hover:opacity-80 text-gray-50 rounded-md text-sm py-2">
           Return Login
         </button>
       </Link>
