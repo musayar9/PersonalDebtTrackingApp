@@ -120,6 +120,7 @@ export const useGetAllUsers = () => {
         setAllUsers(data);
         setLoading(false);
       } catch (error) {
+        setLoading(false);
         if (axios.isAxiosError(error)) {
           setError(error?.response?.data.msg);
         } else {

@@ -1,5 +1,4 @@
 const { StatusCodes } = require("http-status-codes");
-const { BadRequestError, NotFoundError } = require("../errors");
 const PasswordToken = require("../models/resetPasswordTokenModel");
 const User = require("../models/userModel");
 const crypto = require("crypto");

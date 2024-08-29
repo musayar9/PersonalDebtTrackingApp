@@ -32,9 +32,11 @@ const ChangePassword = () => {
         return data;
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          setError(error.response?.data.msg);
+          setError(error.response?.data.msg  || "An error occurred. Please try again.");
         } else {
-          setError("request failed");
+          setError(
+            "Request failed. Please check your internet connection or try again later."
+          );
         }
       }
     };
@@ -68,9 +70,11 @@ const ChangePassword = () => {
     } catch (error) {
       setLoading(false);
       if (axios.isAxiosError(error)) {
-        setErrMsg(error.response?.data.msg);
+setErrMsg(error.response?.data.msg || "An error occurred. Please try again.");
       } else {
-        setErrMsg("request failed");
+         setErrMsg(
+           "Request failed. Please check your internet connection or try again later."
+         );
       }
     }
   };

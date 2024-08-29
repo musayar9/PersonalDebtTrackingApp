@@ -30,10 +30,15 @@ const ResetPassword = () => {
       console.log(data);
     } catch (error) {
       setLoading(false);
+      
       if (axios.isAxiosError(error)) {
-        setErrMsg(error.response?.data.msg);
+        setErrMsg(
+          error.response?.data.msg || "An error occurred. Please try again."
+        );
       } else {
-        setErrMsg("Request failed");
+       setErrMsg(
+         "Request failed. Please check your internet connection or try again later."
+       );
       }
     }
   };
