@@ -4,7 +4,9 @@ const PasswordToken = require("../models/resetPasswordTokenModel");
 const User = require("../models/userModel");
 const crypto = require("crypto");
 const bcryptjs = require("bcryptjs");
+const sendResetPassword = require("../middleware/sendResetPassword");
 const resetPassword = async (req, res, next) => {
+  console.log(req.body);
   const { email } = req.body;
 
   if (!email || email === "") {
@@ -23,7 +25,10 @@ const resetPassword = async (req, res, next) => {
       token: crypto.randomBytes(32).toString("hex"),
     }).save();
 
-    return res.status(StatusCodes.OK).json({
+    const url = `http://localhost:5173/reset-password/${user._id}/token/${token.token}`;
+    await sendResetPassword(user, user.email, url);
+
+    res.status(StatusCodes.OK).json({
       message: "Check your email address. Password change url sent",
       status: { token },
     });

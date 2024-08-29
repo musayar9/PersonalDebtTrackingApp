@@ -22,6 +22,7 @@ import Users from "./components/Admin/Users";
 import Debt from "./components/debt/Debt";
 import { NavbarComponent } from "./components/navbar/Navbar";
 import DebtForm from "./components/debt/DebtForm";
+import ChangePassword from "./pages/ChangePassword";
 const App: React.FC = () => {
   return (
     <div>
@@ -59,20 +60,19 @@ const App: React.FC = () => {
               element={<PaymentPage />}
             />
 
-            <Route
-              path="/users/user_detail/:userId"
-              element={<UserDetail />}
-            />
+            <Route path="/users/user_detail/:userId" element={<UserDetail />} />
 
             <Route path="/success" element={<Success />} />
-
-        
           </Route>
         </Route>
 
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route
+          path="/reset-password/:userId/token/:token"
+          element={<ChangePassword />}
+        />
         <Route />
       </Routes>
       <Toaster />
