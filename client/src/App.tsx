@@ -43,7 +43,7 @@ const App: React.FC = () => {
             />
             <Route path="/users" element={<Users />} />
             <Route path="/debts" element={<Debt />} />
-            <Route path="/debts/create_debt" element={<DebtForm />} />
+            <Route path="/create_debt" element={<DebtForm />} />
             <Route path="/debts/updateDebt/:id" element={<EditDebt />} />
             <Route path="/allUsers/debts" element={<UsersDebts />} />
             <Route

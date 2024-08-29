@@ -6,6 +6,7 @@ import { PiInvoiceBold } from "react-icons/pi";
 import { NavLink } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { signOut } from "../redux/dataFetch";
+import { IoCreate } from "react-icons/io5";
 
 const Sidebar = () => {
   // const [activeLink, setActiveLink] = useState(0);
@@ -22,6 +23,7 @@ const Sidebar = () => {
     { id: 3, path: "/users", name: "Users", icon: FaUsers },
     { id: 4, path: "/allUsers/debts", name: "All Debts", icon: PiInvoiceBold },
     { id: 5, path: "/debts", name: "Debts", icon: FcDebt },
+    { id: 5, path: "/create_debt", name: "Create Debt", icon: IoCreate },
   ];
 
   const handleSignOut = async () => {

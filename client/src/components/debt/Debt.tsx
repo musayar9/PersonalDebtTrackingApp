@@ -28,7 +28,7 @@ const Debt: React.FC = () => {
             <h2 className="font-semibold text-2xl tracking-wider pl-4 text-slate-600">
               Debt Tracking Tables
             </h2>
-            <Link className="btn btn-sm" to="/debts/create_debt">
+            <Link className="btn btn-sm" to="/create_debt">
               Create Debt
             </Link>
           </div>
@@ -46,7 +46,7 @@ const Debt: React.FC = () => {
             You have no registered debt
           </p>
 
-          <Link className="btn btn-md" to="/debts/create_debt">
+          <Link className="btn btn-md" to="/create_debt">
             Create Debt
           </Link>
         </div>

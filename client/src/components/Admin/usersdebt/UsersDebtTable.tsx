@@ -17,7 +17,7 @@ const UsersDebtTable = ({ debt }: { debt: DebtData[] | null | undefined}) => {
   };
 
   const offset = currentPage * itemsPerPage;
-  const currentItems = debt?.slice(offset, offset + itemsPerPage);
+  const currentItems = validDebt?.slice(offset, offset + itemsPerPage);
   return (
     <div className="max-w-6xl mx-auto ">
       <div className="overflow-x-auto my-8 rounded-lg">

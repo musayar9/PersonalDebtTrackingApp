@@ -10,11 +10,23 @@ import AlertMessage from "../AlertMessage.tsx";
 import { MdErrorOutline } from "react-icons/md";
 import { IoFileTraySharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import ReactPaginate from "react-paginate";
 
 export const Users = () => {
   const { allUsers, setAllUsers, loading, error } = useGetAllUsers();
   const [errMsg, setErrMsg] = useState("");
 
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 4;
+  const pageCount = Math.ceil(allUsers.length / itemsPerPage);
+
+  const handlePageClick = (event: { selected: number }) => {
+    setCurrentPage(event.selected);
+  };
+
+  const offset = currentPage * itemsPerPage;
+  const currentItems = allUsers.slice(offset, offset + itemsPerPage);
+  
   const handleDeleteUser = async ({ id }: { id: string | undefined }) => {
     try {
       const res = await axios.delete(`/v1/auth/${id}`);
@@ -43,7 +55,7 @@ export const Users = () => {
   return (
     <div className="w-full p-8">
       <>
-        {allUsers?.length > 0 ? (
+        {currentItems?.length > 0 ? (
           <>
             <div className="border-b border-slate-400 m-4">
               <h2 className="text-2xl text-gray-600 font-semibold my-2">
@@ -68,7 +80,7 @@ export const Users = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {allUsers?.map((item, index) => (
+                    {currentItems?.map((item, index) => (
                       <tr
                         key={item._id}
                         className="text-gray-700 font-semibold text-sm"
@@ -128,6 +140,30 @@ export const Users = () => {
                   />
                 )}
               </div>
+            </div>
+            <div className="flex items-center justify-end">
+              <ReactPaginate
+                previousLabel={"prev"}
+                nextLabel={"next"}
+                breakLabel={"..."}
+                breakClassName={"break-me"}
+                pageCount={pageCount}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={handlePageClick}
+                containerClassName={
+                  "flex items-center text-xs  capitalize bg-slate-50 border border-slate-300 rounded-xl max-w-fit"
+                }
+                pageClassName={"p-2 border-l border-r border-slate-50"}
+                previousClassName={
+                  "w-20 text-center hover:bg-slate-400  hover:p-2 hover:rounded-l-lg text-gray-700 font-semibold  hover:text-slate-50"
+                }
+                nextClassName={
+                  "w-20 text-center hover:bg-slate-400 hover:p-2 hover:rounded-r-lg text-gray-700 font-semibold hover:text-slate-50"
+                }
+                activeClassName={"text-slate-50 p-1 bg-slate-400"}
+                renderOnZeroPageCount={null}
+              />
             </div>
           </>
         ) : (
