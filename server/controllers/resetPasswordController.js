@@ -75,7 +75,9 @@ const resetPasswordChange = async (req, res, next) => {
     res
       .status(StatusCodes.OK)
       .json({ message: "Password Change Success", updatePassword });
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 };
 
 const changePasswordGet = async (req, res, next) => {
@@ -83,18 +85,16 @@ const changePasswordGet = async (req, res, next) => {
   try {
     const user = await User.findById(userId);
     if (!user) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ msg: "User not found" });
+      return res.status(StatusCodes.NOT_FOUND).json({ msg: "User not found" });
     }
 
     const resetToken = await PasswordToken.findOne({ userId, token });
     if (!resetToken) {
-        return res
-          .status(StatusCodes.BAD_REQUEST)
-          .json({msg:"The provided token is invalid"});
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ msg: "The provided token is invalid" });
     }
-
+    await PasswordToken.findOneAndDelete({ userId });
     res.status(StatusCodes.OK).json({ message: "Change Password" });
   } catch (error) {
     next(error);

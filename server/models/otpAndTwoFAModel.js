@@ -19,7 +19,7 @@ const otpAndTwoFAModel = mongoose.Schema(
   { timestamps: true }
 );
 
-otpAndTwoFAModel.index({ createdAt: 1 }, { expiresAfterSeconds: 3600 });
+otpAndTwoFAModel.index({ createAt: 1 }, { expiresAfterSeconds: 3600 });
 const otpAndTwoFA = mongoose.model("optAndTwoFA", otpAndTwoFAModel);
 
 module.exports = otpAndTwoFA;

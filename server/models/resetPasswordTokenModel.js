@@ -18,7 +18,7 @@ const resetPasswordToken = mongoose.Schema({
   },
 });
 
-resetPasswordToken.index({createdAt:1},{expiresAfterSeconds:3600});
+resetPasswordToken.index({createAt:1},{expiresAfterSeconds:3600});
 const PasswordToken = mongoose.model("PasswordToken", resetPasswordToken);
 
 
