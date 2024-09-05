@@ -4,6 +4,8 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError } = require("../errors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const otpAndTwoFA = require("../models/otpAndTwoFAModel");
+const verifyAccountMail = require("../middleware/verifyAccountMail");
 const getUsers = async (req, res, next) => {
   const user = await User.find({}).sort({ updatedAt: -1 });
   try {
@@ -44,11 +46,42 @@ const register = async (req, res, next) => {
   try {
     // const user = await User.create({ ...req.body });
     await user.save();
+
+    const accountVerify = await new otpAndTwoFA({
+      userId: user._id,
+      verificationCode: Math.floor(100000 + Math.random() * 900000).toString(),
+    }).save();
+    console.log(accountVerify);
+    await verifyAccountMail(user, email, accountVerify.verificationCode);
+
     res.status(StatusCodes.CREATED).json({
       status: user,
       message:
         "Success! User Created, A verification code has been sent to your email.",
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const verifyUserAccount = async (req, res, next) => {
+  const { verificationCode } = req.body;
+
+  const verifyAccount = await otpAndTwoFA.findOne({ verificationCode });
+
+  if (!verifyAccount) {
+    throw new BadRequestError("Invalid verification code");
+  }
+
+  try {
+    const user = await User.findByIdAndUpdate(
+      { _id: verifyAccount.userId },
+      { $set: { verifyAccount: true } },
+      { new: true }
+    ).select("-password");
+
+    await otpAndTwoFA.findOneAndDelete({ userId: user._id });
+    res.status(StatusCodes.OK).json(user);
   } catch (error) {
     next(error);
   }
@@ -99,7 +132,7 @@ const login = async (req, res, next) => {
         secure: process.env.NODE_ENV === "production",
         httpOnly: true,
         // maxAge: 30 * 60 * 1000,
-         maxAge: 4 * 60 * 60 * 1000,
+        maxAge: 4 * 60 * 60 * 1000,
         // maxAge: 1 * 24 * 60 * 60 * 1000,
         sameSite: "strict", // CSRF: saldirilara karsi onlemek icin
       })
@@ -143,7 +176,7 @@ const refreshToken = async (req, res, next) => {
         secure: process.env.NODE_ENV === "production",
         sameStrict: "strict",
         // maxAge: 30 * 60 * 1000,
-            maxAge: 4 * 60 * 60 * 1000,
+        maxAge: 4 * 60 * 60 * 1000,
       })
       .json({ message: "Access Token refreshed", token: newAccessToken });
   } catch (error) {
@@ -300,4 +333,5 @@ module.exports = {
   updateUser,
   getUserId,
   refreshToken,
+  verifyUserAccount,
 };

@@ -1,5 +1,4 @@
 import axios from "axios";
-
 import { useState } from "react";
 import { Button, Modal } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
@@ -7,7 +6,6 @@ import { Link } from "react-router-dom";
 import { DebtData } from "../../lib/types";
 import { formatPercentage, formatPrice } from "../../utils/functions";
 import api from "../../utils/api";
-
 interface DebtTableProps {
   debt: DebtData[];
   setDebt: React.Dispatch<React.SetStateAction<DebtData[]>>;

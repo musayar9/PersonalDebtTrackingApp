@@ -6,6 +6,7 @@ import axios, { AxiosResponse } from "axios";
 import AlertMessage from "../components/AlertMessage";
 import { MdErrorOutline } from "react-icons/md";
 import FormInput from "../components/FormInput";
+import VerifyUserModal from "../components/VerifyUserModal";
 type FormData = {
   name: string;
   surname: string;
@@ -28,11 +29,11 @@ const Register = () => {
   const [error, setError] = useState<boolean>(false);
   const [errMsg, setErrMsg] = useState<string>("");
   const [infoMsg, setInfoMsg] = useState<string>("");
+  const [showModal, setShowModal] = useState(false);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -49,14 +50,14 @@ const Register = () => {
 
       if (response.status !== 201) {
         setErrMsg(response.data.msg);
-   
+
         setError(true);
-  
       }
 
       const data = await response.data;
 
       setInfoMsg(data.message);
+      setShowModal(true);
       setLoading(false);
       return data;
     } catch (error) {
@@ -65,7 +66,6 @@ const Register = () => {
       if (axios.isAxiosError(error)) {
         setErrMsg(error.response?.data.msg);
       } else {
-
         setErrMsg("Request failed");
       }
 
@@ -179,7 +179,7 @@ const Register = () => {
               to="/login"
               className="text-blue-600 underline hover:text-blue-700"
             >
-            Login
+              Login
             </Link>
           </div>
 
@@ -200,6 +200,12 @@ const Register = () => {
           )}
         </div>
       </div>
+
+      <VerifyUserModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        setInfoMsg={setInfoMsg}
+      />
     </div>
   );
 };

@@ -3,11 +3,10 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import ErrorMessage from "../../pages/ErrorMessage";
 import { formatDateTwo, formatPrice } from "../../utils/functions";
-
 import { useAppSelector } from "../../redux/hooks";
 import Loading from "../../pages/Loading";
 import api from "../../utils/api";
-// import { useAppSelector } from "../../redux/hooks";
+
 
 interface PaymentPlan {
   _id: string;

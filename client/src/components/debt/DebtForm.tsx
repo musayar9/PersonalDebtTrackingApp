@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-
 import { addMonths, format, isToday, isValid, parseISO } from "date-fns";
 import DebtImage from "../../assets/Debt.png";
 import axios from "axios";
-
 import { CiCircleInfo } from "react-icons/ci";
 import { MdErrorOutline } from "react-icons/md";
 import { useNavigate } from "react-router-dom";

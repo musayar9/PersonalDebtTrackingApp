@@ -1,15 +1,5 @@
-
-
-// import axios from "axios";
-
-// import ErrorMessage from "../../pages/ErrorMessage";
 import { DebtData } from "../../lib/types";
 import { formatDateTwo, formatPercentage, formatPrice } from "../../utils/functions";
-
-// import { Audio } from "react-loader-spinner";
-
-
-
 const DebtDetailItem = ({debt}:{debt:DebtData | undefined}) => {
 
   return (

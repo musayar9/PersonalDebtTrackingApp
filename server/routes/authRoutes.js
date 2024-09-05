@@ -9,6 +9,7 @@ const {
   changePassword,
   getUserId,
   refreshToken,
+  verifyUserAccount,
 } = require("../controllers/authController");
 const verifyToken = require("../middleware/verifyToken");
 const router = express.Router();
@@ -16,6 +17,7 @@ router.get("/", getUsers);
 router.post("/refresh-token", refreshToken)
 router.get("/:userId", verifyToken, getUserId)
 router.post("/register", register);
+router.put("/verifyUserAccount", verifyUserAccount)
 router.post("/login", login);
 router.put("/updateUser/:id", verifyToken, updateUser);
 router.delete("/:id", verifyToken, deleteUser);
