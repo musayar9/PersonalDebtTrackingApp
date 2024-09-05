@@ -16,7 +16,7 @@ const VerifyUserModal = ({
   setShowModal,
   setInfoMsg,
 }: VerifyUserProps) => {
-  const [verificationCode, setVerificationCode] = useState(
+  const [code, setCode] = useState(
     new Array(6).fill("")
   );
   const navigate = useNavigate();
@@ -26,9 +26,9 @@ const VerifyUserModal = ({
   const handleChange = (e: HTMLInputElement, index: number) => {
     if (isNaN(Number(e.value))) return;
 
-    const newCode = [...verificationCode];
+    const newCode = [...code];
     newCode[index] = e.value;
-    setVerificationCode(newCode);
+    setCode(newCode);
 
     if (e.value !== "" && index < 5) {
       inputsRef.current[index + 1]?.focus();
@@ -43,13 +43,13 @@ const VerifyUserModal = ({
       inputsRef.current[index - 1]?.focus();
     }
   };
-
+const verificationCode = code.join("")
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       setLoading(true);
       const res = await axios.put(`/api/v1/auth/verifyUserAccount/`, {
-        verificationCode,
+        verificationCode
       });
       const data = res.data;
 
@@ -80,7 +80,7 @@ const VerifyUserModal = ({
 
           <form className="flex flex-col  gap-4" onSubmit={handleSubmit}>
             <div className="flex justify-evenly">
-              {verificationCode.map((digit, index) => (
+              {code.map((digit, index) => (
                 <input
                   key={index}
                   type="text"

@@ -65,6 +65,7 @@ const register = async (req, res, next) => {
 };
 
 const verifyUserAccount = async (req, res, next) => {
+console.log(req.body, "veri")
   const { verificationCode } = req.body;
 
   const verifyAccount = await otpAndTwoFA.findOne({ verificationCode });
