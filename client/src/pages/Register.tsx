@@ -7,6 +7,8 @@ import AlertMessage from "../components/AlertMessage";
 import { MdErrorOutline } from "react-icons/md";
 import FormInput from "../components/FormInput";
 import VerifyUserModal from "../components/VerifyUserModal";
+import { User } from "../lib/types";
+import { IoIosWarning } from "react-icons/io";
 type FormData = {
   name: string;
   surname: string;
@@ -30,6 +32,8 @@ const Register = () => {
   const [errMsg, setErrMsg] = useState<string>("");
   const [infoMsg, setInfoMsg] = useState<string>("");
   const [showModal, setShowModal] = useState(false);
+  const [data, setData] = useState<User |  null> (null)
+  const [warningMsg, setWarningMsg] = useState("")
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -55,8 +59,9 @@ const Register = () => {
       }
 
       const data = await response.data;
-
+console.log(data)
       setInfoMsg(data.message);
+      setData(data.status)
       setShowModal(true);
       setLoading(false);
       return data;
@@ -191,6 +196,14 @@ const Register = () => {
             />
           )}
 
+          {warningMsg && (
+            <AlertMessage
+              message={warningMsg}
+              color="bg-orange-500"
+              icon={<IoIosWarning />}
+            />
+          )}
+
           {error && (
             <AlertMessage
               icon={<MdErrorOutline size={28} />}
@@ -205,6 +218,8 @@ const Register = () => {
         showModal={showModal}
         setShowModal={setShowModal}
         setInfoMsg={setInfoMsg}
+        data={data}
+        setWarningMsg={setWarningMsg}
       />
     </div>
   );

@@ -65,16 +65,15 @@ const register = async (req, res, next) => {
 };
 
 const verifyUserAccount = async (req, res, next) => {
-console.log(req.body, "veri")
+  console.log(req.body, "veri");
   const { verificationCode } = req.body;
 
   const verifyAccount = await otpAndTwoFA.findOne({ verificationCode });
 
-  if (!verifyAccount) {
-    throw new BadRequestError("Invalid verification code");
-  }
-
   try {
+    if (!verifyAccount) {
+      throw new BadRequestError("Invalid verification code");
+    }
     const user = await User.findByIdAndUpdate(
       { _id: verifyAccount.userId },
       { $set: { verifyAccount: true } },
@@ -106,6 +105,22 @@ const login = async (req, res, next) => {
     if (!validPassword) {
       throw new BadRequestError("Invalid Password");
     }
+
+    if (isUser.isTwoFA) {
+      const twoFactorAuthentication = await new otpAndTwoFA({
+        userId: isUser._id,
+        verificationCode: Math.floor(
+          100000 + Math.random() * 900000
+        ).toString(),
+      });
+
+      await verifyAccountMail(
+        isUser,
+        email,
+        twoFactorAuthentication.verificationCode
+      );
+    }
+
     const { password: pass, ...rest } = isUser._doc;
 
     const token = jwt.sign(
@@ -249,6 +264,28 @@ const updateUser = async (req, res, next) => {
   }
 };
 
+const deleteVerifyUser = async (req, res, next) => {
+  const { id } = req.params;
+  const isUser = await User.findById({ _id: id });
+
+  try {
+    if (!isUser) {
+      throw new BadRequestError("user is not found");
+      // return res.status(404).json({ msg: "vkullanı bulunamadı" })
+    }
+
+    await User.findByIdAndDelete({ _id: id });
+    await otpAndTwoFA.findOneAndDelete({ userId: id });
+
+    res.status(200).json({
+      message:
+        "Registration was not completed because the account was not verified",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const deleteUser = async (req, res, next) => {
   const { id } = req.params;
   const { isAdmin } = req.user;
@@ -335,4 +372,5 @@ module.exports = {
   getUserId,
   refreshToken,
   verifyUserAccount,
+  deleteVerifyUser,
 };

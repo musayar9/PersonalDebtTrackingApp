@@ -62,7 +62,12 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    verified: {
+    isTwoFA:{
+       type:Boolean,
+       default:false
+    },
+    
+    isTwoFAVerify: {
       type: Boolean,
       default: false,
     },

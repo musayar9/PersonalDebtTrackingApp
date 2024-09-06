@@ -42,7 +42,7 @@ const UserAccountStatus = ({ userDetail }: { userDetail: User | null }) => {
                         : "bg-red-300 text-red-600"
                     } font-semibold  px-6 py-1 text-sm  rounded-full`}
                   >
-                    {userDetail ? "verified" : "unverified"}
+                    {userDetail?.verifyAccount ? "Verified" : "Unverified"}
                   </span>
                 </td>
                 <td>
