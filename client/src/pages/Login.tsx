@@ -35,12 +35,14 @@ const Login = () => {
     dispatch(loginUser({ formData }));
   };
 
-
-
   useEffect(() => {
     if (user && user?.response?.status !== 400) {
       if (user !== null) {
-        navigate("/");
+        if (user?.user?.isTwoFA) {
+          navigate("/twoFactorAuth");
+        }else{
+          navigate("/")
+        }
       }
     } else {
       dispatch(setError(true));

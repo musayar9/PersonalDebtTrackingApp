@@ -112,7 +112,7 @@ const login = async (req, res, next) => {
         verificationCode: Math.floor(
           100000 + Math.random() * 900000
         ).toString(),
-      });
+      }).save();
 
       await verifyAccountMail(
         isUser,
@@ -157,6 +157,62 @@ const login = async (req, res, next) => {
         message: " Otp code Your send email address",
         token,
       });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const controllerTwoFA = async (req, res, next) => {
+  const userId = req.user.id;
+  const { verifyStatus } = req.body;
+
+  try {
+    const isUser = await User.findOne({ _id: userId });
+    if (!isUser) {
+      throw new BadRequestError("Invalid Authentication");
+    }
+
+    await User.findByIdAndUpdate(
+      {
+        _id: userId,
+      },
+      { $set: { isTwoFA: verifyStatus, isTwoFAVerify: false } },
+      { new: true }
+    );
+
+    return res.status(StatusCodes.OK).json({
+      msg: `${
+        verifyStatus
+          ? " two factor authentication active "
+          : "two factor authentication inactive"
+      }`,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const twoFAVerifyCode = async (req, res, next) => {
+  const { verificationCode } = req.body;
+  console.log(verificationCode);
+  const isVerifyCode = await otpAndTwoFA.findOne({ verificationCode });
+  try {
+    console.log(isVerifyCode);
+    if (!isVerifyCode) {
+      throw new BadRequestError("Invalid verify code");
+    }
+
+    const updateUser = await User.findByIdAndUpdate(
+      {
+        _id: isVerifyCode.userId,
+      },
+      { $set: { isTwoFAVerify: true } },
+      { new: true }
+    );
+    await otpAndTwoFA.findOneAndDelete({ userId: updateUser._id });
+    return res.status(StatusCodes.OK).json({
+      msg: "Your account has been verified, you are being redirected",
+    });
   } catch (error) {
     next(error);
   }
@@ -373,4 +429,6 @@ module.exports = {
   refreshToken,
   verifyUserAccount,
   deleteVerifyUser,
+  controllerTwoFA,
+  twoFAVerifyCode,
 };

@@ -23,6 +23,7 @@ import Debt from "./components/debt/Debt";
 import { NavbarComponent } from "./components/navbar/Navbar";
 import DebtForm from "./components/debt/DebtForm";
 import ChangePassword from "./pages/ChangePassword";
+import TwoFactorAuth from "./components/TwoFactorAuth";
 const App: React.FC = () => {
   return (
     <div>
@@ -68,6 +69,7 @@ const App: React.FC = () => {
 
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/twoFactorAuth" element={<TwoFactorAuth/>}/>
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route
           path="/reset-password/:userId/token/:token"

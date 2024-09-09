@@ -7,7 +7,8 @@ export interface User {
   email: string;
   profilePicture?: string;
   verifyAccount?: boolean;
-  verified?: boolean;
+  isTwoFA?: boolean;
+  isTwoFAVerify?:boolean;
   isAdmin?: boolean;
   address: string;
   phone: string;

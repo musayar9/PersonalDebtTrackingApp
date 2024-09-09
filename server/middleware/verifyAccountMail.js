@@ -13,7 +13,7 @@ const verifyAccountMail = async (user, email, code) => {
     await transporter.sendMail({
       from: `"Personal Debt Tracking" <softwarebkm@outlook.com>`,
       to: email,
-      subject: "Reset Password",
+      subject: "Verify Account",
       text: `your account verification code ${code}`,
       html: `<html lang="en">
 <head>
