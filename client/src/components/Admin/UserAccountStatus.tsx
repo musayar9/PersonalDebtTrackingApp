@@ -19,6 +19,7 @@ const UserAccountStatus = ({ userDetail }: { userDetail: User | null }) => {
                 <th>Email</th>
                 <th>Password</th>
                 <th>Status</th>
+                <th>Two Factor Auth</th>
                 <th>Admin</th>
               </tr>
             </thead>
@@ -43,6 +44,19 @@ const UserAccountStatus = ({ userDetail }: { userDetail: User | null }) => {
                     } font-semibold  px-6 py-1 text-sm  rounded-full`}
                   >
                     {userDetail?.verifyAccount ? "Verified" : "Unverified"}
+                  </span>
+                </td>
+
+                <td>
+                  <span
+                    className={`${
+                      userDetail?.isTwoFA
+                        ? " text-emerald-600"
+                        : " text-red-600"
+                    } font-semibold  px-6 py-1 text-sm  rounded-full`}
+                  >
+                    {" "}
+                    {userDetail?.isTwoFA ? "Active" : "Inactive"}
                   </span>
                 </td>
                 <td>

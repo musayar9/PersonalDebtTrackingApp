@@ -1,12 +1,17 @@
+import axios from "axios";
 import React, { FormEvent, useRef, useState } from "react";
+import { MdError } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import AlertMessage from "./AlertMessage";
+import { FaCheck } from "react-icons/fa";
 
 const TwoFactorAuth = () => {
   const [code, setCode] = useState(new Array(6).fill(""));
   const navigate = useNavigate();
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
+  const [infoMsg, setInfoMsg] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [errMsg, setErrMsg] = useState("");
   const handleChange = (e: HTMLInputElement, index: number) => {
     if (isNaN(Number(e.value))) return;
 
@@ -29,8 +34,31 @@ const TwoFactorAuth = () => {
   };
   const verificationCode = code.join("");
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    try {
+      setLoading(true);
+      const res = await axios.put(`/api/v1/auth/twoFAVerifyCode`, {
+        verificationCode,
+      });
+      const data = res.data;
+      setInfoMsg(data.msg);
+      console.log(data, "try area");
+      setLoading(false);
+      navigate("/");
+    } catch (error) {
+      setLoading(false);
+      if (axios.isAxiosError(error)) {
+        setErrMsg(error?.response?.data.msg);
+      } else {
+        setErrMsg("request failed");
+      }
+    }
+    setTimeout(() => {
+      setErrMsg("");
+      setInfoMsg("");
+    }, 3000);
   };
 
   return (
@@ -61,6 +89,13 @@ const TwoFactorAuth = () => {
             ))}
           </div>
 
+          {errMsg && (
+            <AlertMessage
+              color="bg-red-500"
+              message={errMsg}
+              icon={<MdError />}
+            />
+          )}
           <button
             type="submit"
             className="bg-emerald-600 hover:opacity-80 text-gray-50 text-sm rounded-md py-2"
@@ -75,7 +110,13 @@ const TwoFactorAuth = () => {
             )}
           </button>
         </form>
-
+        {infoMsg && (
+          <AlertMessage
+            message={infoMsg}
+            color="bg-emerald-500"
+            icon={<FaCheck />}
+          />
+        )}
         <p className="p-4  text-xs  text-center text-slate-500">
           Remember to check your spam folder or unblock softwarebkm@outlook.com
           if you can not find the message.

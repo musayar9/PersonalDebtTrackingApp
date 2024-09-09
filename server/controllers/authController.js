@@ -379,12 +379,18 @@ const signOut = async (req, res, next) => {
   if (!user) {
     throw new BadRequestError("User is not found");
   }
-
-  res
-    .clearCookie("token")
-    .clearCookie("refreshToken")
-    .status(200)
-    .json({ message: "Sign Out" });
+  await User.findByIdAndUpdate(
+    {
+      _id: user._id,
+    },
+    { $set: { isTwoFAVerify: false } },
+    { new: true }
+  ),
+    res
+      .clearCookie("token")
+      .clearCookie("refreshToken")
+      .status(200)
+      .json({ message: "Sign Out" });
 };
 
 const changePassword = async (req, res, next) => {
