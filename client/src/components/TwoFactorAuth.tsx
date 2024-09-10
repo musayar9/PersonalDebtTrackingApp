@@ -7,6 +7,7 @@ import { FaCheck } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { updateUser } from "../redux/dataFetch";
 
+
 const TwoFactorAuth = () => {
   const { user } = useAppSelector((state) => state.user);
   const [code, setCode] = useState(new Array(6).fill(""));
@@ -49,6 +50,7 @@ const TwoFactorAuth = () => {
       const data = await  res.data;
       await dispatch(updateUser({ id: user?.user._id, formData: data.updateUser }));
       setInfoMsg(data.msg);
+   
       console.log(data, "try area");
       setLoading(false);
       navigate("/");

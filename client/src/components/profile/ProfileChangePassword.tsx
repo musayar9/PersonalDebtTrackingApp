@@ -10,6 +10,7 @@ import AlertMessage from "../AlertMessage";
 import api from "../../utils/api";
 import { ToggleSwitch } from "flowbite-react";
 import { updateUser } from "../../redux/dataFetch";
+import toast from "react-hot-toast";
 
 interface PasswordData {
   currentPassword: string;
@@ -85,13 +86,13 @@ const ProfileChangePassword: React.FC = () => {
       const res = await api.put("/v1/auth/controllerTwoFA", {
         verifyStatus: updatedStatus,
       });
-      const data = res.data.updateUser;
-
-      if (user?.user._id) {
-        await dispatch(updateUser({ id: user?.user?._id, formData: data }));
-      }
-
-      console.log(data);
+      const data =  await res.data;
+ 
+        await dispatch(updateUser({ id: user?.user?._id, formData: data.updateUser }));
+   
+      
+      console.log(data, "verifty");
+      toast.success(data.msg)
     } catch (error) {
       console.log(error);
     }
