@@ -46,7 +46,7 @@ export const signOut: AsyncThunk<
 );
 
 interface UpdateUserArgs {
-  id: string;
+  id: string | undefined; 
   formData: User;
 }
 

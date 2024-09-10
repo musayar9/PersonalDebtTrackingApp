@@ -6,7 +6,6 @@ import {
   DropdownItem,
   Navbar,
   NavbarBrand,
-
   NavbarToggle,
 } from "flowbite-react";
 import { CiUser } from "react-icons/ci";
@@ -24,7 +23,6 @@ import {
   setDeleteInComingMessage,
   setInComingMessage,
   deleteMessage,
-
 } from "../../redux/messageSlice";
 import MessageNotifications from "./MessageNotifications";
 
@@ -56,20 +54,13 @@ export function NavbarComponent() {
     socket.current = io("ws://localhost:8800");
     socket.current?.on("recieve-message", (data) => {
       dispatch(addMessage(data));
-
     });
-
-
   }, []);
-
-
 
   useEffect(() => {
     if (recieverMessage) {
       const senderUser = async () => {
-        const res = await api.get(
-          `/v1/auth/${recieverMessage?.senderId}`
-        );
+        const res = await api.get(`/v1/auth/${recieverMessage?.senderId}`);
         const data = await res.data;
 
         if (pathname !== "/chat" && recieverMessage._id !== data._id) {
@@ -80,8 +71,6 @@ export function NavbarComponent() {
       senderUser();
     }
   }, [recieverMessage]);
-  
-
 
   return (
     <Navbar
@@ -94,7 +83,7 @@ export function NavbarComponent() {
         </span>
       </NavbarBrand>
       <div className="flex md:order-2">
-        {!user?.user ? (
+        {!user?.user  ? (
           <div className="dropdown dropdown-hover  group">
             <div
               tabIndex={0}
@@ -126,7 +115,9 @@ export function NavbarComponent() {
             </ul>
           </div>
         ) : (
-          <div className="flex items-center gap-2">
+
+        
+          <div className={`${user.user?.isTwoFAVerify ? "flex": "hidden"}  items-center gap-2`}>
             <MessageNotifications />
             <Notifications />
             <Dropdown
@@ -142,9 +133,9 @@ export function NavbarComponent() {
               }
             >
               <DropdownHeader>
-                <span className="block text-sm">{user.user.username}</span>
+                <span className="block text-sm">{user?.user.username}</span>
                 <span className="block truncate text-sm font-medium">
-                  {user.user.email}
+                  {user?.user.email}
                 </span>
               </DropdownHeader>
               <DropdownItem>
@@ -155,7 +146,7 @@ export function NavbarComponent() {
               <DropdownDivider />
               <DropdownItem onClick={handleSignOut}>Sign out</DropdownItem>
             </Dropdown>
-          </div>
+          </div> 
         )}
 
         <NavbarToggle />

@@ -4,10 +4,12 @@ import { HiEye } from "react-icons/hi";
 import axios from "axios";
 import { MdErrorOutline } from "react-icons/md";
 import { AiFillLike } from "react-icons/ai";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import ProfileBreadcrumps from "./ProfileBreadcrumps";
 import AlertMessage from "../AlertMessage";
 import api from "../../utils/api";
+import { ToggleSwitch } from "flowbite-react";
+import { updateUser } from "../../redux/dataFetch";
 
 interface PasswordData {
   currentPassword: string;
@@ -16,6 +18,11 @@ interface PasswordData {
 
 const ProfileChangePassword: React.FC = () => {
   const { user } = useAppSelector((state) => state.user);
+  console.log(user, "user");
+  const [verifyStatus, setVerifyStatus] = useState<boolean>(
+    !!user?.user?.isTwoFA
+  );
+  console.log(verifyStatus, "verifyStatus");
 
   const [formData, setFormData] = useState<PasswordData>({
     currentPassword: "",
@@ -29,7 +36,6 @@ const ProfileChangePassword: React.FC = () => {
   const [newPassShow, setNewPassShow] = useState(false);
 
   const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -66,6 +72,28 @@ const ProfileChangePassword: React.FC = () => {
         setPassMsg("");
         setPassMsgErr(false);
       }, 3000);
+    }
+  };
+
+  const dispatch = useAppDispatch();
+  const handleToggleChange = async () => {
+    try {
+      const updatedStatus = !verifyStatus;
+      setVerifyStatus(updatedStatus);
+
+      // API isteği ile iki faktörlü kimlik doğrulama durumunu güncelleme
+      const res = await api.put("/v1/auth/controllerTwoFA", {
+        verifyStatus: updatedStatus,
+      });
+      const data = res.data.updateUser;
+
+      if (user?.user._id) {
+        await dispatch(updateUser({ id: user?.user?._id, formData: data }));
+      }
+
+      console.log(data);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -190,6 +218,24 @@ const ProfileChangePassword: React.FC = () => {
           For your security, choose a password that does not include your name,
           surname and date of birth.
         </p>
+
+        <div className="border border-gray-300 rounded-md p-4 m-5">
+          <div className="flex items-center justify-between">
+            <h2 className="text-slate-700 font-semibold text-xl">
+              Two Factor Authentication
+            </h2>
+            <ToggleSwitch
+              checked={verifyStatus}
+              onChange={handleToggleChange}
+            />
+          </div>
+
+          <p className="text-slate-600 text-xs w-80 leading-relaxed my-2">
+            When you enable the two-step verification method, you log in with
+            the verification code sent to your registered e-mail in addition to
+            your personal passwords.
+          </p>
+        </div>
       </div>
     </div>
   );

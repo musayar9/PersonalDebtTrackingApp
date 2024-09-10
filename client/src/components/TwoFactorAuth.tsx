@@ -4,11 +4,15 @@ import { MdError } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import AlertMessage from "./AlertMessage";
 import { FaCheck } from "react-icons/fa";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { updateUser } from "../redux/dataFetch";
 
 const TwoFactorAuth = () => {
+  const { user } = useAppSelector((state) => state.user);
   const [code, setCode] = useState(new Array(6).fill(""));
   const navigate = useNavigate();
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
+  const dispatch = useAppDispatch();
   const [infoMsg, setInfoMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
@@ -42,7 +46,8 @@ const TwoFactorAuth = () => {
       const res = await axios.put(`/api/v1/auth/twoFAVerifyCode`, {
         verificationCode,
       });
-      const data = res.data;
+      const data = await  res.data;
+      await dispatch(updateUser({ id: user?.user._id, formData: data.updateUser }));
       setInfoMsg(data.msg);
       console.log(data, "try area");
       setLoading(false);

@@ -165,18 +165,18 @@ const login = async (req, res, next) => {
 const controllerTwoFA = async (req, res, next) => {
   const userId = req.user.id;
   const { verifyStatus } = req.body;
-
+  console.log("verif", verifyStatus);
   try {
     const isUser = await User.findOne({ _id: userId });
     if (!isUser) {
       throw new BadRequestError("Invalid Authentication");
     }
 
-    await User.findByIdAndUpdate(
+    const updateUser = await User.findByIdAndUpdate(
       {
         _id: userId,
       },
-      { $set: { isTwoFA: verifyStatus, isTwoFAVerify: false } },
+      { $set: { isTwoFA: verifyStatus} },
       { new: true }
     );
 
@@ -186,6 +186,7 @@ const controllerTwoFA = async (req, res, next) => {
           ? " two factor authentication active "
           : "two factor authentication inactive"
       }`,
+      updateUser,
     });
   } catch (error) {
     next(error);
@@ -211,7 +212,7 @@ const twoFAVerifyCode = async (req, res, next) => {
     );
     await otpAndTwoFA.findOneAndDelete({ userId: updateUser._id });
     return res.status(StatusCodes.OK).json({
-      msg: "Your account has been verified, you are being redirected",
+      msg: "Your account has been verified, you are being redirected", updateUser
     });
   } catch (error) {
     next(error);
@@ -268,6 +269,8 @@ const updateUser = async (req, res, next) => {
     address,
     phone,
     profilePicture,
+    isTwoFA,
+    isTwoFAVerify,
   } = req.body;
 
   const { id } = req.params;
@@ -309,6 +312,8 @@ const updateUser = async (req, res, next) => {
           district,
           profilePicture,
           birthdate,
+          isTwoFA,
+          isTwoFAVerify,
         },
       },
       { new: true }
