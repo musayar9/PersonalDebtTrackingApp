@@ -63,9 +63,11 @@ const getDebt = async (req, res, next) => {
 
 const getUserDebt = async (req, res, next) => {
   const { userId } = req.params;
-
+  
   try {
-    const debt = await Debt.find({ userId }).sort({ updatedAt: -1 }).exec();
+    const debt = await Debt.find({ userId })
+      .sort({ updatedAt: -1 })
+   
 
     if (!debt) {
       throw new BadRequestError("Data is not found");
@@ -265,12 +267,14 @@ const updatePaymentDebt = async (req, res, next) => {
 
 const getPaymentStatus = async (req, res, next) => {
   const { paymentStatus } = req.body;
-
+  const { limit } = req.query;
   const userId = req.user.id;
   try {
-    const checkDebt = await Debt.find({ userId, paymentStatus }).sort({
-      updatedAt: -1,
-    });
+    const checkDebt = await Debt.find({ userId, paymentStatus })
+      .sort({
+        updatedAt: -1,
+      })
+      .limit(limit);
 
     if (!checkDebt) {
       throw new BadRequestError("Data is not found");

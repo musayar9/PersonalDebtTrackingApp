@@ -40,11 +40,15 @@ const resetPassword = async (req, res, next) => {
 
 const resetPasswordChange = async (req, res, next) => {
   const { userId, token } = req.params;
+  console.log("reavklsf v", req.params)
   console.log(req.body);
   const { newPassword, newPasswordConfirm } = req.body;
 
   const resetToken = await PasswordToken.findOne({ userId, token });
 
+
+  try {
+  
   if (!resetToken) {
     return res
       .status(StatusCodes.BAD_REQUEST)
@@ -58,8 +62,6 @@ const resetPasswordChange = async (req, res, next) => {
   }
 
   const hashedPassword = bcryptjs.hashSync(newPassword, 12);
-
-  try {
     const updatePassword = await User.findByIdAndUpdate(
       userId,
       {
@@ -94,7 +96,7 @@ const changePasswordGet = async (req, res, next) => {
         .status(StatusCodes.BAD_REQUEST)
         .json({ msg: "The provided token is invalid" });
     }
-    await PasswordToken.findOneAndDelete({ userId });
+    
     res.status(StatusCodes.OK).json({ message: "Change Password" });
   } catch (error) {
     next(error);

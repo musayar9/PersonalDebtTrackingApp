@@ -1,23 +1,17 @@
 import { Link } from "react-router-dom";
 import { DebtData } from "../../../lib/types";
 import { formatPercentage, formatPrice } from "../../../utils/functions";
-import { useState } from "react";
-import ReactPaginate from "react-paginate";
+import { usePagination } from "../../../utils/customHooks";
+import CustomPagination from "../../CustomPagination";
 
-const UsersDebtTable = ({ debt }: { debt: DebtData[] | null | undefined}) => {
-  const validDebt = debt || [] ;
+const UsersDebtTable = ({ debt }: { debt: DebtData[]  | undefined}) => {
 
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 8;
 
-  const pageCount = Math.ceil(validDebt?.length / itemsPerPage);
+const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
+  data: debt,
+  page: 8,
+});
 
-  const handlePageClick = (event: { selected: number }) => {
-    setCurrentPage(event.selected);
-  };
-
-  const offset = currentPage * itemsPerPage;
-  const currentItems = validDebt?.slice(offset, offset + itemsPerPage);
   return (
     <div className="max-w-6xl mx-auto ">
       <div className="overflow-x-auto my-8 rounded-lg">
@@ -79,31 +73,8 @@ const UsersDebtTable = ({ debt }: { debt: DebtData[] | null | undefined}) => {
           </tbody>
         </table>
       </div>
-      {validDebt?.length > 10 && (
-        <div className="flex items-center justify-end">
-          <ReactPaginate
-            previousLabel={"prev"}
-            nextLabel={"next"}
-            breakLabel={"..."}
-            breakClassName={"break-me"}
-            pageCount={pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={handlePageClick}
-            containerClassName={
-              "flex items-center text-xs  capitalize bg-slate-50 border border-slate-300 rounded-xl max-w-fit"
-            }
-            pageClassName={"p-2 border-l border-r border-slate-50"}
-            previousClassName={
-              "w-20 text-center hover:bg-slate-400  hover:p-2 hover:rounded-l-lg text-gray-700 font-semibold  hover:text-slate-50"
-            }
-            nextClassName={
-              "w-20 text-center hover:bg-slate-400 hover:p-2 hover:rounded-r-lg text-gray-700 font-semibold hover:text-slate-50"
-            }
-            activeClassName={"text-slate-50 p-1 bg-slate-400"}
-            renderOnZeroPageCount={null}
-          />
-        </div>
+      {dataValue?.length > 10 && (
+       <CustomPagination pageCount={pageCount} handlePageClick={handlePageClick}/>
       )}
     </div>
   );

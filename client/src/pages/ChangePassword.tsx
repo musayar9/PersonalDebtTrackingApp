@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import AlertMessage from "../components/AlertMessage";
 import { MdError } from "react-icons/md";
 
+
 const ChangePassword = () => {
   const { userId, token } = useParams();
 
@@ -27,12 +28,12 @@ const ChangePassword = () => {
           `/api/v1/resetPassword/${userId}/token/${token}`
         );
 
-        const data = res.data;
+        const data = await res.data;
         console.log("data", data);
         return data;
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          setError(error.response?.data.msg  || "An error occurred. Please try again.");
+          setError(error.response?.data.msg );
         } else {
           setError(
             "Request failed. Please check your internet connection or try again later."
@@ -70,7 +71,7 @@ const ChangePassword = () => {
     } catch (error) {
       setLoading(false);
       if (axios.isAxiosError(error)) {
-setErrMsg(error.response?.data.msg || "An error occurred. Please try again.");
+setErrMsg(error.response?.data.msg );
       } else {
          setErrMsg(
            "Request failed. Please check your internet connection or try again later."
@@ -115,6 +116,8 @@ setErrMsg(error.response?.data.msg || "An error occurred. Please try again.");
               value={password.newPassword}
               onChange={handleChangePassword}
             />
+
+     
           </div>
 
           <label
@@ -149,6 +152,7 @@ setErrMsg(error.response?.data.msg || "An error occurred. Please try again.");
               value={password.newPasswordConfirm}
               onChange={handleChangePassword}
             />
+
           </div>
 
           <label
@@ -172,6 +176,10 @@ setErrMsg(error.response?.data.msg || "An error occurred. Please try again.");
       </form>
 
       {error && (
+        <AlertMessage message={error} icon={<MdError />} color="bg-red-600" />
+      )}
+
+      {errMsg && (
         <AlertMessage message={errMsg} icon={<MdError />} color="bg-red-600" />
       )}
     </div>

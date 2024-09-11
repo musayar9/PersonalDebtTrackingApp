@@ -84,7 +84,7 @@ export const useGetPaymentStatus = ({
   useEffect(() => {
     const fetchPaymentStatus = async () => {
       try {
-        const res = await api.post(`/v1/debt/checkPaymentStatus`, {
+        const res = await api.post(`/v1/debt/checkPaymentStatus?limit=5`, {
           paymentStatus,
         });
         const data = await res.data;
@@ -133,4 +133,27 @@ export const useGetAllUsers = () => {
   }, []);
 
   return { allUsers, setAllUsers, loading, error };
+};
+
+export const usePagination = ({
+  data,
+  page,
+}: {
+  data: DebtData[] | undefined ;
+  page: number;
+}) => {
+  const dataValue = data || [];
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = page;
+
+  const pageCount = Math.ceil(dataValue?.length / itemsPerPage);
+
+  const handlePageClick = (event: { selected: number }) => {
+    setCurrentPage(event.selected);
+  };
+
+  const offset = currentPage * itemsPerPage;
+  const currentItems = dataValue?.slice(offset, offset + itemsPerPage);
+
+  return { handlePageClick, pageCount, currentItems, dataValue };
 };
