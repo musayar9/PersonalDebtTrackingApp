@@ -83,7 +83,7 @@ const dispatch = useAppDispatch()
       createdAt: new Date(),
       updatedAt: new Date(),
       senderId: currentUser,
-      profilePicture: user?.user.profilePicture,
+      profilePicture: user?.user?.profilePicture,
       senderName: user?.user.name + " " + user?.user.surname,
       text: newMessage,
       chatId: chat?._id,
@@ -161,7 +161,7 @@ const dispatch = useAppDispatch()
                       : "bg-gradient-to-r from-orange-500 to-yellow-400 rounded-tl-[1rem] rounded-tr-[1rem] rounded-br-[1rem] rounded-bl-none"
                   }  text-white p-2  max-w-96 w-fit flex flex-col gap-2`}
                 >
-                  <span>{message?.text}</span>
+                  <span className="text-xs p-1">{message?.text}</span>
                   <span className="text-[10px] text-white self-end">
                     {moment(message.createdAt).tz('Europe/Istanbul').format('HH:mm')}
                   </span>

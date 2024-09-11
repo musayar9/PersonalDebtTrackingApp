@@ -119,7 +119,7 @@ const Chat = () => {
             </h2>
 
             {/* Chat-list */}
-            <div className=" flex  md:flex-col gap-2">
+            <div className=" flex  md:flex-col gap-2 h-96 overflow-y-auto overflow-x-hidden">
               {/* Example conversation item */}
               {chats?.map((chat, index) => (
                 <div

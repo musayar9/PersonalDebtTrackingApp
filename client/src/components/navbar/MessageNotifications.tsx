@@ -80,9 +80,9 @@ const MessageNotifications = () => {
       const isChat: ChatType | undefined = allChats.find((chat) =>
         chat.members.includes(senderId || "")
       );
-
-      if (isChat) {
         navigate("/chat");
+      if (isChat) {
+
         dispatch(setCurrentChatData(isChat))
         dispatch(setDeleteInComingMessage([]));
         dispatch(deleteMessage(null));

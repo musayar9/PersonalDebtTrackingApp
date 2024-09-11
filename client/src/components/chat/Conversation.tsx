@@ -49,7 +49,7 @@ const Conversation = ({
   return (
     <>
       {loading && <p>loading....</p>}
-      <div className="bg-slate-50 group hover:bg-slate-200 transition-all cursor-pointer duration-100 ease-linear m-1 p-2 flex rounded-md  justify-between items-center ">
+      <div className="bg-slate-50 group  hover:bg-slate-200 transition-all cursor-pointer duration-100 ease-linear m-1 p-2 flex rounded-md  justify-between items-center ">
         <div className="relative flex flex-col md:flex-row gap-4 ">
           {online && (
             <div className="bg-emerald-500 rounded-full absolute left-8 w-3 h-3"></div>
@@ -60,8 +60,8 @@ const Conversation = ({
             className="w-12 h-12 rounded-full "
             alt={"img"}
           />
-          <div className="  flex  flex-col items-start justify-center text-md font-semibold text-gray-600">
-            <span className="hidden md:flex">
+          <div className="  flex  flex-col items-start justify-center  font-semibold text-gray-600">
+            <span className="hidden md:flex text-xs">
               {userData?.name} {userData?.surname}
             </span>
             <span

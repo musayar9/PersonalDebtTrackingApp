@@ -11,12 +11,16 @@ import { MdErrorOutline } from "react-icons/md";
 import { IoFileTraySharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import CustomPagination from "../CustomPagination.tsx";
+import { useAppSelector } from "../../redux/hooks.ts";
 
 export const Users = () => {
+  const { user } = useAppSelector((state) => state.user);
   const { allUsers, setAllUsers, loading, error } = useGetAllUsers();
   const [errMsg, setErrMsg] = useState("");
-  
 
+  const filteredUsers = user?.user?.isAdmin
+    ? allUsers
+    : allUsers.filter((user) => user.isAdmin);
 
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 4;
@@ -27,8 +31,8 @@ export const Users = () => {
   };
 
   const offset = currentPage * itemsPerPage;
-  const currentItems = allUsers.slice(offset, offset + itemsPerPage);
-  
+  const currentItems = filteredUsers.slice(offset, offset + itemsPerPage);
+
   const handleDeleteUser = async ({ id }: { id: string | undefined }) => {
     try {
       const res = await axios.delete(`/v1/auth/${id}`);
@@ -61,7 +65,7 @@ export const Users = () => {
           <>
             <div className="border-b border-slate-400 m-4">
               <h2 className="text-2xl text-gray-600 font-semibold my-2">
-                Users
+                {user?.user.isAdmin ? "Users" : "Admins"}
               </h2>
             </div>
             <div className="mx-auto max-w-6xl ">
@@ -85,7 +89,7 @@ export const Users = () => {
                     {currentItems?.map((item, index) => (
                       <tr
                         key={item._id}
-                        className="text-gray-700 font-semibold text-sm"
+                        className={` text-gray-700 font-semibold text-sm`}
                       >
                         <th>{index + 1}</th>
                         <td>
@@ -143,8 +147,12 @@ export const Users = () => {
                 )}
               </div>
             </div>
-
-            <CustomPagination pageCount={pageCount} handlePageClick={handlePageClick}/>
+            {filteredUsers.length > 4 && (
+              <CustomPagination
+                pageCount={pageCount}
+                handlePageClick={handlePageClick}
+              />
+            )}
           </>
         ) : (
           <div>

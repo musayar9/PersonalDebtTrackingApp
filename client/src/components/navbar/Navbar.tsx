@@ -117,7 +117,7 @@ export function NavbarComponent() {
         ) : (
 
         
-          <div className={`${user.user?.isTwoFAVerify ? "flex": "hidden"}  items-center gap-2`}>
+          <div className={`${pathname !=="twoFA" ? "flex": "hidden"}  items-center gap-2`}>
             <MessageNotifications />
             <Notifications />
             <Dropdown

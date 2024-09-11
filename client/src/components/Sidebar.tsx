@@ -20,7 +20,7 @@ const Sidebar = () => {
   const SIDEBAR_LINKS = [
     { id: 1, path: "/", name: "Dashboard", icon: MdOutlineSpaceDashboard },
     { id: 2, path: "profile", name: "Profile", icon: HiUser },
-    { id: 3, path: "/users", name: "Users", icon: FaUsers },
+    { id: 3, path: "/users", name:`${user?.user?.isAdmin ? "Users":"Admins"}`, icon: FaUsers },
     { id: 4, path: "/allUsers/debts", name: "All Debts", icon: PiInvoiceBold },
     { id: 5, path: "/debts", name: "Debts", icon: FcDebt },
     { id: 5, path: "/create_debt", name: "Create Debt", icon: IoCreate },
