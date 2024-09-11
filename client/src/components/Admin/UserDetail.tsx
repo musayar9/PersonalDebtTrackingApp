@@ -7,10 +7,11 @@ import UserDetailInfo from "./UserDetailInfo";
 import { User } from "../../lib/types";
 import UserDetailDebtInfo from "./UserDetailDebtInfo";
 import api from "../../utils/api";
+import { useAppSelector } from "../../redux/hooks";
 
 const UserDetail = () => {
   const { userId } = useParams();
-
+  const { user } = useAppSelector((state) => state.user);
   const [userDetail, setUserDetail] = useState<User | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -48,10 +49,12 @@ const UserDetail = () => {
     <div className="max-w-6xl mx-auto my-8 p-4">
       <div className="border-b border-slate-200  p-2 flex justify-between">
         <h2 className="text-2xl font-semibold text-gray-600">
-          User Detail Page
+          {user?.user.isAdmin ? " User Detail Page" : "Admin Detail Page"}
         </h2>
         <Link className="btn btn-sm" to="/users">
-          Return Users Page
+          {user?.user.isAdmin
+            ? "      Return Users Page"
+            : "     Return Admins Page"}
         </Link>
       </div>
 

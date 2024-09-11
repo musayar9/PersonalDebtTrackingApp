@@ -20,6 +20,7 @@ const Sidebar = () => {
   const SIDEBAR_LINKS = [
     { id: 1, path: "/", name: "Dashboard", icon: MdOutlineSpaceDashboard },
     { id: 2, path: "profile", name: "Profile", icon: HiUser },
+  
     { id: 3, path: "/users", name:`${user?.user?.isAdmin ? "Users":"Admins"}`, icon: FaUsers },
     { id: 4, path: "/allUsers/debts", name: "All Debts", icon: PiInvoiceBold },
     { id: 5, path: "/debts", name: "Debts", icon: FcDebt },
@@ -39,9 +40,7 @@ const Sidebar = () => {
         {SIDEBAR_LINKS.map((link, index) => (
           <li
             key={index}
-            // className={`font-medium rounded-md py-2 px-5 hover:bg-gray-100 hover:text-indigo-500 ${
-            //   activeLink === index ? "bg-indigo-100 text-indigo-500" : ""
-            // }`}
+            className={`w-full ${!user?.user?.isAdmin ? link.id !== 4  ? "block" : "hidden" : "block"}`}
           >
             <NavLink
               to={link.path}
