@@ -3,13 +3,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import UserAccountStatus from "./UserAccountStatus";
 import UserDebtStatus from "./UserDebtStatus";
-
 import ErrorMessage from "../../pages/ErrorMessage";
 import api from "../../utils/api";
 import { useAppSelector } from "../../redux/hooks";
 
 const UserDetailDebtInfo = ({ userDetail }: { userDetail: User | null }) => {
-  const { user } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state?.user);
   const [debt, setDebt] = useState<DebtData[]>([]);
   const [errMsg, setErrMsg] = useState("");
 

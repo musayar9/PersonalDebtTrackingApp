@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { RiMessage3Fill, RiMessage3Line } from "react-icons/ri";
 
 import toast from "react-hot-toast";
-import { useEffect, } from "react";
+import { useEffect } from "react";
 import { Dropdown, DropdownHeader } from "flowbite-react";
 import { formatDateTwo } from "../../utils/functions";
 import { ChatType, RecievedMessage } from "../../lib/types";
@@ -27,8 +27,6 @@ const MessageNotifications = () => {
 
   const navigate = useNavigate();
 
-
-
   useEffect(() => {
     if (recieverMessage) {
       const findChat = async () => {
@@ -40,11 +38,11 @@ const MessageNotifications = () => {
 
           dispatch(setCurrentChatData(data));
         } catch (error) {
-         if (axios.isAxiosError(error)) {
-           dispatch(setChatErrorMessage(error.response?.data.msg));
-         } else {
-           dispatch(setChatErrorMessage("Request Failed"));
-         }
+          if (axios.isAxiosError(error)) {
+            dispatch(setChatErrorMessage(error.response?.data.msg));
+          } else {
+            dispatch(setChatErrorMessage("Request Failed"));
+          }
         }
       };
 
@@ -58,21 +56,20 @@ const MessageNotifications = () => {
         try {
           const res = await api.get(`/v1/chat/${user?.user._id}`);
           const data = await res.data;
-
+          console.log("alla da", data);
           dispatch(setAllChats(data));
           //  navigate("/chat");
         } catch (error) {
-         if (axios.isAxiosError(error)) {
-           dispatch(setChatErrorMessage(error.response?.data.msg));
-         } else {
-           dispatch(setChatErrorMessage("Request Failed"));
-         }
+          if (axios.isAxiosError(error)) {
+            dispatch(setChatErrorMessage(error.response?.data.msg));
+          } else {
+            dispatch(setChatErrorMessage("Request Failed"));
+          }
         }
       };
       getChats();
     }
   }, [user]);
-
 
   const sendMessage = async (senderId: string | undefined) => {
     if (allChats) {
@@ -80,10 +77,10 @@ const MessageNotifications = () => {
       const isChat: ChatType | undefined = allChats.find((chat) =>
         chat.members.includes(senderId || "")
       );
-        navigate("/chat");
+      navigate("/chat");
       if (isChat) {
 
-        dispatch(setCurrentChatData(isChat))
+        dispatch(setCurrentChatData(isChat));
         dispatch(setDeleteInComingMessage([]));
         dispatch(deleteMessage(null));
       }
@@ -149,14 +146,12 @@ const MessageNotifications = () => {
       };
     }) || [];
 
-
-
-
   return (
     <div className="relative flex items-center">
       {inComingMessage.length === 0 && (
         <Link to="/chat" onClick={() => dispatch(setCurrentChatData(null))}>
-          <RiMessage3Line className="text-slate-600 z-100 italic" size={28} />{" "}        </Link>
+          <RiMessage3Line className="text-slate-600 z-100 italic" size={28} />{" "}
+        </Link>
       )}
       {inComingMessage?.length > 0 && (
         <>

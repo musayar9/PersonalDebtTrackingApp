@@ -85,7 +85,7 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
             {currentItems?.map((item: DebtData, index: number) => (
               <tr key={item._id} className=" text-gray-500">
                 <th>{index + 1}</th>
-                <td className=" flex flex-grow">{item.lender}</td>
+                <td className="">{item.lender}</td>
                 <td>{item.borrower}</td>
                 <td className="text-ellipsis">{item.description}</td>
                 <td>{formatPrice(item.debtAmount)}</td>
