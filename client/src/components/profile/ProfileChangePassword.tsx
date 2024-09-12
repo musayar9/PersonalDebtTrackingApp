@@ -19,11 +19,11 @@ interface PasswordData {
 
 const ProfileChangePassword: React.FC = () => {
   const { user } = useAppSelector((state) => state.user);
-  console.log(user, "user");
+
   const [verifyStatus, setVerifyStatus] = useState<boolean>(
     !!user?.user?.isTwoFA
   );
-  console.log(verifyStatus, "verifyStatus");
+
 
   const [formData, setFormData] = useState<PasswordData>({
     currentPassword: "",
@@ -89,9 +89,7 @@ const ProfileChangePassword: React.FC = () => {
       const data =  await res.data;
  
         await dispatch(updateUser({ id: user?.user?._id, formData: data.updateUser }));
-   
-      
-      console.log(data, "verifty");
+  
       toast.success(data.msg)
     } catch (error) {
       console.log(error);

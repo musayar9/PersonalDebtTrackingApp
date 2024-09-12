@@ -29,7 +29,7 @@ const ChangePassword = () => {
         );
 
         const data = await res.data;
-        console.log("data", data);
+
         return data;
       } catch (error) {
         if (axios.isAxiosError(error)) {

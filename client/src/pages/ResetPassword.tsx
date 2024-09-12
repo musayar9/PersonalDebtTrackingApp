@@ -28,7 +28,7 @@ const ResetPassword = () => {
       const data = await res.data;
       setLoading(false);
       setMessage(data.message);
-      console.log(data);
+
     } catch (error) {
       setLoading(false);
       

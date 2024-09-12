@@ -51,7 +51,7 @@ const register = async (req, res, next) => {
       userId: user._id,
       verificationCode: Math.floor(100000 + Math.random() * 900000).toString(),
     }).save();
-    console.log(accountVerify);
+   
     await verifyAccountMail(user, email, accountVerify.verificationCode);
 
     res.status(StatusCodes.CREATED).json({
@@ -65,7 +65,6 @@ const register = async (req, res, next) => {
 };
 
 const verifyUserAccount = async (req, res, next) => {
-  console.log(req.body, "veri");
   const { verificationCode } = req.body;
 
   const verifyAccount = await otpAndTwoFA.findOne({ verificationCode });
@@ -165,7 +164,7 @@ const login = async (req, res, next) => {
 const controllerTwoFA = async (req, res, next) => {
   const userId = req.user.id;
   const { verifyStatus } = req.body;
-  console.log("verif", verifyStatus);
+
   try {
     const isUser = await User.findOne({ _id: userId });
     if (!isUser) {
@@ -195,10 +194,10 @@ const controllerTwoFA = async (req, res, next) => {
 
 const twoFAVerifyCode = async (req, res, next) => {
   const { verificationCode } = req.body;
-  console.log(verificationCode);
+
   const isVerifyCode = await otpAndTwoFA.findOne({ verificationCode });
   try {
-    console.log(isVerifyCode);
+
     if (!isVerifyCode) {
       throw new BadRequestError("Invalid verify code");
     }

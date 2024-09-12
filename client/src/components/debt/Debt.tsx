@@ -6,12 +6,9 @@ import ErrorMessage from "../../pages/ErrorMessage";
 import DebtTable from "./DebtTable";
 
 const Debt: React.FC = () => {
-  // const { debt } = useAppSelector((state) => state.debt);
+
   const { debt, loading, errMsg, setDebt } = useFetchUserDebt();
 
-  // console.log(localStorage.getItem("token"));
-  const token = localStorage.getItem("token");
-  console.log(token, "token");
   if (loading) {
     return <Loading />;
   }

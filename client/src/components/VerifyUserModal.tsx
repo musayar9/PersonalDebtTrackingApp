@@ -87,7 +87,7 @@ const VerifyUserModal = ({
       const res = await axios.delete(
         `/api/v1/auth/deleteVerifyUser/${data?._id}`
       );
-      console.log(res.data);
+
       setShowModal(false);
       setInfoMsg("");
       setWarningMsg(res.data.message);
@@ -96,7 +96,7 @@ const VerifyUserModal = ({
         setWarningMsg("");
       }, 4000);
     } catch (error) {
-      console.log(error, "hatavar");
+
 
       if (axios.isAxiosError(error)) {
         setErrMsg(error.response?.data.msg);

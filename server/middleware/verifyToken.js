@@ -4,8 +4,7 @@ const { UnauthenticatedError } = require("../errors");
 const verifyToken = async (req, res, next) => {
   const token =
     req.cookies.token || req.headers.authorization || req.headers.Authorization;
-  console.log("req authorization", req.headers.authorization);
-  console.log("reqgf", req.headers.Authorization);
+
   if (!token) {
     return res.status(401).json("Authentication Invalid");
   }
@@ -20,14 +19,6 @@ const verifyToken = async (req, res, next) => {
     next();
   });
 
-  // try {
-  //   const payload = jwt.verify(token, process.env.JWT_SECRET);
-  //   const user = User.findById(payload.id).select("-password");
-  //   req.user = user;
-  //   req.user = { userId: payload.userId, name: payload.name };
-  //   next();
-  // } catch (err) {
-  //   throw new UnauthenticatedError("Authentication failed");
-  // }
+
 };
 module.exports = verifyToken;

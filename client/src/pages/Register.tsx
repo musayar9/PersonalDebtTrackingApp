@@ -59,7 +59,7 @@ const Register = () => {
       }
 
       const data = await response.data;
-console.log(data)
+
       setInfoMsg(data.message);
       setData(data.status)
       setShowModal(true);

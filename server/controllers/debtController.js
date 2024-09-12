@@ -26,7 +26,6 @@ const getAllDebt = async (req, res, next) => {
 };
 
 const getDebt = async (req, res, next) => {
-  console.log(req.query, "req querty");
   try {
     const debts = await Debt.find({
       ...(req.query.lender && {

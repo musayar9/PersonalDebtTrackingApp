@@ -5,7 +5,7 @@ const crypto = require("crypto");
 const bcryptjs = require("bcryptjs");
 const sendResetPassword = require("../middleware/sendResetPassword");
 const resetPassword = async (req, res, next) => {
-  console.log(req.body);
+
   const { email } = req.body;
 
   if (!email || email === "") {
@@ -40,8 +40,7 @@ const resetPassword = async (req, res, next) => {
 
 const resetPasswordChange = async (req, res, next) => {
   const { userId, token } = req.params;
-  console.log("reavklsf v", req.params)
-  console.log(req.body);
+
   const { newPassword, newPasswordConfirm } = req.body;
 
   const resetToken = await PasswordToken.findOne({ userId, token });
