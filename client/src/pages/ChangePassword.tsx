@@ -125,6 +125,7 @@ const ChangePassword = () => {
               name="newPassword"
               value={password.newPassword}
               onChange={handleChangePassword}
+              maxLength={12}
             />
           </div>
 
@@ -134,6 +135,10 @@ const ChangePassword = () => {
           >
             New Password
           </label>
+
+          <p className="text-slate-500 text-[10px] pl-1 ">
+            {12 - password.newPassword.length} characters remaining
+          </p>
         </div>
 
         <div className="relative">
@@ -159,6 +164,7 @@ const ChangePassword = () => {
               name="newPasswordConfirm"
               value={password.newPasswordConfirm}
               onChange={handleChangePassword}
+              maxLength={12}
             />
           </div>
 
@@ -168,6 +174,9 @@ const ChangePassword = () => {
           >
             New Password Confirm
           </label>
+          <p className="text-slate-500 text-[10px] pl-1 ">
+            {12 - password.newPasswordConfirm.length} characters remaining
+          </p>
         </div>
 
         <button className="bg-emerald-600 hover:opacity-80 p-2 text-sm text-white rounded-md">
