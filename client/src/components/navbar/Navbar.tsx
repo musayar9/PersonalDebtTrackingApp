@@ -83,7 +83,7 @@ export function NavbarComponent() {
         </span>
       </NavbarBrand>
       <div className="flex md:order-2">
-        {!user?.user  ? (
+        {!user?.user ? (
           <div className="dropdown dropdown-hover  group">
             <div
               tabIndex={0}
@@ -115,9 +115,11 @@ export function NavbarComponent() {
             </ul>
           </div>
         ) : (
-
-        
-          <div className={`${pathname !=="twoFA" ? "flex": "hidden"}  items-center gap-2`}>
+          <div
+            className={`${
+              pathname !== "/twoFactorAuth" ? "flex" : "hidden"
+            }  items-center gap-2`}
+          >
             <MessageNotifications />
             <Notifications />
             <Dropdown
@@ -146,7 +148,7 @@ export function NavbarComponent() {
               <DropdownDivider />
               <DropdownItem onClick={handleSignOut}>Sign out</DropdownItem>
             </Dropdown>
-          </div> 
+          </div>
         )}
 
         <NavbarToggle />

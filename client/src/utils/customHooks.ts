@@ -157,3 +157,15 @@ export const usePagination = ({
 
   return { handlePageClick, pageCount, currentItems, dataValue };
 };
+
+
+export const useCheckPasswordCriteria = (password:string) =>{
+  const criteria = {
+    hasLowerCase: /[a-z]/.test(password),
+    hasUpperCase: /[A-Z]/.test(password),
+    hasDigit: /\d/.test(password),
+    hasSpecialChar: /[@$!%*?&.]/.test(password),
+    hasMinLength: password.length >= 8 && password.length <= 12,
+  };
+return {criteria}
+}

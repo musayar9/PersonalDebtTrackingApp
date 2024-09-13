@@ -6,7 +6,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import AlertMessage from "../components/AlertMessage";
 import { MdError } from "react-icons/md";
 
-
 const ChangePassword = () => {
   const { userId, token } = useParams();
 
@@ -33,7 +32,7 @@ const ChangePassword = () => {
         return data;
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          setError(error.response?.data.msg );
+          setError(error.response?.data.msg);
         } else {
           setError(
             "Request failed. Please check your internet connection or try again later."
@@ -71,21 +70,32 @@ const ChangePassword = () => {
     } catch (error) {
       setLoading(false);
       if (axios.isAxiosError(error)) {
-setErrMsg(error.response?.data.msg );
+        setErrMsg(error.response?.data.msg);
       } else {
-         setErrMsg(
-           "Request failed. Please check your internet connection or try again later."
-         );
+        setErrMsg(
+          "Request failed. Please check your internet connection or try again later."
+        );
       }
     }
   };
 
+  useEffect(() => {
+    if (errMsg || error) {
+      setTimeout(() => {
+        setErrMsg("");
+        setError("");
+      }, 3000);
+    }
+  }, [errMsg, error]);
   return (
     <div className="max-w-md mx-auto mt-24 p-4">
       <div className="flex flex-col items-center justify-center">
         <h3 className="text-3xl font-bold text-slate-700">Reset Password</h3>
-        <p className="text-sm text-slate-600">
-          Password must be contain at least 8 characters
+        <p className="text-[10px] text-slate-600 my-2 text-center">
+          The password must be <b>8 to 12 characters long</b>, and it must
+          contain at least <b>one uppercase letter</b>,{" "}
+          <b>one lowercase letter</b>, <b>one special character</b>, and{" "}
+          <b>one number</b>.
         </p>
       </div>
       <form
@@ -116,8 +126,6 @@ setErrMsg(error.response?.data.msg );
               value={password.newPassword}
               onChange={handleChangePassword}
             />
-
-     
           </div>
 
           <label
@@ -152,7 +160,6 @@ setErrMsg(error.response?.data.msg );
               value={password.newPasswordConfirm}
               onChange={handleChangePassword}
             />
-
           </div>
 
           <label

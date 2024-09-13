@@ -34,24 +34,41 @@ const register = async (req, res, next) => {
   const { name, surname, username, email, password, birthdate } =
     req.body.formData;
 
-  const user = new User({
-    name,
-    surname,
-    username,
-    email,
-    password,
-    birthdate,
-  });
+  const emailRegex = /^[\w-]+(\.[\w-]+)*@\w+(\.[\w-]+)+$/;
+  console.log(emailRegex.test(email), "emil check");
+const regexPassword =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[a-zA-Z\d@$!%*?&.]{8,12}$/;
+
+  
+console.log(regexPassword.test(password), "regepass")
 
   try {
     // const user = await User.create({ ...req.body });
+    if (!emailRegex.test(email)) {
+      throw new BadRequestError("Email is not valid");
+    }
+
+    if (!regexPassword.test(password)) {
+      throw new BadRequestError(
+        "Your password must be at least 8 and at most 12 characters long, and it must contain at least one uppercase letter, one lowercase letter, one special character, and one number"
+      );
+    }
+
+    const user = new User({
+      name,
+      surname,
+      username,
+      email,
+      password,
+      birthdate,
+    });
     await user.save();
 
     const accountVerify = await new otpAndTwoFA({
       userId: user._id,
       verificationCode: Math.floor(100000 + Math.random() * 900000).toString(),
     }).save();
-   
+
     await verifyAccountMail(user, email, accountVerify.verificationCode);
 
     res.status(StatusCodes.CREATED).json({
@@ -175,7 +192,7 @@ const controllerTwoFA = async (req, res, next) => {
       {
         _id: userId,
       },
-      { $set: { isTwoFA: verifyStatus} },
+      { $set: { isTwoFA: verifyStatus } },
       { new: true }
     );
 
@@ -197,7 +214,6 @@ const twoFAVerifyCode = async (req, res, next) => {
 
   const isVerifyCode = await otpAndTwoFA.findOne({ verificationCode });
   try {
-
     if (!isVerifyCode) {
       throw new BadRequestError("Invalid verify code");
     }
@@ -211,7 +227,8 @@ const twoFAVerifyCode = async (req, res, next) => {
     );
     await otpAndTwoFA.findOneAndDelete({ userId: updateUser._id });
     return res.status(StatusCodes.OK).json({
-      msg: "Your account has been verified, you are being redirected", updateUser
+      msg: "Your account has been verified, you are being redirected",
+      updateUser,
     });
   } catch (error) {
     next(error);

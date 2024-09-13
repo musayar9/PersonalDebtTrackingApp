@@ -4,8 +4,8 @@ const User = require("../models/userModel");
 const crypto = require("crypto");
 const bcryptjs = require("bcryptjs");
 const sendResetPassword = require("../middleware/sendResetPassword");
+const { BadRequestError } = require("../errors");
 const resetPassword = async (req, res, next) => {
-
   const { email } = req.body;
 
   if (!email || email === "") {
@@ -45,22 +45,24 @@ const resetPasswordChange = async (req, res, next) => {
 
   const resetToken = await PasswordToken.findOne({ userId, token });
 
-
+  const regexPassword =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[a-zA-Z\d@$!%*?&.]{8,12}$/;
   try {
-  
-  if (!resetToken) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ msg: "The provided token is invalid" });
-  }
+    if (!resetToken) {
+      throw new BadRequestError("The provided token is invalid");
+    }
 
-  if (newPassword !== newPasswordConfirm) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ msg: "Password not match check it repeat" });
-  }
+    if (newPassword !== newPasswordConfirm) {
+      throw new BadRequestError("Password not match check it repeat");
+    }
 
-  const hashedPassword = bcryptjs.hashSync(newPassword, 12);
+    if (!regexPassword.test(newPassword)) {
+      throw new BadRequestError(
+        "Your password must be at least 8 and at most 12 characters long, and it must contain at least one uppercase letter, one lowercase letter, one special character, and one number"
+      );
+    }
+
+    const hashedPassword = bcryptjs.hashSync(newPassword, 12);
     const updatePassword = await User.findByIdAndUpdate(
       userId,
       {
@@ -95,7 +97,7 @@ const changePasswordGet = async (req, res, next) => {
         .status(StatusCodes.BAD_REQUEST)
         .json({ msg: "The provided token is invalid" });
     }
-    
+
     res.status(StatusCodes.OK).json({ message: "Change Password" });
   } catch (error) {
     next(error);

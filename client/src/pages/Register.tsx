@@ -9,6 +9,8 @@ import FormInput from "../components/FormInput";
 import VerifyUserModal from "../components/VerifyUserModal";
 import { User } from "../lib/types";
 import { IoIosWarning } from "react-icons/io";
+import CheckPasswordCriteria from "../components/CheckPasswordCriteria";
+
 type FormData = {
   name: string;
   surname: string;
@@ -32,8 +34,9 @@ const Register = () => {
   const [errMsg, setErrMsg] = useState<string>("");
   const [infoMsg, setInfoMsg] = useState<string>("");
   const [showModal, setShowModal] = useState(false);
-  const [data, setData] = useState<User |  null> (null)
-  const [warningMsg, setWarningMsg] = useState("")
+  const [data, setData] = useState<User | null>(null);
+  const [warningMsg, setWarningMsg] = useState("");
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -61,7 +64,7 @@ const Register = () => {
       const data = await response.data;
 
       setInfoMsg(data.message);
-      setData(data.status)
+      setData(data.status);
       setShowModal(true);
       setLoading(false);
       return data;
@@ -171,6 +174,10 @@ const Register = () => {
                 handleChange={handleChange}
                 styles="custom-input peer w-full"
               />
+
+              <CheckPasswordCriteria password={formData.password} />
+
+      
             </div>
 
             <button className="border border-emerald-400 text-gray-500 font-semibold hover:border-white hover:text-white hover:bg-emerald-500 duration-150 ease-in rounded-md p-2">
