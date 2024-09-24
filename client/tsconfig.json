@@ -6,6 +6,14 @@
     },
     {
       "path": "./tsconfig.node.json"
-    }
+    },{
+  "compilerOptions": {
+
+    "skipLibCheck": true, // Bu satırı ekleyebilirsiniz
+ 
+  }
+}
+
+    
   ]
 }
