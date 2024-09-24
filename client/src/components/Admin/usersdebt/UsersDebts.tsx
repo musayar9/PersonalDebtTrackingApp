@@ -9,7 +9,7 @@ import axios from "axios";
 import ErrorMessage from "../../../pages/ErrorMessage";
 
 const UsersDebts = () => {
-  const [debts, setDebts] = useState<DebtData[] | undefined | null>([]);
+  const [debts, setDebts] = useState<DebtData[] >([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [filter, setFilter] = useState<Filter>({
