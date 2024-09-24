@@ -13,7 +13,7 @@ const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const resetPasswordRoutes = require("./routes/resetPasswordRoutes");
 //extra security packages
-
+const path = require("path");
 const helmet = require("helmet");
 const xss = require("xss-clean");
 const connectMongoDB = require("./db/connect");
@@ -23,13 +23,17 @@ const errorHandlerMiddleware = require("./middleware/errorHandler");
 const notFoundMiddleware = require("./middleware/notFound");
 
 const socket = require("./middleware/socketio");
-
+path.resolve();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 app.use(helmet());
 app.use(xss());
+app.use(express.static(path.join(path.resolve(), "/client/dist")));
 
+app.get("*", (req, res) => {
+  res.sendFile(path.join(path.resolve(), "client", "dist", "index.html"));
+});
 app.get("/", (req, res) => {
   res.send("<h1>Personal Debt Tracking</h1>");
 });
