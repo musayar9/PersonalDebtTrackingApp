@@ -7,11 +7,19 @@
     {
       "path": "./tsconfig.node.json"
     },{
+ {
   "compilerOptions": {
-
-    "skipLibCheck": true, // Bu satırı ekleyebilirsiniz
- 
-  }
+    "target": "ESNext",
+    "module": "ESNext",
+    "jsx": "react-jsx", // React 17 ve üzeri için
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
 }
 
     
