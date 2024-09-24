@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { addMonths, format, isToday, isValid, parseISO } from "date-fns";
-import DebtImage from "../../assets/Debt.png";
 import axios from "axios";
 import { CiCircleInfo } from "react-icons/ci";
 import { MdErrorOutline } from "react-icons/md";
@@ -113,7 +112,7 @@ const DebtForm = () => {
       <div className="max-w-6xl mx-auto flex flex-col items-center justify-center">
         <div className="flex items-center justify-center flex-col gap-2">
           <img
-            src={DebtImage}
+            src="../../assets/Debt.png"
             alt="debt"
             className="w-44 h-44 object-cover  rounded-full"
           />

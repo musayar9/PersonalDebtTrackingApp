@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import RegisterSvg from "../assets/register.svg";
+
 import { useState } from "react";
 import { CiCircleInfo } from "react-icons/ci";
 import axios, { AxiosResponse } from "axios";
@@ -102,7 +102,7 @@ const Register = () => {
         <div className="flex-1 ">
           <div className="flex items-center justify-center flex-col  mt-4">
             <img
-              src={RegisterSvg}
+              src={"../assets/register.svg"}
               alt="register"
               className="rounded-full w-40 h-40  shadow-md bg-emerald-400 "
             />
@@ -176,8 +176,6 @@ const Register = () => {
               />
 
               <CheckPasswordCriteria password={formData.password} />
-
-      
             </div>
 
             <button className="border border-emerald-400 text-gray-500 font-semibold hover:border-white hover:text-white hover:bg-emerald-500 duration-150 ease-in rounded-md p-2">

@@ -1,4 +1,4 @@
-import React from "react";
+
 import { PieChart, Pie, Cell, Tooltip, PieLabelRenderProps } from "recharts";
 import { useFetchUserDebt } from "../../../utils/customHooks";
 
@@ -56,7 +56,7 @@ const PieChartPartialDebt = () => {
               fill="#8884d8"
               dataKey="value"
             >
-              {data.map((entry, index) => (
+              {data.map((_, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={COLORS[index % COLORS.length]}

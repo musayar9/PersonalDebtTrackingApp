@@ -92,7 +92,7 @@ export const deleteUser = createAsyncThunk<
 export const fetchCountries = async () => {
   try {
     const res = await api.get("/v1/countries");
-    const data: CountryData[] = await res.data;
+    const data: string | CountryData[] = await res.data;
     return data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

@@ -29,11 +29,7 @@ app.use(cookieParser());
 app.use(cors());
 app.use(helmet());
 app.use(xss());
-app.use(express.static(path.join(path.resolve(), "/client/dist")));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(path.resolve(), "client", "dist", "index.html"));
-});
 app.get("/", (req, res) => {
   res.send("<h1>Personal Debt Tracking</h1>");
 });
@@ -46,7 +42,11 @@ app.use("/api/v1/message", messageRoutes);
 app.use("/api/v1/resetPassword", resetPasswordRoutes);
 app.use(errorHandlerMiddleware);
 app.use(notFoundMiddleware);
+app.use(express.static(path.join(path.resolve(), "/client/dist")));
 
+app.get("*", (req, res) => {
+  res.sendFile(path.join(path.resolve(), "client", "dist", "index.html"));
+});
 const port = process.env.PORT || 5000;
 socket(8800);
 connectMongoDB();

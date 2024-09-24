@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import RegisterSvg from "../assets/register.svg";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
@@ -78,7 +77,7 @@ const Login = () => {
         <div className="flex-1 ">
           <div className="flex items-center justify-center flex-col  mt-4">
             <img
-              src={RegisterSvg}
+              src={"../assets/register.svg"}
               alt="register"
               className="rounded-full w-40 h-40  shadow-md bg-emerald-400 "
             />

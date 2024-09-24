@@ -17,7 +17,13 @@ const CountryDropDown = () => {
 
     const fetchAndSetCountries = async () => {
       const countryData = await fetchCountries();
-      setCountries(countryData);
+        if (Array.isArray(countryData)) {
+          setCountries(countryData); // Eğer data bir dizi ise
+        } else {
+        
+          // İsteğe bağlı olarak boş bir dizi set edebilirsiniz
+          setCountries([]);
+        }
     };
 
     fetchAndSetCountries();
