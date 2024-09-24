@@ -34,18 +34,22 @@ const register = async (req, res, next) => {
   const { name, surname, username, email, password, birthdate } =
     req.body.formData;
 
+  const userNameRegex = /^\w+$/;
   const emailRegex = /^[\w-]+(\.[\w-]+)*@\w+(\.[\w-]+)+$/;
   console.log(emailRegex.test(email), "emil check");
-const regexPassword =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[a-zA-Z\d@$!%*?&.]{8,12}$/;
+  const regexPassword =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[a-zA-Z\d@$!%*?&.]{8,12}$/;
 
-  
-console.log(regexPassword.test(password), "regepass")
+  console.log(regexPassword.test(password), "regepass");
 
   try {
     // const user = await User.create({ ...req.body });
     if (!emailRegex.test(email)) {
       throw new BadRequestError("Email is not valid");
+    }
+
+    if (!userNameRegex.test(username)) {
+      throw new BadRequestError("User is not valid");
     }
 
     if (!regexPassword.test(password)) {
@@ -291,29 +295,37 @@ const updateUser = async (req, res, next) => {
 
   const { id } = req.params;
   const userId = req.user.id;
+  const userNameRegex = /^\w+$/;
 
-  if (id !== userId) {
-    return res.status(400).json({ error: "You mustn't update this user" });
-  }
-
-  if (name.length < 2 || name.length > 14 || name === "") {
-    return res.status(400).json({ error: "Name must be 2 and 14 characters" });
-  }
-  if (surname.length < 2 || surname.length > 14 || surname === "") {
-    return res
-      .status(400)
-      .json({ error: "Surname must be 2 and 14 characters" });
-  }
-  if (username.length < 3 || username.length > 14 || username === "") {
-    return res
-      .status(400)
-      .json({ error: "Username must be 3 and 14 characters" });
-  }
-  if (email === "") {
-    return res.status(400).json({ error: "Email is required" });
-  }
 
   try {
+  
+    if (id !== userId) {
+      return res.status(400).json({ error: "You mustn't update this user" });
+    }
+
+    if (name.length < 2 || name.length > 14 || name === "") {
+      return res
+        .status(400)
+        .json({ error: "Name must be 2 and 14 characters" });
+    }
+    if (surname.length < 2 || surname.length > 14 || surname === "") {
+      return res
+        .status(400)
+        .json({ error: "Surname must be 2 and 14 characters" });
+    }
+    if (username.length < 3 || username.length > 14 || username === "") {
+      return res
+        .status(400)
+        .json({ error: "Username must be 3 and 14 characters" });
+    }
+    if (email === "") {
+      return res.status(400).json({ error: "Email is required" });
+    }
+
+    if (!userNameRegex.test(username)) {
+      return res.status(400).json({ error: "User is not valid" });
+    }
     const updateUser = await User.findByIdAndUpdate(
       userId,
       {
@@ -418,11 +430,12 @@ const changePassword = async (req, res, next) => {
   const { currentPassword, newPassword } = req.body;
   const { id } = req.params;
   const userId = req.user.id;
+  const regexPassword =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[a-zA-Z\d@$!%*?&.]{8,12}$/;
 
   if (id !== userId) {
     throw new BadRequestError("You can't change password");
   }
-  const user = await User.findById({ _id: id });
 
   if (currentPassword == newPassword) {
     return res.status(400).json({
@@ -430,6 +443,13 @@ const changePassword = async (req, res, next) => {
         "Your new password should not be the same as your last password.",
     });
   }
+  if (!regexPassword.test(newPassword)) {
+    return res.status(400).json({
+      message:
+        "Your password must be at least 8 and at most 12 characters long, and it must contain at least one uppercase letter, one lowercase letter, one special character, and one number",
+    });
+  }
+
   const hashedPassword = await bcrypt.hashSync(newPassword, 10);
 
   try {

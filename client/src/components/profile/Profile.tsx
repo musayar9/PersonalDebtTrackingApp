@@ -46,7 +46,7 @@ const Profile: React.FC = () => {
   const imageRef = useRef<HTMLInputElement | null>(null);
   const [showSuccessMsg, setShowSuccessMsg] = useState<string | undefined>("");
   const navigate = useNavigate();
-
+  const [isError, setIsError] = useState(false);
   useEffect(() => {
     if (image) {
       handleFileUpload(image);
@@ -90,10 +90,13 @@ const Profile: React.FC = () => {
       await dispatch(updateUser({ id: user?.user?._id, formData }));
       if (userUpdateStatus === "succeeded") {
         setShowSuccessMsg(user?.message);
+      } else if (userUpdateStatus === "failed") {
+        setIsError(true);
       }
 
       setTimeout(() => {
         setShowSuccessMsg("");
+        setIsError(false);
       }, 3000);
     } else {
       setErrorMessage("User ID is not available");
@@ -112,7 +115,7 @@ const Profile: React.FC = () => {
       setErrorMessage("User ID is not available");
     }
   };
-
+  console.log(errorMessage);
   return (
     <div className="w-full border p-8">
       <ProfileBreadcrumps />
@@ -295,7 +298,7 @@ const Profile: React.FC = () => {
             />
           )}
 
-          {error && (
+          {isError && error && (
             <AlertMessage
               icon={<MdErrorOutline size={28} />}
               message={error}

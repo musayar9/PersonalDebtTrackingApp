@@ -24,7 +24,6 @@ const ProfileChangePassword: React.FC = () => {
     !!user?.user?.isTwoFA
   );
 
-
   const [formData, setFormData] = useState<PasswordData>({
     currentPassword: "",
     newPassword: "",
@@ -61,6 +60,7 @@ const ProfileChangePassword: React.FC = () => {
       }, 3000);
       return data;
     } catch (error: unknown) {
+      setLoading(false);
       if (axios.isAxiosError(error) && error.response) {
         setPassMsg(error.response.data.message);
         setPassMsgErr(true);
@@ -75,7 +75,7 @@ const ProfileChangePassword: React.FC = () => {
       }, 3000);
     }
   };
-
+  console.log(passMsg);
   const dispatch = useAppDispatch();
   const handleToggleChange = async () => {
     try {
@@ -86,11 +86,13 @@ const ProfileChangePassword: React.FC = () => {
       const res = await api.put("/v1/auth/controllerTwoFA", {
         verifyStatus: updatedStatus,
       });
-      const data =  await res.data;
- 
-        await dispatch(updateUser({ id: user?.user?._id, formData: data.updateUser }));
-  
-      toast.success(data.msg)
+      const data = await res.data;
+
+      await dispatch(
+        updateUser({ id: user?.user?._id, formData: data.updateUser })
+      );
+
+      toast.success(data.msg);
     } catch (error) {
       console.log(error);
     }
@@ -103,8 +105,11 @@ const ProfileChangePassword: React.FC = () => {
       <div className="mx-auto max-w-lg mt-12">
         <div className="flex flex-col items-center my-8">
           <h2 className="text-3xl font-bold text-slate-700">Change Password</h2>
-          <p className="mt-3 text-sm text-center text-slate-600">
-            Your password must consist of at least 8 characters.
+          <p className="text-xs text-slate-600 my-2 text-center">
+            The password must be <b>8 to 12 characters long</b>, and it must
+            contain at least <b>one uppercase letter</b>,{" "}
+            <b>one lowercase letter</b>, <b>one special character</b>, and{" "}
+            <b>one number</b>.
           </p>
         </div>
 

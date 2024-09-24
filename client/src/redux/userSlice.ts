@@ -50,6 +50,7 @@ const userSlice = createSlice({
       .addCase(updateUser.rejected, (state, action) => {
         state.userUpdateStatus = "failed";
         state.error = action.payload as string;
+     
       })
 
       .addCase(signOut.pending, (state) => {
