@@ -8,6 +8,7 @@ import FormInput from "../FormInput";
 import FormTextArea from "../FormTextArea";
 import AlertMessage from "../AlertMessage";
 import api from "../../utils/api";
+import DebtImage from "../../assets/Debt.png";
 const DebtForm = () => {
   const [formData, setFormData] = useState({
     lender: "",
@@ -112,7 +113,7 @@ const DebtForm = () => {
       <div className="max-w-6xl mx-auto flex flex-col items-center justify-center">
         <div className="flex items-center justify-center flex-col gap-2">
           <img
-            src="../../assets/Debt.png"
+            src={DebtImage}
             alt="debt"
             className="w-44 h-44 object-cover  rounded-full"
           />

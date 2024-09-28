@@ -10,7 +10,7 @@ import VerifyUserModal from "../components/VerifyUserModal";
 import { User } from "../lib/types";
 import { IoIosWarning } from "react-icons/io";
 import CheckPasswordCriteria from "../components/CheckPasswordCriteria";
-
+import RegisterImage  from "../assets/register.svg"
 type FormData = {
   name: string;
   surname: string;
@@ -102,7 +102,7 @@ const Register = () => {
         <div className="flex-1 ">
           <div className="flex items-center justify-center flex-col  mt-4">
             <img
-              src={"../assets/register.svg"}
+              src={RegisterImage}
               alt="register"
               className="rounded-full w-40 h-40  shadow-md bg-emerald-400 "
             />

@@ -38,9 +38,9 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="w-16 md:w-56  fixed z-10 md:z-0  h-screen border-r pt-9  bg-[#ffffff]">
+    <div className=" w-16 md:w-56  mt-16 fixed z-10 md:z-0  h-screen border-r pt-8   ">
       {/* Navigation Links */}
-      <ul className="mt-12 space-y-6 px-4">
+      <ul className=" space-y-6 px-4">
         {SIDEBAR_LINKS.map((link, index) => (
           <li
             key={index}
@@ -64,7 +64,7 @@ const Sidebar = () => {
       </ul>
       {/* Navigation Links */}
 
-      <div className="w-full absolute bottom-5 space-y-3 left-0 px-4 py-2 cursor-pointer text-center">
+      <div className="w-full absolute bottom-20 space-y-3 left-0 px-4 py-2 cursor-pointer text-center">
         <button
           className="flex items-center justify-center space-x-2 text-xs text-white py-2 px-5 w-full bg-gradient-to-r from-emerald-500 to-blue-600 rounded-full hover:opacity-80"
           onClick={handleSignOut}

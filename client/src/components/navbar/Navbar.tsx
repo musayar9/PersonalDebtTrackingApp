@@ -74,8 +74,8 @@ export function NavbarComponent() {
 
   return (
     <Navbar
-      className="border-b shadow-none w-full mb-12 z-20 flex  left-0 top-0 fixed border-slate-300"
-      rounded
+      className="navbar bg-base-100 border-b shadow-none w-full mb-12 z-20 flex  left-0 top-0 fixed border-slate-300 "
+      
     >
       <NavbarBrand href="https://flowbite-react.com">
         <span className="self-center  text-xl font-semibold ">
@@ -122,7 +122,7 @@ export function NavbarComponent() {
           >
             <MessageNotifications />
             <Notifications />
-            <Dropdown
+            <Dropdown className="bg-base-100"
               arrowIcon={false}
               inline
               label={

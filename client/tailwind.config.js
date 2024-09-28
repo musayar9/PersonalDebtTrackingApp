@@ -12,7 +12,7 @@ export default {
     flowbite.content(),
   ],
   daisyui: {
-    themes: ["light",],
+    themes: ["dark",],
   },
   plugins: [
     // ...
