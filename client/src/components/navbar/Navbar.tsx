@@ -27,10 +27,13 @@ import {
 import MessageNotifications from "./MessageNotifications";
 
 import api from "../../utils/api";
+import { BsMoonFill, BsSunFill } from "react-icons/bs";
+import { toggleTheme } from "../../redux/themeSlice";
 export function NavbarComponent() {
   const { user } = useAppSelector((state: { user: UsersState }) => state?.user);
   const { pathname } = useLocation();
-
+  const { theme } = useAppSelector((state) => state.theme);
+  console.log(theme)
   const { recieverMessage, inComingMessage } = useAppSelector(
     (state) => state?.message
   );
@@ -73,11 +76,8 @@ export function NavbarComponent() {
   }, [recieverMessage]);
 
   return (
-    <Navbar
-      className="navbar bg-base-100 border-b shadow-none w-full mb-12 z-20 flex  left-0 top-0 fixed border-slate-300 "
-      
-    >
-      <NavbarBrand href="https://flowbite-react.com">
+    <Navbar className="navbar bg-base-100 border-b shadow-none w-full mb-12 z-20 flex  left-0 top-0 fixed border-slate-300  ">
+      <NavbarBrand>
         <span className="self-center  text-xl font-semibold ">
           Personal Debt Tracking
         </span>
@@ -120,9 +120,28 @@ export function NavbarComponent() {
               pathname !== "/twoFactorAuth" ? "flex" : "hidden"
             }  items-center gap-2`}
           >
+            <div className="flex items-center justify-center">
+              {/* this hidden checkbox controls the state */}
+
+              <button
+                type="button"
+                className="transform duration ease-in"
+                // defaultChecked={isDarkTheme}
+                onClick={() => dispatch(toggleTheme())}
+              >
+                {theme === "light" ? (
+                  <BsSunFill  className="text-yellow-400"/>
+                ) : (
+                  <BsMoonFill />
+                )}
+              </button>
+            </div>
+
             <MessageNotifications />
             <Notifications />
-            <Dropdown className="bg-base-100"
+
+            <Dropdown
+              className="bg-base-100"
               arrowIcon={false}
               inline
               label={

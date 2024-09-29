@@ -5,10 +5,11 @@ import storage from "redux-persist/lib/storage";
 import { Persistor } from "redux-persist";
 import { Action, ThunkAction } from "@reduxjs/toolkit";
 import messageReducer from "./messageSlice";
+import themeReducer from "./themeSlice"
 // Root reducer'ı combineReducers ile oluşturun
 const rootReducer = combineReducers({
   user: userReducer,
-
+  theme:themeReducer,
   message: messageReducer,
 });
 

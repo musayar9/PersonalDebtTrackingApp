@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 
 const verifyAccountMail = async (user, email, code) => {
+console.loh(user, email, code)
   try {
     const transporter = nodemailer.createTransport({
       service: "hotmail",

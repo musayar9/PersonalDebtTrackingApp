@@ -1,15 +1,13 @@
+import { BsDroplet, BsDropletHalf, BsFillDropletFill } from "react-icons/bs";
 
+import { useAppSelector } from "../../redux/hooks";
+import { calculatePercentage } from "../../utils/functions";
+import { DebtData } from "../../lib/types";
 
-import { BsDroplet, BsDropletHalf, BsFillDropletFill } from 'react-icons/bs';
-
-import { useAppSelector } from '../../redux/hooks';
-import { calculatePercentage } from '../../utils/functions';
-import { DebtData } from '../../lib/types';
-
-const DashboardStat = ({debt}:{debt:DebtData[] | null}) => {
+const DashboardStat = ({ debt }: { debt: DebtData[] | null }) => {
   // const {debt} = useFetchUserDebt()
-const {user} = useAppSelector((state)=>state.user);
-
+  const { user } = useAppSelector((state) => state.user);
+const {theme} = useAppSelector((state)=>state.theme)
   const totalDebt = debt?.length;
   const unpaidCount = debt?.filter((d) => d?.paymentStatus === "Unpaid").length;
   const partialPaidCount = debt?.filter(
@@ -31,9 +29,8 @@ const {user} = useAppSelector((state)=>state.user);
 
   return (
     <>
-
-      <div className="flex items-center justify-center">
-        <div className="stats shadow ">
+      <div className="flex items-center justify-center ">
+        <div className={`stats ${ theme === "light" ?"shadow-md" : "shadow-sm-light"  }`}>
           <div className="stat">
             <div className="stat-figure">
               <BsDroplet className="text-red-600" size={24} />
@@ -90,6 +87,6 @@ const {user} = useAppSelector((state)=>state.user);
       </div>
     </>
   );
-}
+};
 
-export default DashboardStat
+export default DashboardStat;

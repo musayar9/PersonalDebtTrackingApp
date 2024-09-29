@@ -11,8 +11,9 @@ export default {
     "node_modules/flowbite-react/lib/esm/**/*.js",
     flowbite.content(),
   ],
+  darkMode: "class",
   daisyui: {
-    themes: ["dark",],
+    themes: ["dark", "light"],
   },
   plugins: [
     // ...

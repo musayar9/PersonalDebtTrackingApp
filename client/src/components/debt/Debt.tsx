@@ -21,8 +21,8 @@ const Debt: React.FC = () => {
     <>
       {debt.length > 0 ? (
         <div className="w-full p-8">
-          <div className="border-b border-[#dfe1e6eb] p-4 rounded-md  flex items-center  justify-between">
-            <h2 className="font-semibold text-2xl tracking-wider pl-4 text-slate-600">
+          <div className="border-b border-[#dfe1e6eb] p-4   flex items-center  justify-between">
+            <h2 className="font-semibold text-xl tracking-wider pl-4 text-base ">
               Debt Tracking Tables
             </h2>
             <Link className="btn btn-sm" to="/create_debt">
