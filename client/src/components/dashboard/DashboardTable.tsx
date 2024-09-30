@@ -1,4 +1,5 @@
 import { DebtData } from "../../lib/types";
+import { useAppSelector } from "../../redux/hooks";
 import { formatPrice } from "../../utils/functions";
 
 
@@ -9,9 +10,9 @@ groupDebt: DebtData[]
 
 
 const DashboardTable:React.FC<DashboardTableProps> = ({groupDebt, status}) => {
-  
+  const {theme} = useAppSelector((state)=>state.theme)
 return (
-  <div className={`border  overflow-x-auto p-2 h-max rounded-md`}>
+  <div className={`  overflow-x-auto p-2 h-max rounded-md ${theme === "light" ? "border": "bg-base-200"} `}>
     <div className="flex justify-end p-2.5">
       <span
         className={`${
@@ -26,9 +27,9 @@ return (
       </span>
     </div>
 
-    <table className="table table-zebra   table-xs p-4 ">
+    <table className="table table-xs p-4 ">
       {/* head */}
-      <thead>
+      <thead className={`${theme==="light" || "text-base-content"}`}>
         <tr>
           <th></th>
           <th>Lender</th>

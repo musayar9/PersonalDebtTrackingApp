@@ -29,8 +29,8 @@ const {theme} = useAppSelector((state)=>state.theme)
 
   return (
     <>
-      <div className="flex items-center justify-center ">
-        <div className={`stats ${ theme === "light" ?"shadow-md" : "shadow-sm-light"  }`}>
+      <div className="flex items-center justify-center  ">
+        <div className={`stats shadow-md ${ theme === "light" || "bg-base-200"  }`}>
           <div className="stat">
             <div className="stat-figure">
               <BsDroplet className="text-red-600" size={24} />

@@ -1,12 +1,7 @@
 import {
-  Avatar,
-  Dropdown,
-  DropdownDivider,
-  DropdownHeader,
-  DropdownItem,
+
   Navbar,
   NavbarBrand,
-  NavbarToggle,
 } from "flowbite-react";
 import { CiUser } from "react-icons/ci";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -33,7 +28,7 @@ export function NavbarComponent() {
   const { user } = useAppSelector((state: { user: UsersState }) => state?.user);
   const { pathname } = useLocation();
   const { theme } = useAppSelector((state) => state.theme);
-  console.log(theme)
+  console.log(theme);
   const { recieverMessage, inComingMessage } = useAppSelector(
     (state) => state?.message
   );
@@ -130,7 +125,7 @@ export function NavbarComponent() {
                 onClick={() => dispatch(toggleTheme())}
               >
                 {theme === "light" ? (
-                  <BsSunFill  className="text-yellow-400"/>
+                  <BsSunFill className="text-yellow-400" />
                 ) : (
                   <BsMoonFill />
                 )}
@@ -140,37 +135,39 @@ export function NavbarComponent() {
             <MessageNotifications />
             <Notifications />
 
-            <Dropdown
-              className="bg-base-100"
-              arrowIcon={false}
-              inline
-              label={
-                <Avatar
-                  alt="User settings"
-                  img={user?.user.profilePicture}
-                  rounded
-                  className="object-cover"
-                />
-              }
-            >
-              <DropdownHeader>
-                <span className="block text-sm">{user?.user.username}</span>
-                <span className="block truncate text-sm font-medium">
-                  {user?.user.email}
-                </span>
-              </DropdownHeader>
-              <DropdownItem>
-                <Link to="/">Dashboard</Link>
-              </DropdownItem>
-              <DropdownItem>Settings</DropdownItem>
-              <DropdownItem>Earnings</DropdownItem>
-              <DropdownDivider />
-              <DropdownItem onClick={handleSignOut}>Sign out</DropdownItem>
-            </Dropdown>
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle avatar"
+              >
+                <div className="w-10 rounded-full">
+                  <img alt="User Settings" src={user?.user.profilePicture} />
+                </div>
+              </div>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm border dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow space-y-2"
+              >
+                <li className="flex item-center flex-col  border-b ">
+                  <span>{user?.user.username}</span>
+                  <span>{user?.user.email}</span>
+                </li>
+
+                <li>
+                  <Link to="/">Dashboard</Link>
+                </li>
+                <li>
+                  <Link to="profile" className="justify-between">Profile</Link>
+                </li>
+
+                <li>
+                  <button onClick={handleSignOut}>Logout</button>
+                </li>
+              </ul>
+            </div>
           </div>
         )}
-
-        <NavbarToggle />
       </div>
       {/* <NavbarCollapse>
         <Link to="/">Home</Link>

@@ -20,6 +20,7 @@ import api from "../../utils/api";
 const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
   const { user } = useAppSelector((state) => state.user);
   const {currentChatData} = useAppSelector((state)=>state.message)
+  const {theme} = useAppSelector((state)=>state.theme)
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -103,7 +104,7 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
 
   return (
     <div className="md:col-span-3  ">
-      <div className="shadow-md rounded-lg">
+      <div className={`shadow-md rounded-lg  ${theme ==="dark" && "bg-base-200"}`}>
         <div className="bg-emerald-400 p-10 rounded-b-none rounded-t-lg "></div>
         <div className=" flex flex-col items-center justify-center  -mt-12 ">
           {" "}
@@ -112,7 +113,7 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
             src={userDetail?.profilePicture}
             alt={userDetail?.username}
           />
-          <h2 className="text-xl font-semibold  text-gray-600 mt-1">
+          <h2 className="text-xl font-semibold   mt-1">
             {userDetail?.username}
           </h2>
         </div>

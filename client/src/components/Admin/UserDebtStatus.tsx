@@ -4,22 +4,33 @@ import { formatPrice } from "../../utils/functions";
 import { IoFileTraySharp } from "react-icons/io5";
 import { usePagination } from "../../utils/customHooks";
 import CustomPagination from "../CustomPagination";
+import { useAppSelector } from "../../redux/hooks";
 
 const UserDebtStatus = ({ debt }: { debt: DebtData[] | undefined }) => {
 
-
+const {theme} = useAppSelector((state)=>state.theme)
 const {currentItems, pageCount, handlePageClick, dataValue} = usePagination({data:debt, page:4})
 
   return (
     <div className="shadow-sm">
-      <div className="flex  flex-col border rounded-lg gap-4 p-8">
-        <h2 className="text-xl font-semibold ">Debt Status</h2>
+      <div
+        className={`flex  flex-col  rounded-lg gap-4 p-8 ${
+          theme === "light" ? "border" : "bg-base-200"
+        }`}
+      >
+        <h2 className="text-lg font-semibold ">Debt Status</h2>
 
         {dataValue?.length > 0 ? (
           <>
-            <div className="overflow-x-auto border border-slate-200 rounded-lg">
+            <div
+              className={`overflow-x-auto rounded-lg ${
+                theme === "light"
+                  ? " border border-slate-200"
+                  : " bg-base-300"
+              }`}
+            >
               <table className="table">
-                <thead className="">
+                <thead className={`${theme==="light" ? "bg-slate-50" :"text-base-content"}`}>
                   <tr>
                     <th>Lender</th>
                     <th>Borrower</th>
@@ -33,13 +44,13 @@ const {currentItems, pageCount, handlePageClick, dataValue} = usePagination({dat
                 <tbody>
                   {currentItems?.map((item) => (
                     <tr key={item?._id}>
-                      <td className="text-slate-500">{item?.lender}</td>
-                      <td className="text-slate-500">{item?.borrower}</td>
-                      <td className="text-slate-500">{item?.description}</td>
-                      <td className="text-slate-500">
+                      <td className="">{item?.lender}</td>
+                      <td className="">{item?.borrower}</td>
+                      <td className="">{item?.description}</td>
+                      <td className="">
                         {formatPrice(item?.amount)}
                       </td>
-                      <td className="text-slate-500">{item?.installment}</td>
+                      <td className="">{item?.installment}</td>
                       <td>
                         <p
                           className={`${
@@ -67,7 +78,10 @@ const {currentItems, pageCount, handlePageClick, dataValue} = usePagination({dat
               </table>
             </div>
             {dataValue.length > 4 && (
-              <CustomPagination pageCount={pageCount} handlePageClick={handlePageClick}/>
+              <CustomPagination
+                pageCount={pageCount}
+                handlePageClick={handlePageClick}
+              />
             )}
           </>
         ) : (

@@ -1,13 +1,9 @@
-import {
-  Dropdown,
-  DropdownHeader,
-} from "flowbite-react";
-
+import { Dropdown, DropdownHeader } from "flowbite-react";
 
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-import {IoFileTraySharp} from "react-icons/io5";
+import { IoFileTraySharp } from "react-icons/io5";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { UpcomingDebt } from "../../lib/types";
 import { formatDateTwo, formatPrice } from "../../utils/functions";
@@ -18,22 +14,20 @@ import api from "../../utils/api";
 
 const Notifications = () => {
   const { user } = useAppSelector((state) => state?.user);
-   const [upcomingDebt, setUpcomingDebt] =useState<UpcomingDebt[]>([])
-  const dispatch = useAppDispatch()
+  const [upcomingDebt, setUpcomingDebt] = useState<UpcomingDebt[]>([]);
+  const dispatch = useAppDispatch();
   useEffect(() => {
     const upcomingDebt = async () => {
       try {
-        const res = await api.get(
-          `/v1/debt/upcomingDebt/${user?.user._id}`
-        );
-        const data:UpcomingDebt[] = await res.data;
+        const res = await api.get(`/v1/debt/upcomingDebt/${user?.user._id}`);
+        const data: UpcomingDebt[] = await res.data;
 
-        setUpcomingDebt(data)
+        setUpcomingDebt(data);
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          dispatch(setChatErrorMessage(error?.response?.statusText)) 
+          dispatch(setChatErrorMessage(error?.response?.statusText));
         } else {
-      dispatch(setChatErrorMessage("Request Failed")); 
+          dispatch(setChatErrorMessage("Request Failed"));
         }
       }
     };
@@ -41,10 +35,9 @@ const Notifications = () => {
     upcomingDebt();
   }, [user]);
 
-
-// if (errMsg){
-//   return <ErrorMessage message={errMsg}/>
-// }
+  // if (errMsg){
+  //   return <ErrorMessage message={errMsg}/>
+  // }
   return (
     <div className="relative flex items-center">
       {upcomingDebt?.length > 0 && (
@@ -54,27 +47,24 @@ const Notifications = () => {
       )}
 
       <Dropdown
-        className="w-72 rounded-xl border shadow-sm"
+        className={`w-72 rounded-xl  shadow-sm bg-base-100`}
         arrowIcon={false}
         inline
-        label={<FaRegBell className="text-slate-600 z-100" size={28} />}
+        label={<FaRegBell className=" z-100" size={28} />}
       >
         <DropdownHeader className="flex items-center justify-between rounded-lg">
-          <span className="block text-sm font-bold text-slate-600">
+          <span className="block text-sm font-semibold text-gray-500">
             Upcoming Debts
           </span>
-          <span className="block truncate text-sm font-medium">
+          <span className="block truncate text-sm font-medium text-gray-500">
             {formatDateTwo(new Date().toDateString())}
           </span>
         </DropdownHeader>
-        <div className=" p-2 space-y-2 border-b border-gray-200">
+        <div className=" p-2 space-y-2 border-b ">
           {upcomingDebt?.length > 0 ? (
             <>
               {upcomingDebt?.map((item, index) => (
-                <div
-                  key={index}
-                  className="w-full flex flex-col  border-b border-slate-200"
-                >
+                <div key={index} className="w-full flex flex-col  border-b ">
                   <div className="flex items-center justify-between ">
                     <p className="text-xs italic text-yellow-400">
                       Lender - {item?.lender}

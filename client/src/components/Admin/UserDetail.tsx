@@ -48,7 +48,7 @@ const UserDetail = () => {
   return (
     <div className="max-w-6xl mx-auto my-8 p-4">
       <div className="border-b border-slate-200  p-2 flex justify-between">
-        <h2 className="text-2xl font-semibold text-gray-600">
+        <h2 className="text-xl font-semibold">
           {user?.user.isAdmin ? " User Detail Page" : "Admin Detail Page"}
         </h2>
         <Link className="btn btn-sm" to="/users">

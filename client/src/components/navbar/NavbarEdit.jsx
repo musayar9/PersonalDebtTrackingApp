@@ -40,6 +40,7 @@ const NavbarEdit = () => {
             </div>
           </div>
         </div>
+
         <div className="dropdown dropdown-end">
           <div
             tabIndex={0}
@@ -47,27 +48,27 @@ const NavbarEdit = () => {
             className="btn btn-ghost btn-circle avatar"
           >
             <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
+              <img alt="User Settings" src={user?.user.profilePicture} />
             </div>
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            className="menu menu-sm border dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
           >
+            <li className="flex item-center flex-col">
+              <span>{user?.user.username}</span>
+              <span>{user?.user.email}</span>
+            </li>
+
             <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
+              <Link to="/">Dashboard</Link>
             </li>
             <li>
-              <a>Settings</a>
+              <a className="justify-between">Profile</a>
             </li>
+
             <li>
-              <a>Logout</a>
+              <button onClick={handleSignOut}>Logout</button>
             </li>
           </ul>
         </div>
@@ -77,3 +78,46 @@ const NavbarEdit = () => {
 }
 
 export default NavbarEdit
+
+            <Dropdown
+            
+              className={`${
+                theme === "light" || "bg-base-200 border-none"
+              } rounded-xl`}
+              arrowIcon={false}
+              inline
+              label={
+                <Avatar
+                  alt="User settings"
+                  img={user?.user.profilePicture}
+                  rounded
+                  className="object-cover "
+                />
+              }
+            >
+              <DropdownHeader>
+                <span
+                  className={`block text-sm ${
+                    theme === "light" || "text-white"
+                  }`}
+                >
+                  {user?.user.username}
+                </span>
+                <span
+                  className={`block truncate text-sm font-medium  ${
+                    theme === "light" || "text-white"
+                  }`}
+                >
+                  {user?.user.email}
+                </span>
+              </DropdownHeader>
+              <DropdownItem className={`${theme === "light" || "text-white hover:bg-base-300"}`}>
+                <Link to="/">Dashboard</Link>
+              </DropdownItem>
+              <DropdownItem className={`${theme === "light" || "text-white"}`}>
+                <Link to="Profile">Profile</Link>
+              </DropdownItem>
+
+              <DropdownDivider />
+              <DropdownItem className={`${theme==="light" || "text-white"}`} onClick={handleSignOut}>Sign out</DropdownItem>
+            </Dropdown>

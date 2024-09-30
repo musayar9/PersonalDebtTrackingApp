@@ -101,7 +101,7 @@ const MessageNotifications = () => {
         <div
           className={`${
             t.visible ? "animate-enter" : "animate-leave"
-          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          } max-w-md w-full shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
@@ -156,7 +156,7 @@ const MessageNotifications = () => {
     <div className="relative flex items-center">
       {inComingMessage.length === 0 && (
         <Link to="/chat" onClick={() => dispatch(setCurrentChatData(null))}>
-          <RiMessage3Line className="text-slate-600 z-100 italic" size={28} />{" "}        </Link>
+          <RiMessage3Line className=" z-100 italic" size={28} />{" "}        </Link>
       )}
       {inComingMessage?.length > 0 && (
         <>

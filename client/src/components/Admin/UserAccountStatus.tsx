@@ -2,19 +2,32 @@
 import { User } from '../../lib/types';
 import { FaCheck } from 'react-icons/fa';
 import { FaX } from 'react-icons/fa6';
+import { useAppSelector } from '../../redux/hooks';
 
 
 const UserAccountStatus = ({ userDetail }: { userDetail: User | null }) => {
-
+const {theme} = useAppSelector((state)=>state.theme)
 
   return (
     <div className="shadow-sm">
-      <div className="flex  flex-col border rounded-lg gap-4 p-8">
-        <h2 className="text-xl font-semibold text-gray-500">Account Status</h2>
+      <div
+        className={`flex  flex-col  rounded-lg gap-4 p-8 ${
+          theme === "light" ? "border" : "bg-base-200 "
+        }`}
+      >
+        <h2 className="text-xl font-semibold ">Account Status</h2>
 
-        <div className="overflow-x-auto border border-slate-200 rounded-lg">
+        <div
+          className={`overflow-x-auto  rounded-lg ${
+            theme === "light" ? "border" : "bg-base-300"
+          }`}
+        >
           <table className="table  ">
-            <thead className="bg-slate-50">
+            <thead
+              className={`${
+                theme === "light" ? "bg-slate-50" : "text-base-content"
+              }`}
+            >
               <tr>
                 <th>Email</th>
                 <th>Password</th>
@@ -32,7 +45,7 @@ const UserAccountStatus = ({ userDetail }: { userDetail: User | null }) => {
                     maxLength={6}
                     value={"******"}
                     disabled
-                    className="border border-none w-24 text-slate-500"
+                    className={`border border-none w-24 text-slate-500 ${theme==="light" || "bg-base-300"} `}
                   />
                 </td>
                 <td>
