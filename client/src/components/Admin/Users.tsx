@@ -63,8 +63,8 @@ export const Users = () => {
       <>
         {currentItems?.length > 0 ? (
           <>
-            <div className="border-b border-slate-400 m-4">
-              <h2 className="text-2xl text-gray-600 font-semibold my-2">
+            <div className="border-b  m-4">
+              <h2 className="text-2xl  font-semibold my-2">
                 {user?.user.isAdmin ? "Users" : "Admins"}
               </h2>
             </div>
@@ -72,7 +72,7 @@ export const Users = () => {
               <div className="overflow-x-auto ">
                 <table className="table table-sm">
                   {/* head */}
-                  <thead>
+                  <thead className="text-base-content">
                     <tr>
                       <th></th>
                       <th>Profile P.</th>
@@ -89,7 +89,7 @@ export const Users = () => {
                     {currentItems?.map((item, index) => (
                       <tr
                         key={item._id}
-                        className={` text-gray-700 font-semibold text-sm`}
+                        className={` font-semibold text-sm`}
                       >
                         <th>{index + 1}</th>
                         <td>
@@ -120,7 +120,7 @@ export const Users = () => {
                               item?.isAdmin
                                 ? "cursor-not-allowed"
                                 : "cursor-pointer"
-                            } btn btn-xs    rounded-md text-rose-500 text-center m-4 cursor-pointer hover:text-rose-600 duration-150 ease-linear`}
+                            } btn btn-xs    rounded-md text-rose-500 text-center m-4 cursor-pointer hover:text-rose-600 duration-150 ease-linear disabled:cursor-not-allowed`}
                           >
                             Delete
                           </button>

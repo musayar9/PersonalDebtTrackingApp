@@ -17,7 +17,7 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
       <div className="overflow-x-auto my-8 rounded-lg">
         <table className="table table-sm">
           {/* head */}
-          <thead className=" p-2 bg-slate-50 rounded-lg">
+          <thead className=" p-2 text-base-content rounded-lg">
             <tr>
               <th></th>
               <th>Lender</th>
@@ -36,7 +36,7 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
             {/* row 1 */}
 
             {currentItems?.map((item: DebtData, index: number) => (
-              <tr key={item._id} className=" text-gray-500">
+              <tr key={item._id} className=" ">
                 <th>{index + 1}</th>
                 <td className=" flex flex-grow">{item.lender}</td>
                 <td>{item.borrower}</td>

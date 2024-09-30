@@ -34,14 +34,14 @@ const UsersDebtSearch = ({ filter, setFilter }: FilterProps) => {
   };
 
   return (
-    <div className="m-4 bg-slate-50 rounded-lg max-w-6xl mx-auto ">
+    <div className="m-4  bg-base-200  rounded-lg max-w-6xl mx-auto ">
       <form
         className="grid  grid-cols-1  md:grid-cols-2 lg:grid-cols-4  p-4 gap-2"
         onSubmit={handleSubmit}
       >
         <div className="form-control w-full max-w-xs">
           <label className="label">
-            <span className="label-text text-gray-500 tracking-wider font-semibold">
+            <span className="label-text  tracking-wider font-semibold">
               Lender
             </span>
           </label>
@@ -56,7 +56,7 @@ const UsersDebtSearch = ({ filter, setFilter }: FilterProps) => {
         </div>
         <div className="form-control w-full max-w-xs">
           <label className="label">
-            <span className="label-text text-gray-500 tracking-wider font-semibold">
+            <span className="label-text  tracking-wider font-semibold">
               Borrower
             </span>
           </label>
@@ -72,7 +72,7 @@ const UsersDebtSearch = ({ filter, setFilter }: FilterProps) => {
 
         <div className="form-control w-full max-w-xs">
           <label htmlFor="payment" className="label">
-            <span className="label-text text-gray-500 tracking-wider font-semibold">
+            <span className="label-text  tracking-wider font-semibold">
               Payment Status
             </span>
           </label>

@@ -28,8 +28,8 @@ const {user} = useAppSelector((state)=>state.user)
         <span className="text-orange-500 font-semibold">Detail Page</span>
       </Link>
       <div className="pl-4 my-4 flex flex-col gap-2">
-        <h2 className="text-xl font-semibold text-slate-700 mb-2">Payment Summary</h2>
-        <h4 className="text-md text-end font-semibold text-slate-600">
+        <h2 className="text-xl font-semibold mb-2">Payment Summary</h2>
+        <h4 className="text-md text-end font-semibold ">
           Debt Payment For {formatDateTwo(selectPayment?.paymentDate)}
         </h4>
         <p className="text-md text-end text-orange-500 font-semibold">
@@ -37,20 +37,20 @@ const {user} = useAppSelector((state)=>state.user)
           {debt?.description}
         </p>
         <p className="flex items-center gap-2 text-md justify-between">
-          <span className="text-slate-600 text-sm font-semibold">Lender </span>
+          <span className="  text-sm font-semibold">Lender </span>
           <span className="text-orange-500 font-semibold capitalize">
             {debt?.lender}
           </span>
         </p>
 
         <p className="flex items-center gap-2 text-md justify-between">
-          <span className="text-slate-600 text-sm font-semibold">Installment </span>
+          <span className="  text-sm font-semibold">Installment </span>
           <span className="text-orange-500 font-semibold capitalize">
             {debt?.installment}
           </span>
         </p>
         <p className="flex items-center gap-2 text-md justify-between">
-          <span className="text-slate-600 text-sm font-semibold  capitalize">
+          <span className="  text-sm font-semibold  capitalize">
             monthly payment amount
             
           </span>
@@ -59,7 +59,7 @@ const {user} = useAppSelector((state)=>state.user)
           </span>
         </p>
         <p className="flex items-center gap-2 text-md capitalize font-semibold  justify-between border-t-2 border-slate-300 my-2">
-          <span className="text-slate-600 mt-2">total debt amount </span>
+          <span className="  mt-2">total debt amount </span>
           <span className="text-orange-500  ">
             {formatPrice(debt?.amount)}
           </span>

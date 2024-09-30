@@ -13,13 +13,13 @@ const {currentItems, pageCount, handlePageClick, dataValue} = usePagination({dat
   return (
     <div className="shadow-sm">
       <div className="flex  flex-col border rounded-lg gap-4 p-8">
-        <h2 className="text-xl font-semibold text-gray-500">Debt Status</h2>
+        <h2 className="text-xl font-semibold ">Debt Status</h2>
 
         {dataValue?.length > 0 ? (
           <>
             <div className="overflow-x-auto border border-slate-200 rounded-lg">
               <table className="table">
-                <thead className="bg-slate-50">
+                <thead className="">
                   <tr>
                     <th>Lender</th>
                     <th>Borrower</th>

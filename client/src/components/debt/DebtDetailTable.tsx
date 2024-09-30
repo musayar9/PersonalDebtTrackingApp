@@ -19,6 +19,7 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
   const { userId } = useParams();
   const { user } = useAppSelector((state) => state.user);
   const [debt, setDebt] = useState<PaymentPlan[]>([]);
+  const {theme} = useAppSelector((state)=>state.theme)
 
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
@@ -53,9 +54,9 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
   }
 
   return (
-    <div className="overflow-x-auto my-10  border border-slate-200 rounded-md">
+    <div className={`overflow-x-auto my-10 rounded-md ${theme === "light" ? "border border-slate-200":"bg-base-200"}`}>
       <table className="table ">
-        <thead className="bg-gray-50">
+        <thead className="text-base-content">
           <tr>
             <th></th>
             <th>Debt Date</th>
@@ -67,7 +68,7 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
         </thead>
         <tbody>
           {debt?.map((item: PaymentPlan, index: number) => (
-            <tr key={item._id} className="text-gray-500">
+            <tr key={item._id} className="">
               <th>{index + 1}</th>
               <td>{formatDateTwo(item.paymentDate)}</td>
               <td>{formatPrice(item.paymentAmount)}</td>

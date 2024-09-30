@@ -62,7 +62,7 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
         {" "}
         <table className="table table-sm ">
           {/* head */}
-          <thead className=" p-2">
+          <thead className="text-base-content  p-2">
             <tr>
               <th></th>
               <th>Lender</th>
@@ -83,7 +83,7 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
             {/* row 1 */}
 
             {currentItems?.map((item: DebtData, index: number) => (
-              <tr key={item._id} className=" text-gray-500">
+              <tr key={item._id} className=" ">
                 <th>{index + 1}</th>
                 <td className="">{item.lender}</td>
                 <td>{item.borrower}</td>

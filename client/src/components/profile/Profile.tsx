@@ -241,8 +241,8 @@ const Profile: React.FC = () => {
               <FormTextArea
                 id="address"
                 styles="flex px-2.5 pt-8  text-sm w-full
-  text-gray-900 bg-transparent rounded-md border-1 border-gray-300 appearance-none dark:text-white
-  dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
+ bg-transparent rounded-md border-1 border-gray-300 appearance-none 
+ focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
                 placeholder="Address "
                 name="address"
                 value={formData.address}
@@ -262,14 +262,14 @@ const Profile: React.FC = () => {
                   value={formData.phone}
                   name="phone"
                   styles={
-                    "block p-2.5 w-full z-20 text-sm text-gray-900 rounded-e-lg border-s-0 border-1 border-gray-300   focus:outline-none focus:ring-0 focus:border-emerald-600"
+                    "block p-2.5 w-full bg-base-100 z-20 text-sm rounded-e-lg border-s-0 border-1 border-gray-300   focus:outline-none focus:ring-0 focus:border-emerald-600"
                   }
                   handleChange={handleChange}
                 />
               </div>
             </div>
 
-            <button className="border border-emerald-400 text-gray-500 font-semibold hover:border-white hover:text-white hover:bg-emerald-500 duration-150 ease-in rounded-md p-2">
+            <button className="border border-emerald-400 font-semibold hover:border-white hover:text-white hover:bg-emerald-500 duration-150 ease-in rounded-md p-2">
               {userUpdateStatus === "loading" ? (
                 <div className="flex items-center justify-center gap-2">
                   <span className="loading loading-infinity loading-xs"></span>

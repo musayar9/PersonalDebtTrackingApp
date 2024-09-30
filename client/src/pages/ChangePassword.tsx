@@ -90,8 +90,8 @@ const ChangePassword = () => {
   return (
     <div className="max-w-md mx-auto mt-24 p-4">
       <div className="flex flex-col items-center justify-center">
-        <h3 className="text-3xl font-bold text-slate-700">Reset Password</h3>
-        <p className="text-[10px] text-slate-600 my-2 text-center">
+        <h3 className="text-3xl font-bold ">Reset Password</h3>
+        <p className="text-[10px] my-2 text-center">
           The password must be <b>8 to 12 characters long</b>, and it must
           contain at least <b>one uppercase letter</b>,{" "}
           <b>one lowercase letter</b>, <b>one special character</b>, and{" "}

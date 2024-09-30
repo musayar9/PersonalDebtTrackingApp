@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 const ProfileBreadcrumps = () => {
   return (
     <div>
-      <div className="border-b border-base-300 pb-5">
-        <h2 className="text-3xl font-medium tracking-wider capitalize text-slate-500">
+      <div className="border-b pb-5">
+        <h2 className="text-2xl font-medium tracking-wider capitalize ">
           User Information
         </h2>
       </div>

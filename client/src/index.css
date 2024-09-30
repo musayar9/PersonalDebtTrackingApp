@@ -4,7 +4,7 @@
 
 @layer components {
   .custom-input {
-    @apply block px-2.5 pb-2.5 pt-4 text-sm  text-gray-900 bg-transparent rounded-md border border-gray-300 appearance-none dark:text-white dark:border-gray-600  focus:ring-0 focus:border-emerald-600;
+    @apply block px-2.5 pb-2.5 pt-4 text-sm bg-transparent rounded-md border border-gray-300 appearance-none   focus:ring-0 focus:border-emerald-600 placeholder:capitalize;
   }
 
   .custom-gradient {

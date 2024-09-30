@@ -68,8 +68,8 @@ const UsersDebts = () => {
     <>
       {debts!.length > 0 ? (
         <div className="w-full p-8">
-          <div className="border-b border-slate-100 p-4 ">
-            <h2 className="font-semibold text-2xl pl-4 text-slate-600 capitalize">
+          <div className="border-b p-4 ">
+            <h2 className="font-semibold text-2xl pl-4 capitalize">
               users' debts table
             </h2>
           </div>

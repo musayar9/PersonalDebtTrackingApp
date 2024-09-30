@@ -70,7 +70,7 @@ const PaymentPage = () => {
   return (
     <div className="max-w-6xl mx-auto p-4">
       <div className="border-b border-gray-200 my-4 p-2">
-        <h2 className="text-2xl text-gray-500 font-semibold">
+        <h2 className="text-2xl  font-semibold">
           Payment Information
         </h2>
       </div>
@@ -82,7 +82,7 @@ const PaymentPage = () => {
         <div className="lg:border-l-2 border-gray-200 lg:col-span-5 my-8 ">
           {clientSecret && stripePromise && (
             <>
-              <p className="mt-3 text-sm pl-6  text-slate-600">
+              <p className="mt-3 text-sm pl-6  ">
                 You can make your payment safely using Debit or Credit Card.
               </p>
               <Elements stripe={stripePromise} options={{ clientSecret }}>

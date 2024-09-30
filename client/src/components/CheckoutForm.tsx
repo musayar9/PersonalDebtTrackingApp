@@ -81,7 +81,7 @@ const CheckoutForm = ({ debtId, paymentId }: CheckoutFormProps) => {
       className="border border-[#f6f9fc ] m-5 rounded-md p-5"
       onSubmit={handleSubmit}
     >
-      <PaymentElement id="payment-element" options={{ layout: "tabs" }} />
+      <PaymentElement id="payment-element" options={{ layout: "tabs" }}  />
 
       <button
         className="px-6 py-2 text-sm  rounded-full bg-orange-500 text-gray-50 hover:bg-orange-600 ease-linear duration-150"
@@ -93,7 +93,7 @@ const CheckoutForm = ({ debtId, paymentId }: CheckoutFormProps) => {
         </span>
       </button>
       {message && (
-        <div className="px-4 py-2 my-4 bg-primary text-white rounded-md">
+        <div className="px-4 py-2 my-4 bg-primary  rounded-md">
           {message}
         </div>
       )}

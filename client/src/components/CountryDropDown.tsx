@@ -35,7 +35,7 @@ const CountryDropDown = () => {
     };
 
   return (
-    <div className="relative inline-block w-56 text-gray-700">
+    <div className="relative inline-block w-56 ">
       <div className=" border rounded-s-lg border-e-2  border-gray-300 focus:outline-none focus:ring-0 focus:border-emerald-600">
         <div
           className="flex items-center p-2 justify-between cursor-pointer"
@@ -67,7 +67,7 @@ const CountryDropDown = () => {
         </div>
       </div>
       {isOpen && (
-        <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-1">
+        <ul className="absolute z-10 w-full bg-base-100 border border-gray-300 rounded-lg mt-1">
           {countries?.map((c) => (
             <li
               key={c?._id}

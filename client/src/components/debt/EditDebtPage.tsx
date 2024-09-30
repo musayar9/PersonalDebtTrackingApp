@@ -178,8 +178,8 @@ const EditDebtPage: React.FC<EditDebtProps> = ({
           <FormTextArea
             id="description"
             styles="flex px-3.5 pt-8  text-sm w-full 
-  text-gray-900 bg-transparent rounded-md border-1 border-gray-300 appearance-none dark:text-white
-  dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
+ bg-transparent rounded-md border-1 border-gray-300 appearance-none
+ focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
             placeholder="description "
             name="description"
             value={formData.description ?? ""}
@@ -246,7 +246,7 @@ const EditDebtPage: React.FC<EditDebtProps> = ({
       color={"bg-blue-600"}
       message={updateDebt?.message}
       />}
-      ;
+      
     </div>
   );
 };

@@ -52,15 +52,15 @@ const EditDebt = () => {
   }
 
   if (errMsg) {
-    return <ErrorMessage message={errMsg} />;
+    return <ErrorMessage message={errMsg} />
   }
 
   return (
     <div className="max-w-6xl mx-auto p-4">
-      <div className="border-b pb-2 border-slate-400 m-4 flex items-center justify-between">
-        <h2 className="text-2xl font-semibold text-gray-500 ">Edit Debt</h2>
+      <div className="border-b pb-2 m-4 flex items-center justify-between">
+        <h2 className="text-2xl font-semibold  ">Edit Debt</h2>
         <Link
-          className="bg-slate-200 hover:bg-slate-300 hover:text-gray-900 duration-150 ease-linear px-4 py-3 rounded-lg font-semibold text-gray-700"
+          className="btn btn-sm"
           to="/debts"
         >
           Return Debt

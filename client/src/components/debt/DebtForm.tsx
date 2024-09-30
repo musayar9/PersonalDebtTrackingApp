@@ -105,7 +105,7 @@ const DebtForm = () => {
   return (
     <div className=" w-full">
       <div className="">
-        <h2 className="text-2xl m-4 font-semibold text-gray-500 border-b border-gray-300 p-4">
+        <h2 className="text-xl m-4 font-semibold  border-b border-gray-300 p-4">
           Create Debt
         </h2>
       </div>
@@ -136,7 +136,7 @@ const DebtForm = () => {
             />
 
             <FormInput
-              type={"tezt"}
+              type={"text"}
               id="Borrower"
               name="borrower"
               placeholder={"borrower"}
@@ -203,8 +203,8 @@ const DebtForm = () => {
             <FormTextArea
               id="description"
               styles="flex px-2.5 pt-8  text-sm w-full
-  text-gray-900 bg-transparent rounded-md border-1 border-gray-300 appearance-none dark:text-white
-  dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
+ bg-transparent rounded-md border-1 border-gray-300 appearance-none 
+ focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
               placeholder="description "
               name="description"
               value={formData.description}

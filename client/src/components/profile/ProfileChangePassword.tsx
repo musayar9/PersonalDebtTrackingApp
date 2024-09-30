@@ -104,8 +104,8 @@ const ProfileChangePassword: React.FC = () => {
 
       <div className="mx-auto max-w-lg mt-12">
         <div className="flex flex-col items-center my-8">
-          <h2 className="text-3xl font-bold text-slate-700">Change Password</h2>
-          <p className="text-xs text-slate-600 my-2 text-center">
+          <h2 className="text-2xl font-bold ">Change Password</h2>
+          <p className="text-xs my-2 text-center">
             The password must be <b>8 to 12 characters long</b>, and it must
             contain at least <b>one uppercase letter</b>,{" "}
             <b>one lowercase letter</b>, <b>one special character</b>, and{" "}
@@ -119,7 +119,7 @@ const ProfileChangePassword: React.FC = () => {
         >
           <label className="form-control w-full max-w-md">
             <div className="label">
-              <span className="label-text text-slate-500 text-semibold">
+              <span className="label-text  font-semibold">
                 Current Password
               </span>
             </div>
@@ -130,8 +130,8 @@ const ProfileChangePassword: React.FC = () => {
                 className="absolute  right-4 top-3"
                 onClick={() => setCurrPassShow(!currPassShow)}
               >
-                <HiEye size={24} className="text-slate-500 hidden" />
-                <span className="text-slate-500">
+                <HiEye size={24} className=" hidden" />
+                <span className="">
                   {" "}
                   {currPassShow ? "Hide" : "Show"}
                 </span>
@@ -153,7 +153,7 @@ const ProfileChangePassword: React.FC = () => {
 
           <label className="form-control w-full max-w-md">
             <div className="label">
-              <span className="label-text text-slate-500 text-semibold">
+              <span className="label-text font-semibold">
                 New Password
               </span>
             </div>
@@ -164,7 +164,7 @@ const ProfileChangePassword: React.FC = () => {
                 className="absolute  right-4 top-3"
                 onClick={() => setNewPassShow(!newPassShow)}
               >
-                <span className="text-slate-500">
+                <span className="">
                   {newPassShow
                     ? // <HiEye size={24} className="text-slate-500" />
                       "Hide"
@@ -189,7 +189,7 @@ const ProfileChangePassword: React.FC = () => {
 
           <button
             type="submit"
-            className=" w-full max-w-md my-4  text-xs border border-emerald-400 text-gray-500 font-semibold hover:border-white hover:text-white hover:bg-emerald-500 duration-150 ease-linear rounded-md p-2.5"
+            className=" w-full max-w-md my-4  text-xs border border-emerald-400 font-semibold hover:border-white hover:text-white hover:bg-emerald-500 duration-150 ease-linear rounded-md p-2.5"
           >
             {loading ? (
               <p className="flex gap-2 items-center justify-center">
@@ -218,14 +218,14 @@ const ProfileChangePassword: React.FC = () => {
           )}
         </div>
 
-        <p className=" text-xs flex items-center justify-center text-center text-slate-600 w-full p-4">
+        <p className=" text-xs flex items-center justify-center text-center w-full p-4">
           For your security, choose a password that does not include your name,
           surname and date of birth.
         </p>
 
-        <div className="border border-gray-300 rounded-md p-4 m-5">
+        <div className="border rounded-md p-4 m-5">
           <div className="flex items-center justify-between">
-            <h2 className="text-slate-700 font-semibold text-xl">
+            <h2 className=" font-semibold text-xl">
               Two Factor Authentication
             </h2>
             <ToggleSwitch
@@ -234,7 +234,7 @@ const ProfileChangePassword: React.FC = () => {
             />
           </div>
 
-          <p className="text-slate-600 text-xs w-80 leading-relaxed my-2">
+          <p className=" text-xs w-80 leading-relaxed my-2">
             When you enable the two-step verification method, you log in with
             the verification code sent to your registered e-mail in addition to
             your personal passwords.

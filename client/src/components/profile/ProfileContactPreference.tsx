@@ -13,10 +13,10 @@ const ProfileContactPreference = () => {
       <ProfileBreadcrumps />
       <div className="max-w-lg mx-auto mt-12">
         <div className="flex flex-col items-center">
-          <h2 className="text-2xl font-bold text-slate-700">
+          <h2 className="text-2xl font-bold ">
             Contact Preferences
           </h2>
-          <p className="text-slate-600 text-sm text-center mt-3">
+          <p className=" text-sm text-center mt-3">
             You can determine the methods you prefer to be informed about
             important campaigns.
           </p>
@@ -24,10 +24,10 @@ const ProfileContactPreference = () => {
         <div className="border border-gray-300 p-4 rounded-md my-8">
           <div className="flex items-center justify-between border-b-2 border-gray-300">
             <div className="p-4">
-              <h3 className="text-md text-slate-600 font-semibold">
+              <h3 className="text-md  font-semibold">
                 Instant Text Message
               </h3>
-              <p className="text-sm text-slate-500 mt-3">
+              <p className="text-sm  mt-3">
                 Messages to be sent by DebtTracking to your mobile phone via
                 instant/text message channels
               </p>
@@ -38,8 +38,8 @@ const ProfileContactPreference = () => {
 
           <div className="flex items-center justify-between border-b-2 border-gray-300">
             <div className="p-4">
-              <h3 className="text-md text-slate-600 font-semibold">E-mail</h3>
-              <p className="text-sm text-slate-500 mt-3">
+              <h3 className="text-md  font-semibold">E-mail</h3>
+              <p className="text-sm mt-3">
                 Notifications sent by DebtTracking via email
               </p>
             </div>
@@ -49,10 +49,10 @@ const ProfileContactPreference = () => {
 
           <div className="flex items-center justify-between ">
             <div className="p-4">
-              <h3 className="text-md text-slate-600 font-semibold">
+              <h3 className="text-md  font-semibold">
                 Phone Call
               </h3>
-              <p className="text-xs text-slate-500 my-3">
+              <p className="text-xs  my-3">
                 Calls to be made by DebtTracking to your mobile phone using the
                 search method.
               </p>
