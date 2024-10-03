@@ -172,14 +172,14 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
               {currentChatData === null ? (
                 <button
                   onClick={sendMessage}
-                  className={` btn btn-sm btn-circle mt-8 w-full text-emerald-500 flex items-center`}
+                  className={` btn btn-sm btn-circle mt-8 w-full text-emerald-500 flex items-center bg-base-300`}
                 >
                   Send Message
                 </button>
               ) : (
                 <Link
                   className="
-               btn btn-sm btn-circle mt-8 w-full text-emerald-500 flex items-center"
+               btn btn-sm btn-circle mt-8 w-full text-emerald-500 flex items-center bg-base-300"
                   to={`/chat`}
                 >
                   Send Message
@@ -192,7 +192,7 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
               <button
                 disabled={userDetail?.isAdmin}
                 onClick={() => handleDeleteUser({ id: userDetail?._id })}
-                className={` btn btn-sm btn-circle mt-2 w-full text-rose-500 flex items-center`}
+                className={` btn btn-sm btn-circle mt-2 w-full text-rose-500 flex items-center bg-base-300`}
               >
                 Delete
               </button>

@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState } from "react";
-import { Button, Modal } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { DebtData } from "../../lib/types";
@@ -9,6 +8,7 @@ import api from "../../utils/api";
 import { usePagination } from "../../utils/customHooks";
 
 import CustomPagination from "../CustomPagination";
+import toast from "react-hot-toast";
 interface DebtTableProps {
   debt: DebtData[];
   setDebt: React.Dispatch<React.SetStateAction<DebtData[]>>;
@@ -16,7 +16,7 @@ interface DebtTableProps {
 
 const DebtTable = ({ debt, setDebt }: DebtTableProps) => {
 
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
   const [debtId, setDebtId] = useState<string | undefined>("");
   const [errMsg, setErrMsg] = useState("");
   
@@ -37,8 +37,8 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
       const deleteDebt = debt.filter((d) => d._id !== debtId);
 
       setDebt(deleteDebt);
-      setShowModal(false);
-
+      // setShowModal(false);
+      toast.success(data.message)
       setErrMsg("");
       return data
     } catch (error) {
@@ -51,7 +51,7 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
 
       setTimeout(() => {
         setErrMsg("");
-        setShowModal(false);
+        // setShowModal(false);
       }, 3000);
     }
   };
@@ -107,13 +107,19 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
                   </p>
                 </td>
                 <td
-                  onClick={() => {
-                    setShowModal(true);
-                    setDebtId(item?._id);
-                  }}
+                  // onClick={() => {
+                  //   setShowModal(true);
+                  //   setDebtId(item?._id);
+                  // }}
                   className="text-red-500 font-semibold hover:underline cursor-pointer"
                 >
-                  Delete
+                  <a
+                    href="#my_modal_8"
+                    className=""
+                    onClick={() => setDebtId(item?._id)}
+                  >
+                    Delete
+                  </a>
                 </td>
                 <td className="text-blue-600 font-semibold hover:underline cursor-pointer">
                   <Link to={`/debts/updateDebt/${item?._id}`}>Edit</Link>
@@ -130,12 +136,13 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
           </tbody>
         </table>
       </div>
-
+{/* 
       <Modal
         show={showModal}
         onClose={() => setShowModal(false)}
         popup
         size="md"
+        className="bg-base-300"
       >
         <Modal.Header />
         <Modal.Body>
@@ -162,11 +169,44 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
             )}
           </div>
         </Modal.Body>
-      </Modal>
+      </Modal> */}
+
+    
+
+      {/* Put this part before </body> tag */}
+      <div className="modal" role="dialog" id="my_modal_8">
+        <div className="modal-box">
+          <h3 className="text-lg font-bold">
+            {" "}
+            <HiOutlineExclamationCircle className="h-14 w-14 text-base-300 mx-auto" />
+          </h3>
+
+          {errMsg !== "" ? (
+            <p className="text-red-600 text-md font-semibold">{errMsg}</p>
+          ) : (
+            <>
+              <h4 className="py-4 text-center">
+                {" "}
+                Are you sure you want to delete this post?
+              </h4>
+              <div className="modal-action flex justify-between">
+                <a href="#" className="btn " onClick={handleDeleteDebt}>
+                  Yes I'm sure
+                </a>
+                <a href="#" className="btn">
+                  No Cancel
+                </a>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
 
       {dataValue.length > 4 && (
-      
-        <CustomPagination pageCount={pageCount} handlePageClick={handlePageClick}/>
+        <CustomPagination
+          pageCount={pageCount}
+          handlePageClick={handlePageClick}
+        />
       )}
     </div>
   );

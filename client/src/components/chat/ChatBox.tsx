@@ -139,14 +139,14 @@ const dispatch = useAppDispatch()
                   src={userData?.profilePicture}
                   alt={userData?.username}
                 />
-                <div className="flex  flex-col items-start justify-center text-md font-semibold text-gray-600">
+                <div className="flex  flex-col items-start justify-center text-md font-semibold ">
                   <span>{userData?.username}</span>
                 </div>
               </div>
               {loading && <>loading...</>}
             </div>
 
-            <hr className="w-[95%] border border-slate-100 mt-5"></hr>
+            <hr className="w-[95%] border  mt-5"></hr>
           </div>
 
           <div className="flex flex-col gap-2 p-6 overflow-scroll ">
@@ -170,10 +170,10 @@ const dispatch = useAppDispatch()
             </>
           </div>
           {/**chat sender */}
-          <div className="bg-white flex items-center justify-between h-14 gap-4 p-2 rounded-2xl self-end">
+          <div className="bg-base-300 flex items-center justify-between h-14 gap-4 p-2 rounded-2xl self-end">
             <div
               onClick={() => imageRef?.current?.click()}
-              className="bg-gray-200 rounded-md flex items-center justify-center font-bold cursor-pointer h-[70%] px-4"
+              className="bg-base-100 rounded-md flex items-center justify-center font-bold cursor-pointer h-[70%] px-4"
             >
               +{" "}
             </div>
@@ -184,7 +184,7 @@ const dispatch = useAppDispatch()
             >
           
               <input
-                className="border border-gray-200 p-2 rounded-full focus:outline-none w-full"
+                className="border bg-base-100 p-2 rounded-full focus:outline-none w-full"
                 value={newMessage}
                 name="newMessage"
                 onChange={(e) => setNewMessage(e.target.value)}

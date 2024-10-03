@@ -109,14 +109,12 @@ const Chat = () => {
   };
 
   return (
-    <div>
-      <div className="bg-slate-200 relative mt-14 p-4 grid md:grid-cols-[22%_auto] gap-4">
+    <div className="bg-base-300 ">
+      <div className=" relative mt-16  p-4 grid md:grid-cols-[22%_auto] gap-4">
         {/* Left-side-chat */}
-        <div className="flex flex-col gap-4 bg-white p-4 md:p-8 rounded-lg">
-          <div className=" flex flex-col rounded-2xl p-2 md:min-h-[80vh] gap-4 bg-[rgba(255, 255, 255, 0.64)]">
-            <h2 className="text-3xl font-semibold tracking-widest text-gray-600">
-              Chats
-            </h2>
+        <div className="flex flex-col  gap-4 bg-base-100 p-4 md:p-8 rounded-lg">
+          <div className=" flex flex-col rounded-2xl p-2 md:min-h-[80vh] gap-4 ">
+            <h2 className="text-3xl font-semibold tracking-widest ">Chats</h2>
 
             {/* Chat-list */}
             <div className=" flex  md:flex-col gap-2 h-96 overflow-y-auto overflow-x-hidden">
@@ -140,7 +138,7 @@ const Chat = () => {
         </div>
 
         {/* Right-side-chat */}
-        <div className=" flex flex-col p-2 gap-4 bg-white rounded-lg">
+        <div className=" flex flex-col p-2 gap-4 bg-base-100 rounded-lg">
           {/* Chat-container */}
 
           <ChatBox

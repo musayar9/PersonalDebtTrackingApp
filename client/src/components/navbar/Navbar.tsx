@@ -120,15 +120,17 @@ export function NavbarComponent() {
 
               <button
                 type="button"
-                className="transform duration ease-in"
+                className="transform  duration-150 ease-in"
                 // defaultChecked={isDarkTheme}
                 onClick={() => dispatch(toggleTheme())}
               >
                 {theme === "light" ? (
-                  <BsSunFill className="text-yellow-400" />
+                  <BsSunFill />
                 ) : (
                   <BsMoonFill />
                 )}
+
+              
               </button>
             </div>
 
@@ -158,7 +160,9 @@ export function NavbarComponent() {
                   <Link to="/">Dashboard</Link>
                 </li>
                 <li>
-                  <Link to="profile" className="justify-between">Profile</Link>
+                  <Link to="profile" className="justify-between">
+                    Profile
+                  </Link>
                 </li>
 
                 <li>

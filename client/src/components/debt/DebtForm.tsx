@@ -9,6 +9,7 @@ import FormTextArea from "../FormTextArea";
 import AlertMessage from "../AlertMessage";
 import api from "../../utils/api";
 import DebtImage from "../../assets/Debt.png";
+import toast from "react-hot-toast";
 const DebtForm = () => {
   const [formData, setFormData] = useState({
     lender: "",
@@ -82,8 +83,9 @@ const DebtForm = () => {
 
       const res = await api.post("/v1/debt", formData);
       const data = await res.data;
-
+  
       setMsg(data?.message);
+      toast.success(data.message)
       setLoading(false);
       navigate("/debts");
       setTimeout(() => {
