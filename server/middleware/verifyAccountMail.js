@@ -126,7 +126,7 @@ const verifyAccountMail = async (user, email, code) => {
 <footer>
     <h4>Personal Debt Tracking</h4>
     <div class="contact">
-        <p class="email">Email: softwarebkm@outlook.com</p>
+        <p class="email">Email: softwarebkm@gmail.com</p>
         <p class="address">Contact: BKM Grup Consultancy Communication and Sales Trade Inc. Beylikdüzü / İstanbul</p>
     </div>
     <p class="copyright">© 2024 SoftwareBKM</p>

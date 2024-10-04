@@ -58,8 +58,8 @@ const ResetPassword = () => {
       )}
 
       <div className="flex flex-col items-center my-8">
-        <h2 className="text-3xl font-bold text-slate-700">Password Reset</h2>
-        <p className="mt-3 text-sm text-center text-slate-600">
+        <h2 className="text-3xl font-bold ">Password Reset</h2>
+        <p className="mt-3 text-sm text-center text-slate-500 font-semibold">
           We need your email address so we can send you the password reset link.
         </p>
       </div>
@@ -98,8 +98,8 @@ const ResetPassword = () => {
       </Link>
 
       <div className="text-center">
-        <p className="text-slate-600 text-xs p-1">
-          Remember to check your spam folder or unblock softwarebkm@outlook.com
+        <p className="text-slate-500 text-xs p-1">
+          Remember to check your spam folder or unblock softwarebkm@gmail.com
           if you can not find the message.
         </p>
       </div>

@@ -197,7 +197,7 @@ const sendResetPassword = async (user, email, url) => {
 <footer>
     <h4>Personal Debt Tracking</h4>
     <div class="contact">
-        <p class="email">Email: softwarebkm@outlook.com</p>
+        <p class="email">Email: softwarebkm@gmail.com</p>
         <p class="address">
             Contact: BKM Grup Consultancy Communication and Sales Trade Inc.
             BeyLikdüzü / İstanbul
