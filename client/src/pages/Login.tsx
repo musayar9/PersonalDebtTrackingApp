@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import LoginImage  from "../assets/login.svg"
+import LoginImage from "../assets/login.svg";
 import FormInput from "../components/FormInput";
 import { loginUser } from "../redux/dataFetch";
 import { setError } from "../redux/userSlice";
@@ -62,7 +62,7 @@ const Login = () => {
   }, [user]);
 
   return (
-    <div className="mt-12">
+    <div className="mt-20">
       <div className="flex p-3 max-w-5xl mx-auto flex-col md:flex-row md:items-center gap-5">
         <div className="flex-1 items-center justify-center">
           <h2 className="text-4xl  font-bold   rounded-lg   py-1 ">

@@ -10,7 +10,7 @@ import VerifyUserModal from "../components/VerifyUserModal";
 import { User } from "../lib/types";
 import { IoIosWarning } from "react-icons/io";
 import CheckPasswordCriteria from "../components/CheckPasswordCriteria";
-import RegisterImage  from "../assets/register.svg"
+import RegisterImage from "../assets/register.svg";
 type FormData = {
   name: string;
   surname: string;
@@ -85,10 +85,10 @@ const Register = () => {
       }
     }
   };
-console.log("err", errMsg)
-console.log("errrrr", error)
+  console.log("err", errMsg);
+  console.log("errrrr", error);
   return (
-    <div className="mt-12">
+    <div className="mt-20">
       <div className="flex p-3 max-w-5xl mx-auto flex-col md:flex-row md:items-center gap-5">
         <div className="flex-1 items-center justify-center">
           <h2 className="text-4xl  font-bold   rounded-lg   py-1 ">
