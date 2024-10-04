@@ -78,7 +78,20 @@ export function NavbarComponent() {
         </span>
       </NavbarBrand>
       <div className="flex md:order-2">
+              <div className="flex items-center justify-center mr-2">
+              {/* this hidden checkbox controls the state */}
+
+              <button
+                type="button"
+                className="transform  duration-150 ease-in"
+                // defaultChecked={isDarkTheme}
+                onClick={() => dispatch(toggleTheme())}
+              >
+                {theme === "light" ? <BsSunFill /> : <BsMoonFill />}
+              </button>
+            </div>
         {!user?.user ? (
+        
           <div className="dropdown dropdown-hover  group">
             <div
               tabIndex={0}
@@ -110,67 +123,51 @@ export function NavbarComponent() {
             </ul>
           </div>
         ) : (
-          <div
-            className={`${
-              pathname !== "/twoFactorAuth" ? "flex" : "hidden"
-            }  items-center gap-2`}
-          >
-            <div className="flex items-center justify-center">
-              {/* this hidden checkbox controls the state */}
+          <>
+            <div
+              className={`${
+                pathname !== "/twoFactorAuth" ? "flex" : "hidden"
+              }  items-center gap-2`}
+            >
 
-              <button
-                type="button"
-                className="transform  duration-150 ease-in"
-                // defaultChecked={isDarkTheme}
-                onClick={() => dispatch(toggleTheme())}
-              >
-                {theme === "light" ? (
-                  <BsSunFill />
-                ) : (
-                  <BsMoonFill />
-                )}
+              <MessageNotifications />
+              <Notifications />
 
-              
-              </button>
-            </div>
-
-            <MessageNotifications />
-            <Notifications />
-
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle avatar"
-              >
-                <div className="w-10 rounded-full">
-                  <img alt="User Settings" src={user?.user.profilePicture} />
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle avatar"
+                >
+                  <div className="w-10 rounded-full">
+                    <img alt="User Settings" src={user?.user.profilePicture} />
+                  </div>
                 </div>
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm border dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow space-y-2"
+                >
+                  <li className="flex item-center flex-col  border-b ">
+                    <span>{user?.user.username}</span>
+                    <span>{user?.user.email}</span>
+                  </li>
+
+                  <li>
+                    <Link to="/">Dashboard</Link>
+                  </li>
+                  <li>
+                    <Link to="profile" className="justify-between">
+                      Profile
+                    </Link>
+                  </li>
+
+                  <li>
+                    <button onClick={handleSignOut}>Logout</button>
+                  </li>
+                </ul>
               </div>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm border dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow space-y-2"
-              >
-                <li className="flex item-center flex-col  border-b ">
-                  <span>{user?.user.username}</span>
-                  <span>{user?.user.email}</span>
-                </li>
-
-                <li>
-                  <Link to="/">Dashboard</Link>
-                </li>
-                <li>
-                  <Link to="profile" className="justify-between">
-                    Profile
-                  </Link>
-                </li>
-
-                <li>
-                  <button onClick={handleSignOut}>Logout</button>
-                </li>
-              </ul>
             </div>
-          </div>
+          </>
         )}
       </div>
       {/* <NavbarCollapse>

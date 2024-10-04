@@ -7,7 +7,6 @@ import { FaCheck } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { updateUser } from "../redux/dataFetch";
 
-
 const TwoFactorAuth = () => {
   const { user } = useAppSelector((state) => state.user);
   const [code, setCode] = useState(new Array(6).fill(""));
@@ -47,8 +46,10 @@ const TwoFactorAuth = () => {
       const res = await axios.put(`/api/v1/auth/twoFAVerifyCode`, {
         verificationCode,
       });
-      const data = await  res.data;
-      await dispatch(updateUser({ id: user?.user._id, formData: data.updateUser }));
+      const data = await res.data;
+      await dispatch(
+        updateUser({ id: user?.user._id, formData: data.updateUser })
+      );
       setInfoMsg(data.msg);
 
       setLoading(false);
@@ -68,13 +69,13 @@ const TwoFactorAuth = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto">
+    <div className="max-w-xl mx-auto ">
       <div className=" flex flex-col items-center justify-center my-24 ">
-        <h2 className="text-3xl font-semibold text-slate-700 leading-relaxed">
+        <h2 className="text-3xl font-semibold leading-relaxed">
           Two Factor Authentication
         </h2>
 
-        <p className="p-4  text-sm  text-slate-600">
+        <p className="p-4  text-sm ">
           The two-factor verification code has been sent to your e-mail address.
           Please check the e-mail address
         </p>
@@ -90,7 +91,7 @@ const TwoFactorAuth = () => {
                 onChange={(e) => handleChange(e.target, index)}
                 onKeyUp={(e) => handleKeyUp(e, index)}
                 ref={(el) => (inputsRef.current[index] = el)}
-                className="w-12 h-12 text-center text-lg font-bold border border-gray-300 rounded-md focus:outline-none focus:border-emerald-600"
+                className="w-12 h-12 text-center text-lg font-bold border bg-base-200 border-gray-300 rounded-md focus:outline-none focus:border-emerald-600"
               />
             ))}
           </div>

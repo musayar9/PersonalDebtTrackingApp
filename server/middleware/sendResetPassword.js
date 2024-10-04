@@ -1,17 +1,39 @@
 const nodemailer = require("nodemailer");
+const {google} = require("googleapis")
 
 const sendResetPassword = async (user, email, url) => {
   try {
+    const OAuth2 = google.auth.OAuth2;
+
+    const oauth2Client = new OAuth2(
+      process.env.CLIENT_ID, // Google Client ID
+      process.env.CLIENT_SECRET, // Google Client Secret
+      "https://developers.google.com/oauthplayground" // Geri dönüş URL'si
+    );
+
+    // OAuth2 Refresh Token'ı ayarlama
+    oauth2Client.setCredentials({
+      refresh_token: process.env.REFRESH_TOKEN,
+    });
+    
+    
+    const accessToken = await oauth2Client.getAccessToken();
+    
+
     const transporter = nodemailer.createTransport({
-      service: "hotmail",
+      service: "gmail",
       auth: {
+        type: "OAuth2",
         user: process.env.NODE_EMAIL_USER,
-        pass: process.env.NODE_EMAIL_PASS,
+        clientId: process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
+        refresh_token: process.env.REFRESH_TOKEN,
+        accessToken: accessToken.token, // Access Token'ı al
       },
     });
 
     await transporter.sendMail({
-      from: `"Personal Debt Tracking" <softwarebkm@outlook.com>`,
+      from: `"Personal Debt Tracking" <softwarebkm@gmail.com>`,
       to: email,
       subject: "Reset Password",
       text: url,

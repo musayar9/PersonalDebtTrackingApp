@@ -85,7 +85,8 @@ const Register = () => {
       }
     }
   };
-
+console.log("err", errMsg)
+console.log("errrrr", error)
   return (
     <div className="mt-12">
       <div className="flex p-3 max-w-5xl mx-auto flex-col md:flex-row md:items-center gap-5">

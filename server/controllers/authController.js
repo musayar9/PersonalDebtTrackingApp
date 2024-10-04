@@ -36,11 +36,11 @@ const register = async (req, res, next) => {
 
   const userNameRegex = /^\w+$/;
   const emailRegex = /^[\w-]+(\.[\w-]+)*@\w+(\.[\w-]+)+$/;
-  console.log(emailRegex.test(email), "emil check");
+
   const regexPassword =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[a-zA-Z\d@$!%*?&.]{8,12}$/;
 
-  console.log(regexPassword.test(password), "regepass");
+
 
   try {
     // const user = await User.create({ ...req.body });
@@ -49,7 +49,7 @@ const register = async (req, res, next) => {
     }
 
     if (!userNameRegex.test(username)) {
-      throw new BadRequestError("User is not valid");
+      throw new BadRequestError("Username is not valid");
     }
 
     if (!regexPassword.test(password)) {
@@ -133,7 +133,7 @@ const login = async (req, res, next) => {
           100000 + Math.random() * 900000
         ).toString(),
       }).save();
-
+  console.log("verifiacation", twoFactorAuthentication);
       await verifyAccountMail(
         isUser,
         email,
