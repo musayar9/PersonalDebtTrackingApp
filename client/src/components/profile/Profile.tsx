@@ -117,7 +117,7 @@ const Profile: React.FC = () => {
   };
   console.log(errorMessage);
   return (
-    <div className="w-full border p-8">
+    <div className="w-full  p-8">
       <ProfileBreadcrumps />
 
       <div className="flex items-center flex-col justify-center mx-auto max-w-6xl ">

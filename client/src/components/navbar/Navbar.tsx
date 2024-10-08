@@ -24,6 +24,7 @@ import MessageNotifications from "./MessageNotifications";
 import api from "../../utils/api";
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
 import { toggleTheme } from "../../redux/themeSlice";
+import Language from "./Language";
 export function NavbarComponent() {
   const { user } = useAppSelector((state: { user: UsersState }) => state?.user);
   const { pathname } = useLocation();
@@ -90,6 +91,8 @@ export function NavbarComponent() {
                 {theme === "light" ? <BsSunFill /> : <BsMoonFill />}
               </button>
             </div>
+            
+            <Language/>
         {!user?.user ? (
         
           <div className="dropdown dropdown-hover  group">
