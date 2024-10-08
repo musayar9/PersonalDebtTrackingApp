@@ -17,8 +17,8 @@ const DashboardArea = () => {
   const { debt, loading } = useFetchUserDebt();
   const { groupDebt } = useGetPaymentStatus({ paymentStatus: "Paid" });
 
-const clickHandle = (lang:string)=>{
-   i18n.changeLanguage(lang)
+const clickHandle = async(lang:string)=>{
+ await  i18n.changeLanguage(lang)
 
 }
 console.log(i18n, "18n")

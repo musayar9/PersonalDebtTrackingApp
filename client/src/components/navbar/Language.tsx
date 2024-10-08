@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 
 interface Languages {
+  id: number;
   language: string;
   flag: string;
 }
@@ -17,19 +18,29 @@ const languages = [
 ];
 
 const Language = () => {
-  const [selectLanguage, setSelectLanguage] = useState<Languages | null>(null);
+  const [selectLanguage, setSelectLanguage] = useState<Languages | undefined>(
+    undefined
+  );
   const [isOpen, setIsOpen] = useState(false);
   const { i18n } = useTranslation();
 
-  const handleSelectLanguage =  (data: Languages) => {
+  useEffect(() => {
+    const currentLanguage = languages.find(
+      (lang) => lang.language === i18n.language
+    );
+    console.log(currentLanguage, "currentland");
+    setSelectLanguage(currentLanguage);
+  }, []);
+
+  const handleSelectLanguage = async (data: Languages) => {
     setSelectLanguage(data);
 
     setIsOpen(false);
-     i18n.changeLanguage(data.language);
+    await i18n.changeLanguage(data.language);
   };
   return (
-    <div className="relative inline-block w-24">
-      <div className="  rounded border   focus:outline-none focus:ring-0 focus:border-emerald-600">
+    <div className="relative  w-26 ml-2">
+      <div className="">
         <div
           className="flex items-center p-2 justify-between cursor-pointer"
           onClick={() => setIsOpen(!isOpen)}
@@ -57,11 +68,11 @@ const Language = () => {
         </div>
       </div>
       {isOpen && (
-        <ul className="absolute z-10 w-full bg-base-100 border border-gray-300 rounded-lg mt-1">
+        <ul className="absolute z-10 w-full bg-base-200 rounded-lg mt-1">
           {languages?.map((c) => (
             <li
               key={c?.id}
-              className="flex items-center space-x-2 text-xs p-2 cursor-pointer hover:bg-gray-100"
+              className="flex items-center space-x-2 text-xs p-2 cursor-pointer hover:bg-base-300 m-2 hover:rounded-lg transform duration-150 ease-in "
               onClick={() => handleSelectLanguage(c)}
             >
               <img

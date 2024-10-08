@@ -1,25 +1,30 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import HttpBackend, { HttpBackendOptions } from "i18next-http-backend";
 
 i18n
-  .use(initReactI18next) // i18next'i React ile entegre eder
-  .init({
-    resources: {
-      en: {
-        translation: {
-          welcome: "Welcome",
-        },
-      },
-      tr: {
-        translation: {
-          welcome: "Hoş Geldin",
-        },
-      },
+  .use(initReactI18next)
+  .use(HttpBackend)
+  .init<HttpBackendOptions>({
+    // resources: {
+    //   en: {
+    //     translation: {
+    //       welcome: "Welcome",
+    //     },
+    //   },
+    //   tr: {
+    //     translation: {
+    //       welcome: "Hoş Geldin",
+    //     },
+    //   },
+    // },
+    backend: {
+      loadPath: "/locales/{{lng}}/translation.json",
     },
-    lng: "en", // Varsayılan dil
+    lng: "en",
     fallbackLng: "en",
     interpolation: {
-      escapeValue: false, // React'te HTML escape etmeye gerek yok
+      escapeValue: false,
     },
   });
 

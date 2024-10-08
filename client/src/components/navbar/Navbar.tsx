@@ -1,8 +1,4 @@
-import {
-
-  Navbar,
-  NavbarBrand,
-} from "flowbite-react";
+import { Navbar, NavbarBrand } from "flowbite-react";
 import { CiUser } from "react-icons/ci";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -25,11 +21,12 @@ import api from "../../utils/api";
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
 import { toggleTheme } from "../../redux/themeSlice";
 import Language from "./Language";
+import { useTranslation } from "react-i18next";
 export function NavbarComponent() {
+  const { t } = useTranslation();
   const { user } = useAppSelector((state: { user: UsersState }) => state?.user);
   const { pathname } = useLocation();
   const { theme } = useAppSelector((state) => state.theme);
-  console.log(theme);
   const { recieverMessage, inComingMessage } = useAppSelector(
     (state) => state?.message
   );
@@ -75,27 +72,25 @@ export function NavbarComponent() {
     <Navbar className="navbar bg-base-100 border-b shadow-none w-full mb-12 z-20 flex  left-0 top-0 fixed border-slate-300  ">
       <NavbarBrand>
         <span className="self-center  text-xl font-semibold ">
-          Personal Debt Tracking
+          {t("personal_debt_tracking")}
         </span>
       </NavbarBrand>
-      <div className="flex md:order-2">
-              <div className="flex items-center justify-center mr-2">
-              {/* this hidden checkbox controls the state */}
+      <div className="flex md:order-2 items-center justify-center space-x-3">
+        <div className="flex items-center justify-center mr-2">
+          {/* this hidden checkbox controls the state */}
 
-              <button
-                type="button"
-                className="transform  duration-150 ease-in"
-                // defaultChecked={isDarkTheme}
-                onClick={() => dispatch(toggleTheme())}
-              >
-                {theme === "light" ? <BsSunFill /> : <BsMoonFill />}
-              </button>
-            </div>
-            
-            <Language/>
+          <button
+            type="button"
+            className="transform  duration-150 ease-in"
+            // defaultChecked={isDarkTheme}
+            onClick={() => dispatch(toggleTheme())}
+          >
+            {theme === "light" ? <BsSunFill /> : <BsMoonFill />}
+          </button>
+        </div>
+
         {!user?.user ? (
-        
-          <div className="dropdown dropdown-hover  group">
+          <div className="dropdown dropdown-hover  group ">
             <div
               tabIndex={0}
               className="hover:text-emerald-500 font-semibold group  group-hover:text-emerald-500 flex items-center justify-center gap-2"
@@ -132,7 +127,6 @@ export function NavbarComponent() {
                 pathname !== "/twoFactorAuth" ? "flex" : "hidden"
               }  items-center gap-2`}
             >
-
               <MessageNotifications />
               <Notifications />
 
@@ -172,6 +166,8 @@ export function NavbarComponent() {
             </div>
           </>
         )}
+
+        <Language />
       </div>
       {/* <NavbarCollapse>
         <Link to="/">Home</Link>
