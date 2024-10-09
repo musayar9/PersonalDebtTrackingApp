@@ -6,9 +6,9 @@ import enTranslation from "../public/locales/en/translation.json";
 import trTranslation from "../public/locales/tr/translation.json";
 // i18next yapılandırması
 i18n
-  .use(LanguageDetector) // Tarayıcı dil algılayıcısı kullanımı
-  .use(HttpBackend) // Dil dosyalarını sunucudan yüklemek için HTTP backend
-  .use(initReactI18next) // React için i18next adaptörü
+  .use(LanguageDetector) 
+  .use(HttpBackend) 
+  .use(initReactI18next) 
   .init({
     resources: {
       en: {
@@ -22,13 +22,12 @@ i18n
     //   // Dil dosyalarının yolu
     //   loadPath: "/locales/{{lng}}/translation.json",
     // },
-    fallbackLng: "en", // Tarayıcı dil algılamazsa kullanılacak dil
-    debug: true, // Geliştirme sırasında hata ayıklamak için debug modunu açabilirsin
+    fallbackLng: "en", 
+    debug: true, 
     interpolation: {
       escapeValue: false, // XSS saldırılarını engellemek için değerlerin otomatik olarak kaçış yapmasını kapattık
     },
     detection: {
-      // Tarayıcı dil algılama seçenekleri
       order: [
         "querystring",
         "cookie",
@@ -37,9 +36,9 @@ i18n
         "navigator",
         "htmlTag",
       ],
-      caches: ["localStorage", "cookie"], // Dil tercihlerini localStorage veya cookie'de saklar
+      caches: ["localStorage", "cookie"], 
     },
-    lng: "en", // Varsayılan dil
+    lng: "en", 
   });
 
 export default i18n;
