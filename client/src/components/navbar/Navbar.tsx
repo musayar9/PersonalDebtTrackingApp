@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { signOut } from "../../redux/dataFetch";
 import { UsersState } from "../../lib/types";
 
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 import {
   addMessage,
@@ -166,8 +166,9 @@ export function NavbarComponent() {
             </div>
           </>
         )}
-
-        <Language />
+        <Suspense fallback={<div>Loading</div>}>
+          <Language />
+        </Suspense>
       </div>
       {/* <NavbarCollapse>
         <Link to="/">Home</Link>

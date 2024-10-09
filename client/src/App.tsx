@@ -24,7 +24,10 @@ import { NavbarComponent } from "./components/navbar/Navbar";
 import DebtForm from "./components/debt/DebtForm";
 import ChangePassword from "./pages/ChangePassword";
 import TwoFactorAuth from "./components/TwoFactorAuth";
+
+
 const App: React.FC = () => {
+
   return (
     <div>
       <NavbarComponent />

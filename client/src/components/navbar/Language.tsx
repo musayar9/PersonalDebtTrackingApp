@@ -19,7 +19,7 @@ const languages = [
 
 const Language = () => {
   const [selectLanguage, setSelectLanguage] = useState<Languages | undefined>(
-    undefined
+    languages[0]
   );
   const [isOpen, setIsOpen] = useState(false);
   const { i18n } = useTranslation();
@@ -28,7 +28,7 @@ const Language = () => {
     const currentLanguage = languages.find(
       (lang) => lang.language === i18n.language
     );
-    console.log(currentLanguage, "currentland");
+   
     setSelectLanguage(currentLanguage);
   }, []);
 
