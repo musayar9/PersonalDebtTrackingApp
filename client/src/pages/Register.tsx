@@ -11,6 +11,8 @@ import { User } from "../lib/types";
 import { IoIosWarning } from "react-icons/io";
 import CheckPasswordCriteria from "../components/CheckPasswordCriteria";
 import RegisterImage from "../assets/register.svg";
+import { useTranslation } from "react-i18next";
+import { useAppSelector } from "../redux/hooks";
 type FormData = {
   name: string;
   surname: string;
@@ -21,6 +23,8 @@ type FormData = {
 };
 
 const Register = () => {
+  const { t } = useTranslation();
+const {theme} = useAppSelector((state)=>state.theme)
   const [formData, setFormData] = useState<FormData>({
     name: "",
     surname: "",
@@ -85,18 +89,16 @@ const Register = () => {
       }
     }
   };
-  console.log("err", errMsg);
-  console.log("errrrr", error);
+
   return (
     <div className="mt-20">
-      <div className="flex p-3 max-w-5xl mx-auto flex-col md:flex-row md:items-center gap-5">
+      <div className="flex p-3 max-w-6xl mx-auto flex-col md:flex-row md:items-center gap-5">
         <div className="flex-1 items-center justify-center">
           <h2 className="text-4xl  font-bold   rounded-lg   py-1 ">
-            Personal Debt Tracking
+            {t("personal_debt_tracking")}
           </h2>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam,
-            nobis.
+          <p className="my-4 leading-8 tracking-wider indent-6 hyphens-auto   ">
+            {t("app_description")}
           </p>
         </div>
 
@@ -107,7 +109,7 @@ const Register = () => {
               alt="register"
               className="rounded-full w-40 h-40  shadow-md bg-emerald-400 "
             />
-            <h1 className="text-2xl font-semibold my-4">Register</h1>
+            <h1 className="text-2xl font-semibold my-4">{t("register")}</h1>
           </div>
 
           <form className="flex flex-col gap-2 p-4  " onSubmit={handleSubmit}>
@@ -116,7 +118,7 @@ const Register = () => {
                 type={"text"}
                 id="Name"
                 name="name"
-                placeholder={"name"}
+                placeholder={t("name")}
                 value={formData.name}
                 handleChange={handleChange}
                 styles="custom-input peer w-full md:w-40"
@@ -126,7 +128,7 @@ const Register = () => {
                 type={"text"}
                 id="Surname"
                 name="surname"
-                placeholder={"surname"}
+                placeholder={t("surname")}
                 value={formData.surname}
                 handleChange={handleChange}
                 styles="custom-input peer w-full md:w-40"
@@ -136,32 +138,32 @@ const Register = () => {
                 type={"date"}
                 id="Birthdate"
                 name="birthdate"
-                placeholder={"birthdate"}
+                placeholder={t("birthdate")}
                 value={formData.birthdate}
                 handleChange={handleChange}
                 styles="custom-input peer w-full md:w-40 "
               />
             </div>
 
-            <div className="flex flex-col justify-between md:flex-row gap-2 ">
+            <div className="flex flex-col justify-between md:flex-row gap-1 ">
               <FormInput
                 type={"text"}
                 id="Username"
                 name="username"
-                placeholder={"username"}
+                placeholder={t("username")}
                 value={formData.username}
                 handleChange={handleChange}
-                styles="custom-input peer w-full md:w-60"
+                styles="custom-input peer w-full md:w-64"
               />
 
               <FormInput
                 type={"email"}
                 id="Email"
                 name="email"
-                placeholder={"email"}
+                placeholder={t("email")}
                 value={formData.email}
                 handleChange={handleChange}
-                styles="custom-input peer w-full md:w-60"
+                styles="custom-input peer w-full md:w-64"
               />
             </div>
 
@@ -170,7 +172,7 @@ const Register = () => {
                 type={"password"}
                 id="Password"
                 name="password"
-                placeholder={"password"}
+                placeholder={t("password")}
                 value={formData.password}
                 handleChange={handleChange}
                 styles="custom-input peer w-full"
@@ -179,18 +181,22 @@ const Register = () => {
               <CheckPasswordCriteria password={formData.password} />
             </div>
 
-            <button className="border border-emerald-400 text-gray-500 font-semibold hover:border-white hover:text-white hover:bg-emerald-500 duration-150 ease-in rounded-md p-2">
-              {loading ? "Registering..." : "Register"}
+            <button className="border border-emerald-400  font-semibold hover:border-white hover:text-white hover:bg-emerald-500 duration-150 ease-in rounded-md p-2">
+              {loading ? <>{t("registering")}</> : <>{t("register")}</>}
             </button>
           </form>
 
           <div className="text-xs  flex justify-end pr-4 gap-2">
-            Have An Account?
+            {t("I_have_an_account")}
             <Link
               to="/login"
-              className="text-blue-600 underline hover:text-blue-700"
+              className={` underline   ${
+                theme === "light"
+                  ? "text-blue-600  hover:text-blue-700"
+                  : "text-blue-400  hover:text-blue-500"
+              } `}
             >
-              Login
+              {t("login")}
             </Link>
           </div>
 

@@ -3,5 +3,25 @@
   "personal_debt_tracking": "Kişisel Borç Takibi",
   "login": "Giriş Yap",
   "register": "Kayıt Ol",
-  "app_description": "Bu uygulama, kullanıcıların kişisel borçlarını kolayca takip edebileceği ve yönetebileceği, güvenli bir finansal planlama platformudur. Faiz uygulama, taksitlendirme ve ödeme yönetimi özellikleriyle borçlarınıza tam kontrol sağlarken, çift faktörlü doğrulama ile kişisel verilerinizi koruma altına alır. Finansal düzeninizi sağlamak için güçlü ve kullanımı kolay bir çözüm sunuyoruz!"
-}
+  "app_description": "Bu uygulama, kullanıcıların kişisel borçlarını kolayca takip edebileceği ve yönetebileceği, güvenli bir finansal planlama platformudur. Faiz uygulama, taksitlendirme ve ödeme yönetimi özellikleriyle borçlarınıza tam kontrol sağlarken, çift faktörlü doğrulama ile kişisel verilerinizi koruma altına alır. Finansal düzeninizi sağlamak için güçlü ve kullanımı kolay bir çözüm sunuyoruz!",
+  "email": "mail",
+  "password": "şifre",
+  "name": "İsim",
+  "surname": "Soyisim",
+  "birthdate": "Doğum Tarihi",
+  "username": "Kullanıcı Adı",
+  "redirecting": "Yönlendiriliyorsunuz",
+  "registering":"Kaydediliyor...",
+  "forget_password": "Şifremi Unuttum?",
+  "I_don't_have_an_account_yet": "Henüz bir hesabım yok?",
+  "At_least_one_lowercase_letter": "En az bir küçük harf",
+  "At_least_one_uppercase_letter": "En az bir büyük harf",
+  "At_least_one_digit": "En az bir rakam",
+  "At_least_one_special_character": "En az bir özel karakter",
+  "check_password": "Şifre 8 ila 12 karakter uzunluğunda olmalıdır",
+  "I_have_an_account":"Bir hesabım var!"
+  
+  
+  
+  
+  }

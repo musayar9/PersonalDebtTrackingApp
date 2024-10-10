@@ -3,5 +3,21 @@
   "personal_debt_tracking": "Personal Debt Tracking",
   "login": "Login",
   "register": "Register",
-  "app_description": "This application is a secure financial planning platform that allows users to easily track and manage their personal debts. With features like interest application, installment options, and payment management, it gives you complete control over your debts while protecting your personal information with two-factor authentication. We offer a powerful and user-friendly solution to help you maintain your financial order!"
+  "app_description": "This application is a secure financial planning platform that allows users to easily track and manage their personal debts. With features like interest application, installment options, and payment management, it gives you complete control over your debts while protecting your personal information with two-factor authentication. We offer a powerful and user-friendly solution to help you maintain your financial order!",
+  "email": "e-mail",
+  "password": "password",
+  "name": "Name",
+  "surname": "Surname",
+  "birthate": "Birthdate",
+  "username": "Username",
+  "redirecting": "Redirecting",
+  "forget_password": "Forget Password?",
+  "I_don't_have_an_account_yet": "I don't have an account yet?",
+  "At_least_one_lowercase_letter": " At least one lowercase letter",
+  "At_least_one_uppercase_letter": "  At least one uppercase letter",
+  "At_least_one_digit": " At least one digit",
+  "At_least_one_special_character": "At least one special character",
+  "check_password": "The password must be 8 to 12 characters long",
+  "I_have_an_account": "I have an account!",
+  "registering": "Registering..."
 }

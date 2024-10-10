@@ -1,9 +1,9 @@
+import { useTranslation } from "react-i18next";
+import { useCheckPasswordCriteria } from "../utils/customHooks";
 
-import { useCheckPasswordCriteria } from '../utils/customHooks';
-
-const CheckPasswordCriteria = ({password}:{password:string}) => {
- const { criteria } = useCheckPasswordCriteria(password);
-
+const CheckPasswordCriteria = ({ password }: { password: string }) => {
+  const { criteria } = useCheckPasswordCriteria(password);
+  const { t } = useTranslation();
   return (
     <div>
       {" "}
@@ -13,21 +13,21 @@ const CheckPasswordCriteria = ({password}:{password:string}) => {
             criteria.hasLowerCase ? "text-green-500" : "text-slate-400"
           }`}
         >
-          At least one lowercase letter
+          {t("At_least_one_lowercase_letter")}
         </li>
         <li
           className={`${
             criteria.hasUpperCase ? "text-green-500" : "text-slate-400"
           }`}
         >
-          At least one uppercase letter
+          {t("At_least_one_uppercase_letter")}
         </li>
         <li
           className={`${
             criteria.hasDigit ? "text-green-500" : "text-slate-400"
           }`}
         >
-          At least one digit
+          {t(" At least one digit")}
         </li>
       </ul>
       <ul className="list-disc grid grid-cols-2 font-semibold  text-[10px] pl-4 ">
@@ -36,18 +36,18 @@ const CheckPasswordCriteria = ({password}:{password:string}) => {
             criteria.hasSpecialChar ? "text-green-500" : "text-slate-400"
           }`}
         >
-          At least one special character (@$!%*?&.)
+          {t("At_least_one_special_character")} (@$!%*?&.)
         </li>
         <li
           className={`${
             criteria.hasMinLength ? "text-green-500" : "text-slate-400"
           }`}
         >
-          The password must be 8 to 12 characters long
+          {t("check_password")}
         </li>
       </ul>
     </div>
   );
-}
+};
 
-export default CheckPasswordCriteria
+export default CheckPasswordCriteria;

@@ -22,6 +22,7 @@ const Login = () => {
   });
 
   const { user, error, userStatus } = useAppSelector((state) => state.user);
+  const {theme} = useAppSelector((state)=>state.theme)
 
   const [errMsg, setErrMsg] = useState("");
   const dispatch = useAppDispatch();
@@ -82,7 +83,7 @@ const Login = () => {
               alt="register"
               className="rounded-full w-40 h-40  shadow-md bg-emerald-400 "
             />
-            <h1 className="text-2xl font-semibold my-4">Login</h1>
+            <h1 className="text-2xl font-semibold my-4">{t("login")}</h1>
           </div>
 
           <form className="flex flex-col gap-2 p-4  " onSubmit={handleSubmit}>
@@ -91,7 +92,7 @@ const Login = () => {
                 type={"email"}
                 id="Email"
                 name="email"
-                placeholder={"email"}
+                placeholder={t("email")}
                 value={formData.email}
                 handleChange={handleChange}
                 styles="custom-input peer w-full "
@@ -101,7 +102,7 @@ const Login = () => {
                 type={"password"}
                 id="Password"
                 name="password"
-                placeholder={"password"}
+                placeholder={t("password")}
                 value={formData.password}
                 handleChange={handleChange}
                 styles="custom-input peer w-full"
@@ -112,10 +113,10 @@ const Login = () => {
               {userStatus === "loading" ? (
                 <div className="flex items-center justify-center gap-2">
                   <span className="loading loading-infinity loading-xs"></span>
-                  <span>Redirecting</span>
+                  <span>{t("redirecting")}</span>
                 </div>
               ) : (
-                <span>Login</span>
+                <span>{t("login")}</span>
               )}
             </button>
           </form>
@@ -123,14 +124,25 @@ const Login = () => {
           <div className="flex justify-between pr-4">
             <Link
               to="/reset-password"
-              className=" text-xs text-blue-600 pl-4 underline hover:text-blue-700 "
+              className={`text-xs pl-4 underline   ${
+                theme === "light"
+                  ? "text-blue-600  hover:text-blue-700"
+                  : "text-blue-400  hover:text-blue-500"
+              } `}
             >
-              Forget Password?
+              {t("forget_password")}
             </Link>
-            <p className="text-xs text-slate-500">
-              Do You Have An Account?{" "}
-              <Link to="/register" className="text-blue-600 underline pr-2">
-                Register
+            <p className="text-xs space-x-2">
+              <span>{t("I_don't_have_an_account_yet")}</span>
+              <Link
+                to="/register"
+                className={` underline pr-2 ${
+                  theme === "light"
+                    ? "text-blue-600  hover:text-blue-700"
+                    : "text-blue-400  hover:text-blue-500"
+                }`}
+              >
+                {t("register")}
               </Link>
             </p>
           </div>
