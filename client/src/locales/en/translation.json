@@ -19,5 +19,14 @@
   "At_least_one_special_character": "At least one special character",
   "check_password": "The password must be 8 to 12 characters long",
   "I_have_an_account": "I have an account!",
-  "registering": "Registering..."
+  "registering": "Registering...",
+  "password_reset": "Password Reset",
+  "password_reset_info": "  We need your email address so we can send you the password reset link.",
+  "enter_your_email": "Enter Your Email",
+  "sending_email": "Sending Email",
+  "send_email":"Send Email",
+  "return_login":"Return Login",
+  "reset_password_warning":"Remember to check your spam folder or unblock softwarebkm@gmail.com ifyou can not find the message.",
+  "change_password_info":" The password must be  to 12 characters long and it must contain at least one uppercase letter, one lowercase letter, one special character, and one number"
+
 }

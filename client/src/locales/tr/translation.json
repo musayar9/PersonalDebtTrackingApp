@@ -19,9 +19,15 @@
   "At_least_one_digit": "En az bir rakam",
   "At_least_one_special_character": "En az bir özel karakter",
   "check_password": "Şifre 8 ila 12 karakter uzunluğunda olmalıdır",
-  "I_have_an_account":"Bir hesabım var!"
-  
-  
+  "I_have_an_account":"Bir hesabım var!",
+  "password_reset":"Şifre Yenileme",
+  "password_reset_info":"Size şifre yenileme bağlantısını gönderebilmemiz için e-posta adresinize ihtiyacımız var.",
+  "enter_your_email":"mail adresinizi girin",
+  "sending_email":"Mail Gönderiliyor",
+  "send_email":"Mail Gönder",
+  "return_login":"Giriş Sayfasına Dön",
+  "reset_password_warning":"Mesajı bulamıyorsanız spam klasörünüzü kontrol etmeyi veya softwarekm@gmail.com adresinin engellemesini kaldırmayı unutmayın.",
+  "change_password_info":"Şifre 8 - 12 karakter uzunluğunda olmalı ve en az bir büyük harf, bir küçük harf, bir özel karakter ve  bir sayı  içermelidir"
   
   
   }

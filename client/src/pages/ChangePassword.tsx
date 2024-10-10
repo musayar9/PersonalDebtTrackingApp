@@ -5,10 +5,11 @@ import { IoMdEyeOff } from "react-icons/io";
 import { useNavigate, useParams } from "react-router-dom";
 import AlertMessage from "../components/AlertMessage";
 import { MdError } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 const ChangePassword = () => {
+const {t}= useTranslation()
   const { userId, token } = useParams();
-
   const [newPasswordType, setNewPasswordType] = useState(false);
   const [newPasswordConfirmType, setNewPasswordConfirmType] = useState(false);
   const [password, setPassword] = useState({
@@ -92,10 +93,7 @@ const ChangePassword = () => {
       <div className="flex flex-col items-center justify-center">
         <h3 className="text-3xl font-bold ">Reset Password</h3>
         <p className="text-[10px] my-2 text-center">
-          The password must be <b>8 to 12 characters long</b>, and it must
-          contain at least <b>one uppercase letter</b>,{" "}
-          <b>one lowercase letter</b>, <b>one special character</b>, and{" "}
-          <b>one number</b>.
+          {t("change_password_info")}
         </p>
       </div>
       <form
@@ -110,17 +108,17 @@ const ChangePassword = () => {
               className="absolute inset-y-0 end-0 flex items-center pr-3.5 pointer-events-auto"
             >
               {newPasswordType ? (
-                <FaEye className="w-5 h-5 text-gray-800 dark:text-gray-400" />
+                <FaEye className="w-5 h-5 " />
               ) : (
-                <IoMdEyeOff className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                <IoMdEyeOff className="w-5 h-5 " />
               )}
             </button>
             <input
               type={newPasswordType ? "text" : "password"}
               id="newPassword"
-              className="flex px-2.5 pb-2.5 pt-4 w-full  text-sm pr-10
-  text-gray-900 bg-transparent rounded-md border-1 border-gray-300 appearance-none dark:text-white
-  dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
+              className="flex px-2.5 pb-2.5 pt-4 w-full  text-sm pr-10 
+ bg-transparent rounded-md border-1 appearance-none 
+ dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
               placeholder=" "
               name="newPassword"
               value={password.newPassword}
@@ -131,12 +129,13 @@ const ChangePassword = () => {
 
           <label
             htmlFor="email"
-            className="absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-emerald-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+            className="absolute text-md duration-300 transform -translate-y-4 scale-75 top-1 z-10 origin-[0] bg-base-100
+            px-2 peer-focus:px-2 peer-focus:text-emerald-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
           >
             New Password
           </label>
 
-          <p className="text-slate-500 text-[10px] pl-1 ">
+          <p className=" text-[10px] pl-1 ">
             {12 - password.newPassword.length} characters remaining
           </p>
         </div>
@@ -149,17 +148,17 @@ const ChangePassword = () => {
               className="absolute inset-y-0 end-0 flex items-center pr-3.5 pointer-events-auto"
             >
               {newPasswordConfirmType ? (
-                <FaEye className="w-5 h-5 text-gray-800 dark:text-gray-400" />
+                <FaEye className="w-5 h-5 " />
               ) : (
-                <IoMdEyeOff className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                <IoMdEyeOff className="w-5 h-5 " />
               )}
             </button>
             <input
               type={newPasswordConfirmType ? "text" : "password"}
               id="newPassword"
-              className="flex px-2.5 pb-2.5 pt-4 w-full  text-sm pr-10
-  text-gray-900 bg-transparent rounded-md border-1 border-gray-300 appearance-none dark:text-white
-  dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
+              className="flex px-2.5 pb-2.5 pt-4 w-full  text-sm pr-10 
+ bg-transparent rounded-md border-1 appearance-none 
+ dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
               placeholder=" "
               name="newPasswordConfirm"
               value={password.newPasswordConfirm}
@@ -169,12 +168,13 @@ const ChangePassword = () => {
           </div>
 
           <label
-            htmlFor="email"
-            className="absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-emerald-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+            htmlFor="password"
+            className="absolute text-md duration-300 transform -translate-y-4 scale-75 top-1 z-10 origin-[0] bg-base-100
+            px-2 peer-focus:px-2 peer-focus:text-emerald-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
           >
             New Password Confirm
           </label>
-          <p className="text-slate-500 text-[10px] pl-1 ">
+          <p className=" text-[10px] pl-1 ">
             {12 - password.newPasswordConfirm.length} characters remaining
           </p>
         </div>
