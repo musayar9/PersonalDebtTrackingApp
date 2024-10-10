@@ -1,0 +1,7 @@
+{
+  "welcome": "merhaba json",
+  "personal_debt_tracking": "Kişisel Borç Takibi",
+  "login": "Giriş Yap",
+  "register": "Kayıt Ol",
+  "app_description": "Bu uygulama, kullanıcıların kişisel borçlarını kolayca takip edebileceği ve yönetebileceği, güvenli bir finansal planlama platformudur. Faiz uygulama, taksitlendirme ve ödeme yönetimi özellikleriyle borçlarınıza tam kontrol sağlarken, çift faktörlü doğrulama ile kişisel verilerinizi koruma altına alır. Finansal düzeninizi sağlamak için güçlü ve kullanımı kolay bir çözüm sunuyoruz!"
+}

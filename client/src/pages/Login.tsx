@@ -7,6 +7,7 @@ import { loginUser } from "../redux/dataFetch";
 import { setError } from "../redux/userSlice";
 import AlertMessage from "../components/AlertMessage";
 import { MdErrorOutline } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 type UserLogin = {
   email: string;
@@ -14,6 +15,7 @@ type UserLogin = {
 };
 
 const Login = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState<UserLogin>({
     email: "",
     password: "",
@@ -62,19 +64,18 @@ const Login = () => {
   }, [user]);
 
   return (
-    <div className="mt-20">
-      <div className="flex p-3 max-w-5xl mx-auto flex-col md:flex-row md:items-center gap-5">
-        <div className="flex-1 items-center justify-center">
+    <div className="mt-24">
+      <div className="flex p-3 max-w-6xl mx-auto flex-col md:flex-row md:items-center gap-5 ">
+        <div className="flex-1 items-center justify-center mt-24">
           <h2 className="text-4xl  font-bold   rounded-lg   py-1 ">
-            Personal Debt Tracking
+            {t("personal_debt_tracking")}
           </h2>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam,
-            nobis.
+          <p className="my-4 leading-8 tracking-wider indent-6 hyphens-auto  ">
+            {t("app_description")}
           </p>
         </div>
 
-        <div className="flex-1 ">
+        <div className="flex-1 md:flex-none w-[500px]">
           <div className="flex items-center justify-center flex-col  mt-4">
             <img
               src={LoginImage}

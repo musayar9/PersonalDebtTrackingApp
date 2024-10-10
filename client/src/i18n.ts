@@ -2,8 +2,8 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import HttpBackend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
-import enTranslation from "../public/locales/en/translation.json";
-import trTranslation from "../public/locales/tr/translation.json";
+import enTranslation from "../src/locales/en/translation.json";
+import trTranslation from "../src/locales/tr/translation.json";
 // i18next yapılandırması
 i18n
   .use(LanguageDetector) 

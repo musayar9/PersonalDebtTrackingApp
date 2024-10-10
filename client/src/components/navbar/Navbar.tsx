@@ -96,7 +96,11 @@ export function NavbarComponent() {
               className="hover:text-emerald-500 font-semibold group  group-hover:text-emerald-500 flex items-center justify-center gap-2"
             >
               <CiUser size={24} />
-              <span>Login / Register</span>
+              {/* <span> Login / Register</span> */}
+              <span>
+                {" "}
+                {t("login")} / {t("register")}
+              </span>
             </div>
             <ul
               tabIndex={0}
@@ -107,7 +111,7 @@ export function NavbarComponent() {
                   to="/login"
                   className=" px-4 py-2  border  flex items-center justify-center rounded-md border-slate-300 hover:border-white hover:text-slate-50 hover:bg-emerald-400 "
                 >
-                  Login
+                  {t("login")}
                 </Link>
               </li>
               <li>
@@ -115,7 +119,7 @@ export function NavbarComponent() {
                   to="/register"
                   className="px-4 py-2 border rounded-md border-slate-300 flex items-center justify-center  hover:border-white hover:text-slate-50 hover:bg-emerald-400 "
                 >
-                  Register
+                  {t("register")}
                 </Link>
               </li>
             </ul>
