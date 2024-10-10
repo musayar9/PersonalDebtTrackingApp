@@ -11,7 +11,7 @@
   "birthdate": "Doğum Tarihi",
   "username": "Kullanıcı Adı",
   "redirecting": "Yönlendiriliyorsunuz",
-  "registering":"Kaydediliyor...",
+  "registering": "Kaydediliyor...",
   "forget_password": "Şifremi Unuttum?",
   "I_don't_have_an_account_yet": "Henüz bir hesabım yok?",
   "At_least_one_lowercase_letter": "En az bir küçük harf",
@@ -19,15 +19,22 @@
   "At_least_one_digit": "En az bir rakam",
   "At_least_one_special_character": "En az bir özel karakter",
   "check_password": "Şifre 8 ila 12 karakter uzunluğunda olmalıdır",
-  "I_have_an_account":"Bir hesabım var!",
-  "password_reset":"Şifre Yenileme",
-  "password_reset_info":"Size şifre yenileme bağlantısını gönderebilmemiz için e-posta adresinize ihtiyacımız var.",
-  "enter_your_email":"mail adresinizi girin",
-  "sending_email":"Mail Gönderiliyor",
-  "send_email":"Mail Gönder",
-  "return_login":"Giriş Sayfasına Dön",
-  "reset_password_warning":"Mesajı bulamıyorsanız spam klasörünüzü kontrol etmeyi veya softwarekm@gmail.com adresinin engellemesini kaldırmayı unutmayın.",
-  "change_password_info":"Şifre 8 - 12 karakter uzunluğunda olmalı ve en az bir büyük harf, bir küçük harf, bir özel karakter ve  bir sayı  içermelidir"
-  
-  
-  }
+  "I_have_an_account": "Bir hesabım var!",
+  "password_reset": "Şifre Yenileme",
+  "password_reset_info": "Size şifre yenileme bağlantısını gönderebilmemiz için e-posta adresinize ihtiyacımız var.",
+  "enter_your_email": "mail adresinizi girin",
+  "sending_email": "Mail Gönderiliyor",
+  "send_email": "Mail Gönder",
+  "return_login": "Giriş Sayfasına Dön",
+  "reset_password_warning": "Mesajı bulamıyorsanız spam klasörünüzü kontrol etmeyi veya softwarekm@gmail.com adresinin engellemesini kaldırmayı unutmayın.",
+  "change_password_info": "Şifre 8 - 12 karakter uzunluğunda olmalı ve en az bir büyük harf, bir küçük harf, bir özel karakter ve  bir sayı  içermelidir",
+  "new_password": "Yeni Şifre",
+  "new_password_repeat": "Yeni Şifre Tekrar",
+  "characters_remaining": "karatkter",
+  "change_password": "Kaydet",
+  "change_password_status": "şifre değiştiriliyor",
+  "verify_user_account": "Kullanıcı Hesap Doğrulama",
+  "verify_user_account_message": "E-postanıza bir doğrulama kodu gönderildi.",
+  "verify_account":"Hesabı Doğrula",
+  "verify_account_status":"Hesap Doğrulanıyor..."
+}

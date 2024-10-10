@@ -41,9 +41,9 @@ const Login = () => {
     if (user && user?.response?.status !== 400) {
       if (user !== null) {
         if (user?.user?.isTwoFA) {
-          navigate("/twoFactorAuth");
+          navigate("/twoFactorAuth", {replace:true});
         } else {
-          navigate("/");
+          navigate("/", {replace:true});
         }
       }
     } else {

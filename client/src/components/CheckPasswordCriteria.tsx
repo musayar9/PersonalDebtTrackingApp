@@ -27,7 +27,7 @@ const CheckPasswordCriteria = ({ password }: { password: string }) => {
             criteria.hasDigit ? "text-green-500" : "text-slate-400"
           }`}
         >
-          {t(" At least one digit")}
+          {t("At_least_one_digit")}
         </li>
       </ul>
       <ul className="list-disc grid grid-cols-2 font-semibold  text-[10px] pl-4 ">

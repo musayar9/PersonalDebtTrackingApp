@@ -91,7 +91,7 @@ const {t}= useTranslation()
   return (
     <div className="max-w-md mx-auto mt-24 p-4">
       <div className="flex flex-col items-center justify-center">
-        <h3 className="text-3xl font-bold ">Reset Password</h3>
+        <h3 className="text-3xl font-bold ">{t("password_reset")}</h3>
         <p className="text-[10px] my-2 text-center">
           {t("change_password_info")}
         </p>
@@ -132,11 +132,11 @@ const {t}= useTranslation()
             className="absolute text-md duration-300 transform -translate-y-4 scale-75 top-1 z-10 origin-[0] bg-base-100
             px-2 peer-focus:px-2 peer-focus:text-emerald-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
           >
-            New Password
+            {t("new_password")}
           </label>
 
           <p className=" text-[10px] pl-1 ">
-            {12 - password.newPassword.length} characters remaining
+            {12 - password.newPassword.length} {t(`characters_remaining`)}
           </p>
         </div>
 
@@ -172,10 +172,11 @@ const {t}= useTranslation()
             className="absolute text-md duration-300 transform -translate-y-4 scale-75 top-1 z-10 origin-[0] bg-base-100
             px-2 peer-focus:px-2 peer-focus:text-emerald-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
           >
-            New Password Confirm
+            {t("new_password_repeat")}
           </label>
           <p className=" text-[10px] pl-1 ">
-            {12 - password.newPasswordConfirm.length} characters remaining
+            {12 - password.newPasswordConfirm.length}{" "}
+            {t(`characters_remaining`)}
           </p>
         </div>
 
@@ -183,10 +184,10 @@ const {t}= useTranslation()
           {loading ? (
             <div className="flex items-center justify-center gap-2">
               <span className="loading loading-infinity loading-xs"></span>
-              <span className="text-sm">password is being changed</span>
+              <span className="text-sm">{t("change_password_status")}</span>
             </div>
           ) : (
-            <p>Change Password</p>
+            <p>{t("change_password")}</p>
           )}
         </button>
       </form>

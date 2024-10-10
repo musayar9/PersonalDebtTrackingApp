@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import AlertMessage from "./AlertMessage";
 import { MdError } from "react-icons/md";
 import { User } from "../lib/types";
+import { useTranslation } from "react-i18next";
 
 interface VerifyUserProps {
   showModal: boolean;
@@ -21,6 +22,7 @@ const VerifyUserModal = ({
   setWarningMsg,
   data,
 }: VerifyUserProps) => {
+const {t} = useTranslation()
   const [code, setCode] = useState(new Array(6).fill(""));
   const navigate = useNavigate();
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
@@ -70,7 +72,7 @@ const VerifyUserModal = ({
       setInfoMsg("");
 
       if (data.verifyAccount) {
-        navigate("/login");
+        navigate("/login", {replace:true});
       }
     } catch (error) {
       setLoading(false);
@@ -107,54 +109,59 @@ const VerifyUserModal = ({
   };
 
   return (
-    <Modal size="md" show={showModal} onClose={handleClose}>
-      <Modal.Header>Verify User Account</Modal.Header>
-      <Modal.Body>
-        <div className="space-y-6">
-          <p className="text-base leading-relaxed text-gray-500">
-            A verification code has been sent to your email.
-          </p>
+    <Modal size="md"  show={showModal} onClose={handleClose}>
+      <div className="bg-base-200 rounded-md">
+        {" "}
+        <Modal.Header>
+          <h3 className="text-slate-500 font-semibold">{t("verify_user_account")} </h3>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="space-y-6 ">
+            <p className="text-base leading-relaxed text-gray-500">
+              {t("verify_user_account_message")}
+            </p>
 
-          <form className="flex flex-col  gap-4" onSubmit={handleSubmit}>
-            <div className="flex justify-evenly">
-              {code.map((digit, index) => (
-                <input
-                  key={index}
-                  type="text"
-                  maxLength={1}
-                  value={digit}
-                  onChange={(e) => handleChange(e.target, index)}
-                  onKeyUp={(e) => handleKeyUp(e, index)}
-                  ref={(el) => (inputsRef.current[index] = el)}
-                  className="w-12 h-12 text-center text-lg font-bold border border-gray-300 rounded-md focus:outline-none focus:border-emerald-600"
+            <form className="flex flex-col  gap-4" onSubmit={handleSubmit}>
+              <div className="flex justify-evenly">
+                {code.map((digit, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    maxLength={1}
+                    value={digit}
+                    onChange={(e) => handleChange(e.target, index)}
+                    onKeyUp={(e) => handleKeyUp(e, index)}
+                    ref={(el) => (inputsRef.current[index] = el)}
+                    className="w-12 h-12 text-center text-lg font-bold border bg-base-100 border-gray-300 rounded-md focus:outline-none focus:border-emerald-600"
+                  />
+                ))}
+              </div>
+
+              {errMsg && (
+                <AlertMessage
+                  color="bg-red-500"
+                  message={errMsg}
+                  icon={<MdError />}
                 />
-              ))}
-            </div>
-
-            {errMsg && (
-              <AlertMessage
-                color="bg-red-500"
-                message={errMsg}
-                icon={<MdError />}
-              />
-            )}
-
-            <button
-              type="submit"
-              className="bg-emerald-600 hover:opacity-80 text-gray-50 text-sm rounded-md py-2"
-            >
-              {loading ? (
-                <div className="flex items-center justify-center gap-2">
-                  <span className="loading loading-infinity loading-xs"></span>
-                  <span>Account Verifying...</span>
-                </div>
-              ) : (
-                <span> Account Verify</span>
               )}
-            </button>
-          </form>
-        </div>
-      </Modal.Body>
+
+              <button
+                type="submit"
+                className="bg-emerald-600 hover:opacity-80 text-gray-50 text-sm rounded-md py-2"
+              >
+                {loading ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="loading loading-infinity loading-xs"></span>
+                    <span>{t("verify_account_status")}</span>
+                  </div>
+                ) : (
+                  <span>{t("verify_account")}</span>
+                )}
+              </button>
+            </form>
+          </div>
+        </Modal.Body>
+      </div>
     </Modal>
   );
 };

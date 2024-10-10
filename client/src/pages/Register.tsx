@@ -24,7 +24,7 @@ type FormData = {
 
 const Register = () => {
   const { t } = useTranslation();
-const {theme} = useAppSelector((state)=>state.theme)
+  const { theme } = useAppSelector((state) => state.theme);
   const [formData, setFormData] = useState<FormData>({
     name: "",
     surname: "",
@@ -58,10 +58,15 @@ const {theme} = useAppSelector((state)=>state.theme)
           formData,
         }
       );
+      console.log("response", response);
 
       if (response.status !== 201) {
         setErrMsg(response.data.msg);
+        setError(true);
+      }
 
+      if (response.status === 500) {
+        setErrMsg(response.data.message);
         setError(true);
       }
 
@@ -71,6 +76,7 @@ const {theme} = useAppSelector((state)=>state.theme)
       setData(data.status);
       setShowModal(true);
       setLoading(false);
+
       return data;
     } catch (error) {
       setError(true);
@@ -91,8 +97,8 @@ const {theme} = useAppSelector((state)=>state.theme)
   };
 
   return (
-    <div className="mt-20">
-      <div className="flex p-3 max-w-6xl mx-auto flex-col md:flex-row md:items-center gap-5">
+    <div className="mt-16">
+      <div className="flex p-4 max-w-6xl mx-auto flex-col md:flex-row md:items-center gap-5">
         <div className="flex-1 items-center justify-center">
           <h2 className="text-4xl  font-bold   rounded-lg   py-1 ">
             {t("personal_debt_tracking")}

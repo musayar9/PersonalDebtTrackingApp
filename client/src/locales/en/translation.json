@@ -15,7 +15,7 @@
   "I_don't_have_an_account_yet": "I don't have an account yet?",
   "At_least_one_lowercase_letter": " At least one lowercase letter",
   "At_least_one_uppercase_letter": "  At least one uppercase letter",
-  "At_least_one_digit": " At least one digit",
+  "At_least_one_digit": "At least one digit",
   "At_least_one_special_character": "At least one special character",
   "check_password": "The password must be 8 to 12 characters long",
   "I_have_an_account": "I have an account!",
@@ -24,9 +24,17 @@
   "password_reset_info": "  We need your email address so we can send you the password reset link.",
   "enter_your_email": "Enter Your Email",
   "sending_email": "Sending Email",
-  "send_email":"Send Email",
-  "return_login":"Return Login",
-  "reset_password_warning":"Remember to check your spam folder or unblock softwarebkm@gmail.com ifyou can not find the message.",
-  "change_password_info":" The password must be  to 12 characters long and it must contain at least one uppercase letter, one lowercase letter, one special character, and one number"
-
+  "send_email": "Send Email",
+  "return_login": "Return Login",
+  "reset_password_warning": "Remember to check your spam folder or unblock softwarebkm@gmail.com ifyou can not find the message.",
+  "change_password_info": " The password must be  to 12 characters long and it must contain at least one uppercase letter, one lowercase letter, one special character, and one number",
+  "new_password": "New Password",
+  "new_password_repeat": "New Password Repeat",
+  "characters_remaining": "characters remaining",
+  "change_password": "Save",
+  "change_password_status": "password is being changed",
+  "verify_user_account": "Verify User Account",
+  "verify_user_account_message": "A verification code has been sent to your email.",
+  "verify_account": "Verify Account",
+  "verify_account_status": "Account Verifying..."
 }
