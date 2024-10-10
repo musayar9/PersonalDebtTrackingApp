@@ -181,7 +181,7 @@ const {theme} = useAppSelector((state)=>state.theme)
               <CheckPasswordCriteria password={formData.password} />
             </div>
 
-            <button className="border border-emerald-400  font-semibold hover:border-white hover:text-white hover:bg-emerald-500 duration-150 ease-in rounded-md p-2">
+            <button className="border border-emerald-400 text-gray-500 font-semibold hover:border-white hover:text-white hover:bg-emerald-500 duration-150 ease-in rounded-md p-2">
               {loading ? <>{t("registering")}</> : <>{t("register")}</>}
             </button>
           </form>
