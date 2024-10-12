@@ -60,5 +60,8 @@
   "borrower": "Borrower",
   "description": "Description",
   "amount": "Amount",
-  "installment": "Installment"
+  "installment": "Installment",
+  "other_debt": "Other Debt",
+  "debt_track_table": "Debt Tracking Table",
+  "no_registered_debt": "You have no registered debt"
 }

@@ -14,8 +14,8 @@ const PieChartPartialDebt = () => {
 
   // Veriler ve renkler
   const data = [
-    { name: "Other Debt", value: unpaidCount + paidCount },
-    { name: "Partially Paid", value: partialPaidCount },
+    { name: `${t("other_debt")}`, value: unpaidCount + paidCount },
+    { name: `${t("partially_paid")}`, value: partialPaidCount },
   ];
 
   const COLORS = ["#fd810eea", "#e9e20f"];

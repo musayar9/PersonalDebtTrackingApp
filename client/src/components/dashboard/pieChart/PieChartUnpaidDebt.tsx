@@ -13,8 +13,8 @@ const PieChartUnpaidDebt = () => {
   const paidCount = debt.filter((d) => d.paymentStatus === "Paid").length;
 
   const data = [
-    { name: "Other Debt", value: partialPaidCount + paidCount },
-    { name: "Unpaid", value: unpaidCount },
+    { name: `${t("other_debt")}`, value: partialPaidCount + paidCount },
+    { name:`${t("unpaid")}`, value: unpaidCount },
   ];
 
   const COLORS = ["#fd810eea", "#dd1414"];

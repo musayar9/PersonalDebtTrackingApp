@@ -60,6 +60,11 @@
   "borrower":"Borçlu",
   "description":"Tanım",
   "amount":"Miktar",
-  "installment":"Taksit"
+  "installment":"Taksit",
+  "other_debt":"Diğer Borçlar",
+  "debt_track_table":"Borç Takip Tablosu",
+  "no_registered_debt":"Kayıtlı borcunuz yok"
+ 
+  
   
 }

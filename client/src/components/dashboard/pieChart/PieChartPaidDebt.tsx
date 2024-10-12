@@ -17,8 +17,8 @@ const paidCount = debt.filter((d) => d.paymentStatus === "Paid").length;
 
   // Veriler ve renkler
   const data = [
-    { name: "Other Debt", value: unpaidCount + partialPaidCount },
-    { name: "Paid", value: paidCount },
+    { name: `${t("other_debt")}`, value: unpaidCount + partialPaidCount },
+    { name: `${t("paid")}`, value: paidCount },
   ];
 
   const COLORS = ["#fd810eea", "#00C49F"];
