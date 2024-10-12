@@ -1,9 +1,9 @@
-
 import { PieChart, Pie, Cell, Tooltip, PieLabelRenderProps } from "recharts";
 import { useFetchUserDebt } from "../../../utils/customHooks";
-
+import { useTranslation } from "react-i18next";
 
 const PieChartPartialDebt = () => {
+  const { t } = useTranslation();
   const { debt } = useFetchUserDebt();
 
   const unpaidCount =
@@ -66,9 +66,8 @@ const PieChartPartialDebt = () => {
             <Tooltip />
           </PieChart>
           <h6 className="-mt-2 mb-2 text-xs font-semibold text-gray-500">
-            Partially Paid Debt Pie Chart
+            {t("partially_paid_pie_chart")}
           </h6>
-         
         </div>
       )}
     </>

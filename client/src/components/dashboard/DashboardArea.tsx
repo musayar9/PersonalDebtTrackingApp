@@ -9,19 +9,15 @@ import UnpaidTable from "./dashboardTable/UnpaidTable";
 import PartiallyPaid from "./dashboardTable/PartiallyPaid";
 import PaidTable from "./dashboardTable/PaidTable";
 import DebtPaymentChart from "./DebtPaymentChart";
-import { useTranslation } from "react-i18next";
+
 
 
 const DashboardArea = () => {
-  const { t, i18n } = useTranslation();
+
   const { debt, loading } = useFetchUserDebt();
   const { groupDebt } = useGetPaymentStatus({ paymentStatus: "Paid" });
 
-const clickHandle = async(lang:string)=>{
- await  i18n.changeLanguage(lang)
 
-}
-console.log(i18n, "18n")
 
   if (loading) {
     return <Loading />;
@@ -29,15 +25,7 @@ console.log(i18n, "18n")
 
   return (
     <div className=" max-w-6xl mx-auto flex mt-14">
-      <div className="w-72 h-24 border border-slate-500">
-        <p className="text-white">aktif dil {i18n.language}</p>
-        <p>{t("welcome")}</p>
-
-        <div>
-          <button className="btn btn-primary" onClick={() => clickHandle("tr")}>tr</button>
-          <button className="btn btn-red" onClick={() => clickHandle("en")}>en</button>
-        </div>
-      </div>
+ 
 
       {debt.length > 0 || groupDebt.length > 0 ? (
         <div className=" my-4 ">

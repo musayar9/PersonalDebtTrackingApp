@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { DebtData } from "../../lib/types";
 import { useAppSelector } from "../../redux/hooks";
 import { formatPrice } from "../../utils/functions";
@@ -11,16 +12,21 @@ groupDebt: DebtData[]
 
 const DashboardTable:React.FC<DashboardTableProps> = ({groupDebt, status}) => {
   const {theme} = useAppSelector((state)=>state.theme)
+  const {t} = useTranslation()
 return (
-  <div className={`  overflow-x-auto p-2 h-max rounded-md ${theme === "light" ? "border": "bg-base-200"} `}>
+  <div
+    className={`  overflow-x-auto p-2 h-max rounded-md ${
+      theme === "light" ? "border" : "bg-base-200"
+    } `}
+  >
     <div className="flex justify-end p-2.5">
       <span
         className={`${
-          status === "Unpaid"
+          status === `${t("unpaid")}`
             ? "bg-rose-700"
-            : status === "Partially Paid"
+            : status === `${t("partially_paid")}`
             ? "bg-yellow-400"
-            : status === "Paid" && "bg-green-500"
+            : status === `${t("paid")}` && "bg-green-500"
         }   px-1 py-1.5 rounded-sm text-center text-white text-xs`}
       >
         {status}
@@ -29,14 +35,14 @@ return (
 
     <table className="table table-xs p-4 ">
       {/* head */}
-      <thead className={`${theme==="light" || "text-base-content"}`}>
+      <thead className={`${theme === "light" || "text-base-content"}`}>
         <tr>
           <th></th>
-          <th>Lender</th>
-          <th>Borrower</th>
-          <th>Description </th>
-          <th>Amount</th>
-          <th>Installment</th>
+          <th>{t("lender")}</th>
+          <th>{t("borrower")}</th>
+          <th>{t("description")} </th>
+          <th>{t("amount")}</th>
+          <th>{t("installment")}</th>
         </tr>
       </thead>
       <tbody className="">

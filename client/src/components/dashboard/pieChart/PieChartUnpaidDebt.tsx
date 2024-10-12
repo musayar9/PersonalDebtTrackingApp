@@ -1,12 +1,10 @@
-
 import { PieChart, Pie, Cell, Tooltip, PieLabelRenderProps } from "recharts";
-import { useFetchUserDebt } from '../../../utils/customHooks';
+import { useFetchUserDebt } from "../../../utils/customHooks";
+import { useTranslation } from "react-i18next";
 
 const PieChartUnpaidDebt = () => {
-
+  const { t } = useTranslation();
   const { debt } = useFetchUserDebt();
-
-
 
   const unpaidCount = debt?.filter((d) => d.paymentStatus === "Unpaid").length;
   const partialPaidCount = debt.filter(
@@ -35,7 +33,7 @@ const PieChartUnpaidDebt = () => {
         fill="white"
         textAnchor={x > (cx as number) ? "start" : "end"}
         dominantBaseline="central"
-         fontSize="12px" 
+        fontSize="12px"
       >
         {`${(percent! * 100).toFixed(2)}%`}
       </text>
@@ -67,12 +65,12 @@ const PieChartUnpaidDebt = () => {
           </PieChart>
 
           <h6 className="-mt-2 mb-2 text-xs font-semibold text-gray-500">
-            UnPaid Debt Pie Chart
+            {t("unpaid_pie_chart")}
           </h6>
         </div>
       )}
     </>
   );
-}
+};
 
-export default PieChartUnpaidDebt
+export default PieChartUnpaidDebt;

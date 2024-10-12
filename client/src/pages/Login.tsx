@@ -113,7 +113,7 @@ const Login = () => {
               {userStatus === "loading" ? (
                 <div className="flex items-center justify-center gap-2">
                   <span className="loading loading-infinity loading-xs"></span>
-                  <span>{t("redirecting")}</span>
+                  {/* <span>{t("redirecting")}</span> */}
                 </div>
               ) : (
                 <span>{t("login")}</span>

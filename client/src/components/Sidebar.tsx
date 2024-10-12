@@ -7,6 +7,7 @@ import { NavLink } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { signOut } from "../redux/dataFetch";
 import { IoCreate } from "react-icons/io5";
+import { useTranslation } from "react-i18next";
 
 const Sidebar = () => {
   // const [activeLink, setActiveLink] = useState(0);
@@ -14,21 +15,37 @@ const Sidebar = () => {
   // const handleLinkClick = (index: number) => {
   //   setActiveLink(index);
   // };
+  const { t } = useTranslation();
 
   const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const SIDEBAR_LINKS = [
-    { id: 1, path: "/", name: "Dashboard", icon: MdOutlineSpaceDashboard },
-    { id: 5, path: "/debts", name: "Debts", icon: FcDebt },
-    { id: 6, path: "/create_debt", name: "Create Debt", icon: IoCreate },
-    { id: 2, path: "profile", name: "Profile", icon: HiUser },
+    {
+      id: 1,
+      path: "/",
+      name: `${t("dashboard")}`,
+      icon: MdOutlineSpaceDashboard,
+    },
+    { id: 5, path: "/debts", name: `${t("debts")}`, icon: FcDebt },
+    {
+      id: 6,
+      path: "/create_debt",
+      name: `${t("create_debt")}`,
+      icon: IoCreate,
+    },
+    { id: 2, path: "profile", name: `${t("profile")}`, icon: HiUser },
     {
       id: 3,
       path: "/users",
-      name: `${user?.user?.isAdmin ? "Users" : "Admins"}`,
+      name: `${user?.user?.isAdmin ? `${t("users")}` : `${t("admins")}`}`,
       icon: FaUsers,
     },
-    { id: 4, path: "/allUsers/debts", name: "All Debts", icon: PiInvoiceBold },
+    {
+      id: 4,
+      path: "/allUsers/debts",
+      name: `${t("all_debts")}`,
+      icon: PiInvoiceBold,
+    },
   ];
 
   const handleSignOut = async () => {
@@ -40,11 +57,17 @@ const Sidebar = () => {
   return (
     <div className=" w-16 md:w-56  mt-16 fixed z-10 md:z-0  h-screen border-r pt-8   ">
       {/* Navigation Links */}
-      <ul className=" space-y-6 px-4">
+      <ul className=" space-y-4 px-4">
         {SIDEBAR_LINKS.map((link, index) => (
           <li
             key={index}
-            className={`w-full ${!user?.user?.isAdmin ? link.id !== 4  ? "block" : "hidden" : "block"}`}
+            className={`w-full ${
+              !user?.user?.isAdmin
+                ? link.id !== 4
+                  ? "block"
+                  : "hidden"
+                : "block"
+            }`}
           >
             <NavLink
               to={link.path}
@@ -72,11 +95,12 @@ const Sidebar = () => {
           <span>
             <HiArrowSmRight size={18} />
           </span>
-          <span className="hidden md:flex "> Sign Out</span>
+          <span className="hidden md:flex "> {t("sign_out")}</span>
         </button>
         <p className="flex items-center justify-center  space-x-2 text-xs text-white py-2 px-5 bg-gradient-to-r from-indigo-500 to-violet-600 rounded-full">
           {" "}
-          <span>?</span> <span className="hidden md:flex">Need Help</span>
+          <span>?</span>{" "}
+          <span className="hidden md:flex">{t("need_help")}</span>
         </p>
       </div>
     </div>
