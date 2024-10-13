@@ -9,13 +9,14 @@ import { usePagination } from "../../utils/customHooks";
 
 import CustomPagination from "../CustomPagination";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 interface DebtTableProps {
   debt: DebtData[];
   setDebt: React.Dispatch<React.SetStateAction<DebtData[]>>;
 }
 
 const DebtTable = ({ debt, setDebt }: DebtTableProps) => {
-
+const {t} = useTranslation()
   // const [showModal, setShowModal] = useState(false);
   const [debtId, setDebtId] = useState<string | undefined>("");
   const [errMsg, setErrMsg] = useState("");
@@ -60,23 +61,23 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
     <div className="overflow-x-auto my-8 ">
       <div>
         {" "}
-        <table className="table table-sm ">
+        <table className="table table-xs ">
           {/* head */}
           <thead className="text-base-content  p-2">
             <tr>
               <th></th>
-              <th>Lender</th>
-              <th>Borrower</th>
-              <th>Description</th>
-              <th>Debt Amount</th>
-              <th>Interest Rate</th>
-              <th>Amount</th>
-              <th>Payment Start</th>
-              <th>Installment</th>
-              <th>Payment Status</th>
-              <th>Delete</th>
-              <th>Edit</th>
-              <th>Pay</th>
+              <th>{t("lender")}</th>
+              <th>{t("borrower")}</th>
+              <th>{t("description")}</th>
+              <th>{t("debt_amount")}</th>
+              <th>{t("interest_rate")}</th>
+              <th>{t("amount")}</th>
+              <th>{t("payment_start")}</th>
+              <th>{t("installment")}</th>
+              <th>{t("payment_status")}</th>
+              <th>{t("delete")}</th>
+              <th>{t("edit")}</th>
+              <th>{t("payment")}</th>
             </tr>
           </thead>
           <tbody>
@@ -101,9 +102,13 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
                         : item?.paymentStatus === "Partially Paid"
                         ? "bg-yellow-400"
                         : item.paymentStatus === "Paid" && "bg-green-500"
-                    }  } px-1 py-1.5 rounded-md text-center text-white text-xs`}
+                    }  } px-1 py-1.5 rounded-md text-center text-white text-[11px]`}
                   >
-                    {item.paymentStatus}
+                    {item.paymentStatus === "Unpaid"
+                      ? `${t("unpaid")}`
+                      : item?.paymentStatus === "Partially Paid"
+                      ? `${t("partially_paid")}`
+                      : item.paymentStatus === "Paid" && `${t("paid")}`}
                   </p>
                 </td>
                 <td
@@ -118,15 +123,15 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
                     className=""
                     onClick={() => setDebtId(item?._id)}
                   >
-                    Delete
+                    {t("delete")}
                   </a>
                 </td>
                 <td className="text-blue-600 font-semibold hover:underline cursor-pointer">
-                  <Link to={`/debts/updateDebt/${item?._id}`}>Edit</Link>
+                  <Link to={`/debts/updateDebt/${item?._id}`}>{t("edit")}</Link>
                 </td>
                 <td className="text-emerald-500 font-semibold hover:underline cursor-pointer">
                   <Link to={`/debts/debtDetail/${item.userId}/${item?._id}`}>
-                    Detail
+                    {t("detail")}
                   </Link>
                 </td>
               </tr>
@@ -136,7 +141,7 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
           </tbody>
         </table>
       </div>
-{/* 
+      {/* 
       <Modal
         show={showModal}
         onClose={() => setShowModal(false)}
@@ -170,8 +175,6 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
           </div>
         </Modal.Body>
       </Modal> */}
-
-    
 
       {/* Put this part before </body> tag */}
       <div className="modal" role="dialog" id="my_modal_8">
