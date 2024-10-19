@@ -71,5 +71,15 @@
   "payment":"Payment",
   "other_debt": "Other Debt",
   "debt_track_table": "Debt Tracking Table",
-  "no_registered_debt": "You have no registered debt"
+  "no_registered_debt": "You have no registered debt",
+  "debt_date": "Debt Date",
+  "status": "Status",
+  "pay": "Pay",
+  "pay_debt": "Pay Debt",
+  "payment_information": "Payment Information",
+  "payment_summary": "Payment Summary",
+  "monthly_payment_amount": "Monthly Payment Amount",
+  "detail_page": "Detail Page",
+  "debt_payment_for": "Debt Payment For"
+
 }

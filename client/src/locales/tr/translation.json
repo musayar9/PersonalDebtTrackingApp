@@ -59,9 +59,9 @@
   "lender":"Borç Veren",
   "borrower":"Borçlu",
   "description":"Tanım",
-  "amount":"Miktar",
+  "amount":"Tutar",
   "installment":"Taksit",
-  "debt_amount":"Borç Miktarı",
+  "debt_amount":"Borç Tutarı",
   "interest_rate":"Faiz Oranı",
   "payment_start":"Ödeme Başlangıcı",
   "payment_status":"Ödeme Durumu",
@@ -71,7 +71,15 @@
   "payment":"Ödeme",
   "other_debt":"Diğer Borçlar",
   "debt_track_table":"Borç Takip Tablosu",
-  "no_registered_debt":"Kayıtlı borcunuz yok"
+  "no_registered_debt":"Kayıtlı borcunuz yok",
+  "debt_date":"Borç Tarihi",
+  "status": "Borç Durumu",
+  "pay": "Ödeme",
+  "pay_debt": "Borcu Öde",
+  "payment_information": "Ödeme Bilgileri",
+  "payment_summary": "Ödeme Özeti",
+  "monthly_payment_amount": "Aylık Ödeme Tutarı",
+  "detail_page": "Detay Sayfası"
  
   
   

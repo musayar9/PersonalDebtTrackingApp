@@ -6,6 +6,7 @@ import { formatDateTwo, formatPrice } from "../../utils/functions";
 import { useAppSelector } from "../../redux/hooks";
 import Loading from "../../pages/Loading";
 import api from "../../utils/api";
+import {useTranslation} from "react-i18next";
 
 
 interface PaymentPlan {
@@ -16,6 +17,7 @@ interface PaymentPlan {
 }
 
 const DebtDetailTable = ({ id }: { id: string | undefined }) => {
+  const {t} = useTranslation();
   const { userId } = useParams();
   const { user } = useAppSelector((state) => state.user);
   const [debt, setDebt] = useState<PaymentPlan[]>([]);
@@ -25,6 +27,7 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
   const [errMsg, setErrMsg] = useState("");
 
   useEffect(() => {
+
     const fetchDebtId = async () => {
       setLoading(true);
       try {
@@ -59,11 +62,11 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
         <thead className="text-base-content">
           <tr>
             <th></th>
-            <th>Debt Date</th>
-            <th>Amount</th>
-            <th>Status</th>
+            <th>{t("debt_date")}</th>
+            <th>{t("amount")}</th>
+            <th>{t("status")}</th>
 
-            {userId === user?.user._id && <th>Pay</th>}
+            {userId === user?.user._id && <th>{t("pay")}</th>}
           </tr>
         </thead>
         <tbody>
@@ -74,9 +77,9 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
               <td>{formatPrice(item.paymentAmount)}</td>
               <td>
                 {item.paymentStatus ? (
-                  <span className="text-emerald-600">Paid</span>
+                  <span className="text-emerald-600">{t("paid")}</span>
                 ) : (
-                  <span className="text-red-600">Unpaid</span>
+                  <span className="text-red-600">{t("unpaid")}</span>
                 )}
               </td>
 
@@ -87,14 +90,14 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
                       disabled={item.paymentStatus}
                       className="btn btn-xs text-blue-400 cursor-not-allowed"
                     >
-                      Pay Debt
+                      {t("pay_debt")}
                     </button>
                   ) : (
                     <Link
                       className="text-blue-600 btn btn-xs "
                       to={`/debts/payment_debt/${id}/debt/${item._id}`}
                     >
-                      Pay Debt
+                      {t("pay_debt")}
                     </Link>
                   )}
                 </td>
