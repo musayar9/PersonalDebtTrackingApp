@@ -4,10 +4,11 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import AlertMessage from "./AlertMessage";
 import { MdErrorOutline } from "react-icons/md";
+import {useTranslation} from "react-i18next";
 import api from "../utils/api";
 
 interface CheckoutFormProps {
@@ -16,6 +17,7 @@ interface CheckoutFormProps {
 }
 
 const CheckoutForm = ({ debtId, paymentId }: CheckoutFormProps) => {
+ const {t} = useTranslation()
   const stripe = useStripe();
   const elements = useElements();
 
@@ -89,7 +91,11 @@ const CheckoutForm = ({ debtId, paymentId }: CheckoutFormProps) => {
         id="submit"
       >
         <span id="button-text">
-          {isProcessing ? "Processing ... " : "Complete Payment"}
+          {isProcessing ?
+              <div className="flex items-center justify-center gap-2">
+            <span className="loading loading-infinity loading-xs"></span>
+
+          </div>: <>{t("complete_payment")}</>}
         </span>
       </button>
       {message && (

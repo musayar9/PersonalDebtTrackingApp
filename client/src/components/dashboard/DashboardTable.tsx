@@ -16,7 +16,7 @@ const DashboardTable:React.FC<DashboardTableProps> = ({groupDebt, status}) => {
 return (
   <div
     className={`  overflow-x-auto p-2 h-max rounded-md ${
-      theme === "light" ? "border" : "bg-base-200"
+      theme !== "dark" ? "border" : "bg-base-200"
     } `}
   >
     <div className="flex justify-end p-2.5">

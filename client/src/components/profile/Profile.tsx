@@ -19,7 +19,9 @@ import FormTextArea from "../FormTextArea";
 import CountryDropDown from "../CountryDropDown";
 import AlertMessage from "../AlertMessage";
 import { MdErrorOutline } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 const Profile: React.FC = () => {
+  const { t } = useTranslation();
   const { user, error, userUpdateStatus, userStatus } = useAppSelector(
     (state) => state.user
   );
@@ -166,7 +168,7 @@ const Profile: React.FC = () => {
                 type={"text"}
                 id="Name"
                 name="name"
-                placeholder={"name"}
+                placeholder={t("name")}
                 value={formData.name}
                 handleChange={handleChange}
                 styles="custom-input peer w-full md:w-40"
@@ -176,7 +178,7 @@ const Profile: React.FC = () => {
                 type={"text"}
                 id="Surname"
                 name="surname"
-                placeholder={"surname"}
+                placeholder={t("surname")}
                 value={formData.surname}
                 handleChange={handleChange}
                 styles="custom-input peer w-full md:w-40"
@@ -186,7 +188,7 @@ const Profile: React.FC = () => {
                 type={"date"}
                 id="Birthdate"
                 name="birthdate"
-                placeholder={"birthdate"}
+                placeholder={t("birthdate")}
                 value={formData.birthdate}
                 handleChange={handleChange}
                 styles="custom-input peer w-full md:w-40 "
@@ -198,7 +200,7 @@ const Profile: React.FC = () => {
                 type={"text"}
                 id="Username"
                 name="username"
-                placeholder={"username"}
+                placeholder={t("username")}
                 value={formData.username}
                 handleChange={handleChange}
                 styles="custom-input peer w-full md:w-60"
@@ -208,7 +210,7 @@ const Profile: React.FC = () => {
                 type={"email"}
                 id="Email"
                 name="email"
-                placeholder={"email"}
+                placeholder={t("email")}
                 value={formData.email}
                 handleChange={handleChange}
                 styles="custom-input peer w-full md:w-60"
@@ -220,7 +222,7 @@ const Profile: React.FC = () => {
                 type={"text"}
                 id="City"
                 name="city"
-                placeholder={"city"}
+                placeholder={t("city")}
                 value={formData.city}
                 handleChange={handleChange}
                 styles="custom-input peer w-full md:w-60"
@@ -230,7 +232,7 @@ const Profile: React.FC = () => {
                 type={"text"}
                 id="District"
                 name="district"
-                placeholder={"district"}
+                placeholder={t("district")}
                 value={formData.district}
                 handleChange={handleChange}
                 styles="custom-input peer w-full md:w-60"
@@ -243,7 +245,7 @@ const Profile: React.FC = () => {
                 styles="flex px-2.5 pt-8  text-sm w-full
  bg-transparent rounded-md border-1 border-gray-300 appearance-none 
  focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
-                placeholder="Address "
+                placeholder={t("address")}
                 name="address"
                 value={formData.address}
                 handleChange={handleChange}
@@ -258,7 +260,7 @@ const Profile: React.FC = () => {
                 <FormInput
                   type={"text"}
                   id="Phone Number"
-                  placeholder="Phone Number"
+                  placeholder={t("phone_number")}
                   value={formData.phone}
                   name="phone"
                   styles={
@@ -273,10 +275,10 @@ const Profile: React.FC = () => {
               {userUpdateStatus === "loading" ? (
                 <div className="flex items-center justify-center gap-2">
                   <span className="loading loading-infinity loading-xs"></span>
-                  <span>Updateting</span>
+                  <span>{t("updating")}</span>
                 </div>
               ) : (
-                <span>Update Profile</span>
+                <span>{t("update_profile")}</span>
               )}
             </button>
           </form>
@@ -286,7 +288,7 @@ const Profile: React.FC = () => {
               onClick={handleDeleteUser}
               className=" text-red-600 hover:underline "
             >
-              Delete Account
+              {t("delete_account")}
             </button>
           </div>
 

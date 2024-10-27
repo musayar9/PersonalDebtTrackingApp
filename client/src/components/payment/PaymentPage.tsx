@@ -85,9 +85,9 @@ const PaymentPage = () => {
           {clientSecret && stripePromise && (
             <>
               <p className="mt-3 text-sm pl-6  ">
-                You can make your payment safely using Debit or Credit Card.
+                {t("payment_info_message")}
               </p>
-              <Elements stripe={stripePromise} options={{ clientSecret }}>
+              <Elements stripe={stripePromise} options={{ clientSecret }} >
                 <CheckoutForm
                   debtId={params.debtId}
                   paymentId={params.paymentId}

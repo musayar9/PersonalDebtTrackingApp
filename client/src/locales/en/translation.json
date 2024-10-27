@@ -31,7 +31,8 @@
   "new_password": "New Password",
   "new_password_repeat": "New Password Repeat",
   "characters_remaining": "characters remaining",
-  "change_password": "Save",
+  "change_password": "Change Password",
+  "save":"Save",
   "change_password_status": "password is being changed",
   "verify_user_account": "Verify User Account",
   "verify_user_account_message": "A verification code has been sent to your email.",
@@ -80,6 +81,23 @@
   "payment_summary": "Payment Summary",
   "monthly_payment_amount": "Monthly Payment Amount",
   "detail_page": "Detail Page",
-  "debt_payment_for": "Debt Payment For"
+  "debt_payment_for": "Debt Payment For",
+  "payment_info_message": "You can make your payment safely using Debit or Credit Card.",
+"complete_payment": "Complete Payment",
+"create_debt_info":"Create your debts, set up installments, and track them monthly with ease. We make debt management simple and effective for you.",
+"payments_plan":"Payment Plan",
+"payment_date":"Payment Date",
+  "user_information":"User Information",
+  "contact_preferences":"Contact Preferences",
+  "city":"City",
+  "district":"District",
+  "address":"Address",
+  "phone_number":"Phone Number",
+  "updating":"Updating",
+  "update_profile":"Update Profile",
+  "delete_account":"Delete Account"
+
+
+
 
 }

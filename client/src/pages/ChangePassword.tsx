@@ -187,7 +187,7 @@ const {t}= useTranslation()
               <span className="text-sm">{t("change_password_status")}</span>
             </div>
           ) : (
-            <p>{t("change_password")}</p>
+            <p>{t("save")}</p>
           )}
         </button>
       </form>

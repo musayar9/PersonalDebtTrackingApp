@@ -33,7 +33,7 @@ const {theme} = useAppSelector((state)=>state.theme)
     <>
       <div className="flex items-center justify-center  ">
         <div
-          className={`stats shadow-md ${theme === "light" || "bg-base-200"}`}
+          className={`stats shadow-md ${theme === "dark" && "bg-base-200"}`}
         >
           <div className="stat">
             <div className="stat-figure">

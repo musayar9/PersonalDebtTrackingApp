@@ -10,7 +10,10 @@ import AlertMessage from "../AlertMessage";
 import api from "../../utils/api";
 import DebtImage from "../../assets/Debt.png";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 const DebtForm = () => {
+const {t} = useTranslation()
+
   const [formData, setFormData] = useState({
     lender: "",
     borrower: "",
@@ -105,14 +108,14 @@ const DebtForm = () => {
   };
 
   return (
-    <div className=" w-full">
+    <div className=" w-full my-12">
       <div className="">
         <h2 className="text-xl m-4 font-semibold  border-b border-gray-300 p-4">
-          Create Debt
+          {t("create_debt")}
         </h2>
       </div>
 
-      <div className="max-w-6xl mx-auto flex flex-col items-center justify-center">
+      <div className="max-w-6xl mx-auto flex flex-col items-center justify-center my-8">
         <div className="flex items-center justify-center flex-col gap-2">
           <img
             src={DebtImage}
@@ -120,18 +123,17 @@ const DebtForm = () => {
             className="w-44 h-44 object-cover  rounded-full"
           />
           <p className="text-center text-sm text-gray-400 tracking-wide max-w-md my-4">
-            Create your debts, set up installments, and track them monthly with
-            ease. We make debt management simple and effective for you.
+            {t("create_debt_info")}
           </p>
         </div>
 
-        <form className="flex flex-col gap-2 p-4" onSubmit={handleSubmit}>
+        <form className="flex flex-col gap-2 p-4 " onSubmit={handleSubmit}>
           <div className="flex flex-col justify-between md:flex-row gap-2 ">
             <FormInput
               type={"text"}
               id="Lender"
               name="lender"
-              placeholder={"lender"}
+              placeholder={t("lender")}
               value={formData.lender}
               handleChange={handleChange}
               styles="custom-input peer w-full md:w-60"
@@ -141,7 +143,7 @@ const DebtForm = () => {
               type={"text"}
               id="Borrower"
               name="borrower"
-              placeholder={"borrower"}
+              placeholder={t("borrower")}
               value={formData.borrower}
               handleChange={handleChange}
               styles="custom-input peer w-full md:w-60"
@@ -152,7 +154,7 @@ const DebtForm = () => {
               type={"number"}
               id="debtAmount"
               name="debtAmount"
-              placeholder={"debtAmount"}
+              placeholder={t("debt_amount")}
               value={formData.debtAmount}
               handleChange={handleChange}
               styles="custom-input peer w-full md:w-60"
@@ -162,7 +164,7 @@ const DebtForm = () => {
               type={"number"}
               id="InterestRate"
               name="interestRate"
-              placeholder={"interestRate"}
+              placeholder={t("interest_rate")}
               value={formData.interestRate}
               handleChange={handleChange}
               styles="custom-input peer w-full md:w-60"
@@ -173,7 +175,7 @@ const DebtForm = () => {
               type={"number"}
               id="Amount"
               name="amount"
-              placeholder={"amount"}
+              placeholder={t("amount")}
               value={formData.amount}
               //   handleChange={handleChange}
               styles="custom-input peer w-full md:w-40 "
@@ -183,7 +185,7 @@ const DebtForm = () => {
               type={"date"}
               id="PaymentStart"
               name="paymentStart"
-              placeholder={"paymentStart"}
+              placeholder={t("payment_start")}
               value={formData.paymentStart}
               handleChange={handleChange}
               styles="custom-input peer w-full md:w-40"
@@ -194,7 +196,7 @@ const DebtForm = () => {
               type={"number"}
               id="Installment"
               name="installment"
-              placeholder={"installment"}
+              placeholder={t("installment")}
               value={formData.installment}
               handleChange={handleChange}
               styles="custom-input peer w-full md:w-40"
@@ -207,7 +209,7 @@ const DebtForm = () => {
               styles="flex px-2.5 pt-8  text-sm w-full
  bg-transparent rounded-md border-1 border-gray-300 appearance-none 
  focus:outline-none focus:ring-0 focus:border-emerald-600 peer"
-              placeholder="description "
+              placeholder={t("description")}
               name="description"
               value={formData.description}
               handleChange={handleChange}
@@ -216,12 +218,12 @@ const DebtForm = () => {
             />
 
             <p className="text-slate-500 text-xs pl-2 mt-2">
-              {20 - formData.description.length} characters remaining
+              {20 - formData.description.length} {t("characters_remaining")}
             </p>
           </div>
 
           <div className="mt-4">
-            <h6>Payments Plan</h6>
+            <h6>{t("payments_plan")}</h6>
 
             {formData.paymentPlan.map((plan, index) => (
               <div
@@ -232,7 +234,7 @@ const DebtForm = () => {
                   type={"date"}
                   id="PaymentDate"
                   name="paymentDate"
-                  placeholder={"paymentDate"}
+                  placeholder={t("payment_date")}
                   value={plan.paymentDate}
                   min={
                     isToday(new Date()) ? format(new Date(), "yyyy-MM-dd") : ""
@@ -244,7 +246,7 @@ const DebtForm = () => {
                   type={"number"}
                   id="PaymentAmount"
                   name="paymentAmount"
-                  placeholder={"paymentAmount"}
+                  placeholder={t("monthly_payment_amount")}
                   value={plan.paymentAmount}
                   styles="custom-input peer w-full md:w-60"
                 />
@@ -252,8 +254,14 @@ const DebtForm = () => {
             ))}
           </div>
 
-          <button className="btn btn-success text-gray-100">
-            {loading ? "Creating Debt" : "Ccreate Debt"}
+          <button className="btn btn-success text-gray-100" disabled={loading}>
+            {loading ? (
+              <div className="flex items-center justify-center gap-2">
+                <span className="loading loading-infinity loading-xs"></span>
+              </div>
+            ) : (
+              <>{t("create_debt")}</>
+            )}
           </button>
         </form>
 
