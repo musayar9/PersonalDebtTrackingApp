@@ -12,8 +12,10 @@ import { IoFileTraySharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import CustomPagination from "../CustomPagination.tsx";
 import { useAppSelector } from "../../redux/hooks.ts";
+import { useTranslation } from "react-i18next";
 
 export const Users = () => {
+  const { t } = useTranslation();
   const { user } = useAppSelector((state) => state.user);
   const { allUsers, setAllUsers, loading, error } = useGetAllUsers();
   const [errMsg, setErrMsg] = useState("");
@@ -65,7 +67,7 @@ export const Users = () => {
           <>
             <div className="border-b  m-4">
               <h2 className="text-2xl  font-semibold my-2">
-                {user?.user.isAdmin ? "Users" : "Admins"}
+                {user?.user.isAdmin ? `${t("users")}` : `${t("admins")}`}
               </h2>
             </div>
             <div className="mx-auto max-w-6xl ">
@@ -75,22 +77,19 @@ export const Users = () => {
                   <thead className="text-base-content">
                     <tr>
                       <th></th>
-                      <th>Profile P.</th>
-                      <th>Name</th>
-                      <th>Username</th>
-                      <th>Email</th>
-                      <th>Age</th>
-                      <th>Admin</th>
-                      <th>Delete</th>
-                      <th>Detail</th>
+                      <th>{t("profile_picture")}.</th>
+                      <th>{t("name")}</th>
+                      <th>{t("username")}</th>
+                      <th>{t("email")}</th>
+                      <th>{t("age")}</th>
+                      <th>{t("admin")}</th>
+                      <th>{t("delete")}</th>
+                      <th>{t("detail")}</th>
                     </tr>
                   </thead>
                   <tbody>
                     {currentItems?.map((item, index) => (
-                      <tr
-                        key={item._id}
-                        className={` font-semibold text-sm`}
-                      >
+                      <tr key={item._id} className={` font-semibold text-sm`}>
                         <th>{index + 1}</th>
                         <td>
                           <img
@@ -122,7 +121,7 @@ export const Users = () => {
                                 : "cursor-pointer"
                             } btn btn-xs    rounded-md text-rose-500 text-center m-4 cursor-pointer hover:text-rose-600 duration-150 ease-linear disabled:cursor-not-allowed`}
                           >
-                            Delete
+                            {t("delete")}
                           </button>
                         </td>
                         <td>
@@ -130,7 +129,7 @@ export const Users = () => {
                             className=" text-emerald-500"
                             to={`/users/user_detail/${item?._id}`}
                           >
-                            Detail
+                            {t("detail")}
                           </Link>
                         </td>
                       </tr>
@@ -159,7 +158,7 @@ export const Users = () => {
             <div className="flex items-center justify-center flex-col mx-auto -mt-28 ">
               <IoFileTraySharp size={96} />
               <p className="text-xl text-gray-400 font-semibold">
-                You have no registered user
+                {t("no_registered_user")}
               </p>
             </div>
           </div>

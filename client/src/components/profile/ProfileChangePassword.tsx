@@ -11,6 +11,7 @@ import api from "../../utils/api";
 import { ToggleSwitch } from "flowbite-react";
 import { updateUser } from "../../redux/dataFetch";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 interface PasswordData {
   currentPassword: string;
@@ -18,6 +19,7 @@ interface PasswordData {
 }
 
 const ProfileChangePassword: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAppSelector((state) => state.user);
 
   const [verifyStatus, setVerifyStatus] = useState<boolean>(
@@ -104,12 +106,9 @@ const ProfileChangePassword: React.FC = () => {
 
       <div className="mx-auto max-w-lg mt-12">
         <div className="flex flex-col items-center my-8">
-          <h2 className="text-2xl font-bold ">Change Password</h2>
+          <h2 className="text-2xl font-bold ">{t("change_password")}</h2>
           <p className="text-xs my-2 text-center">
-            The password must be <b>8 to 12 characters long</b>, and it must
-            contain at least <b>one uppercase letter</b>,{" "}
-            <b>one lowercase letter</b>, <b>one special character</b>, and{" "}
-            <b>one number</b>.
+            {t("change_password_info")}
           </p>
         </div>
 
@@ -120,7 +119,7 @@ const ProfileChangePassword: React.FC = () => {
           <label className="form-control w-full max-w-md">
             <div className="label">
               <span className="label-text  font-semibold">
-                Current Password
+                {t("current_password")}
               </span>
             </div>
 
@@ -133,13 +132,13 @@ const ProfileChangePassword: React.FC = () => {
                 <HiEye size={24} className=" hidden" />
                 <span className="">
                   {" "}
-                  {currPassShow ? "Hide" : "Show"}
+                  {currPassShow ? `${t("hide")}` : `${t("show")}`}
                 </span>
               </button>
               <input
                 type={currPassShow ? "text" : "password"}
                 name="currentPassword"
-                placeholder="Current Password"
+                placeholder={t("current_password")}
                 value={formData.currentPassword}
                 className={` input  w-full max-w-md ${
                   passMsgErr
@@ -154,7 +153,7 @@ const ProfileChangePassword: React.FC = () => {
           <label className="form-control w-full max-w-md">
             <div className="label">
               <span className="label-text font-semibold">
-                New Password
+                {t("new_password")}
               </span>
             </div>
 
@@ -165,16 +164,12 @@ const ProfileChangePassword: React.FC = () => {
                 onClick={() => setNewPassShow(!newPassShow)}
               >
                 <span className="">
-                  {newPassShow
-                    ? // <HiEye size={24} className="text-slate-500" />
-                      "Hide"
-                    : // <HiEyeOff size={24} className="text-slate-500" />
-                      "Show"}
+                  {newPassShow ? `${t("hide")}` : `${t("show")}`}
                 </span>
               </button>
               <input
                 type={newPassShow ? "text" : "password"}
-                placeholder="New Password"
+                placeholder={t("new_password")}
                 name="newPassword"
                 value={formData.newPassword}
                 className={`input w-full max-w-md ${
@@ -194,10 +189,10 @@ const ProfileChangePassword: React.FC = () => {
             {loading ? (
               <p className="flex gap-2 items-center justify-center">
                 <span className="loading loading-spinner"></span>
-                <span>Password is updating</span>
+                <span>{t("change_password_status")}</span>
               </p>
             ) : (
-              "Update Password"
+              <>{t("update_password")}</>
             )}
           </button>
         </form>
@@ -219,14 +214,13 @@ const ProfileChangePassword: React.FC = () => {
         </div>
 
         <p className=" text-xs flex items-center justify-center text-center w-full p-4">
-          For your security, choose a password that does not include your name,
-          surname and date of birth.
+          {t("password_warning")}
         </p>
 
         <div className="border rounded-md p-4 m-5">
           <div className="flex items-center justify-between">
             <h2 className=" font-semibold text-xl">
-              Two Factor Authentication
+              {t("two_factor_authentication")}
             </h2>
             <ToggleSwitch
               checked={verifyStatus}
@@ -235,9 +229,7 @@ const ProfileChangePassword: React.FC = () => {
           </div>
 
           <p className=" text-xs w-80 leading-relaxed my-2">
-            When you enable the two-step verification method, you log in with
-            the verification code sent to your registered e-mail in addition to
-            your personal passwords.
+            {t("two_factor_info")}
           </p>
         </div>
       </div>
