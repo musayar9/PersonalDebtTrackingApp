@@ -9,9 +9,13 @@ import ErrorMessage from "../../pages/ErrorMessage";
 
 import { useAppSelector } from "../../redux/hooks";
 import api from "../../utils/api";
+import { RiArrowGoBackLine } from "react-icons/ri";
+import { useTranslation } from "react-i18next";
 
 const DebtDetail = () => {
+  const { t } = useTranslation();
   const { id, userId } = useParams();
+  // console.log(userId,"USERıd")
   const { user } = useAppSelector((state) => state.user);
   const [debt, setDebt] = useState<DebtData>();
   const [loading, setLoading] = useState(false);
@@ -46,18 +50,23 @@ const DebtDetail = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-4">
+    <div className="max-w-6xl mx-auto p-4 my-12">
       <div className="border-b  m-4 pb-2 flex items-center justify-between">
         <h2 className="text-xl font-semibold capitalize">
           {debt && debt.description}
         </h2>
         {userId === user?.user._id ? (
-          <Link className="btn btn-sm" to="/debts">
-            Return Debt
+          <Link className="btn btn-circle" to="/debts">
+            {/* Return Debt */}
+            <RiArrowGoBackLine />
           </Link>
         ) : (
-          <Link className="btn btn-sm" to={`/users/user_detail/${userId}`}>
-            Return User Detail
+          <Link
+            className="btn btn-sm flex items-center px-4 py-2"
+            to={`/users/user_detail/${userId}`}
+          >
+            <RiArrowGoBackLine />
+            <span>{t("user_detail_page")}</span>
           </Link>
         )}
       </div>
