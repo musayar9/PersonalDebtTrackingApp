@@ -1,12 +1,12 @@
-
-import { User } from '../../lib/types';
-import { FaCheck } from 'react-icons/fa';
-import { FaX } from 'react-icons/fa6';
-import { useAppSelector } from '../../redux/hooks';
-
+import { User } from "../../lib/types";
+import { FaCheck } from "react-icons/fa";
+import { FaX } from "react-icons/fa6";
+import { useAppSelector } from "../../redux/hooks";
+import { useTranslation } from "react-i18next";
 
 const UserAccountStatus = ({ userDetail }: { userDetail: User | null }) => {
-const {theme} = useAppSelector((state)=>state.theme)
+  const { theme } = useAppSelector((state) => state.theme);
+  const { t } = useTranslation();
 
   return (
     <div className="shadow-sm">
@@ -15,7 +15,7 @@ const {theme} = useAppSelector((state)=>state.theme)
           theme === "light" ? "border" : "bg-base-200 "
         }`}
       >
-        <h2 className="text-xl font-semibold ">Account Status</h2>
+        <h2 className="text-xl font-semibold ">{t("account_status")}</h2>
 
         <div
           className={`overflow-x-auto  rounded-lg ${
@@ -29,11 +29,11 @@ const {theme} = useAppSelector((state)=>state.theme)
               }`}
             >
               <tr>
-                <th>Email</th>
-                <th>Password</th>
-                <th>Status</th>
-                <th>Two Factor Auth</th>
-                <th>Admin</th>
+                <th>{t("email")}</th>
+                <th>{t("password")}</th>
+                <th>{t("status")}</th>
+                <th>{t("two_factor_authentication")}</th>
+                <th>{t("admin")}</th>
               </tr>
             </thead>
             <tbody>
@@ -45,7 +45,9 @@ const {theme} = useAppSelector((state)=>state.theme)
                     maxLength={6}
                     value={"******"}
                     disabled
-                    className={`border border-none w-24 text-slate-500 ${theme==="light" || "bg-base-300"} `}
+                    className={`border border-none w-24 text-slate-500 ${
+                      theme === "light" || "bg-base-300"
+                    } `}
                   />
                 </td>
                 <td>
@@ -56,7 +58,9 @@ const {theme} = useAppSelector((state)=>state.theme)
                         : "bg-red-300 text-red-600"
                     } font-semibold  px-6 py-1 text-sm  rounded-full`}
                   >
-                    {userDetail?.verifyAccount ? "Verified" : "Unverified"}
+                    {userDetail?.verifyAccount
+                      ? `${t("verified")}`
+                      : `${"unverified"}`}
                   </span>
                 </td>
 
@@ -69,7 +73,9 @@ const {theme} = useAppSelector((state)=>state.theme)
                     } font-semibold  px-6 py-1 text-sm  rounded-full`}
                   >
                     {" "}
-                    {userDetail?.isTwoFA ? "Active" : "Inactive"}
+                    {userDetail?.isTwoFA
+                      ? `${t("active")}`
+                      : `${t("inactive")}`}
                   </span>
                 </td>
                 <td>
@@ -88,4 +94,4 @@ const {theme} = useAppSelector((state)=>state.theme)
   );
 };
 
-export default UserAccountStatus
+export default UserAccountStatus;

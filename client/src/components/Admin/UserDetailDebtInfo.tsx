@@ -7,7 +7,9 @@ import ErrorMessage from "../../pages/ErrorMessage";
 import api from "../../utils/api";
 import { useAppSelector } from "../../redux/hooks";
 
+
 const UserDetailDebtInfo = ({ userDetail }: { userDetail: User | null }) => {
+
   const { user } = useAppSelector((state) => state?.user);
   const [debt, setDebt] = useState<DebtData[]>([]);
   const [errMsg, setErrMsg] = useState("");

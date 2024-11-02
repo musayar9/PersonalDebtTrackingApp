@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent } from "react";
 import { Filter } from "../../../lib/types";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface FilterProps {
   filter: Filter;
@@ -8,6 +9,7 @@ interface FilterProps {
 }
 
 const UsersDebtSearch = ({ filter, setFilter }: FilterProps) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const handleChange = (
@@ -42,12 +44,12 @@ const UsersDebtSearch = ({ filter, setFilter }: FilterProps) => {
         <div className="form-control w-full max-w-xs">
           <label className="label">
             <span className="label-text  tracking-wider font-semibold">
-              Lender
+              {t("lender")}
             </span>
           </label>
           <input
             type="text"
-            placeholder="Enter Lender"
+            placeholder={t("lender")}
             name="lender"
             value={filter?.lender || ""}
             className="input input-bordered input-sm rounded-lg w-full max-w-xs"
@@ -57,14 +59,14 @@ const UsersDebtSearch = ({ filter, setFilter }: FilterProps) => {
         <div className="form-control w-full max-w-xs">
           <label className="label">
             <span className="label-text  tracking-wider font-semibold">
-              Borrower
+              {t("borrower")}
             </span>
           </label>
           <input
             type="text"
             name="borrower"
             value={filter?.borrower || ""}
-            placeholder="Enter Borrower"
+            placeholder={t("borrower")}
             className="input input-bordered input-sm rounded-lg w-full max-w-xs"
             onChange={handleChange}
           />
@@ -73,7 +75,7 @@ const UsersDebtSearch = ({ filter, setFilter }: FilterProps) => {
         <div className="form-control w-full max-w-xs">
           <label htmlFor="payment" className="label">
             <span className="label-text  tracking-wider font-semibold">
-              Payment Status
+              {t("payment_status")}
             </span>
           </label>
           <select
@@ -83,11 +85,11 @@ const UsersDebtSearch = ({ filter, setFilter }: FilterProps) => {
             onChange={handleChange}
           >
             <option disabled selected>
-              Pick one
+              {t("pick_one")}
             </option>
-            <option>Unpaid</option>
-            <option>Partially Paid</option>
-            <option>Paid</option>
+            <option> {t("unpaid")}</option>
+            <option> {t("partially_paid")}</option>
+            <option> {t("paid")}</option>
           </select>
         </div>
 
@@ -96,14 +98,14 @@ const UsersDebtSearch = ({ filter, setFilter }: FilterProps) => {
             className="btn btn-sm w-24 bg-blue-600 rounded-lg  hover:bg-blue-700  text-gray-50   
           "
           >
-            Filter
+            {t("filter")}
           </button>
           <button
             type="button"
             className="btn btn-sm w-24 bg-red-600 rounded-lg  hover:bg-red-700  text-gray-50   "
             onClick={handleReset}
           >
-            Reset
+            {t("clear")}
           </button>
         </div>
       </form>

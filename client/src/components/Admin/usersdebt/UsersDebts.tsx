@@ -7,8 +7,10 @@ import Loading from "../../../pages/Loading";
 import api from "../../../utils/api";
 import axios from "axios";
 import ErrorMessage from "../../../pages/ErrorMessage";
+import { useTranslation } from "react-i18next";
 
 const UsersDebts = () => {
+const {t}= useTranslation()
   const [debts, setDebts] = useState<DebtData[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -70,7 +72,7 @@ const UsersDebts = () => {
         <div className="w-full p-8">
           <div className="border-b p-4 ">
             <h2 className="font-semibold text-2xl pl-4 capitalize">
-              users' debts table
+            {t("all_debts")}
             </h2>
           </div>
 

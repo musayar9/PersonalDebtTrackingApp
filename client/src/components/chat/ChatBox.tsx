@@ -6,10 +6,11 @@ import axios from "axios";
 import { nanoid } from "nanoid";
 import { FaPaperPlane } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import 'moment-timezone';
-import {BiSolidMessageDetail} from "react-icons/bi";
+import "moment-timezone";
+import { BiSolidMessageDetail } from "react-icons/bi";
 import { setChatErrorMessage } from "../../redux/messageSlice";
 import api from "../../utils/api";
+import { useTranslation } from "react-i18next";
 
 interface ChatBoxProps {
   chat: ChatType | null;
@@ -24,13 +25,14 @@ const ChatBox = ({
   receivedMessage,
   setSendMessage,
 }: ChatBoxProps) => {
+  const { t } = useTranslation();
   const { user } = useAppSelector((state) => state.user);
   const [messages, setMessages] = useState<RecievedMessage[]>([]);
   const [newMessage, setNewMessage] = useState("");
 
   const [userData, setUserData] = useState<User | null>(null);
   const [loading, setLoading] = useState(false);
-const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   useEffect(() => {
     if (currentUser && chat) {
       const userId = chat?.members.find((id) => id !== currentUser);
@@ -44,11 +46,11 @@ const dispatch = useAppDispatch()
           setUserData(data);
         } catch (error) {
           setLoading(false);
-        if (axios.isAxiosError(error)) {
-          dispatch(setChatErrorMessage(error.response?.data.msg));
-        } else {
-          dispatch(setChatErrorMessage("Request Failed"));
-        }
+          if (axios.isAxiosError(error)) {
+            dispatch(setChatErrorMessage(error.response?.data.msg));
+          } else {
+            dispatch(setChatErrorMessage("Request Failed"));
+          }
         }
       };
       getUserId();
@@ -62,18 +64,16 @@ const dispatch = useAppDispatch()
         const data = await res.data;
         setMessages(data);
       } catch (error) {
-       if (axios.isAxiosError(error)) {
-         dispatch(setChatErrorMessage(error.response?.data.msg));
-       } else {
-         dispatch(setChatErrorMessage("Request Failed"));
-       }
+        if (axios.isAxiosError(error)) {
+          dispatch(setChatErrorMessage(error.response?.data.msg));
+        } else {
+          dispatch(setChatErrorMessage("Request Failed"));
+        }
       }
     };
 
     if (chat !== null) getMessages();
   }, [chat]);
-
-
 
   const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -105,9 +105,9 @@ const dispatch = useAppDispatch()
       setNewMessage("");
     } catch (error) {
       if (axios.isAxiosError(error)) {
-         dispatch(setChatErrorMessage(error.response?.data.msg));
+        dispatch(setChatErrorMessage(error.response?.data.msg));
       } else {
-         dispatch(setChatErrorMessage("Request Failed"));
+        dispatch(setChatErrorMessage("Request Failed"));
       }
     }
   };
@@ -125,7 +125,6 @@ const dispatch = useAppDispatch()
   const scroll = useRef<HTMLDivElement | null>(null);
   const imageRef: React.MutableRefObject<HTMLInputElement | null> =
     useRef(null);
-    
 
   return (
     <div className="bg-[rgba(234, 36, 36, 0.64)] rounded-2xl grid  grid-rows-[14vh_60vh_13vh]">
@@ -163,7 +162,9 @@ const dispatch = useAppDispatch()
                 >
                   <span className="text-xs p-1">{message?.text}</span>
                   <span className="text-[10px] text-white self-end">
-                    {moment(message.createdAt).tz('Europe/Istanbul').format('HH:mm')}
+                    {moment(message.createdAt)
+                      .tz("Europe/Istanbul")
+                      .format("HH:mm")}
                   </span>
                 </div>
               ))}
@@ -182,7 +183,6 @@ const dispatch = useAppDispatch()
               onSubmit={handleSend}
               className="flex items-center space-x-2 gap-2 w-full"
             >
-          
               <input
                 className="border bg-base-100 p-2 rounded-full focus:outline-none w-full"
                 value={newMessage}
@@ -208,10 +208,13 @@ const dispatch = useAppDispatch()
         </>
       ) : (
         <div className={"flex flex-col items-center justify-center  h-[50vh]"}>
-          <BiSolidMessageDetail  size={64} className={"text-slate-400"}/>
-          <span className={"text-2xl font-semibold text-slate-500 tracking-widest text-center"}>
-
-              Tap on a chat to start conversation...
+          <BiSolidMessageDetail size={64} className={"text-slate-400"} />
+          <span
+            className={
+              "text-2xl font-semibold text-slate-500 tracking-widest text-center"
+            }
+          >
+            {t("chat_warning")}
           </span>
         </div>
       )}

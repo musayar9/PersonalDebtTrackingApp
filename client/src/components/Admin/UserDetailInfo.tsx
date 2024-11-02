@@ -13,25 +13,27 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ErrorMessage from "../../pages/ErrorMessage";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import {  setCurrentChatData } from "../../redux/messageSlice";
+import { setCurrentChatData } from "../../redux/messageSlice";
 import Loading from "../../pages/Loading";
 import api from "../../utils/api";
+import { useTranslation } from "react-i18next";
 
 const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
+  const { t } = useTranslation();
   const { user } = useAppSelector((state) => state.user);
-  const {currentChatData} = useAppSelector((state)=>state.message)
-  const {theme} = useAppSelector((state)=>state.theme)
+  const { currentChatData } = useAppSelector((state) => state.message);
+  const { theme } = useAppSelector((state) => state.theme);
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [findChat, setFindChat] = useState(null);
-  const dispatch  = useAppDispatch()
+  const dispatch = useAppDispatch();
   const handleDeleteUser = async ({ id }: { id: string | undefined }) => {
     try {
       const res = await api.delete(`/v1/auth/${id}`);
       const data = await res.data;
       navigate("/dashboard?tab=users");
-     return data
+      return data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setErrMsg(error.response?.data.msg);
@@ -50,7 +52,7 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
           );
           const data = await res.data;
           setFindChat(data);
-        dispatch(setCurrentChatData(data))
+          dispatch(setCurrentChatData(data));
         } catch (error) {
           if (axios.isAxiosError(error)) {
             setErrMsg(error.response?.data.msg);
@@ -63,8 +65,6 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
       findChat();
     }
   }, [user, userDetail, dispatch]);
-
-
 
   if (errMsg) {
     return <ErrorMessage message={errMsg} />;
@@ -79,12 +79,11 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
       setLoading(false);
       const res = await api.post("/v1/chat", chat);
       const data = await res.data;
-      if(findChat === null){
-        dispatch(setCurrentChatData(data))
+      if (findChat === null) {
+        dispatch(setCurrentChatData(data));
       }
       setLoading(true);
       navigate("/chat");
-
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setErrMsg(error.response?.data.msg);
@@ -94,17 +93,15 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
     }
   };
 
-
-
   if (loading) {
-    return <Loading/>
+    return <Loading />;
   }
-
-
 
   return (
     <div className="md:col-span-3  ">
-      <div className={`shadow-md rounded-lg  ${theme ==="dark" && "bg-base-200"}`}>
+      <div
+        className={`shadow-md rounded-lg  ${theme === "dark" && "bg-base-200"}`}
+      >
         <div className="bg-emerald-400 p-10 rounded-b-none rounded-t-lg "></div>
         <div className=" flex flex-col items-center justify-center  -mt-12 ">
           {" "}
@@ -174,7 +171,7 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
                   onClick={sendMessage}
                   className={` btn btn-sm btn-circle mt-8 w-full text-emerald-500 flex items-center bg-base-300`}
                 >
-                  Send Message
+                  {t("send_message")}
                 </button>
               ) : (
                 <Link
@@ -182,7 +179,7 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
                btn btn-sm btn-circle mt-8 w-full text-emerald-500 flex items-center bg-base-300"
                   to={`/chat`}
                 >
-                  Send Message
+                  {t("send_message")}
                 </Link>
               )}
             </div>
@@ -194,7 +191,7 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
                 onClick={() => handleDeleteUser({ id: userDetail?._id })}
                 className={` btn btn-sm btn-circle mt-2 w-full text-rose-500 flex items-center bg-base-300`}
               >
-                Delete
+                {t("delete")}
               </button>
             </div>
           )}

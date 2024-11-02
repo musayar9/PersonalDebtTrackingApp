@@ -8,8 +8,11 @@ import { User } from "../../lib/types";
 import UserDetailDebtInfo from "./UserDetailDebtInfo";
 import api from "../../utils/api";
 import { useAppSelector } from "../../redux/hooks";
+import { useTranslation } from "react-i18next";
+import { RiArrowGoBackLine } from "react-icons/ri";
 
 const UserDetail = () => {
+  const { t } = useTranslation();
   const { userId } = useParams();
   const { user } = useAppSelector((state) => state.user);
   const [userDetail, setUserDetail] = useState<User | null>(null);
@@ -49,12 +52,16 @@ const UserDetail = () => {
     <div className="max-w-6xl mx-auto my-8 p-4">
       <div className="border-b border-slate-200  p-2 flex justify-between">
         <h2 className="text-xl font-semibold">
-          {user?.user.isAdmin ? " User Detail Page" : "Admin Detail Page"}
-        </h2>
-        <Link className="btn btn-sm" to="/users">
           {user?.user.isAdmin
-            ? "      Return Users Page"
-            : "     Return Admins Page"}
+            ? `${t("user_detail_page")}`
+            : `${t("admin_detail_page")}`}
+        </h2>
+        <Link className="btn btn-circle" to="/users">
+          {/* {user?.user.isAdmin
+            ? `${t("return_user_page")}`
+            : `${t("return_admin_page")}`} */}
+          <RiArrowGoBackLine />
+          {/* <span>Return Page</span> */}
         </Link>
       </div>
 

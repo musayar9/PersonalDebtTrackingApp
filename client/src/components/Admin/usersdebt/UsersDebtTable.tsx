@@ -3,10 +3,11 @@ import { DebtData } from "../../../lib/types";
 import { formatPercentage, formatPrice } from "../../../utils/functions";
 import { usePagination } from "../../../utils/customHooks";
 import CustomPagination from "../../CustomPagination";
+import { useTranslation } from "react-i18next";
 
 const UsersDebtTable = ({ debt }: { debt: DebtData[]  | undefined}) => {
 
-
+const {t}=useTranslation()
 const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
   data: debt,
   page: 8,
@@ -20,16 +21,16 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
           <thead className=" p-2 text-base-content rounded-lg">
             <tr>
               <th></th>
-              <th>Lender</th>
-              <th>Borrower</th>
-              <th>Description</th>
-              <th>Debt Amount</th>
-              <th>Interest Rate</th>
-              <th>Amount</th>
-              <th>Payment Start</th>
-              <th>Installment</th>
-              <th>Payment Status</th>
-              <th>Detail</th>
+              <th> {t("lender")}</th>
+              <th> {t("borrower")}</th>
+              <th> {t("description")}</th>
+              <th> {t("debt_amount")}</th>
+              <th> {t("interest_rate")}</th>
+              <th> {t("amount")}</th>
+              <th> {t("payment_start")}</th>
+              <th> {t("installment")}</th>
+              <th> {t("payment_status")}</th>
+              <th> {t("detail")}</th>
             </tr>
           </thead>
           <tbody>
@@ -56,14 +57,18 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
                         : item.paymentStatus === "Paid" && "bg-green-500"
                     }  } px-1 py-1.5 rounded-md text-center text-white text-xs`}
                   >
-                    {item.paymentStatus}
+                    {item.paymentStatus === "Unpaid" ? (
+                      <>{t("unpaid")}</>
+                    ) : item?.paymentStatus === "Partially Paid" ? (
+                      <>{t("partially_paid")}</>
+                    ) : (
+                      item.paymentStatus === "Paid" && <>{t("paid")}</>
+                    )}
                   </p>
                 </td>
                 <td className="text-emerald-500 font-semibold hover:underline cursor-pointer">
-                  <Link
-                    to={`/debts/debtDetail/${item.userId}/${item?._id}`}
-                  >
-                    Detail
+                  <Link to={`/debts/debtDetail/${item.userId}/${item?._id}`}>
+                   {t("detail")}
                   </Link>
                 </td>
               </tr>
@@ -74,7 +79,10 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
         </table>
       </div>
       {dataValue?.length > 10 && (
-       <CustomPagination pageCount={pageCount} handlePageClick={handlePageClick}/>
+        <CustomPagination
+          pageCount={pageCount}
+          handlePageClick={handlePageClick}
+        />
       )}
     </div>
   );

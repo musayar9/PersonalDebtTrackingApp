@@ -15,8 +15,10 @@ import {
 import { addMessage, setCurrentChatData } from "../../redux/messageSlice";
 import ErrorMessage from "../../pages/ErrorMessage";
 import api from "../../utils/api";
+import { useTranslation } from "react-i18next";
 
 const Chat = () => {
+const {t}= useTranslation()
   const { user } = useAppSelector((state) => state?.user);
   const { currentChatData } = useAppSelector((state) => state.message);
 
@@ -114,7 +116,7 @@ const Chat = () => {
         {/* Left-side-chat */}
         <div className="flex flex-col  gap-4 bg-base-100 p-4 md:p-8 rounded-lg">
           <div className=" flex flex-col rounded-2xl p-2 md:min-h-[80vh] gap-4 ">
-            <h2 className="text-3xl font-semibold tracking-widest ">Chats</h2>
+            <h2 className="text-3xl font-semibold tracking-widest ">{t("chats")}</h2>
 
             {/* Chat-list */}
             <div className=" flex  md:flex-col gap-2 h-96 overflow-y-auto overflow-x-hidden">

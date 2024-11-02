@@ -5,6 +5,7 @@ import { FaTrashCan } from "react-icons/fa6";
 import { useAppDispatch } from "../../redux/hooks.ts";
 import { setChatErrorMessage } from "../../redux/messageSlice.ts";
 import api from "../../utils/api.ts";
+import { useTranslation } from "react-i18next";
 
 interface ConversationProps {
   data: ChatType;
@@ -21,6 +22,7 @@ const Conversation = ({
   handleDeleteChat,
   loading,
 }: ConversationProps) => {
+const {t}= useTranslation()
   const [userData, setUserData] = useState<User | null>(null);
 
   const dispatch = useAppDispatch();
@@ -69,7 +71,7 @@ const Conversation = ({
                 online ? "text-emerald-500" : ""
               } text-sm font-normal flex `}
             >
-              {online ? "Online" : "Offline"}
+              {online ?`${t("online")}` : `${t("offline")}`}
             </span>
           </div>
         </div>
