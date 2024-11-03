@@ -132,5 +132,8 @@
   "chat_warning":"Konuşmaya başlamak için bir sohbete dokunun...",
   "upcoming_debts":"Yaklaşan Borçlar",
   "upcoming_debts_info":"Yaklaşan borçlar burada listelenmiştir.",
-  "upcoming_debts_warning":"Henüz yaklaşan  bir borcunuz bulunmamaktadır"
+  "upcoming_debts_warning":"Henüz yaklaşan  bir borcunuz bulunmamaktadır",
+  "success":"Başarılı",
+  "payment_success_message":"Ödeme başarıyla yapıldı",
+  "return_debts_page":"Borçlar Sayfasına Dön"
 }

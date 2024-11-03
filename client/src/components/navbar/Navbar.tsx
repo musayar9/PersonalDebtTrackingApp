@@ -154,16 +154,16 @@ export function NavbarComponent() {
                   </li>
 
                   <li>
-                    <Link to="/">Dashboard</Link>
+                    <Link to="/">{t("dashboard")}</Link>
                   </li>
                   <li>
                     <Link to="profile" className="justify-between">
-                      Profile
+                      {t("profile")}
                     </Link>
                   </li>
 
                   <li>
-                    <button onClick={handleSignOut}>Logout</button>
+                    <button onClick={handleSignOut}>{t("sign_out")}</button>
                   </li>
                 </ul>
               </div>

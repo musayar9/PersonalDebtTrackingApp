@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { DebtData } from "../../../lib/types";
-import { formatPercentage, formatPrice } from "../../../utils/functions";
+import { formatDateTwo, formatPercentage, formatPrice } from "../../../utils/functions";
 import { usePagination } from "../../../utils/customHooks";
 import CustomPagination from "../../CustomPagination";
 import { useTranslation } from "react-i18next";
 
 const UsersDebtTable = ({ debt }: { debt: DebtData[]  | undefined}) => {
 
-const {t}=useTranslation()
+const {t, i18n}=useTranslation()
 const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
   data: debt,
   page: 8,
@@ -16,7 +16,7 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
   return (
     <div className="max-w-6xl mx-auto ">
       <div className="overflow-x-auto my-8 rounded-lg">
-        <table className="table table-sm">
+        <table className="table table-xs">
           {/* head */}
           <thead className=" p-2 text-base-content rounded-lg">
             <tr>
@@ -45,7 +45,12 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
                 <td>{formatPrice(item.debtAmount)}</td>
                 <td>{formatPercentage(item.interestRate)}</td>
                 <td>{formatPrice(item.amount)}</td>
-                <td>{new Date(item.paymentStart).toLocaleDateString()}</td>
+                <td>
+                  {formatDateTwo({
+                    date: item.paymentStart,
+                    language: i18n.language,
+                  })}
+                </td>
                 <td>{item.installment}</td>
                 <td>
                   <p
@@ -68,7 +73,7 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
                 </td>
                 <td className="text-emerald-500 font-semibold hover:underline cursor-pointer">
                   <Link to={`/debts/debtDetail/${item.userId}/${item?._id}`}>
-                   {t("detail")}
+                    {t("detail")}
                   </Link>
                 </td>
               </tr>

@@ -133,7 +133,10 @@
   "chat_warning":"Tap on a chat to start conversation...",
   "upcoming_debts":"Upcoming Debts",
   "upcoming_debts_info":"Upcoming debts are listed here.",
-  "upcoming_debts_warning":"You do not have any upcoming debts yet."
+  "upcoming_debts_warning":"You do not have any upcoming debts yet.",
+  "success":"Success",
+  "payment_success_message":"Payment was made successfully",
+  "return_debts_page":"Return Debts Page"
 
   
 }

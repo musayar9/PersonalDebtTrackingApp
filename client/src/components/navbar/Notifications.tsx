@@ -74,7 +74,7 @@ const Notifications = () => {
                 <div key={index} className="w-full flex flex-col  border-b ">
                   <div className="flex items-center justify-between ">
                     <p className="text-xs italic text-yellow-400">
-                      Lender - {item?.lender}
+                      {t("lender")} - {item?.lender}
                     </p>
                     <p className="text-xs italic  text-yellow-400">
                       {formatDateTwo({
@@ -103,9 +103,7 @@ const Notifications = () => {
         </div>
 
         <div className="flex items-center justify-center mt-1 mb-2">
-          <p className="text-xs text-gray-400 ">
-            {t("upcoming_debts_warning")}
-          </p>
+          <p className="text-xs text-gray-400 ">{t("upcoming_debts_info")}</p>
         </div>
       </Dropdown>
     </div>
