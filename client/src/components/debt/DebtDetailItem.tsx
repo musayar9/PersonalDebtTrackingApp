@@ -3,7 +3,7 @@ import { useAppSelector } from "../../redux/hooks";
 import { formatDateTwo, formatPercentage, formatPrice } from "../../utils/functions";
 import {useTranslation} from "react-i18next";
 const DebtDetailItem = ({debt}:{debt:DebtData | undefined}) => {
-const {t } = useTranslation();
+const {t,i18n } = useTranslation();
   const {theme} = useAppSelector((state)=>state.theme)
   return (
     <div>
@@ -53,7 +53,7 @@ const {t } = useTranslation();
           <p className="  flex items-center justify-between text-xs border-b p-2 border-neutral-300">
             <span>{t("payment_start")}</span>
             <span className="font-semibold">
-              {formatDateTwo(debt?.paymentStart)}
+              {formatDateTwo({date:debt?.paymentStart, language:i18n.language})}
             </span>
           </p>
 

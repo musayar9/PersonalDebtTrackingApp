@@ -3,7 +3,7 @@ import { useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { DebtData } from "../../lib/types";
-import { formatPercentage, formatPrice } from "../../utils/functions";
+import { formatDateTwo, formatPercentage, formatPrice } from "../../utils/functions";
 import api from "../../utils/api";
 import { usePagination } from "../../utils/customHooks";
 
@@ -16,7 +16,7 @@ interface DebtTableProps {
 }
 
 const DebtTable = ({ debt, setDebt }: DebtTableProps) => {
-const {t} = useTranslation()
+const {t,i18n} = useTranslation()
   // const [showModal, setShowModal] = useState(false);
   const [debtId, setDebtId] = useState<string | undefined>("");
   const [errMsg, setErrMsg] = useState("");
@@ -92,7 +92,7 @@ const { currentItems, pageCount, handlePageClick, dataValue } = usePagination({
                 <td>{formatPrice(item.debtAmount)}</td>
                 <td>{formatPercentage(item.interestRate)}</td>
                 <td>{formatPrice(item.amount)}</td>
-                <td>{new Date(item.paymentStart).toLocaleDateString()}</td>
+                <td>{formatDateTwo({date:item.paymentStart, language:i18n.language})}</td>
                 <td>{item.installment}</td>
                 <td>
                   <p

@@ -17,7 +17,7 @@ interface PaymentPlan {
 }
 
 const DebtDetailTable = ({ id }: { id: string | undefined }) => {
-  const {t} = useTranslation();
+  const {t,i18n} = useTranslation();
   const { userId } = useParams();
   const { user } = useAppSelector((state) => state.user);
   const [debt, setDebt] = useState<PaymentPlan[]>([]);
@@ -73,7 +73,7 @@ const DebtDetailTable = ({ id }: { id: string | undefined }) => {
           {debt?.map((item: PaymentPlan, index: number) => (
             <tr key={item._id} className="">
               <th>{index + 1}</th>
-              <td>{formatDateTwo(item.paymentDate)}</td>
+              <td>{formatDateTwo({date:item.paymentDate, language:i18n.language})}</td>
               <td>{formatPrice(item.paymentAmount)}</td>
               <td>
                 {item.paymentStatus ? (

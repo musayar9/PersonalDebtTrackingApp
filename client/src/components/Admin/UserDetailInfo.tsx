@@ -19,7 +19,7 @@ import api from "../../utils/api";
 import { useTranslation } from "react-i18next";
 
 const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user } = useAppSelector((state) => state.user);
   const { currentChatData } = useAppSelector((state) => state.message);
   const { theme } = useAppSelector((state) => state.theme);
@@ -125,7 +125,7 @@ const UserDetailInfo = ({ userDetail }: { userDetail: User | null }) => {
           <p className="flex items-center  gap-2 ">
             <FaBirthdayCake className="text-gray-500" size={18} />
             <span className="text-gray-500 text-sm  ">
-              {formatDateTwo(userDetail?.birthdate)}
+              {formatDateTwo({date:userDetail?.birthdate, language:i18n.language})}
             </span>
           </p>
           <p className="flex items-center  gap-2 ">

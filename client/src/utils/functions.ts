@@ -1,24 +1,25 @@
-import {format, parseISO} from "date-fns"
- 
-export const formattedDate = (date:string | undefined ) => {
+import { format, parseISO } from "date-fns";
+import { tr, enUS } from "date-fns/locale";
 
-if (!date) return ""; 
+export const formattedDate = (date: string | undefined) => {
+  if (!date) return "";
 
- const dateformat = parseISO(date);
- // Tarihi istediğiniz formata çevir
- return format(dateformat, "yyyy-MM-dd");
-
-
+  const dateformat = parseISO(date);
+  // Tarihi istediğiniz formata çevir
+  return format(dateformat, "yyyy-MM-dd");
 };
 
-export const formatDateTwo = (date:string | undefined | Date)=>{
+export const formatDateTwo = ({date,language}:{date:string | undefined | Date, language:string}) => {
+  
 
-if (!date) return ""; 
-const dateFormat = new Date(date);
-const formattedDate = format(dateFormat, "d MMM yyyy");
-return formattedDate
-}
-
+  const locale = language === "tr" ? tr : enUS;
+  
+  
+  if (!date) return "";
+  const dateFormat = new Date(date);
+  const formattedDate = format(dateFormat, "d MMMM yyyy", { locale });
+  return formattedDate;
+};
 
 export const formatPrice = (price: number | undefined): string => {
   if (price === undefined || price === null) {
@@ -53,22 +54,23 @@ export const formatPercentage = (percentage: number | undefined): string => {
   return formattedPercentage;
 };
 
-// yüzde hesablama 
+// yüzde hesablama
 
 interface CalculatePercentage {
-count:number | undefined;
-total:number | undefined
+  count: number | undefined;
+  total: number | undefined;
 }
-export const calculatePercentage = ({ count, total }: CalculatePercentage): number => {
-if(count === undefined || total=== undefined){
-return 0
-
-}
+export const calculatePercentage = ({
+  count,
+  total,
+}: CalculatePercentage): number => {
+  if (count === undefined || total === undefined) {
+    return 0;
+  }
   return (count / total) * 100;
 };
 
-
-export  const calculateAge = (birthDate:string ):number=>{
+export const calculateAge = (birthDate: string): number => {
   const today = new Date();
   const birthDateObj = new Date(birthDate);
 
@@ -76,10 +78,12 @@ export  const calculateAge = (birthDate:string ):number=>{
   const monthDifference = today.getMonth() - birthDateObj.getMonth();
 
   // Adjust age if birth date has not occurred yet this year
-  if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDateObj.getDate())) {
+  if (
+    monthDifference < 0 ||
+    (monthDifference === 0 && today.getDate() < birthDateObj.getDate())
+  ) {
     age--;
   }
 
-
-  return  age;
-}
+  return age;
+};

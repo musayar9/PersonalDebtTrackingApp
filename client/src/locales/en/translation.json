@@ -130,7 +130,10 @@
   "chats":"Chats",
   "online":"Online",
   "offline":"Offline",
-  "chat_warning":"Tap on a chat to start conversation..."
+  "chat_warning":"Tap on a chat to start conversation...",
+  "upcoming_debts":"Upcoming Debts",
+  "upcoming_debts_info":"Upcoming debts are listed here.",
+  "upcoming_debts_warning":"You do not have any upcoming debts yet."
 
   
 }

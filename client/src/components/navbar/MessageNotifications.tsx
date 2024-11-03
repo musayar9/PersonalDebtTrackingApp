@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { RiMessage3Fill, RiMessage3Line } from "react-icons/ri";
 
 import toast from "react-hot-toast";
-import { useEffect, } from "react";
+import { useEffect } from "react";
 import { Dropdown, DropdownHeader } from "flowbite-react";
 import { formatDateTwo } from "../../utils/functions";
 import { ChatType, RecievedMessage } from "../../lib/types";
@@ -17,17 +17,17 @@ import {
 } from "../../redux/messageSlice";
 import axios from "axios";
 import api from "../../utils/api";
+import { useTranslation } from "react-i18next";
 // import ErrorMessage from "../../pages/ErrorMessage";
 
 const MessageNotifications = () => {
-  const { user } = useAppSelector((state) => state.user);
+const {i18n} = useTranslation()
+  const { user } = useAppSelector((state) => state?.user);
   const { inComingMessage, recieverMessage, messageGroup, allChats } =
     useAppSelector((state) => state.message);
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
-
-
 
   useEffect(() => {
     if (recieverMessage) {
@@ -40,11 +40,11 @@ const MessageNotifications = () => {
 
           dispatch(setCurrentChatData(data));
         } catch (error) {
-         if (axios.isAxiosError(error)) {
-           dispatch(setChatErrorMessage(error.response?.data.msg));
-         } else {
-           dispatch(setChatErrorMessage("Request Failed"));
-         }
+          if (axios.isAxiosError(error)) {
+            dispatch(setChatErrorMessage(error.response?.data.msg));
+          } else {
+            dispatch(setChatErrorMessage("Request Failed"));
+          }
         }
       };
 
@@ -62,17 +62,16 @@ const MessageNotifications = () => {
           dispatch(setAllChats(data));
           //  navigate("/chat");
         } catch (error) {
-         if (axios.isAxiosError(error)) {
-           dispatch(setChatErrorMessage(error.response?.data.msg));
-         } else {
-           dispatch(setChatErrorMessage("Request Failed"));
-         }
+          if (axios.isAxiosError(error)) {
+            dispatch(setChatErrorMessage(error.response?.data.msg));
+          } else {
+            dispatch(setChatErrorMessage("Request Failed"));
+          }
         }
       };
       getChats();
     }
   }, [user]);
-
 
   const sendMessage = async (senderId: string | undefined) => {
     if (allChats) {
@@ -80,10 +79,9 @@ const MessageNotifications = () => {
       const isChat: ChatType | undefined = allChats.find((chat) =>
         chat.members.includes(senderId || "")
       );
-        navigate("/chat");
+      navigate("/chat");
       if (isChat) {
-
-        dispatch(setCurrentChatData(isChat))
+        dispatch(setCurrentChatData(isChat));
         dispatch(setDeleteInComingMessage([]));
         dispatch(deleteMessage(null));
       }
@@ -149,14 +147,12 @@ const MessageNotifications = () => {
       };
     }) || [];
 
-
-
-
   return (
     <div className="relative flex items-center">
       {inComingMessage.length === 0 && (
         <Link to="/chat" onClick={() => dispatch(setCurrentChatData(null))}>
-          <RiMessage3Line className=" z-100 italic" size={28} />{" "}        </Link>
+          <RiMessage3Line className=" z-100 italic" size={28} />{" "}
+        </Link>
       )}
       {inComingMessage?.length > 0 && (
         <>
@@ -178,7 +174,7 @@ const MessageNotifications = () => {
               InComingMessages
             </span>
             <span className="block truncate text-sm font-medium">
-              {formatDateTwo(new Date().toDateString())}
+              {formatDateTwo({date:new Date().toDateString(), language:i18n.language})}
             </span>
           </DropdownHeader>
           <div className=" p-2 space-y-2 border-b border-gray-200">

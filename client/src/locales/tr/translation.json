@@ -129,5 +129,8 @@
   "chats":"Sohbetler",
   "online":"Çevrimiçi",
   "offline":"Çevrimdışı",
-  "chat_warning":"Konuşmaya başlamak için bir sohbete dokunun..."
+  "chat_warning":"Konuşmaya başlamak için bir sohbete dokunun...",
+  "upcoming_debts":"Yaklaşan Borçlar",
+  "upcoming_debts_info":"Yaklaşan borçlar burada listelenmiştir.",
+  "upcoming_debts_warning":"Henüz yaklaşan  bir borcunuz bulunmamaktadır"
 }

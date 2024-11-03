@@ -11,8 +11,12 @@ import { formatDateTwo, formatPrice } from "../../utils/functions";
 import { setChatErrorMessage } from "../../redux/messageSlice";
 import { FaRegBell } from "react-icons/fa";
 import api from "../../utils/api";
+import { useTranslation } from "react-i18next";
 
 const Notifications = () => {
+  const { t, i18n } = useTranslation();
+  console.log(i18n, "i18n notification");
+
   const { user } = useAppSelector((state) => state?.user);
   const [upcomingDebt, setUpcomingDebt] = useState<UpcomingDebt[]>([]);
   const dispatch = useAppDispatch();
@@ -54,10 +58,13 @@ const Notifications = () => {
       >
         <DropdownHeader className="flex items-center justify-between rounded-lg">
           <span className="block text-sm font-semibold text-gray-500">
-            Upcoming Debts
+            {t("upcoming_debts")}
           </span>
           <span className="block truncate text-sm font-medium text-gray-500">
-            {formatDateTwo(new Date().toDateString())}
+            {formatDateTwo({
+              date: new Date().toDateString(),
+              language: i18n.language,
+            })}
           </span>
         </DropdownHeader>
         <div className=" p-2 space-y-2 border-b ">
@@ -70,7 +77,10 @@ const Notifications = () => {
                       Lender - {item?.lender}
                     </p>
                     <p className="text-xs italic  text-yellow-400">
-                      {formatDateTwo(item?.paymentDate)}
+                      {formatDateTwo({
+                        date: item?.paymentDate,
+                        language: i18n.language,
+                      })}
                     </p>
                   </div>
                   <div className="flex items-center justify-between my-1 px-2">
@@ -86,7 +96,7 @@ const Notifications = () => {
             <div className="flex items-center justify-center flex-col p-2">
               <IoFileTraySharp size={28} className="text-gray-400" />
               <p className="text-xs font-semibold text-gray-400">
-                You do not have any upcoming debts yet.
+                {t("upcoming_debts_warning")}
               </p>
             </div>
           )}
@@ -94,7 +104,7 @@ const Notifications = () => {
 
         <div className="flex items-center justify-center mt-1 mb-2">
           <p className="text-xs text-gray-400 ">
-            Upcoming debts are listed here.
+            {t("upcoming_debts_warning")}
           </p>
         </div>
       </Dropdown>
