@@ -22,3 +22,5 @@ declare module 'react-dom/client' {
   function createRoot(container: Element | DocumentFragment): Root;
   export { createRoot };
 }
+declare module "vite";
+declare module "@vitejs/plugin-react";
