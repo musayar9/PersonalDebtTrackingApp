@@ -8,7 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "jsx": "react-jsx",
     "skipLibCheck": true,
-    "types": ["vite/client"], // Vite için tip desteği ekliyoruz
+    "types": ["vite/client"], // Burada Vite tip tanımlarını belirtiyoruz
     "strict": true
   },
   "include": ["src", "vite.config.ts"],
