@@ -112,6 +112,7 @@ const Register = () => {
           <div className="flex items-center justify-center flex-col  mt-4">
             <img
               src={RegisterImage}
+              // src="../assets/register.svg"
               alt="register"
               className="rounded-full w-40 h-40  shadow-md bg-emerald-400 "
             />
