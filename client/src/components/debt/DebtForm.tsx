@@ -109,7 +109,7 @@ const {t} = useTranslation()
 
   return (
     <div className=" w-full my-12">
-      <div className="">
+      <div >
         <h2 className="text-xl m-4 font-semibold  border-b border-gray-300 p-4">
           {t("create_debt")}
         </h2>
